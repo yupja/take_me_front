@@ -12,7 +12,7 @@ function Router() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="*" element={<NotFound />} />
+        {/* <Route path="*" element={<NotFound />} /> */}
         <Route path="/main" element={<Main />} /> 
         <Route path="/save" element={<Save />} />
         <Route path="/mypage" element={<Mypage />} />
