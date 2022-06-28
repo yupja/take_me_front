@@ -1,8 +1,21 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, isAsyncThunkAction } from "@reduxjs/toolkit";
 import { instance } from "../../shared/axios";
 
+export const addGoalRQ = (data) =>{
+    return function (dispatch){
+        console.log(data);
+        try{
+            instance.post('/goalItem',data);
+        }catch(error){
+            console.log(error)
+        }
+    }
+}
+
+
+
 const favoriteSlice = createSlice({
-    name : "favorite",
+    name : "goalItem",
     initialState:{
     },
 reducers:{
