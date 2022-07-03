@@ -145,20 +145,19 @@ function SearchFavorite() {
       <div className='itemWrap'>
       ⭐
         {mylist.map((item, itemIndex) => {
-          return (
-            <div className='favoriteItem' key={item.itemId} onClick={()=>{
-              dispatch(addSaveListRQ(item))
-            }}>
-              {item.itemName}
-              <BiX />
-            </div>
-          )
-        })}
-      </div>
-    </>
-  )
-}
-
+            return (
+              <div className='favoriteItem' key={item.itemId} onClick={()=>{
+                dispatch(addSaveListRQ(item))
+              }}>
+                {item.itemName}
+                <BiX />
+              </div>
+            )
+          })}
+        </div>
+      </>
+    )
+  }
 
 
 const DropDownItem = styled.li`
