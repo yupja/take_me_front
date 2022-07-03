@@ -1,11 +1,13 @@
-import { createSlice, isAsyncThunkAction } from "@reduxjs/toolkit";
+import { createSlice} from "@reduxjs/toolkit";
 import { instance } from "../../shared/axios";
 
-export const addGoalRQ = (data) =>{
+
+
+//--------------------- CREATE ---------------------------
+export const addFavoriteRQ = (data) =>{ // 내 즐겨찾기 추가 
     return function (dispatch){
-        console.log(data);
         try{
-            instance.post('/goalItem',data);
+            instance.post('/favoriteItem',data);
         }catch(error){
             console.log(error)
         }
@@ -13,15 +15,41 @@ export const addGoalRQ = (data) =>{
 }
 
 
+//---------------------- READ ----------------------------
+export const myFavoriteListRQ = ()=>{  // 나의 즐겨찾기 리스트 
+    return async function (dispatch){
+        try{
+            const {data} = await instance.get('/favoriteItem')
+            dispatch(readMyFavorite(data))
+        }catch(error){
+            console.log(error)
+        }
+    }
+}
 
-const favoriteSlice = createSlice({
-    name : "goalItem",
-    initialState:{
-    },
+
+//-------------------- UPDATE ---------------------------
+
+
+//-------------------- DELETE ---------------------------
+
+
+
+
+//-------------------- SLICE ----------------------------
+const goalSlice = createSlice({
+    name : "favoriteItem",
+    initialState:{  
+        myFavoriteList: [],
+        
+       },
 reducers:{
+    readMyFavorite: (state, action) => {
+        state.myFavoriteList = action.payload;
+      },
 
 }
 });
 
-//const { } = saveSlice.actions;
-export default favoriteSlice.reducer;
+const { readMyFavorite } = goalSlice.actions;
+export default goalSlice.reducer;
