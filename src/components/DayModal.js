@@ -1,5 +1,5 @@
 import React from "react";
-import "../public/css/saveModal.css"
+import "../public/css/dayModal.css"
 
 const Modal = (props) =>{
     const { open, close, header } = props;
@@ -15,11 +15,6 @@ const Modal = (props) =>{
               </button>
             </header>
             <main>{props.children}</main>
-            <footer>
-              <button className="close" onClick={close}>
-                close
-              </button>
-            </footer>
           </section>
         ) : null}
       </div>

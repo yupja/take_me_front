@@ -1,7 +1,6 @@
 import React, {useRef, useState}  from "react";
 
-import FormControl from '@mui/material/FormControl'; 
-import NativeSelect from '@mui/material/NativeSelect';
+import styled from 'styled-components'
 
 const Category = (props ) => {
 
@@ -10,9 +9,11 @@ const Category = (props ) => {
     };
 
     return (
-
-        <FormControl sx={{ m: 5, minWidth: 150 }} size="small">
-            <NativeSelect defaultValue={1} onChange={handleChange}>
+            <SelectBox onChange={handleChange} defaultValue="">
+                <option value="" 
+                        disabled 
+                        style={{display:"none"}}
+                        selected>카테고리가 뭘까요?</option>
                 <option value={1}>패션</option>
                 <option value={2}>패션잡화</option>
                 <option value={3}>화장품/미용</option>
@@ -27,10 +28,16 @@ const Category = (props ) => {
                 <option value={12}>완구/취미</option>
                 <option value={13}>문서/오피스</option>
                 <option value={14}>도서/음반</option>
-                <option value={15}>여행</option>
-            </NativeSelect>
-    </FormControl>
+            </SelectBox>
     );
 }
 
+
+
+
+const SelectBox = styled.select`
+border-radius: 20px;
+font-size: 16px;
+padding: 11px;
+`;
 export default Category;

@@ -1,39 +1,61 @@
 import React, {useEffect, useState} from "react";
+
 import styled from "styled-components";
-import GoalModal from "../components/GoalModal";
+import "../public/css/saveMain.css"
+
+import DayModal from "../components/DayModal";
 import GoalADD from "../components/GoalAdd";
 import GoalModify from "../components/GoalModify";
+import FavoriteInput from "../components/FavoriteInput";
+import SearchFavorite from "../components/SearchFavorite";
 
-// 오늘 4시 전까지 할 것 !
-// 1. 클릭하면 모달창 띄우기   -끝
-// 2. 모달창 오픈되면 인풋받기 
-// 3. 인풋받은 값을 함수로 저장해서 디스패치 하기
-// 4. 목 api 연결해서 데이터 저장하기
-// 5. 목표항목 출력하기 ㅇ_ㅇ ! 
+import { useDispatch } from "react-redux";
 
 function Save(){
+
+      
     const [modalOpen, setModalOpen] = useState(false);
     const [modalState, setModalState] = useState();
 
+    const dispatch = useDispatch();
+    
 
     const openModal = () => { setModalOpen(true); };
     const closeModal = () => { setModalOpen(false); };
 
-    useEffect(() => {
-     //myfavorite 가져오셈
-     });
 
-    
+
     return (
-        <div>
-            <Circle onClick={()=>{
-                openModal();
-                setModalState(<GoalADD/>)
-            }}>클릭</Circle>
+        <div className="wrap">
+            <div className="saveHeader">
+                <div className="logo">로고</div>
+                <p> 데일리 티끌</p>
+                <div className="hamArea">
+                    <button>햄버거</button>
+                </div>
+            </div>
             
-            <GoalModal open={modalOpen} close={closeModal} header="Modal heading">
+            <div className="goalMain">
+                <Circle onClick={()=>{
+                    openModal();
+                    setModalState(<GoalADD/>)
+                }}>클릭</Circle>
+            </div>
+
+            <div className="favoriteArea">
+                <SearchFavorite/>
+            </div>
+
+            <div className="savedList">
+                티끌 이력 
+            </div>
+
+            
+            <DayModal   open={modalOpen} 
+                        close={closeModal} 
+                        header="Modal heading">
                 {modalState}
-            </GoalModal>
+            </DayModal>
         </div>
     );
 }
@@ -41,8 +63,8 @@ function Save(){
 export default Save;
 
 const Circle = styled.div`
-width: 200px;
-height: 200px;
+width: 150px;
+height: 150px;
 border-radius: 50%;
 background: lightgreen;
 color : white;

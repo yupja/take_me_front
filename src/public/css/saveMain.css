@@ -1,0 +1,47 @@
+.wrap {
+    height: 844px;
+    width: 390;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+
+}
+
+.saveHeader {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    flex: 0.3;
+    align-items: center;
+
+}
+.logo{
+    flex: 0.3;
+}
+.saveHeader p{
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+.hamArea{
+    flex: 0.3;
+
+}
+
+
+.goalMain{
+    display: flex;
+    align-items: center;
+    flex: 2;
+}
+
+.favoriteArea {
+    padding: 16px;
+    flex: 1;
+}
+
+.savedList{
+    flex: 5;
+}
+

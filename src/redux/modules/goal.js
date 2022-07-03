@@ -4,10 +4,10 @@ import { instance } from "../../shared/axios";
 
 
 //--------------------- CREATE ---------------------------
-export const addFavoriteRQ = (data) =>{ // 내 즐겨찾기 추가 
+export const addGoalRQ = (data) =>{ // 기존에 없던 신규 목표태산 추가
     return function (dispatch){
         try{
-            instance.post('/favoriteItem',data);
+            instance.post('/goalItem',data);
         }catch(error){
             console.log(error)
         }
@@ -15,16 +15,28 @@ export const addFavoriteRQ = (data) =>{ // 내 즐겨찾기 추가
 }
 
 
+
 //---------------------- READ ----------------------------
-export const myFavoriteListRQ = ()=>{  // 나의 즐겨찾기 리스트 
+export const myReadGoalRQ = () => { // 나의 태산 1개 
     return async function (dispatch){
         try{
-            const {data} = await instance.get('/favoriteItem')
-            dispatch(readMyFavorite(data))
+            const {data} = await instance.get('/goalItem')
         }catch(error){
-            console.log(error)
+
+        }
+     }
+}
+
+export const allReadGoalRQ = () => { // 모든 사람의 태산 항목
+    return async function(dispatch){
+        try{
+            const {data} = await instance.get('/goalItem')
+            dispatch(readeAllGoal(data))
+        }catch(error){
+
         }
     }
+
 }
 
 
@@ -38,18 +50,17 @@ export const myFavoriteListRQ = ()=>{  // 나의 즐겨찾기 리스트
 
 //-------------------- SLICE ----------------------------
 const goalSlice = createSlice({
-    name : "favoriteItem",
+    name : "goalItem",
     initialState:{  
-        myFavoriteList: [],
-        
+        allGoalList: [],
        },
 reducers:{
-    readMyFavorite: (state, action) => {
-        state.myFavoriteList = action.payload;
+    readeAllGoal: (state, action) => {
+        state.allGoalList = action.payload;
       },
 
 }
 });
 
-const { readMyFavorite } = goalSlice.actions;
+const { readeAllGoal } = goalSlice.actions;
 export default goalSlice.reducer;
