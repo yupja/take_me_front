@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 
 import styled from "styled-components";
 import "../public/css/saveMain.css"
+import {GiHamburgerMenu} from 'react-icons/gi'
 
 import DayModal from "../components/DayModal";
 import GoalADD from "../components/GoalAdd";
@@ -16,6 +17,7 @@ function Save(){
       
     const [modalOpen, setModalOpen] = useState(false);
     const [modalState, setModalState] = useState();
+    const [modalName, setModalName] = useState("");
 
     const dispatch = useDispatch();
     
@@ -30,15 +32,16 @@ function Save(){
             <div className="topWrap">
                 <div className="saveHeader">
                     <div className="logo">로고</div>
-                    <p>티끌아끼기</p>
+                    <p>데일리 티끌</p>
                     <div className="hamArea">
-                        <button>햄버거</button>
+                    <GiHamburgerMenu/>
                     </div>
                 </div>
                 
                 <div className="goalMain">
                     <div className="circle" onClick={()=>{
                         openModal();
+                        setModalName("내 목표 만들기!")
                         setModalState(<GoalADD/>)
                     }}></div>
                     <p>로봇청소기 60%</p>
@@ -53,6 +56,7 @@ function Save(){
                 <div className="sListWrap">
                     <div className="star">⭐</div>
                     <p className="date">2022<br/></p>
+                    <p>머리끈</p>
                     <div className="itemName"> 3000원</div>
                     <button>등록</button>
                 </div>
@@ -61,7 +65,7 @@ function Save(){
             
             <DayModal   open={modalOpen} 
                         close={closeModal} 
-                        header="Modal heading">
+                        header={modalName}>
                 {modalState}
             </DayModal>
         </div>
@@ -70,7 +74,3 @@ function Save(){
 
 export default Save;
 
-const Circle = styled.div`
-
-
-`;
