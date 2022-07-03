@@ -13,11 +13,11 @@ function Router() {
     <BrowserRouter>
       <Routes>
         {/* <Route path="*" element={<NotFound />} /> */}
-        <Route path="/main" element={<Main />} /> 
-        <Route path="/save" element={<Save />} />
-        <Route path="/mypage" element={<Mypage />} />
-        <Route path="/community" element={<Community />} />
-        <Route path="/statistics" element={<Statistics />} />
+        {/* <Route path="/main" element={<Main />} />  */}
+        <Route path="/" element={<Save />} />
+        {/* <Route path="/mypage" element={<Mypage />} /> */}
+        {/* <Route path="/community" element={<Community />} /> */}
+        {/* <Route path="/statistics" element={<Statistics />} /> */}
       </Routes>
     </BrowserRouter>
   );
