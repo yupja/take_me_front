@@ -58,9 +58,35 @@ height: 180px;
 border-radius: 50%;
 background:  #26DFA6;
 color : white;
+
+display: flex;
+align-items: center;
+justify-content: center;
 }
 
-.goalMain p{
+.circleInP{
+    font-size: 20px;
+}
+
+
+.isGoalSubmenuBox{
+    display: flex;
+    font-size: 13px;
+}
+
+.isGoalSubmenuBox div{
+    display: flex;
+    padding: 5px;
+    align-items: center;
+    flex-direction: column;
+}
+
+.isGoalSubmenuBox p{
+    padding: 5px;
+}
+
+
+.goalTitle{
     font-size: 30px;
     display: flex;
     padding-top: 25px;
