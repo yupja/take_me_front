@@ -27,27 +27,35 @@ function Save(){
 
     return (
         <div className="wrap">
-            <div className="saveHeader">
-                <div className="logo">로고</div>
-                <p>티끌아끼기</p>
-                <div className="hamArea">
-                    <button>햄버거</button>
+            <div className="topWrap">
+                <div className="saveHeader">
+                    <div className="logo">로고</div>
+                    <p>티끌아끼기</p>
+                    <div className="hamArea">
+                        <button>햄버거</button>
+                    </div>
+                </div>
+                
+                <div className="goalMain">
+                    <div className="circle" onClick={()=>{
+                        openModal();
+                        setModalState(<GoalADD/>)
+                    }}></div>
+                    <p>로봇청소기 60%</p>
                 </div>
             </div>
-            
-            <div className="goalMain">
-                <Circle onClick={()=>{
-                    openModal();
-                    setModalState(<GoalADD/>)
-                }}>클릭</Circle>
-            </div>
 
-            <div className="favoriteArea">
-                <SearchFavorite/>
-            </div>
+                <div className="favoriteArea">
+                    <SearchFavorite/>
+                </div>
 
             <div className="savedList">
-                티끌 이력 
+                <div className="sListWrap">
+                    <div className="star">⭐</div>
+                    <p className="date">2022<br/></p>
+                    <div className="itemName"> 3000원</div>
+                    <button>등록</button>
+                </div>
             </div>
 
             
@@ -63,10 +71,6 @@ function Save(){
 export default Save;
 
 const Circle = styled.div`
-width: 150px;
-height: 150px;
-border-radius: 50%;
-background: lightgreen;
-color : white;
+
 
 `;
