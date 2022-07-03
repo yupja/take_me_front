@@ -36,6 +36,7 @@ const Category = (props ) => {
 
 
 const SelectBox = styled.select`
+text-align: center;
 border-radius: 20px;
 font-size: 16px;
 padding: 11px;

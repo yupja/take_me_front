@@ -6,9 +6,6 @@ import { myFavoriteListRQ } from "../redux/modules/favorite"
 import styled from 'styled-components'
 import { BiX } from 'react-icons/bi'
 
-
-
-
 import DayModal from "../components/DayModal"
 import FavoriteInput from "./FavoriteInput"
 
@@ -107,15 +104,15 @@ function SearchFavorite() {
           <DropDownBox>
             {dropDownList.length === 0 && (
               <DropDownItem>
-                <p>
+                <AddFavoriteInput>
                   앗! 찾으시는게 아직 등록이 안되어있네요!<br />
                   새로 등록하시겠어요?
-                </p>
-                <button onClick={() => {
+                </AddFavoriteInput>
+                <AddButton onClick={() => {
                   openModal();
                   setModalState(<FavoriteInput />)
                   setModalName("등록하기")
-                }}>+등록하기</button>
+                }}>+등록하기</AddButton>
               </DropDownItem>
             )}
 
@@ -209,6 +206,7 @@ const DropDownItem = styled.li`
   flex-direction: column;
   
   padding: 0 12px;
+  align-items: center;
   
 
   &.selected {
@@ -235,6 +233,20 @@ overflow-x:scroll;
 white-space: nowrap;
 `;
 
+
+const AddFavoriteInput=styled.p`
+text-align: center;
+padding: 10px;
+`;
+
+const AddButton=styled.button`
+background: #26DFA6;
+color: white;
+border: none;
+border-radius: 20px;
+padding: 10px;
+width: 80%;
+`;
 
 
 export default SearchFavorite;
