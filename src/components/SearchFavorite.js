@@ -144,6 +144,7 @@ function SearchFavorite() {
       </WholeBox>
 
       <ItemWrap>
+      ⭐
         {mylist.map((item, itemIndex) => {
           return (
             <FavoriteItem key={item.itemId} onClick={()=>{
