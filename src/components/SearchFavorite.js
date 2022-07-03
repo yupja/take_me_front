@@ -146,6 +146,7 @@ function SearchFavorite() {
       <ItemWrap>
         {mylist.map((item, itemIndex) => {
           return (
+            // 태그를 클릭하면 즐겨찾기에 있는 나의 아끼기가 등록됩니다 :)
             <FavoriteItem key={item.itemId} onClick={()=>{
               dispatch(addSaveListRQ(item))
             }}>
