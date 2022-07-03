@@ -29,7 +29,7 @@ function Save(){
         <div className="wrap">
             <div className="saveHeader">
                 <div className="logo">로고</div>
-                <p> 그만해야지.</p>
+                <p>티끌아끼기</p>
                 <div className="hamArea">
                     <button>햄버거</button>
                 </div>
