@@ -4,13 +4,12 @@ import {myReadGoalRQ} from "../redux/modules/goal"
 
 import DayModal from "../components/DayModal";
 import GoalADD from "../components/GoalAdd";
-import GoalModify from "../components/GoalModify";
 import FavoriteInput from "../components/FavoriteInput";
 import SearchFavorite from "../components/SearchFavorite";
+import HeaderMenue from "../components/HeaderMenu";
 
 import styled from "styled-components";
 import "../public/css/saveMain.css"
-import {GiHamburgerMenu} from 'react-icons/gi'
 import { FaRegEdit } from 'react-icons/fa'
 import { IoArrowRedoOutline } from 'react-icons/io5'
 
@@ -42,14 +41,7 @@ function Save(){
     return (
         <div className="wrap">
             <div className="topWrap">
-                <div className="saveHeader">
-                    <div className="logo">로고</div>
-                    <p>데일리 티끌</p>
-                    <div className="hamArea">
-                    <GiHamburgerMenu/>
-                    </div>
-                </div>
-                
+                <HeaderMenue/>
                 <div className="goalMain">
                     {/* 목표가 있을경우 없을 경우 비교해서 조건문 걸기  */}
                     { myGoalList.length===1 ?
