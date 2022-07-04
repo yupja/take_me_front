@@ -3,11 +3,10 @@ import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { createCommentAc } from "../redux/modules/comment";
 import { useSelector } from "react-redux/es/exports";
-import { loadCommentAc } from "../redux/modules/comment";
+import { loadCommentAc, deleteComment } from "../redux/modules/comment";
 import { useParams } from "react-router-dom";
-import { deleteComment } from "../redux/modules/comment";
+import {  } from "../redux/modules/comment";
 import "../public/css/comment.css"
-// import { updateCommentAc } from "../redux/modules/comment";
 
 const Comment = (props) => {
   
@@ -80,7 +79,7 @@ const Comment = (props) => {
         </div>
       ))}
 
-      <div className="inputBox">
+      <div className="inputBoxComment">
         <div className="inputWrap">
         <input ref={comment_ref} className="conmeentInput"/>
         <button onClick={createComment}>게시</button>
