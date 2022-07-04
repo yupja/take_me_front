@@ -54,7 +54,7 @@ const FavoriteInput = ()=>{
 
         <div className="footer"
              onClick={addFavorite}>
-            <label>티끌만들기 완료</label>
+            <label>티끌 등록하기</label>
 
         </div>
         </>

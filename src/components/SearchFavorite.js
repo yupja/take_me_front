@@ -5,12 +5,11 @@ import { myFavoriteListRQ } from "../redux/modules/favorite"
 
 import styled from 'styled-components'
 import { BiX } from 'react-icons/bi'
-
-
-
+import "../public/css/searchFavorite.css"
 
 import DayModal from "../components/DayModal"
 import FavoriteInput from "./FavoriteInput"
+
 
 
 function SearchFavorite() {
@@ -89,10 +88,10 @@ function SearchFavorite() {
 
   return (
     <>
-      <WholeBox>
+      <div className='wholeBox'>
 
-        <InputBox isHaveInputValue={isHaveInputValue}>
-          <Input
+        <div className='inputBox' isHaveInputValue={isHaveInputValue}>
+          <input className='innerInput'
             type='text'
             value={inputValue}
             onChange={changeInputValue}
@@ -100,18 +99,18 @@ function SearchFavorite() {
           />
 
 
-          <DeleteButton onClick={() => setInputValue('')}>&times;</DeleteButton>
-        </InputBox>
+          <div className='deleteButton' onClick={() => setInputValue('')}>&times;</div>
+        </div>
 
         {isHaveInputValue && (
-          <DropDownBox>
+          <ul className='dropDownBox'>
             {dropDownList.length === 0 && (
               <DropDownItem>
-                <p>
+                <div className='addFavoriteInput'>
                   앗! 찾으시는게 아직 등록이 안되어있네요!<br />
                   새로 등록하시겠어요?
-                </p>
-                <button onClick={() => {
+                </div>
+                <button className='addButton' onClick={() => {
                   openModal();
                   setModalState(<FavoriteInput />)
                   setModalName("등록하기")
@@ -133,7 +132,7 @@ function SearchFavorite() {
                 </DropDownItem>
               )
             })}
-          </DropDownBox>
+          </ul>
         )}
 
 
@@ -141,99 +140,34 @@ function SearchFavorite() {
           {modalState}
         </DayModal>
 
-      </WholeBox>
+      </div>
 
-      <ItemWrap>
+      <div className='itemWrap'>
+      ⭐
         {mylist.map((item, itemIndex) => {
-          return (
-            <FavoriteItem key={item.itemId} onClick={()=>{
-              dispatch(addSaveListRQ(item))
-            }}>
-              {item.itemName}
-              <BiX />
-            </FavoriteItem>
-          )
-        })}
-      </ItemWrap>
-    </>
-  )
-}
+            return (
+              <div className='favoriteItem' key={item.itemId} onClick={()=>{
+                dispatch(addSaveListRQ(item))
+              }}>
+                {item.itemName}
+                <BiX />
+              </div>
+            )
+          })}
+        </div>
+      </>
+    )
+  }
 
 
-
-
-const activeBorderRadius = '16px 16px 0 0'
-
-const inactiveBorderRadius = '16px 16px 16px 16px'
-
-const WholeBox = styled.div`
-  padding: 10px;
-`
-const InputBox = styled.div`
-  display: flex;
-  width:355px;
-  flex-direction: row;
-  padding: 16px;
-  border: 1px solid rgba(0, 0, 0, 0.3);
-  border-radius: ${props =>
-    props.isHaveInputValue ? activeBorderRadius : inactiveBorderRadius};
-  z-index: 3;
-`
-const Input = styled.input`
-  flex: 1 0 0;
-  margin: 0;
-  padding: 0;
-  background-color: transparent;
-  border: none;
-  outline: none;
-  font-size: 12px;
-`
-const DeleteButton = styled.div`
-  cursor: pointer;
-`
-const DropDownBox = styled.ul`
-  display: block;
-  margin: 0 auto;
-  width:355px;
-  padding: 8px 0;
-  background-color: white;
-  border: 1px solid rgba(0, 0, 0, 0.3);
-  border-top: none;
-  border-radius: 0 0 16px 16px;
-  list-style-type: none;
-  z-index: 3;
-`
 const DropDownItem = styled.li`
   display : flex;
   flex-direction: column;
-  
-  padding: 0 12px;
-  
-
+   padding: 0 12px;
+  align-items: center;
   &.selected {
     background-color: lightgray;
   }
 `
-const FavoriteItem = styled.span`
-margin-top: 5px;
-display :inline-block;
-background: #EFEFEF;
-border-radius: 20px;
-font-size: 15px;
-padding: 5px;
-margin-left: 10px;
-`;
-
-const ItemWrap=styled.div`
-display: flex;
-width:350px;
-overflow-x:scroll;
-&::webkit-scrollbar{
-  display: none; 
-}
-white-space: nowrap;
-`;
-
-
 
 export default SearchFavorite;
