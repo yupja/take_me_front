@@ -2,9 +2,9 @@ import React,{ useState,useEffect,useRef}from "react";
 import { useNavigate } from "react-router-dom";
 
 import CommunityTab from "../components/CommunityTab";
-
+import HeaderMenue from "../components/HeaderMenu";
 import {GiHamburgerMenu} from 'react-icons/gi'
-import "../public/css/communityMain.css"
+
 
 const Community = () => {
 
@@ -15,13 +15,7 @@ const Community = () => {
     return(
         <div className="wrap">
             <div className="topWrap" style={{background:"white"}}>
-                <div className="saveHeader">
-                    <div className="logo">로고</div>
-                    <p>커뮤니티</p>
-                    <div className="hamArea">
-                    <GiHamburgerMenu/>
-                    </div>
-                </div>
+                <HeaderMenue/>            
             </div>
 
             <div className="communityDiv">

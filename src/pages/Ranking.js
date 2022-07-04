@@ -1,8 +1,7 @@
 import styled from "styled-components";
-
 import HeaderMenue from "../components/HeaderMenu";
 
-function MyPage(){
+function Ranking(){
 
     return(
         <div className="wrap">
@@ -13,4 +12,4 @@ function MyPage(){
     )
 };
 
-export default MyPage;
+export default Ranking;
