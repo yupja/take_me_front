@@ -30,13 +30,13 @@ const Comment = (props) => {
   const postData = useSelector((state) => state.post.postList);
   const commentData = useSelector((state) => state.comment.commentList);
 
-  // 인풋 컨트롤 박스 , 
+  // 인풋 컨트롤 박스 
   const openEdit = () => { setIsEdit(true) }
   const editdone = (index) => {setIsEdit(false )}
 
 
 
-//함수 선언/정의 부분 
+  //함수 선언/정의 부분 
   const createComment = () => {  
     console.log(comment_ref.current.value, "CREATE")
     const commentPost = {

@@ -119,7 +119,7 @@ import styled from "styled-components";
 
  
 const Box = styled.div`
-width: 390px;
+width: 100%;
 height: 100%;
 border: 1px solid black;
 margin: auto;

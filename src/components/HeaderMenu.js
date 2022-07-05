@@ -1,4 +1,4 @@
-import React,{useState}  from "react";
+import React,{useState, useEffect}  from "react";
 import { useNavigate } from "react-router-dom";
 
 import styled, { keyframes } from "styled-components";
@@ -15,8 +15,8 @@ const slider = keyframes`
 `;
 
 
+const HeaderMenu=()=>{
 
-const HeaderMenue=()=>{
     // 모달 상태관리
     const [modalOpen, setModalOpen] = useState(false);
     const openModal = () => { setModalOpen(true); };
@@ -26,16 +26,6 @@ const HeaderMenue=()=>{
 
     return (
         <>
-        <div className="saveHeader">
-            <div className="logo">로고</div>
-            <p>데일리</p>
-            <div className="hamArea">
-                <GiHamburgerMenu onClick={()=>{
-                openModal();
-                }}/>
-                </div>
-        </div>
-
         {modalOpen?
             <Backgroud>
                 <Window>
@@ -45,13 +35,17 @@ const HeaderMenue=()=>{
                          </ButtonArea>
                          <MenuBar>
                             <div onClick={()=>{
-                                navigate("/")}}>데일리 티끌</div>
+                                navigate("/");
+                                }}>데일리 티끌</div>
                             <div onClick={()=>{
-                                navigate("/community")}}>티끌 자랑</div>
+                                navigate("/community");
+                                }}>티끌 자랑</div>
                             <div onClick={()=>{
-                                navigate("/ranking")}}>랭킹</div>
+                                navigate("/ranking");
+                                }}>랭킹</div>
                             <div onClick={()=>{
-                                navigate("/mypage")}}>My</div>
+                                navigate("/mypage");
+                                }}>My</div>
                          </MenuBar>
                          <Footer>
                             <p>회원가입</p>
@@ -61,10 +55,19 @@ const HeaderMenue=()=>{
                 </Window>
             </Backgroud>
         :""}
+
+        <div className="saveHeader">
+            <div className="logo">로고</div>
+            <p></p>
+            <div className="hamArea">
+                <GiHamburgerMenu onClick={()=>{
+                openModal();
+                }}/>
+            </div>
+        </div>
         </>
     )
 }
-
 
 const Backgroud = styled.div`
 position: fixed;
@@ -100,8 +103,6 @@ animation-duration: 0.3s;
   animation-fill-mode: forwards;
 `;
 
-
-
 const ButtonArea = styled.div`
 display: flex;
 justify-content: right;
@@ -123,15 +124,12 @@ font-size: 1.5rem;
 font-weight: bold;
 margin-top: 15%;
 
-
-
 div{
     display: flex;
     height: 10%;
 }
 
 `;
-
 
 const Footer = styled.div`
 display: flex;
@@ -141,4 +139,4 @@ justify-content: space-around;
 
 
 
-export default HeaderMenue;
+export default HeaderMenu;
