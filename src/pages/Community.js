@@ -1,90 +1,289 @@
 import React,{ useState,useEffect,useRef}from "react";
-import { useNavigate } from "react-router-dom";
-import { useLocation } from "react-router";
-
-import CommunityTab from "../components/CommunityTab";
-import HeaderMenue from "../components/HeaderMenu";
-
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
-
+import ListModal from "../components/ListModal";
+import PostModal from "../components/PostModal";
+import { useSelector } from "react-redux/es/exports";
+import { loadpostsAc,deletePostAc } from "../redux/modules/post";
+import { useNavigate, useParams } from "react-router-dom"
 
 const Community = () => {
-    const { state } = useLocation();
-    console.log(state);
+    
+    const dispatch = useDispatch();
+    const Navigate = useNavigate();
 
-    const navigate = useNavigate();
-    const [page, setPage] = useState(<CommunityTab/>);
+    const params = useParams();
+    console.log(params,"파람")
+    const postIdex = params.boardid;
+
+    console.log(postIdex,"postidex")
+
+    const [showModall, setShowModall] = useState(false);
+
+    const openModall = () => {
+        setShowModall(true)
+    }
+
+    const closeModall = () => {
+        setShowModall(false);
+    }
+
+    const [showModalll, setShowModalll] = useState(false);
+
+    const openModalll = () => {
+        setShowModalll(true)
+    }
+
+    const closeModalll = () => {
+        setShowModalll(false);
+    }
 
 
-    return(
-        <div className="wrap">
-            <div className="topWrap" style={{background:"white"}}>
-                <HeaderMenue state={state}/>            
-            </div>
+    const Postdata = useSelector((state) => state.post.postList);
 
-            <MenuBar>
-                    <div>티끌자랑</div>
-                    <div>쓸까말까</div>
-            </MenuBar>
+    console.log(Postdata,"postdata")
 
-            <div style={{width:"100%"}}>
-                <RealTimeBox>
-                    <TimeList></TimeList>
-                </RealTimeBox>
 
-                <CommunityContents>
-                    {page}
-                </CommunityContents>
-            </div>
+
+    React.useEffect(() => {
+        dispatch(loadpostsAc())
+    },[])
+
+    const [isEdit, setIsEdit] = useState(false);
+    
+
+    const openEdit = () => {
+        setIsEdit(true)
+    }
+    
+    const editPost = (index) => {
+        window.location.replace(`/community/${index}`);
+    }
+
+    const [iLike, setILike ] = useState(false);
+
+    const clickLike = () => {
+        setILike(true)
+    }
+    
+
+
+return(
+    <Box>
+        <Header>헤더 내용</Header>
+        {Postdata.map((postList, id) => {
+            return(
+            <div key={postList.id}>
+                <>
+        <ContentBox>
+            <Left>
+            {/* <Day>{postList.createAt}</Day> */}
+        <ItemImage></ItemImage>
+        <Profile /*src={postList.profileImg}*/></Profile>
+        </Left>
+        <Right>
+            <Top>
+            <GoalName>{postList.goalItemName}</GoalName>
+            <EditBtn>
+            <ModiBtn onClick={() => {dispatch(editPost(postList.boardId))}}>🛠</ModiBtn>
+            <DelBtn onClick={() => {dispatch(deletePostAc(postList.boardId))}}>🗑</DelBtn>
+            </EditBtn>
+            </Top>
+        <Middle>
+        <Nick>{postList.nickname}&nbsp;&nbsp;{postList.contents}</Nick>
+        </Middle>
+        <Foot>
+        <div style={{fontSize:"0.5rem"}}>
+        {iLike ? <>💚</> : <>🤍</> }
+        {postList.likeCount == null ? <>{postList.likeCount}</> : <>0</>}
         </div>
-        
-    ) 
+            <div style={{marginLeft:"1rem"}}>💬</div>
+                <div onClick={() => {Navigate(`/detail/${postList.boardId}`)}} style={{marginLeft:"0rem"}}>댓글 00 개 모두 보기</div>
+            <div onClick={openModall} style={{marginLeft:"auto"}}>📃</div>
+            {showModall ?
+                                    <ListModal showModall={showModall} closeModall={closeModall} />
+                                    : null}
+        </Foot>
+        </Right>
+        </ContentBox>
+        </>
+        </div>
+         )}
+         )}
+         <BtnBox>
+        <FootBtn onClick={openModalll}>내 태산 % 공유</FootBtn>
+        {showModalll ?
+                                    <PostModal showModalll={showModalll} closeModalll={closeModalll} />
+                                    : null}
+        </BtnBox>
+    </Box>
+)
 };
 
-
-const MenuBar = styled.div`
-display: flex;
-justify-content: center;
-justify-content: space-evenly;
-width : 100%;
-
-
-div{
-    width: 45%;
-    border: 1px solid #CCCCCC;
-    text-align: center;
-    padding: 10px;
-    border-bottom: none;
-    border-radius: 10px 10px 0px 0px;
-}
+const CreatAt = styled.div`
+width: 28vw;
+height: 10vw;
+background-color: rgb(100,100,100, 0.2);
+border-radius: 0 0 50vw 50vw;
+position: relative;
+float: inline-end;
+margin-top: 69%;
 `;
 
-const RealTimeBox = styled.div`
-display: flex;
-justify-content: center;
-align-items: center;
-
+const Box = styled.div`
 width: 100%;
-background: #F5F5F5;
-height: 4%;
-`;
-
-const TimeList = styled.div`
-width: 96%;
-height: 85%;
+height: 1389px;
+/* border: 1px solid black; */
+border: none;
+margin: auto;
 display: flex;
-align-items: center;
+flex-direction: column;
+`;
+
+const Header = styled.div`
+width: 100%;
+height: 10vh;
+border: 1px solid black;
+`;
+
+const ContentBox = styled.div`
+width: 100%;
+height: 20vh;
+padding: 1rem;
+/* border: 3px solid blue; */
+border: none;
+display: flex;
+flex-direction: row;
+`;
+
+const Left = styled.div`
+width: 35%;
+/* border: 2px solid red; */
+border: none;
+position: relative;
+`;
+
+const Profile = styled.img`
+width: 35px;
+height: 35px;
+background-color: gray;
+border-radius: 35px;
+border: none;
+position: absolute;
+`;
+
+const Nick = styled.div`
+margin-left: 10px;
+border: 1px solid white;
+display: flex;
+text-overflow: ellipsis;  
+	overflow : hidden;
+	display: -webkit-box;
+        -webkit-line-clamp: 5;
+        -webkit-box-orient: vertical;
+
+`;
+
+const Day = styled.div`
+font-size: 1.5rem;
+margin-left: auto;
+`
+
+const ItemImage = styled.div`
+width: 31vw;
+height: 31vw;
+border: 1px solid red;
+margin: 0 auto;
+border-radius: 50rem;
+position: absolute;
+`;
+
+const Foot = styled.div`
+width: 100%;
+height: 3vh;
+/* border: 1px solid violet; */
+display: flex;
+margin: auto;
+align-items: flex-end;
+font-size: 0.5rem;
+padding: 1rem;
+`;
+
+const Modalbtn = styled.button`
+border: none;
+background-color: transparent;
+font-size: 0.5rem;
+`;
+
+const BtnBox = styled.div`
+width: 100%;
+height: 8vh;
+margin: 0 auto;
+display: flex;
 justify-content: center;
-background: white;
-box-shadow:initial;
-border-radius: 10px;
+align-items: center;
+bottom: 0;
+/* left: 39% */
+
+`;
+
+const FootBtn = styled.button`
+width: 90%;
+height: 8vh;
+border-radius: 2rem;
+border: none;
+font-size: 1.3rem;
+color: white;
+font-weight: 500;
+/* background-color: rgb(38, 223, 116, 0.2); */
+background-color: #26DFA6;
+`;
+
+const Right = styled.div`
+width: 65%;
+/* border: 2px solid violet; */
+`;
+
+const Middle = styled.div`
+width: 100%;
+height: 10vh;
+/* border: 4px solid black; */
+font-size: 0.7rem;
+line-height: 0.9rem;
+letter-spacing: 0.04rem;
+
+`;
+
+const Top = styled.div`
+width: 100%;
+/* border: 1px solid blue; */
+display: flex;
+justify-content: end;
+`;
+
+const GoalName = styled.div`
+width: 75%;
+font-weight: bold;
+/* border: 1px solid violet; */
+
+`;
+const EditBtn = styled.div`
+width: 20%;
+display: flex;
+/* border: 1px solid orange; */
+`;
+
+const ModiBtn = styled.button`
+width: 20%;
+height: 50%;
+text-align: center;
+`;
+
+const DelBtn = styled.button`
+width: 20%;
+height: 50%;
 `;
 
 
-
-
-const CommunityContents = styled.div`
-
-`;
 
 export default Community;

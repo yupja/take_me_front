@@ -9,8 +9,8 @@ const Category = (props ) => {
     };
 
     return (
-            <SelectBox onChange={handleChange} defaultValue={0}>
-                <option value={0} 
+            <SelectBox onChange={handleChange} defaultValue="">
+                <option value="" 
                         disabled 
                         style={{display:"none"}}
                         selected>카테고리가 뭘까요?</option>
@@ -36,7 +36,6 @@ const Category = (props ) => {
 
 
 const SelectBox = styled.select`
-text-align: center;
 border-radius: 20px;
 font-size: 16px;
 padding: 11px;

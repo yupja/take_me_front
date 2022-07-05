@@ -62,16 +62,17 @@ export const loadpostsAc = () => {
   };
 
 
-export const deletePost = (boardId) => {
+export const deletePostAc = (boardId) => {
     return async function (dispatch) {
       await instance
         .delete(`/board/${boardId}`)
         .then((response) => {
+        dispatch(deletePostAc(boardId));
         })
         .catch((err) => {
           console.log(err);
         });
-    console.log(boardId,"나와제발")
+    console.log(boardId,"삭제외않되")
     };
   };
 
@@ -91,6 +92,10 @@ const postSlice = createSlice({
     },
     roadPosts: (state, action) => {
       state.postList = action.payload;
+    },
+    deletePost: (state, action) => {
+        const new_post = state.postList.filter((v, i) => i !== action.payload);
+        state.postList = new_post;
     },
     setLike: (state, action) => {
       state.post.likeNum = action.payload.likeNum;
