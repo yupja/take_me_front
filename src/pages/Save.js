@@ -1,28 +1,27 @@
 import React, {useEffect, useState} from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {myReadGoalRQ} from "../redux/modules/goal"
+import {readSaveListRQ} from "../redux/modules/saveList"
 
 import DayModal from "../components/DayModal";
-import GoalADD from "../components/GoalAdd";
 import SearchFavorite from "../components/SearchFavorite";
 import HeaderMenue from "../components/HeaderMenu";
+import DountChart from "../components/Goal";
 
 import styled from "styled-components";
 import "../public/css/saveMain.css"
 import { FaRegEdit } from 'react-icons/fa'
 import { IoArrowRedoOutline } from 'react-icons/io5'
-import DountChart from "../components/Goal";
-
-
+import {AiOutlineStar} from 'react-icons/ai'
 
 
 function Save(){
 
     useEffect(() => {
         dispatch(myReadGoalRQ());
+        dispatch(readSaveListRQ());
       }, []);
 
-      
     const [modalOpen, setModalOpen] = useState(false);
     const [modalState, setModalState] = useState();
     const [modalName, setModalName] = useState("");
@@ -34,8 +33,8 @@ function Save(){
     const closeModal = () => { setModalOpen(false); };
 
     const myGoalList=[];
-    // console.log(myGoalList.length)
-
+    const mySavedList = useSelector((state) => state.save.saveList);
+    console.log(mySavedList)
     const state ="데일리 티끌"
 
     return (
@@ -81,18 +80,21 @@ function Save(){
                     <SearchFavorite/>
                 </div>
 
+            <SavedList>
+                    {mySavedList&&mySavedList.map((savedItem, savedItemIndex)=>(
+                        <>
+                        <div className="sListWrap">
+                            <div className="star"><AiOutlineStar/></div>
+                            <p className="date">{savedItem.createdAt}<br/></p>
+                            <p>{savedItem.categoryName}</p>
+                            <p>{savedItem.itemName}</p>
+                            <button>수정</button>
+                            <button>삭제</button>
+                        </div>
+                        </>
+                    ))}
+            </SavedList>
 
-            <div className="savedList">
-                <div className="sListWrap">
-                    <div className="star">⭐</div>
-                    <p className="date">2022<br/></p>
-                    <p>머리끈</p>
-                    <div className="itemName"> 3000원</div>
-                    <button>등록</button>
-                </div>
-            </div>
-
-            
             <DayModal   open={modalOpen} 
                         close={closeModal} 
                         header={modalName}>
@@ -113,6 +115,9 @@ color : white;
 display: flex;
 align-items: center;
 justify-content: center;
+`;
+
+const SavedList = styled.div`
 `;
 
 export default Save;

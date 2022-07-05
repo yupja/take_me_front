@@ -6,7 +6,6 @@ import Save from "../pages/Save";  // 아끼기
 import MyPage from "../pages/MyPage"; // 마이페이지 
 import Community from "../pages/Community"; // 커뮤니티 
 import Detail from "../pages/Detail"; //상세페이지
-import Comment from "../pages/Comment";// 코멘트페이지
 import Ranking from "../pages/Ranking" // 통계
 
 
@@ -22,7 +21,6 @@ function Router() {
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/community" element={<Community />} />
         <Route path="/community/:id" element={<Community />} />
-        <Route path="/comment/:postid" element={<Comment />} />
         <Route path="/ranking" element={<Ranking />} />
       </Routes>
     </BrowserRouter>

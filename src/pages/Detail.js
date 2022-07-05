@@ -8,7 +8,6 @@ import { useParams } from "react-router-dom";
 import { createCommentAc } from "../redux/modules/comment"
 import { loadCommentAc } from "../redux/modules/comment"
 import { deleteComment } from "../redux/modules/comment";
-import { updateCommentAc } from "../redux/modules/comment";
 
 function Detail(props) {
     const dispatch = useDispatch();

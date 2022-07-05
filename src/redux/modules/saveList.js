@@ -19,6 +19,14 @@ export const addSaveListRQ = (data) =>{ // 내 즐겨찾기 추가
 //---------------------- READ ----------------------------
 
 export const readSaveListRQ =() =>{
+    return async function(dispatch){
+        try{
+            const {data} = await instance.get(`saveList`);
+            dispatch(readMySavedList(data))
+        }catch(error){
+            console.log(error)
+        }
+    }
     
 }
 
