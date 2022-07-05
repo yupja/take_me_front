@@ -18,7 +18,6 @@ import { instance } from "../../shared/axios";
         .then(response => {
             // console.log(response,"console create")
             dispatch(createComment(response.data));
-            
         })
         .catch(error => {
           console.log("get error", error)
@@ -26,29 +25,29 @@ import { instance } from "../../shared/axios";
     };
   };
 
-
 export const loadCommentAc = () => {
-    return async function (dispatch) {
-      console.log("로드코멘트");
-      try{
-        const {data} = await instance.get("http://localhost:5005/comment")
-        dispatch(loadComment(data));
-      }catch(error){
-        console.log(error)
-      }
+    return function (dispatch) {
+        instance.get('/comment')
+        .then(response => {
+            console.log(response.data,"console load")
+            dispatch(loadComment(response.data));
+        })
+        .catch(error => {
+          console.log("get error", error)
+    });
   };
 }
 
-export const updateCommentAc = (boardId, commentId,comment) => {
+export const updateCommentAc = (boardId, commentId,data) => {
     return function (dispatch) {
-        instance.put(`/comment/${commentId}`,comment)
+        instance.put(`/comment/${commentId}`,data)
         .then((response)=>{
       }).catch((error) => {
         console.log(error)
       })
       console.log(commentId)
     }
-  }
+  };
 
 
 export const deleteComment = (commentId) => {
@@ -60,7 +59,7 @@ export const deleteComment = (commentId) => {
         .catch((err) => {
           console.log(err);
         });
-    console.log(commentId)
+    console.log(commentId,"댓삭")
     };
   };
 

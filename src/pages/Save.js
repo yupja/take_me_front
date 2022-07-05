@@ -11,6 +11,7 @@ import styled from "styled-components";
 import "../public/css/saveMain.css"
 import { FaRegEdit } from 'react-icons/fa'
 import { IoArrowRedoOutline } from 'react-icons/io5'
+import DountChart from "../components/Goal";
 
 
 
@@ -99,5 +100,17 @@ function Save() {
   );
 }
 
-export default Save;
 
+const Circle = styled.div`
+width: 180px;
+height: 180px;
+border-radius: 50%;
+background:  #26DFA6;
+color : white;
+
+display: flex;
+align-items: center;
+justify-content: center;
+`;
+
+export default Save;

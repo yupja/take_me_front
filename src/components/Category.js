@@ -9,8 +9,8 @@ const Category = (props ) => {
     };
 
     return (
-            <SelectBox onChange={handleChange} defaultValue="">
-                <option value="" 
+            <SelectBox onChange={handleChange} defaultValue={0}>
+                <option value={0} 
                         disabled 
                         style={{display:"none"}}
                         selected>카테고리가 뭘까요?</option>
