@@ -1,10 +1,5 @@
 import styled from "styled-components";
-
-
-
-
 import { useLocation } from "react-router";
-
 
 import HeaderMenue from "../components/HeaderMenu";
 
