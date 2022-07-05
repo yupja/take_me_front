@@ -9,115 +9,116 @@ import { useNavigate, useParams } from "react-router-dom"
 
 const CommunityTab = () => {
     
-    const dispatch = useDispatch();
-    const Navigate = useNavigate();
+  const dispatch = useDispatch();
+  const Navigate = useNavigate();
 
-    const params = useParams();
-    console.log(params,"파람")
-    const postIdex = params.boardid;
+  const params = useParams();
+  console.log(params,"파람")
+  const postIdex = params.boardid;
 
-    console.log(postIdex,"postidex")
+  console.log(postIdex,"postidex")
 
-    const [showModall, setShowModall] = useState(false);
+  const [showModall, setShowModall] = useState(false);
 
-    const openModall = () => {
-        setShowModall(true)
-    }
+  const openModall = () => {
+    setShowModall(true)
+  }
 
-    const closeModall = () => {
-        setShowModall(false);
-    }
+  const closeModall = () => {
+    setShowModall(false);
+  }
 
-    const [showModalll, setShowModalll] = useState(false);
+  const [showModalll, setShowModalll] = useState(false);
 
-    const openModalll = () => {
-        setShowModalll(true)
-    }
+  const openModalll = () => {
+    setShowModalll(true)
+  }
 
-    const closeModalll = () => {
-        setShowModalll(false);
-    }
+  const closeModalll = () => {
+    setShowModalll(false);
+  }
 
-
-    const Postdata = useSelector((state) => state.post.postList);
-
-    console.log(Postdata,"postdata")
+  const Postdata = useSelector((state) => state.post.postList);
 
 
 
-    React.useEffect(() => {
-        dispatch(loadpostsAc())
-    },[])
+  React.useEffect(() => {
+    dispatch(loadpostsAc())
+  },[])
 
-    const [isEdit, setIsEdit] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
     
 
-    const openEdit = () => {
+  const openEdit = () => {
         setIsEdit(true)
-    }
+  }
     
-    const editPost = (index) => {
-        window.location.replace(`/community/${index}`);
-    }
+  const editPost = (index) => {
+    window.location.replace(`/community/${index}`);
+  }
 
-    const [iLike, setILike ] = useState(false);
+  const [iLike, setILike ] = useState(false);
 
-    const clickLike = () => {
-        setILike(true)
-    }
+  const clickLike = () => {
+    setILike(true)
+  }
     
 
 
-return(
+  return(
     <Box>
-        <Header>헤더 내용</Header>
+      <Header>헤더 내용</Header>
         {Postdata.map((postList, id) => {
-            return(
+          return(
             <div key={postList.id}>
-                <>
-        <ContentBox>
-            <Left>
-            {/* <Day>{postList.createAt}</Day> */}
-        <ItemImage></ItemImage>
-        <Profile /*src={postList.profileImg}*/></Profile>
-        </Left>
-        <Right>
-            <Top>
-            <GoalName>{postList.goalItemName}</GoalName>
-            <EditBtn>
-            <ModiBtn onClick={() => {dispatch(editPost(postList.boardId))}}>🛠</ModiBtn>
-            <DelBtn onClick={() => {dispatch(deletePostAc(postList.boardId))}}>🗑</DelBtn>
-            </EditBtn>
-            </Top>
-        <Middle>
-        <Nick>{postList.nickname}&nbsp;&nbsp;{postList.contents}</Nick>
-        </Middle>
-        <Foot>
-        <div style={{fontSize:"0.5rem"}}>
-        {iLike ? <>💚</> : <>🤍</> }
-        {postList.likeCount == null ? <>{postList.likeCount}</> : <>0</>}
-        </div>
-            <div style={{marginLeft:"1rem"}}>💬</div>
-                <div onClick={() => {Navigate(`/detail/${postList.boardId}`)}} style={{marginLeft:"0rem"}}>댓글 00 개 모두 보기</div>
-            <div onClick={openModall} style={{marginLeft:"auto"}}>📃</div>
-            {showModall ?
-                                    <ListModal showModall={showModall} closeModall={closeModall} />
-                                    : null}
-        </Foot>
-        </Right>
-        </ContentBox>
-        </>
-        </div>
-         )}
-         )}
-         <BtnBox>
-        <FootBtn onClick={openModalll}>내 태산 % 공유</FootBtn>
-        {showModalll ?
-                                    <PostModal showModalll={showModalll} closeModalll={closeModalll} />
-                                    : null}
-        </BtnBox>
+            <>
+              <ContentBox>
+                
+                <Left>
+                  {/* <Day>{postList.createAt}</Day> */}
+                  <ItemImage></ItemImage>
+                  <Profile /*src={postList.profileImg}*/></Profile>
+                </Left>
+                
+                <Right>
+                  <Top>
+                    <GoalName>{postList.goalItemName}</GoalName>
+                      <EditBtn>
+                        <ModiBtn onClick={() => {dispatch(editPost(postList.boardId))}}>🛠</ModiBtn>
+                        <DelBtn onClick={() => {dispatch(deletePostAc(postList.boardId))}}>🗑</DelBtn>
+                      </EditBtn>
+                  </Top>
+                  
+                  <Middle>
+                    <Nick>{postList.nickname}&nbsp;&nbsp;{postList.contents}</Nick>
+                  </Middle>
+            
+                  <Foot>
+                    <div style={{fontSize:"0.5rem"}}>
+                      {iLike ? <>💚</> : <>🤍</> }
+                      {postList.likeCount == null ? <>{postList.likeCount}</> : <>0</>}
+                    </div>
+                    <div style={{marginLeft:"1rem"}}>💬</div>
+                    <div onClick={() => {Navigate(`/detail/${postList.boardId}`)}} style={{marginLeft:"0rem"}}>댓글 00 개 모두 보기</div>
+                    <div onClick={openModall} style={{marginLeft:"auto"}}>📃</div>
+                
+                    {showModall ?
+                      <ListModal showModall={showModall} closeModall={closeModall} />
+                        : null}
+                    </Foot>
+                  </Right>
+              </ContentBox>
+            </>
+            </div>
+          )})}
+          <BtnBox>
+            <FootBtn onClick={openModalll}>내 태산 % 공유</FootBtn>
+            {showModalll ?
+              <PostModal showModalll={showModalll} closeModalll={closeModalll} />
+                : null}
+           </BtnBox>
     </Box>
-)
+  )
 };
 
 const CreatAt = styled.div`
