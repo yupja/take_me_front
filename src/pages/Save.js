@@ -11,6 +11,7 @@ import styled from "styled-components";
 import "../public/css/saveMain.css"
 import { FaRegEdit } from 'react-icons/fa'
 import { IoArrowRedoOutline } from 'react-icons/io5'
+import DountChart from "../components/Goal";
 
 
 
@@ -43,15 +44,17 @@ function Save(){
                 <HeaderMenue state={state}/>
                 <div className="goalMain">
                     {/* 목표가 있을경우 없을 경우 비교해서 조건문 걸기  */}
-                    { myGoalList.length===1 ?
+                    { myGoalList.length===0 ?
                         <>  
-                            <div className="circle" onClick={()=>{
+                            {/* <Circle onClick={()=>{
                                 openModal();
                                 setModalName("내 목표 만들기!")
                                 setModalState(<GoalADD/>)
                             }}>
                             <p className="circleInP">+목표만들기</p>
-                            </div>
+                            </Circle> */}
+
+                            <DountChart color="#9bd728" percent={0.75} size="200px" />
                             <p className="goalTitle">아껴서 뭐사?</p>
                         </>
                     :
@@ -98,6 +101,19 @@ function Save(){
         </div>
     );
 }
+
+
+const Circle = styled.div`
+width: 180px;
+height: 180px;
+border-radius: 50%;
+background:  #26DFA6;
+color : white;
+
+display: flex;
+align-items: center;
+justify-content: center;
+`;
 
 export default Save;
 
