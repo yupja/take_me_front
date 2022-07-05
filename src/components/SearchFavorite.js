@@ -5,7 +5,6 @@ import { myFavoriteListRQ } from "../redux/modules/favorite"
 
 import styled from 'styled-components'
 import { BiX } from 'react-icons/bi'
-import "../public/css/searchFavorite.css"
 
 import DayModal from "../components/DayModal"
 import FavoriteInput from "./FavoriteInput"
@@ -88,10 +87,10 @@ function SearchFavorite() {
 
   return (
     <>
-      <div className='wholeBox'>
+      <WholeBox>
 
-        <div className='inputBox' isHaveInputValue={isHaveInputValue}>
-          <input className='innerInput'
+        <InputBox isHaveInputValue={isHaveInputValue}>
+          <input
             type='text'
             value={inputValue}
             onChange={changeInputValue}
@@ -99,22 +98,22 @@ function SearchFavorite() {
           />
 
 
-          <div className='deleteButton' onClick={() => setInputValue('')}>&times;</div>
-        </div>
+          <DeleteButton onClick={() => setInputValue('')}>&times;</DeleteButton>
+        </InputBox>
 
         {isHaveInputValue && (
-          <ul className='dropDownBox'>
+          <DropDownBox>
             {dropDownList.length === 0 && (
               <DropDownItem>
-                <div className='addFavoriteInput'>
+                <AddFavoriteInput>
                   앗! 찾으시는게 아직 등록이 안되어있네요!<br />
                   새로 등록하시겠어요?
-                </div>
-                <button className='addButton' onClick={() => {
+                </AddFavoriteInput>
+                <AddButton onClick={() => {
                   openModal();
                   setModalState(<FavoriteInput />)
                   setModalName("등록하기")
-                }}>+등록하기</button>
+                }}>+등록하기</AddButton>
               </DropDownItem>
             )}
 
@@ -132,7 +131,7 @@ function SearchFavorite() {
                 </DropDownItem>
               )
             })}
-          </ul>
+          </DropDownBox>
         )}
 
 
@@ -140,24 +139,110 @@ function SearchFavorite() {
           {modalState}
         </DayModal>
 
-      </div>
+      </WholeBox>
 
-      <div className='itemWrap'>
+      <ItemWrap>
       ⭐
         {mylist.map((item, itemIndex) => {
             return (
-              <div className='favoriteItem' key={item.itemId} onClick={()=>{
+              <FavoriteItem key={item.itemId} onClick={()=>{
                 dispatch(addSaveListRQ(item))
               }}>
                 {item.itemName}
                 <BiX />
-              </div>
+              </FavoriteItem>
             )
           })}
-        </div>
+        </ItemWrap>
       </>
     )
   }
+
+
+const WholeBox = styled.div`
+  padding: 10px;
+`;
+
+
+const InputBox = styled.div`
+display: flex;
+margin-left:5px;
+width:100%;
+flex-direction: row;
+padding: 10px;
+border: 1px solid rgba(0, 0, 0, 0.3);
+border-radius: 18px;
+z-index: 3;   
+
+  input{
+    flex: 1 0 0;
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    font-size: 12px;
+  }
+`;
+
+
+const DeleteButton = styled.div`
+ cursor: pointer;
+`;
+
+
+const DropDownBox = styled.ul`
+display: block;
+margin-left:12px;
+width:80%;
+padding: 8px 0;
+background-color: white;
+border: 1px solid rgba(0, 0, 0, 0.3);
+border-top: none;
+border-radius: 0 0 16px 16px;
+list-style-type: none;
+position: absolute;
+`;
+
+const ItemWrap = styled.div`
+display: flex;
+align-items: center;
+width:350px;
+overflow-x:scroll;
+
+white-space: nowrap;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;
+ 
+
+const FavoriteItem = styled.div`
+margin-top: 5px;
+display :inline-block;
+background: #EFEFEF;
+border-radius: 20px;
+font-size: 15px;
+padding: 5px;
+margin-left: 10px;
+`;
+
+
+const AddFavoriteInput = styled.input`
+text-align: center;
+padding: 10px;
+`;
+
+const AddButton = styled.button`
+background: #26DFA6;
+color: white;
+border: none;
+border-radius: 20px;
+padding: 10px;
+width: 80%;
+`;
+
 
 
 const DropDownItem = styled.li`
@@ -169,5 +254,7 @@ const DropDownItem = styled.li`
     background-color: lightgray;
   }
 `
+
+
 
 export default SearchFavorite;
