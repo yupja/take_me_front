@@ -15,12 +15,12 @@ export const addGoalRQ = (data) =>{ // 기존에 없던 신규 목표태산 추�
 }
 
 
+
 //---------------------- READ ----------------------------
 export const myReadGoalRQ = () => { // 나의 태산 1개 
     return async function (dispatch){
         try{
-            const {data} = await instance.get('/myGoal')
-            dispatch(readMyGoal(data))
+            const {data} = await instance.get('/goalItem')
         }catch(error){
 
         }
@@ -53,18 +53,14 @@ const goalSlice = createSlice({
     name : "goalItem",
     initialState:{  
         allGoalList: [],
-        myGoalList:[],
        },
 reducers:{
     readeAllGoal: (state, action) => {
         state.allGoalList = action.payload;
       },
-    readMyGoal: (state, action) =>{
-        state.myGoalList = action.payload;
-    }
 
 }
 });
 
-const { readeAllGoal, readMyGoal } = goalSlice.actions;
+const { readeAllGoal } = goalSlice.actions;
 export default goalSlice.reducer;

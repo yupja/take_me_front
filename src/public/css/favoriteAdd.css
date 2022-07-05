@@ -1,0 +1,61 @@
+.selectDesign {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 16px;
+}
+
+.itemName {
+    margin: 5%;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.itemName p{
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+}
+
+.itemName input{
+    border-radius: 20px;
+    font-size: 16px;
+    padding: 10px;
+}
+
+.priceSet {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+}
+
+.priceSet p{
+    flex: 0.5;
+}
+
+.inputDiv{
+    flex: 2;
+    border: 1px solid;
+    border-radius: 20px;
+    padding: 5px;
+}
+
+.priceSet input{
+    font-size: 16px;
+    padding: 5px;
+    border: none;
+}
+
+.footer {
+    padding: 16px;
+    background: #26DFA6;
+    text-align: right;
+    color: white;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+  }
+  
