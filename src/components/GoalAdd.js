@@ -7,41 +7,37 @@ import { addGoalRQ } from "../redux/modules/goal"
 import styled from "styled-components";
 
 const GoalADD = ()=>{
-    const dispatch = useDispatch()
+  const dispatch = useDispatch()
+  const [category , setCategory] = useState()
 
-    const [category , setCategory] = useState()
+  const itemName = useRef()
+  const price = useRef()
+  const goalItemCount = useRef()
 
-    const itemName = useRef()
-    const price = useRef()
-    const goalItemCount = useRef()
-
-
-    const sendData = () =>{
-        const data = {
-            itemName: itemName.current.value,
-            price: price.current.value,
-            goalItemCount: goalItemCount.current.value,
-            category: Number(category)
-        }
-
-        dispatch(addGoalRQ(data))
+  const sendData = () =>{
+    const data = {
+      itemName: itemName.current.value,
+      price: price.current.value,
+      goalItemCount: goalItemCount.current.value,
+      category: Number(category)
     }
+    dispatch(addGoalRQ(data))
+  }
 
-    return (
-        <>
-        <ModalBody> 
-            <div><Category  setCategory={setCategory}/></div>
-            <div> <p>ItemName</p> <input type='text' ref={itemName}/></div>
-            <div> <p>Price</p> <input type='text' ref={price}/></div> 
-            <div><p>수량</p> <input type="Number" ref={goalItemCount}/></div>
-        </ModalBody>
+ return (
+    <>
+    <ModalBody> 
+      <div><Category  setCategory={setCategory}/></div>
+      <div> <p>ItemName</p> <input type='text' ref={itemName}/></div>
+      <div> <p>Price</p> <input type='text' ref={price}/></div> 
+      <div><p>수량</p> <input type="Number" ref={goalItemCount}/></div>
+    </ModalBody>
 
-        <Footer onClick={sendData}>
-        <label>티끌 등록하기</label>
-
-        </Footer>
-        </>
-    )
+    <Footer onClick={sendData}>
+      <label>티끌 등록하기</label>
+    </Footer>
+    </>
+  )
 
 }
 
