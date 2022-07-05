@@ -3,9 +3,9 @@ import { useDispatch } from "react-redux";
 
 import Category from "./Category"
 
-import "../public/css/favoriteAdd.css"
 import { BsPlus } from 'react-icons/bs'
 import { BiMinus } from 'react-icons/bi'
+import styled from "styled-components";
 
 
 const FavoriteInput = ()=>{
@@ -30,36 +30,102 @@ const FavoriteInput = ()=>{
     
     return(
         <>
-        <div className="selectDesign">
+        <SelectDesign>
             <Category setCategory={setCategory}/>
             
-            <div className="itemName">
+            <ItemName>
                 <p>이름</p>
                 <input 
                       type="text"
                       ref={itemName}
                       />
-            </div>
+            </ItemName>
 
-            <div className="priceSet">
+            <PriceSet>
                 <p>가격</p>
-                    <div className="inputDiv">
+                    <div>
                         <BsPlus/>
                             <input onChange={onlynumber}>
                             </input>
                         <BiMinus/>
                     </div>
-           </div>
-        </div>
+           </PriceSet>
+        </SelectDesign>
 
-        <div className="footer"
+        <Footer
              onClick={addFavorite}>
-            <label>티끌만들기 완료</label>
+            <label>티끌 등록하기</label>
 
-        </div>
+        </Footer>
         </>
     )
 }
+
+
+
+const SelectDesign = styled.div`
+display: flex;
+flex-direction: column;
+justify-content: center;
+padding: 16px;
+`;
+
+const ItemName = styled.div`
+margin: 5%;
+display: flex;
+justify-content: center;
+flex-direction: row;
+    p{
+        display: flex;
+        align-items: center;
+        margin-right: 20px;
+    }
+
+    input{
+    border-radius: 20px;
+    font-size: 16px;
+    padding: 10px;
+    }
+`;
+
+const PriceSet = styled.div`
+width: 100%;
+display: flex;
+align-items: center;
+justify-content: center;
+padding: 10px;
+
+    p{
+        flex: 0.5;
+    }
+    div{
+    flex: 2;
+    border: 1px solid;
+    border-radius: 20px;
+    padding: 5px;
+    }
+    input{
+    font-size: 16px;
+    padding: 5px;
+    border: none;
+    }
+`;
+
+
+
+const Footer = styled.div`
+padding: 16px;
+background: #26DFA6;
+text-align: right;
+color: white;
+font-weight: bold;
+display: flex;
+justify-content: center;
+`;
+
+
+
+
 
 
 export default FavoriteInput

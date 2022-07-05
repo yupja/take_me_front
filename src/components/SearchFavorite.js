@@ -6,11 +6,9 @@ import { myFavoriteListRQ } from "../redux/modules/favorite"
 import styled from 'styled-components'
 import { BiX } from 'react-icons/bi'
 
-
-
-
 import DayModal from "../components/DayModal"
 import FavoriteInput from "./FavoriteInput"
+
 
 
 function SearchFavorite() {
@@ -92,7 +90,7 @@ function SearchFavorite() {
       <WholeBox>
 
         <InputBox isHaveInputValue={isHaveInputValue}>
-          <Input
+          <input
             type='text'
             value={inputValue}
             onChange={changeInputValue}
@@ -107,15 +105,15 @@ function SearchFavorite() {
           <DropDownBox>
             {dropDownList.length === 0 && (
               <DropDownItem>
-                <p>
+                <AddFavoriteInput>
                   앗! 찾으시는게 아직 등록이 안되어있네요!<br />
                   새로 등록하시겠어요?
-                </p>
-                <button onClick={() => {
+                </AddFavoriteInput>
+                <AddButton onClick={() => {
                   openModal();
                   setModalState(<FavoriteInput />)
                   setModalName("등록하기")
-                }}>+등록하기</button>
+                }}>+등록하기</AddButton>
               </DropDownItem>
             )}
 
@@ -144,77 +142,83 @@ function SearchFavorite() {
       </WholeBox>
 
       <ItemWrap>
+      ⭐
         {mylist.map((item, itemIndex) => {
-          return (
-            <FavoriteItem key={item.itemId} onClick={()=>{
-              dispatch(addSaveListRQ(item))
-            }}>
-              {item.itemName}
-              <BiX />
-            </FavoriteItem>
-          )
-        })}
-      </ItemWrap>
-    </>
-  )
-}
+            return (
+              <FavoriteItem key={item.itemId} onClick={()=>{
+                dispatch(addSaveListRQ(item))
+              }}>
+                {item.itemName}
+                <BiX />
+              </FavoriteItem>
+            )
+          })}
+        </ItemWrap>
+      </>
+    )
+  }
 
-
-
-
-const activeBorderRadius = '16px 16px 0 0'
-
-const inactiveBorderRadius = '16px 16px 16px 16px'
 
 const WholeBox = styled.div`
   padding: 10px;
-`
-const InputBox = styled.div`
-  display: flex;
-  width:355px;
-  flex-direction: row;
-  padding: 16px;
-  border: 1px solid rgba(0, 0, 0, 0.3);
-  border-radius: ${props =>
-    props.isHaveInputValue ? activeBorderRadius : inactiveBorderRadius};
-  z-index: 3;
-`
-const Input = styled.input`
-  flex: 1 0 0;
-  margin: 0;
-  padding: 0;
-  background-color: transparent;
-  border: none;
-  outline: none;
-  font-size: 12px;
-`
-const DeleteButton = styled.div`
-  cursor: pointer;
-`
-const DropDownBox = styled.ul`
-  display: block;
-  margin: 0 auto;
-  width:355px;
-  padding: 8px 0;
-  background-color: white;
-  border: 1px solid rgba(0, 0, 0, 0.3);
-  border-top: none;
-  border-radius: 0 0 16px 16px;
-  list-style-type: none;
-  z-index: 3;
-`
-const DropDownItem = styled.li`
-  display : flex;
-  flex-direction: column;
-  
-  padding: 0 12px;
-  
+`;
 
-  &.selected {
-    background-color: lightgray;
+
+const InputBox = styled.div`
+display: flex;
+margin-left:5px;
+width:100%;
+flex-direction: row;
+padding: 10px;
+border: 1px solid rgba(0, 0, 0, 0.3);
+border-radius: 18px;
+z-index: 3;   
+
+  input{
+    flex: 1 0 0;
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    font-size: 12px;
   }
-`
-const FavoriteItem = styled.span`
+`;
+
+
+const DeleteButton = styled.div`
+ cursor: pointer;
+`;
+
+
+const DropDownBox = styled.ul`
+display: block;
+margin-left:12px;
+width:80%;
+padding: 8px 0;
+background-color: white;
+border: 1px solid rgba(0, 0, 0, 0.3);
+border-top: none;
+border-radius: 0 0 16px 16px;
+list-style-type: none;
+position: absolute;
+`;
+
+const ItemWrap = styled.div`
+display: flex;
+align-items: center;
+width:350px;
+overflow-x:scroll;
+
+white-space: nowrap;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;
+ 
+
+const FavoriteItem = styled.div`
 margin-top: 5px;
 display :inline-block;
 background: #EFEFEF;
@@ -224,15 +228,32 @@ padding: 5px;
 margin-left: 10px;
 `;
 
-const ItemWrap=styled.div`
-display: flex;
-width:350px;
-overflow-x:scroll;
-&::webkit-scrollbar{
-  display: none; 
-}
-white-space: nowrap;
+
+const AddFavoriteInput = styled.div`
+text-align: center;
+padding: 10px;
 `;
+
+const AddButton = styled.button`
+background: #26DFA6;
+color: white;
+border: none;
+border-radius: 20px;
+padding: 10px;
+width: 80%;
+`;
+
+
+
+const DropDownItem = styled.li`
+  display : flex;
+  flex-direction: column;
+   padding: 0 12px;
+  align-items: center;
+  &.selected {
+    background-color: lightgray;
+  }
+`
 
 
 
