@@ -15,7 +15,7 @@ const slider = keyframes`
 `;
 
 
-const HeaderMenu=()=>{
+const HeaderMenu=(props)=>{
 
     // 모달 상태관리
     const [modalOpen, setModalOpen] = useState(false);
@@ -26,45 +26,48 @@ const HeaderMenu=()=>{
 
     return (
         <>
-        {modalOpen?
-            <Backgroud>
-                <Window>
-                    <Popup>
-                        <ButtonArea>
-                         <button onClick={closeModal}>X</button>
-                         </ButtonArea>
-                         <MenuBar>
-                            <div onClick={()=>{
-                                navigate("/");
-                                }}>데일리 티끌</div>
-                            <div onClick={()=>{
-                                navigate("/community");
-                                }}>티끌 자랑</div>
-                            <div onClick={()=>{
-                                navigate("/ranking");
-                                }}>랭킹</div>
-                            <div onClick={()=>{
-                                navigate("/mypage");
-                                }}>My</div>
-                         </MenuBar>
-                         <Footer>
-                            <p>회원가입</p>
-                            <p>로그인</p>
-                         </Footer>
-                    </Popup>
-                </Window>
-            </Backgroud>
-        :""}
-
         <div className="saveHeader">
             <div className="logo">로고</div>
-            <p></p>
+                <p>{props.state}</p>
             <div className="hamArea">
-                <GiHamburgerMenu onClick={()=>{
-                openModal();
-                }}/>
+                <GiHamburgerMenu onClick={() => {
+                    openModal();
+                }} />
+
+                {modalOpen ?
+                    <Backgroud>
+                        <Window>
+                            <Popup>
+                                <ButtonArea>
+                                    <button onClick={closeModal}>X</button>
+                                </ButtonArea>
+                                <MenuBar>
+                                    <div onClick={() => {
+                                        navigate("/", { state : "데일리 티끌" });
+                                    }}>데일리 티끌</div>
+                                    <div onClick={() => {
+                                        navigate("/community", { state : "티끌 자랑" });
+                                    }}>티끌 자랑</div>
+                                    <div onClick={() => {
+                                        navigate("/ranking", { state : "랭킹" });
+                                    }}>랭킹</div>
+                                    <div onClick={() => {
+                                        navigate("/mypage", { state : "마이페이지" });
+                                    }}>My</div>
+                                </MenuBar>
+                                <Footer>
+                                    <p>회원가입</p>
+                                    <p>로그인</p>
+                                </Footer>
+                            </Popup>
+                        </Window>
+                    </Backgroud>
+                    : ""}
+
             </div>
-        </div>
+
+
+            </div>
         </>
     )
 }

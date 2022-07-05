@@ -4,7 +4,6 @@ import {myReadGoalRQ} from "../redux/modules/goal"
 
 import DayModal from "../components/DayModal";
 import GoalADD from "../components/GoalAdd";
-import FavoriteInput from "../components/FavoriteInput";
 import SearchFavorite from "../components/SearchFavorite";
 import HeaderMenue from "../components/HeaderMenu";
 
@@ -36,12 +35,12 @@ function Save(){
     const myGoalList=[];
     // console.log(myGoalList.length)
 
-
+    const state ="데일리 티끌"
 
     return (
         <div className="wrap">
             <div className="topWrap">
-                <HeaderMenue/>
+                <HeaderMenue state={state}/>
                 <div className="goalMain">
                     {/* 목표가 있을경우 없을 경우 비교해서 조건문 걸기  */}
                     { myGoalList.length===1 ?
