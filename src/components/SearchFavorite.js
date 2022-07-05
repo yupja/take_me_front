@@ -229,7 +229,7 @@ margin-left: 10px;
 `;
 
 
-const AddFavoriteInput = styled.input`
+const AddFavoriteInput = styled.div`
 text-align: center;
 padding: 10px;
 `;

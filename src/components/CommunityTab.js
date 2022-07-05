@@ -67,53 +67,53 @@ import styled from "styled-components";
     
     const dispatch = useDispatch();
 
-    return (
-        <>
+     return (
+         <>
              <Box>
+                   {Postdata.map((postList, index) => {
+                     return (
+                         <div key={index}>
+                             <ContentBox>
+                                 <HeadBox>
+                                     <Profile /*src={postList.profileImg}*/></Profile>
+                                     <Nick>{postList.nickname}</Nick>
+                                     {/* <Day>{postList.createAt}</Day> */}
+                                 </HeadBox>
+                                 <ItemImage></ItemImage>
+                                 <button onClick={() => { dispatch(editPost(postList.boardId)) }}>수정</button>
 
-         {Postdata.map((postList, index) => {
-             return(
-             <>
-         <ContentBox key={index}>
-         <HeadBox>
-             <Profile /*src={postList.profileImg}*/></Profile>
-             <Nick>{postList.nickname}</Nick>
-             {/* <Day>{postList.createAt}</Day> */}
-         </HeadBox>
-         <ItemImage></ItemImage>
-         <button onClick={() => {dispatch(editPost(postList.boardId))}}>수정</button>
-      
-         <button onClick={() => {dispatch(deletePost(postList.boardId))}}>삭제</button> 
-      
-         <Content>{postList.contents}</Content>
-         <Foot>
-             <div>❤{postList.likeCount}</div>
-             <div style={{marginLeft:"1rem"}}>💬</div>
-                 <button onClick={()=>{
-                     navigate(`/Comment/${index}`);
-                 }}>댓글 00 개 모두 보기</button>
+                                 <button onClick={() => { dispatch(deletePost(postList.boardId)) }}>삭제</button>
 
-             {/* 아낌이력조회모달 */}
-             <div onClick={openModall} style={{marginLeft:"auto"}}>📃</div>
-             {showModall ?
-                                     <ListModal showModall={showModall} closeModall={closeModall} />
-                                     : null}
+                                 <Content>{postList.contents}</Content>
+                                 <Foot>
+                                     <div>❤{postList.likeCount}</div>
+                                     <div style={{ marginLeft: "1rem" }}>💬</div>
+                                     <button onClick={() => {
+                                         navigate(`/Comment/${index}`);
+                                     }}>댓글 00 개 모두 보기</button>
 
-            
-         </Foot>
-         </ContentBox>
-         <BtnBox>
-         <FootBtn onClick={openModalll}>내 아낌 % 공유</FootBtn>
-         {showModalll ?
+                                     {/* 아낌이력조회모달 */}
+                                     <div onClick={openModall} style={{ marginLeft: "auto" }}>📃</div>
+                                     {showModall ?
+                                         <ListModal showModall={showModall} closeModall={closeModall} />
+                                         : null}
+
+
+                                 </Foot>
+                             </ContentBox>
+                             <BtnBox>
+                                 <FootBtn onClick={openModalll}>내 아낌 % 공유</FootBtn>
+                                 {showModalll ?
                                      <PostModal showModalll={showModalll} closeModalll={closeModalll} />
                                      : null}
-         <FootBtn>나 이거 사?</FootBtn>
-         </BtnBox>
+                                 <FootBtn>나 이거 사?</FootBtn>
+                             </BtnBox>
+                        </div>
+                     )
+                 })}
+
+             </Box>
          </>
-)})}
-        
-     </Box>
-        </>
     )
  }
 

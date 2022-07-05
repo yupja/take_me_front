@@ -1,5 +1,6 @@
 import React,{ useState,useEffect,useRef}from "react";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router";
 
 import CommunityTab from "../components/CommunityTab";
 import HeaderMenue from "../components/HeaderMenu";
@@ -8,6 +9,8 @@ import styled from "styled-components";
 
 
 const Community = () => {
+    const { state } = useLocation();
+    console.log(state);
 
     const navigate = useNavigate();
     const [page, setPage] = useState(<CommunityTab/>);
@@ -16,7 +19,7 @@ const Community = () => {
     return(
         <div className="wrap">
             <div className="topWrap" style={{background:"white"}}>
-                <HeaderMenue/>            
+                <HeaderMenue state={state}/>            
             </div>
 
             <MenuBar>
