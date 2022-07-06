@@ -61,10 +61,10 @@ const HeaderMenu=(props)=>{
                       :
                       <>
                        <p onClick={()=>{
-                          navigate("/login");
+                          navigate("/signup");
                         }}>회원가입</p>
                         <p onClick={()=>{
-                          navigate("/signup");
+                          navigate("/login");
                         }}>로그인</p>
                       </>
                     }
