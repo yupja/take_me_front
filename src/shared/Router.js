@@ -19,7 +19,7 @@ function Router() {
         {/* <Route path="/main" element={<Main />} />  */}
         <Route path="/" element={<Save />} />
         {/* <Route path="/statistics" element={<Statistics />} /> */}
-        <Route path="/detail/:boardId" element={<Detail />} />
+        {/* <Route path="/detail/:boardId" element={<Detail />} /> */}
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/community" element={<Community />} />
         <Route path="/community/:id" element={<Community />} />
