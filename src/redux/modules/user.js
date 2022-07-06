@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 export const LoginDB = (loginInfo) => {
   return async function (dispatch) {
     console.log(loginInfo);
-    await axios.post("https://13.209.13.168/api/user/login", loginInfo, {
+    await axios.post("http://13.209.13.168/api/user/login", loginInfo, {
       "Content-Type": "application/json",
       withCredentials: true,
     })
@@ -38,7 +38,7 @@ export const LoginDB = (loginInfo) => {
 // 로그인한 사용자 정보 조회 (모든 페이지? 필요한 페이지만 요청?)
 export const getUserInfoDB = () => {
   return async function (dispatch) {
-    await axios.get("https://13.209.13.168/api/user/myInfo", {
+    await axios.get("http://13.209.13.168/api/user/myInfo", {
       headers: { Authorization: `Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJldW5qaW4xMjMiLCJhdXRoIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjU3MDI5NDQ0fQ.P3OhSc80UVY5QfaPVebjf7EDyBzpE8tiMzb5HwMB-366KkluXT-U7cR-feMqfjHOzjbWTHlAiGHHAXp06_qOGg` }
     })
       .then((response) => {
@@ -63,7 +63,7 @@ export const getUserInfoDB = () => {
 export const addUserDB = (userInfo) => {
   return async function (dispatch) {
     console.log(userInfo);
-    await axios.post("https://13.209.13.168/api/user/register", userInfo, {
+    await axios.post("http://13.209.13.168/api/user/register", userInfo, {
       "Content-Type": "application/json",
       withCredentials: true,
     })
@@ -80,7 +80,7 @@ export const addUserDB = (userInfo) => {
 // 아이디 중복 체크
 export const idCheckDB = (id, setUserIdAlert) => {
   return async function (dispatch) {
-    await axios.post("https://13.209.13.168/api/user/register/checkUsername", { username: id }, {
+    await axios.post("http://13.209.13.168/api/user/register/checkUsername", { username: id }, {
       "Content-Type": "application/json",
       withCredentials: true,
     })
@@ -101,7 +101,7 @@ export const idCheckDB = (id, setUserIdAlert) => {
 export const emailCheckDB = (email, setUserEmailAlert) => {
   return async function (dispatch) {
     console.log(email);
-    await axios.post("https://13.209.13.168/api/user/register/checkEmail", { email: email }, {
+    await axios.post("http://13.209.13.168/api/user/register/checkEmail", { email: email }, {
       "Content-Type": "application/json",
       withCredentials: true,
     })
@@ -122,7 +122,7 @@ export const emailCheckDB = (email, setUserEmailAlert) => {
 export const nickCheckDB = (nick, setUserNickAlert) => {
   return async function (dispatch) {
     console.log(nick);
-    await axios.post("https://13.209.13.168/api/user/register/checkNickname", { nickname: nick }, {
+    await axios.post("http://13.209.13.168/api/user/register/checkNickname", { nickname: nick }, {
       "Content-Type": "application/json",
       withCredentials: true,
     })
@@ -143,7 +143,7 @@ export const nickCheckDB = (nick, setUserNickAlert) => {
 export const findIdDB = (email) => {
   return async function (dispatch) {
     console.log(email);
-    await axios.post("https://13.209.13.168/api/user/findId", { email: email }, {
+    await axios.post("http://13.209.13.168/api/user/findId", { email: email }, {
       "Content-Type": "application/json",
       withCredentials: true,
     })
@@ -179,7 +179,7 @@ export const findPwDB = (info) => {
 // 비밀번호 변경 post요청
 export const changePw = (data) => {
   return async function (dispatch) {
-    await axios.post("https://13.209.13.168/api/user/changePassword", (data), {
+    await axios.post("http://13.209.13.168/api/user/changePassword", (data), {
       "Content-Type": "application/json",
       withCredentials: true,
       // Authorization : `Bearer ${accessToken}`, //토큰담아서 보내기
