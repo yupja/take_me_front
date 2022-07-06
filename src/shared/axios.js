@@ -2,7 +2,7 @@ import axios from "axios";
 import { getCookie, setCookie, removeCookie } from "../redux/modules/cookie";
 
 export const instance = axios.create({
-  baseURL: "http://13.209.13.168"
+  baseURL: "https://13.209.13.168"
 });
 
 instance.interceptors.request.use(

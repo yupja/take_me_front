@@ -22,8 +22,12 @@ const FavoriteInput = ()=>{
   }
 
   const addFavorite=()=>{
-    console.log("잘 오고있니?");
     console.log(itemName.current.value, category, price)
+    const sendData = {
+      categoryId : category,
+
+    }
+
 
   }
     
