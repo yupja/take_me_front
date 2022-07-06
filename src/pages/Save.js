@@ -162,7 +162,10 @@ justify-content: center;
 
 const FavoriteArea = styled.div`
 padding: 0.2rem;
+width: 95%;
 height: 10vh;
+display: flex;
+flex-direction: column;
 `;
 
 

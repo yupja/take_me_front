@@ -170,7 +170,6 @@ const WholeBox = styled.div`
   padding: 10px;
 `;
 
-
 const InputBox = styled.div`
 display: flex;
 margin-left:5px;
@@ -201,7 +200,7 @@ const DeleteButton = styled.div`
 const DropDownBox = styled.ul`
 display: block;
 margin-left:12px;
-width:80%;
+width:83%;
 padding: 8px 0;
 background-color: white;
 border: 1px solid rgba(0, 0, 0, 0.3);
