@@ -90,16 +90,17 @@ function SearchFavorite() {
       <WholeBox>
 
         <InputBox isHaveInputValue={isHaveInputValue}>
-          <input
-            type='text'
-            value={inputValue}
-            onChange={changeInputValue}
-            onKeyUp={handleDropDownKey}
-          />
+            <input
+              type='text'
+              value={inputValue}
+              onChange={changeInputValue}
+              onKeyUp={handleDropDownKey}
+              placeholder="오늘은 어떤걸 아끼셨나요?"
+            />
 
 
-          <DeleteButton onClick={() => setInputValue('')}>&times;</DeleteButton>
-        </InputBox>
+            <DeleteButton onClick={() => setInputValue('')}>&times;</DeleteButton>
+          </InputBox>
 
         {isHaveInputValue && (
           <DropDownBox>
@@ -142,17 +143,23 @@ function SearchFavorite() {
       </WholeBox>
 
       <ItemWrap>
-      ⭐
-        {mylist.map((item, itemIndex) => {
-            return (
-              <FavoriteItem key={item.itemId} onClick={()=>{
-                dispatch(addSaveListRQ(item))
-              }}>
-                {item.itemName}
-                <BiX />
-              </FavoriteItem>
-            )
-          })}
+        {mylist.length===0? 
+        <FavoriteItem></FavoriteItem>
+        :
+          <> ⭐
+            {mylist.map((item, itemIndex) => {
+                return (
+                  <FavoriteItem key={item.itemId} onClick={()=>{
+                    dispatch(addSaveListRQ(item))
+                  }}>
+                    {item.itemName}
+                    <BiX />
+                  </FavoriteItem>
+                )
+            })}
+           </>
+        }
+
         </ItemWrap>
       </>
     )

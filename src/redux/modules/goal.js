@@ -19,13 +19,14 @@ export const addGoalRQ = (data) => { // 기존에 없던 신규 목표태산 추
 export const myReadGoalRQ = () => { // 나의 태산 1개 
   return async function (dispatch) {
     try {
-      const { data } = await instance.get('/myGoal')
+      const data = await instance.get('/api/goalItem')
       dispatch(readMyGoal(data))
     } catch (error) {
 
     }
   }
 }
+
 
 export const allReadGoalRQ = () => { // 모든 사람의 태산 항목
   return async function (dispatch) {
@@ -39,12 +40,10 @@ export const allReadGoalRQ = () => { // 모든 사람의 태산 항목
 
 }
 
-
 //-------------------- UPDATE ---------------------------
 
 
 //-------------------- DELETE ---------------------------
-
 
 
 

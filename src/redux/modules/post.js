@@ -20,61 +20,61 @@ import axios from "axios";
 
 
 export const createPostAc = (post) => {
-    return function (dispatch) {
-        instance.post('/board', post)
-        .then((response) => {
-          console.log(response);
-          dispatch(uploadPost())
-          alert("등록 완료");
-        })
-        .catch((error) => {
-          console.log(error);
-          alert("error")
-        });
-    };
-  };  
+  return function (dispatch) {
+    instance.post('/board', post)
+      .then((response) => {
+        console.log(response);
+        dispatch(uploadPost())
+        alert("등록 완료");
+      })
+      .catch((error) => {
+        console.log(error);
+        alert("error")
+      });
+  };
+};
 
 export const loadpostsAc = () => {
-    return function (dispatch) {
-        instance.get('/board')
-        .then(response => {
+  return function (dispatch) {
+    instance.get('/board')
+      .then(response => {
         //   console.log(response.data, "redux_data");
-          dispatch(roadPosts(response.data));
-        })
-        .catch(error => {
-          console.log("get error", error)
-        })
-    };
+        dispatch(roadPosts(response.data));
+      })
+      .catch(error => {
+        console.log("get error", error)
+      })
   };
+};
 
 
-  export const UpdatePost = (boardId) => {
-    return async function (dispatch) {
-      await instance
-        .put(`/board/${boardId}}`,boardId)
-        .then((re) => {
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-        console.log(boardId,"수정아!")
-    };
+export const UpdatePost = (boardId) => {
+  return async function (dispatch) {
+    await instance
+      .put(`/board/${boardId}}`, boardId)
+      .then((re) => {
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    console.log(boardId, "수정아!")
   };
+};
 
 
 export const deletePostAc = (boardId) => {
-    return async function (dispatch) {
-      await instance
-        .delete(`/board/${boardId}`)
-        .then((response) => {
+  return async function (dispatch) {
+    await instance
+      .delete(`/board/${boardId}`)
+      .then((response) => {
         dispatch(deletePostAc(boardId));
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    console.log(boardId,"삭제외않되")
-    };
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    console.log(boardId, "삭제외않되")
   };
+};
 
 
 
@@ -94,8 +94,8 @@ const postSlice = createSlice({
       state.postList = action.payload;
     },
     deletePost: (state, action) => {
-        const new_post = state.postList.filter((v, i) => i !== action.payload);
-        state.postList = new_post;
+      const new_post = state.postList.filter((v, i) => i !== action.payload);
+      state.postList = new_post;
     },
     setLike: (state, action) => {
       state.post.likeNum = action.payload.likeNum;
