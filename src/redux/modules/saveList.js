@@ -5,7 +5,7 @@ import { instance } from "../../shared/axios";
 export const addSaveListRQ = (data) => { // 내 이력 추가 
   return function (dispatch) {
     try {
-      instance.post('/saveList', data);
+      instance.post('/api/mypage/favorite', data);
       dispatch(addMySavedList(data));
 
     } catch (error) {
