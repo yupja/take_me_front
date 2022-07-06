@@ -7,6 +7,7 @@ import { getUserInfoDB } from "./redux/modules/user";
 
 function App() {
   const state = useSelector((state) => state.user);
+  console.log(state)
   const dispatch = useDispatch();
   const [isLogin, setisLogin] = useState(false);
   const getToken = localStorage.getItem('accessToken');
