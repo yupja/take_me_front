@@ -56,19 +56,17 @@ const HeaderMenu=(props)=>{
                   </MenuBar>
                   
                   <Footer>
-                    {/* 이거 일부러 이렇게 설정했어요 ㅋㅋ CSS 잡으려고 
-                    나중에 수정할겁니다.  */}
                     {localStorage.getItem('accessToken')? 
+                      <p onClick={localStorage.removeItem('accessToken')}>로그아웃</p>
+                      :
                       <>
-                        <p onClick={()=>{
-                          navigate("/login");
+                       <p onClick={()=>{
+                          navigate("/signup");
                         }}>회원가입</p>
                         <p onClick={()=>{
-                          navigate("/signup");
+                          navigate("/login");
                         }}>로그인</p>
                       </>
-                      :
-                      <p>로그아웃</p>
                     }
 
                   </Footer>

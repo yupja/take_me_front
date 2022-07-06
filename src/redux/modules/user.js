@@ -187,7 +187,7 @@ export const findIdDB = (email) => {
 export const findPwDB = (info, setfindPwPop) => {
   return async function (dispatch) {
     console.log(info);
-    await axios.post("http://13.209.13.168/api/user/findPassword", info, {
+    await axios.post("https://13.209.13.168/api/user/findPassword", info, {
       "Content-Type": "application/json",
       withCredentials: true,
     })

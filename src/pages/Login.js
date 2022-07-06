@@ -5,6 +5,7 @@ import DayModal from "../components/DayModal";
 import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import { LoginDB } from "../redux/modules/user";
+import { useNavigate } from "react-router-dom";
 
 import HeaderMenue from "../components/HeaderMenu";
 
@@ -20,6 +21,10 @@ function Login() {
 
   const openModal = () => { setModalOpen(true); };
   const closeModal = () => { setModalOpen(false); };
+
+  console.log(userState);
+  console.log(localStorage.getItem("accessToken"));
+  const navigate = useNavigate();
 
 
   // 로그인 정보 가져오기
@@ -53,6 +58,7 @@ function Login() {
       return;
     }
     dispatch(LoginDB(loginInfo, setModalStr, setNavToggles));
+    navigate(-1);
   }
 
   return (

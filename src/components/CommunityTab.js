@@ -6,119 +6,134 @@ import PostModal from "../components/PostModal";
 import { useSelector } from "react-redux/es/exports";
 import { loadpostsAc,deletePostAc } from "../redux/modules/post";
 import { useNavigate, useParams } from "react-router-dom"
+import { loadMoreContentDB } from "../redux/modules/post";
 
 const CommunityTab = () => {
     
-  const dispatch = useDispatch();
-  const Navigate = useNavigate();
+    const dispatch = useDispatch();
+    const Navigate = useNavigate();
 
-  const params = useParams();
-  console.log(params,"파람")
-  const postIdex = params.boardid;
+    const params = useParams();
+    console.log(params,"파람")
+    const boardIdex = params.boardId;
 
-  console.log(postIdex,"postidex")
+    console.log(boardIdex,"boardIdex")
 
-  const [showModall, setShowModall] = useState(false);
+    const [showModall, setShowModall] = useState(false);
+    const openModall = () => {
+        setShowModall(true)
+    }
+    const closeModall = () => {
+        setShowModall(false);
+    }
+    const [showModalll, setShowModalll] = useState(false);
+    const openModalll = () => {
+        setShowModalll(true)
+    }
+    const closeModalll = () => {
+        setShowModalll(false);
+    }
 
-  const openModall = () => {
-    setShowModall(true)
-  }
+    const Postdata = useSelector((state) => state.post.postList);
+    console.log(Postdata,"postdata")
 
-  const closeModall = () => {
-    setShowModall(false);
-  }
+    React.useEffect(() => {
+        dispatch(loadpostsAc())
+    },[])
 
-  const [showModalll, setShowModalll] = useState(false);
-
-  const openModalll = () => {
-    setShowModalll(true)
-  }
-
-  const closeModalll = () => {
-    setShowModalll(false);
-  }
-
-  const Postdata = useSelector((state) => state.post.postList);
-
-
-
-  React.useEffect(() => {
-    dispatch(loadpostsAc())
-  },[])
-
-  const [isEdit, setIsEdit] = useState(false);
-    
-
-  const openEdit = () => {
+    const [isEdit, setIsEdit] = useState(false);
+    const openEdit = () => {
         setIsEdit(true)
-  }
+    }
+    const editPost = (index) => {
+        window.location.replace(`/community/${index}`);
+    }
+
+    const [iLike, setILike ] = useState(false);
+    const clickLike = () => {
+        setILike(true)
+    }
+
+      const [target, setTarget] = useState(null);
+    // 무한스크롤 관련 intersection observer
+    // page를 넘겨주면서 백엔드 쪽에서 몇번부터 시작해서 가져올지
+    const onIntersect = async ([entry], observer) => {
+        //entry.isIntersecting은 내가 지금 target을 보고있니?라는 뜻 그 요소가 화면에 들어오면 true 그전엔 false
+        if (entry.isIntersecting) {
+            observer.unobserve(entry.target); // 이제 그 target을 보지 않겠다는 뜻
+            await dispatch(loadMoreContentDB());
+        }
+    };
+
+    useEffect(() => {
+        let observer;
+        if (target) {
+            observer = new IntersectionObserver(onIntersect, {
+                threshold: 1,
+            });
+            observer.observe(target); // target을 보겠다!
+        }
+        return () => {
+            observer && observer.disconnect();
+        };
+    }, [target]);
     
-  const editPost = (index) => {
-    window.location.replace(`/community/${index}`);
-  }
-
-  const [iLike, setILike ] = useState(false);
-
-  const clickLike = () => {
-    setILike(true)
-  }
-    
 
 
-  return(
+return(
     <Box>
-      <Header>헤더 내용</Header>
-        {Postdata.map((postList, id) => {
-          return(
-            <div key={postList.id}>
-            <>
-              <ContentBox>
-                
-                <Left>
-                  {/* <Day>{postList.createAt}</Day> */}
-                  <ItemImage></ItemImage>
-                  <Profile /*src={postList.profileImg}*/></Profile>
-                </Left>
-                
-                <Right>
-                  <Top>
-                    <GoalName>{postList.goalItemName}</GoalName>
-                      <EditBtn>
-                        <ModiBtn onClick={() => {dispatch(editPost(postList.boardId))}}>🛠</ModiBtn>
-                        <DelBtn onClick={() => {dispatch(deletePostAc(postList.boardId))}}>🗑</DelBtn>
-                      </EditBtn>
-                  </Top>
-                  
-                  <Middle>
-                    <Nick>{postList.nickname}&nbsp;&nbsp;{postList.contents}</Nick>
-                  </Middle>
-            
-                  <Foot>
-                    <div style={{fontSize:"0.5rem"}}>
-                      {iLike ? <>💚</> : <>🤍</> }
-                      {postList.likeCount == null ? <>{postList.likeCount}</> : <>0</>}
-                    </div>
-                    <div style={{marginLeft:"1rem"}}>💬</div>
-                    <div onClick={() => {Navigate(`/detail/${postList.boardId}`)}} style={{marginLeft:"0rem"}}>댓글 00 개 모두 보기</div>
-                    <div onClick={openModall} style={{marginLeft:"auto"}}>📃</div>
-                
-                    {showModall ?
-                      <ListModal showModall={showModall} closeModall={closeModall} />
-                        : null}
-                    </Foot>
-                  </Right>
-              </ContentBox>
-            </>
-            </div>
-          )})}
-          <BtnBox>
-            <FootBtn onClick={openModalll}>내 태산 % 공유</FootBtn>
-            {showModalll ?
-              <PostModal showModalll={showModalll} closeModalll={closeModalll} />
-                : null}
-           </BtnBox>
+        {Postdata.map((postList, boardId) => {
+            return(
+            <div key={boardId}>
+            {/* <div key={postList.id} ref={boardId === Postdata.length - 1 ? setTarget : null}> * */}
+                <>
+        <ContentBox>
+            <Left>
+            {/* <Day>{postList.createAt}</Day> */}
+        <ItemImage></ItemImage>
+        <Profile /*src={postList.profileImg}*/></Profile>
+        </Left>
+        <Right>
+            <Top>
+            <GoalName onClick={() => {Navigate(`/detail/${postList.boardId}`)}}>
+                {postList.goalItemName}</GoalName>
+            <EditBtn>
+            <ModiBtn onClick={() => {dispatch(editPost(postList.boardId))}}>🛠</ModiBtn>
+            <DelBtn onClick={() => {dispatch(deletePostAc(postList.boardId))}}>🗑</DelBtn>
+            </EditBtn>
+            </Top>
+        <Middle>
+        <Nick onClick={() => {Navigate(`/detail/${postList.boardId}`)}}>
+            {postList.nickname}&nbsp;&nbsp;{postList.contents}</Nick>
+        </Middle>
+        <Foot>
+        <div style={{fontSize:"0.5rem"}}>
+        {iLike ? <>💚</> : <>🤍</> }
+        {postList.likeCount == null ? <>{postList.likeCount}</> : <>0</>}
+        </div>
+            <div style={{marginLeft:"1rem"}}>💬</div>
+                <div onClick={() => {Navigate(`/detail/${postList.boardId}`)}}
+                    style={{marginLeft:"0rem"}}>
+                        댓글 00 개 모두 보기</div>
+            <div onClick={openModall} style={{marginLeft:"auto"}}>📃</div>
+            {showModall ?
+            <ListModal showModall={showModall} closeModall={closeModall} />
+            : null}
+        </Foot>
+        </Right>
+        </ContentBox>
+        </>
+        </div>
+         )}
+         )}
+         <BtnBox>
+        <FootBtn onClick={openModalll}>내 태산 % 공유</FootBtn>
+        {showModalll ?
+                                    <PostModal showModalll={showModalll} closeModalll={closeModalll} />
+                                    : null}
+        </BtnBox>
     </Box>
-  )
+)
 };
 
 const CreatAt = styled.div`
@@ -144,7 +159,7 @@ flex-direction: column;
 const Header = styled.div`
 width: 100%;
 height: 10vh;
-border: 1px solid black;
+/* border: 1px solid black; */
 `;
 
 const ContentBox = styled.div`
@@ -171,11 +186,11 @@ background-color: gray;
 border-radius: 35px;
 border: none;
 position: absolute;
+top: 5%
 `;
 
 const Nick = styled.div`
-margin-left: 10px;
-border: 1px solid white;
+/* border: 1px solid red; */
 display: flex;
 text-overflow: ellipsis;  
 	overflow : hidden;
@@ -191,12 +206,13 @@ margin-left: auto;
 `
 
 const ItemImage = styled.div`
-width: 31vw;
-height: 31vw;
+width: 110px;
+height: 110px;
 border: 1px solid red;
 margin: 0 auto;
 border-radius: 50rem;
 position: absolute;
+top: 5%
 `;
 
 const Foot = styled.div`
@@ -223,7 +239,8 @@ margin: 0 auto;
 display: flex;
 justify-content: center;
 align-items: center;
-bottom: 0;
+bottom: 5%;
+position: fixed;
 /* left: 39% */
 
 `;
@@ -238,6 +255,8 @@ color: white;
 font-weight: 500;
 /* background-color: rgb(38, 223, 116, 0.2); */
 background-color: #26DFA6;
+/* box-shadow: rgb(0 0 0 / 9%) 0px 2px 12px 0px; */
+box-shadow: 5px 5px 5px rgb(110, 110, 110, 0.4);
 `;
 
 const Right = styled.div`
@@ -248,10 +267,11 @@ width: 65%;
 const Middle = styled.div`
 width: 100%;
 height: 10vh;
-/* border: 4px solid black; */
+/* border: 1px solid black; */
 font-size: 0.7rem;
 line-height: 0.9rem;
 letter-spacing: 0.04rem;
+padding: 0 1rem;
 
 `;
 
@@ -260,18 +280,20 @@ width: 100%;
 /* border: 1px solid blue; */
 display: flex;
 justify-content: end;
+padding: 0 1rem;
 `;
 
 const GoalName = styled.div`
-width: 75%;
+width: 85%;
 font-weight: bold;
 /* border: 1px solid violet; */
 
 `;
 const EditBtn = styled.div`
-width: 20%;
+width: 15%;
 display: flex;
 /* border: 1px solid orange; */
+justify-content: right;
 `;
 
 const ModiBtn = styled.button`

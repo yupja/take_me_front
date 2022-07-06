@@ -13,7 +13,7 @@ const Category = (props ) => {
       <option value={0} 
               disabled 
               style={{display:"none"}}
-              selected>카테고리가 뭘까요?</option>
+              >카테고리가 뭘까요?</option>
       <option value={1}>패션</option>
       <option value={2}>패션잡화</option>
       <option value={3}>화장품/미용</option>

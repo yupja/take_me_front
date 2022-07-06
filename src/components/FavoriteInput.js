@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect } from "react"
 import { useDispatch } from "react-redux";
+import { addSaveListRQ } from "../redux/modules/saveList"
 
 import Category from "./Category"
 
@@ -8,7 +9,7 @@ import { BiMinus } from 'react-icons/bi'
 import styled from "styled-components";
 
 
-const FavoriteInput = ()=>{
+const FavoriteInput = (props)=>{
   const dispatch = useDispatch();
 
   const itemName = useRef()
@@ -21,9 +22,14 @@ const FavoriteInput = ()=>{
   setPrice(str);
   }
 
-  const addFavorite=()=>{
-    console.log("잘 오고있니?");
-    console.log(itemName.current.value, category, price)
+  const addSavedList=()=>{
+    const sendData = {
+      categoryId : category,
+      itemName : itemName.current.value,
+      price : price
+    }
+    dispatch(addSaveListRQ(sendData))
+    props.closeModal();
 
   }
     
@@ -51,7 +57,7 @@ const FavoriteInput = ()=>{
     </SelectDesign>
 
     <Footer
-      onClick={addFavorite}>
+      onClick={addSavedList}>
       <label>티끌 등록하기</label>
     </Footer>
     </>

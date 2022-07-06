@@ -7,7 +7,7 @@ import { instance } from "../../shared/axios";
 export const addFavoriteRQ = (data) => { // 내 즐겨찾기 추가 
   return function (dispatch) {
     try {
-      instance.post('/favoriteItem', data);
+      instance.post('/api/mypage/favorite', data);
     } catch (error) {
       console.log(error)
     }
@@ -16,7 +16,7 @@ export const addFavoriteRQ = (data) => { // 내 즐겨찾기 추가
 
 
 //---------------------- READ ----------------------------
-export const myFavoriteListRQ = () => {  // 나의 즐겨찾기 리스트 
+export const myFavoriteListRQ = ()=>{  // 나의 즐겨찾기 리스트 
   return async function (dispatch) {
     try {
       const { data } = await instance.get('/favoriteItem')
@@ -29,7 +29,6 @@ export const myFavoriteListRQ = () => {  // 나의 즐겨찾기 리스트
 
 
 //-------------------- UPDATE ---------------------------
-
 
 //-------------------- DELETE ---------------------------
 

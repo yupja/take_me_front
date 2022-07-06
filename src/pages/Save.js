@@ -19,7 +19,7 @@ import { AiOutlineStar } from 'react-icons/ai'
 function Save() {
   useEffect(() => {
     dispatch(myReadGoalRQ());
-    dispatch(readSaveListRQ());
+    //dispatch(readSaveListRQ());
   }, []);
 
   const [modalOpen, setModalOpen] = useState(false);
@@ -162,7 +162,10 @@ justify-content: center;
 
 const FavoriteArea = styled.div`
 padding: 0.2rem;
+width: 95%;
 height: 10vh;
+display: flex;
+flex-direction: column;
 `;
 
 
