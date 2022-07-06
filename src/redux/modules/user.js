@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { setCookie } from "./cookie";
 import instance from "../../shared/axios";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 
 //login
@@ -37,8 +38,8 @@ export const LoginDB = (loginInfo) => {
 // 로그인한 사용자 정보 조회 (모든 페이지? 필요한 페이지만 요청?)
 export const getUserInfoDB = () => {
   return async function (dispatch) {
-    await instance.get("http://13.209.13.168/api/user/myInfo", {
-      // headers: { Authorization: `Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJldW5qaW4xMjMiLCJhdXRoIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjU3MDI5NDQ0fQ.P3OhSc80UVY5QfaPVebjf7EDyBzpE8tiMzb5HwMB-366KkluXT-U7cR-feMqfjHOzjbWTHlAiGHHAXp06_qOGg` }
+    await axios.get("http://13.209.13.168/api/user/myInfo", {
+      headers: { Authorization: `Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJldW5qaW4xMjMiLCJhdXRoIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjU3MDI5NDQ0fQ.P3OhSc80UVY5QfaPVebjf7EDyBzpE8tiMzb5HwMB-366KkluXT-U7cR-feMqfjHOzjbWTHlAiGHHAXp06_qOGg` }
     })
       .then((response) => {
         console.log(response);
@@ -53,7 +54,7 @@ export const getUserInfoDB = () => {
         }))
       })
       .catch((error) => {
-        // window.alert(error);
+        console.log(error);
       });
   };
 };
@@ -68,7 +69,7 @@ export const addUserDB = (userInfo) => {
     })
       .then((response) => {
         console.log("유저 등록 성공");
-        // window.location.reload()
+        window.location.reload('/')
       })
       .catch((error) => {
         window.alert(error.response.data.message);
@@ -83,28 +84,33 @@ export const idCheckDB = (id, setUserIdAlert) => {
       "Content-Type": "application/json",
       withCredentials: true,
     })
-      .then((response) => {
-        setUserIdAlert(response.data.respMsg)
-        // alert(response.data.respMsg);
-        // dispatch(idCheckResult(response.data.result))
+      .then((res) => {
+        if (res.data.result === true) {
+          setUserIdAlert("사용 가능한 아이디입니다")
+        } else {
+          setUserIdAlert("중복된 아이디입니다")
+        }
       })
-      .catch((error) => {
-        window.alert(error.response.data.message);
+      .catch((err) => {
+        console.log(err)
       });
   };
 };
 
 // 이메일 중복 체크
-export const emailCheckDB = (email) => {
+export const emailCheckDB = (email, setUserEmailAlert) => {
   return async function (dispatch) {
     console.log(email);
     await axios.post("http://13.209.13.168/api/user/register/checkEmail", { email: email }, {
       "Content-Type": "application/json",
       withCredentials: true,
     })
-      .then((response) => {
-        console.log(response.data.respMsg);
-
+      .then((res) => {
+        if (res.data.result === true) {
+          setUserEmailAlert("사용 가능한 이메일입니다")
+        } else {
+          setUserEmailAlert("중복된 이메일입니다")
+        }
       })
       .catch((error) => {
         window.alert(error);
@@ -113,15 +119,19 @@ export const emailCheckDB = (email) => {
 };
 
 // 닉네임 중복 체크
-export const nickCheckDB = (nick) => {
+export const nickCheckDB = (nick, setUserNickAlert) => {
   return async function (dispatch) {
     console.log(nick);
     await axios.post("http://13.209.13.168/api/user/register/checkNickname", { nickname: nick }, {
       "Content-Type": "application/json",
       withCredentials: true,
     })
-      .then((response) => {
-        console.log(response.data.respMsg);
+      .then((res) => {
+        if (res.data.result === true) {
+          setUserNickAlert("사용 가능한 닉네임입니다")
+        } else {
+          setUserNickAlert("중복된 닉네임입니다")
+        }
       })
       .catch((error) => {
         window.alert(error.response.data.message);
