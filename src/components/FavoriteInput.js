@@ -9,7 +9,7 @@ import { BiMinus } from 'react-icons/bi'
 import styled from "styled-components";
 
 
-const FavoriteInput = ()=>{
+const FavoriteInput = (props)=>{
   const dispatch = useDispatch();
 
   const itemName = useRef()
@@ -22,13 +22,14 @@ const FavoriteInput = ()=>{
   setPrice(str);
   }
 
-  const addFavorite=()=>{
+  const addSavedList=()=>{
     const sendData = {
       categoryId : category,
       itemName : itemName.current.value,
       price : price
     }
     dispatch(addSaveListRQ(sendData))
+    props.closeModal();
 
   }
     
@@ -56,7 +57,7 @@ const FavoriteInput = ()=>{
     </SelectDesign>
 
     <Footer
-      onClick={addFavorite}>
+      onClick={addSavedList}>
       <label>티끌 등록하기</label>
     </Footer>
     </>

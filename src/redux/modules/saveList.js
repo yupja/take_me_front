@@ -1,11 +1,11 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { instance } from "../../shared/axios";
 
 //--------------------- CREATE ---------------------------
 export const addSaveListRQ = (data) => { // 내 이력 추가 
   return function (dispatch) {
     try {
-      instance.post('/api/mypage/favorite', data);
+      instance.post('/api/savedItem', data);
       dispatch(addMySavedList(data));
 
     } catch (error) {
@@ -17,18 +17,18 @@ export const addSaveListRQ = (data) => { // 내 이력 추가
 
 //---------------------- READ ----------------------------
 
-export const readSaveListRQ = () => {
-  return async function (dispatch) {
-    try {
-      const { data } = await instance.get(`saveList`);
-      dispatch(readMySavedList(data))
-    } catch (error) {
-      console.log(error)
+export const readSaveListRQ = createAsyncThunk(
+  'readList/mySavedList',
+  async(dispatch) =>{
+    try{
+      const { data } = await instance.get(`/api/savedItem`);
+      //dispatch(readMySavedList(data))
+    } catch(error){
+      window.alert(error)
     }
   }
-
-}
-
+)
+  
 //-------------------- UPDATE ---------------------------
 
 

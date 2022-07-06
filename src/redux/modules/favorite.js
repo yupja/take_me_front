@@ -16,7 +16,7 @@ export const addFavoriteRQ = (data) => { // 내 즐겨찾기 추가
 
 
 //---------------------- READ ----------------------------
-export const myFavoriteListRQ = () => {  // 나의 즐겨찾기 리스트 
+export const myFavoriteListRQ = ()=>{  // 나의 즐겨찾기 리스트 
   return async function (dispatch) {
     try {
       const { data } = await instance.get('/favoriteItem')
