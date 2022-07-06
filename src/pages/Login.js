@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-
+import DayModal from "../components/DayModal";
 import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import { LoginDB } from "../redux/modules/user";
@@ -12,14 +12,30 @@ function Login() {
   const { state } = useLocation();
   const dispatch = useDispatch();
   const userState = useSelector((state) => state.user)
-  console.log(userState);
-  console.log(localStorage.getItem("accessToken"));
+
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalState, setModalState] = useState();
+  const [modalName, setModalName] = useState("");
+
+
+  const openModal = () => { setModalOpen(true); };
+  const closeModal = () => { setModalOpen(false); };
 
 
   // 로그인 정보 가져오기
   const userId = useRef();
   const userPw = useRef();
 
+
+  const [navToggles, setNavToggles] = useState(false);
+  const [ModalStr, setModalStr] = useState('');
+
+  // const onNav = (e) => {
+  //   setNavToggles(true)
+  // }
+  const closeNav = (e) => {
+    setNavToggles(false)
+  }
 
   // 로그인 버튼 클릭시
   const login = (e) => {
@@ -29,14 +45,14 @@ function Login() {
       username: userId.current.value,
       password: userPw.current.value,
     }
-    console.log(loginInfo);
 
     // 빈 항목 체크
     if (userId.current.value === "" || userPw.current.value === "") {
-      window.alert("아이디 혹은 비밀번호가 입력되지 않았습니다.")
+      setModalStr('아이디 또는 비밀번호를 확인해 주세요')
+      setNavToggles(true)
       return;
     }
-    dispatch(LoginDB(loginInfo));
+    dispatch(LoginDB(loginInfo, setModalStr, setNavToggles));
   }
 
   return (
@@ -77,11 +93,67 @@ function Login() {
           <li>네이버로 시작하기</li>
         </ul>
       </LoginWrap>
+      {navToggles ?
+        <ModalWrap>
+          <ModalBox>
+            <div className="icon">아이콘</div>
+            <CloseBtn onClick={closeNav}>
+              <span></span>
+              <span></span>
+            </CloseBtn>
+            <h3>{ModalStr}</h3>
+            <button onClick={closeNav}>닫기</button>
+          </ModalBox>
+        </ModalWrap>
+        : null
+      }
     </>
   )
 };
 
 export default Login;
+
+const ModalWrap = styled.div`
+width: 100%;
+height: 100vh;
+`
+const ModalBox = styled.div`
+width: 100%;
+padding: 0 25px;
+background: #fff;
+border-radius: 5px;
+
+.icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  background: #d9d9d9;
+  margin:  10px auto 0;
+}
+`
+
+const CloseBtn = styled.div`
+width:1rem; //180px
+height: 1rem;
+margin-top: 10px;
+position:absolute;
+top: 0; right: 3%;
+
+span {
+  display:block;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width:100%;
+  height:2px;
+  background-color: #999999;
+}
+span:first-child{
+  transform: rotate(45deg) translateX(0%);
+  }
+span:last-child{
+  transform: rotate(135deg) translateX(0%);
+  }
+`;
 
 const LoginWrap = styled.div`
 width: 100%;

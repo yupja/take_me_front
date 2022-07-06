@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 
 //login
-export const LoginDB = (loginInfo) => {
+export const LoginDB = (loginInfo, setModalStr, setNavToggles) => {
   return async function (dispatch) {
     console.log(loginInfo);
     await axios.post("http://13.209.13.168/api/user/login", loginInfo, {
@@ -15,21 +15,28 @@ export const LoginDB = (loginInfo) => {
     })
       // .then(onLoginSuccess)
       .then((response) => {
-        console.log(response)
+        console.log(response.data);
+        if (response.data.code === 1002) {
+          setModalStr('로그인 실패! 아이디 또는 비밀번호를 확인해 주세요');
+          setNavToggles(true);
+          return;
+        } else {
+          console.log(response)
+          const accessToken = response.data.accessToken;
+          const refreshToken = response.data.refreshToken;
 
-        const accessToken = response.data.accessToken;
-        // const refreshToken = response.data.refreshToken;
-
-        localStorage.setItem("accessToken", accessToken);
-        // setCookie('refreshToken', refreshToken, {
-        //   path: "/",
-        //   secure: true,
-        //   sameSite: 'none',
-        // })
-        dispatch(isLogin(true))
+          localStorage.setItem("accessToken", accessToken);
+          setCookie('refreshToken', refreshToken, {
+            path: "/",
+            secure: true,
+            sameSite: 'none',
+          })
+          // window.location.href = "/"
+          dispatch(isLogin(true))
+        }
       })
       .catch((error) => {
-        console.log("로그인 실패")
+        console.log("로그인 실패") //로그인실패 이걸로뜸
       });
   };
 };
@@ -38,20 +45,29 @@ export const LoginDB = (loginInfo) => {
 // 로그인한 사용자 정보 조회 (모든 페이지? 필요한 페이지만 요청?)
 export const getUserInfoDB = () => {
   return async function (dispatch) {
-    await axios.get("http://13.209.13.168/api/user/myInfo", {
-      headers: { Authorization: `Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJldW5qaW4xMjMiLCJhdXRoIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjU3MDI5NDQ0fQ.P3OhSc80UVY5QfaPVebjf7EDyBzpE8tiMzb5HwMB-366KkluXT-U7cR-feMqfjHOzjbWTHlAiGHHAXp06_qOGg` }
+    await instance.get("/api/user/myInfo", {
+      // headers: {
+      //   Authorization: `Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJldW5qaW4xMjMiLCJhdXRoIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjU3MDczMDAzfQ.hIxttVUT7Q48sV-gcMY__idVriDAM4gKaIJspSKhzoGnhplDBdYPHcjY5hvPF2g0RY30Gyb09W1gwTRvY3QQEw`,
+      // "Content-Type": "application/json",
+      // withCredentials: true,
+      // }
+      "Content-Type": "application/json",
+      withCredentials: true,
     })
       .then((response) => {
         console.log(response);
-        const username = response.data.username;
-        const nickname = response.data.nickname;
-        const email = response.data.email;
+        const username = response.data.data.username;
+        const nickname = response.data.data.nickname;
+        const email = response.data.data.email;
 
-        dispatch(userInfo({
+        const userInfo = {
           username: username,
           nickname: nickname,
           email: email
-        }))
+        }
+        console.log(userInfo)
+
+        dispatch(userInfo(userInfo))
       })
       .catch((error) => {
         console.log(error);
@@ -147,11 +163,19 @@ export const findIdDB = (email) => {
       "Content-Type": "application/json",
       withCredentials: true,
     })
-      .then((response) => {
-        console.log(response.data.userId);
-        const userFindId = response.data.userId;
-        const provider = response.data.provider;
-        dispatch(findIdResult(userFindId, provider))
+      .then((res) => {
+        console.log(res);
+        if (res.data.result === false) {
+          const result = res.data.result;
+          dispatch(findIdResult(result))
+        } else {
+          const findInfo = {
+            userFindId: res.data.data.userId,
+            provider: res.data.data.provider,
+            result: res.data.result,
+          }
+          dispatch(findIdResult(findInfo))
+        }
       })
       .catch((error) => {
         window.alert(error);
@@ -160,17 +184,19 @@ export const findIdDB = (email) => {
 };
 
 // 비밀번호 찾기
-export const findPwDB = (info) => {
+export const findPwDB = (info, setfindPwPop) => {
   return async function (dispatch) {
     console.log(info);
     await axios.post("http://13.209.13.168/api/user/findPassword", info, {
       "Content-Type": "application/json",
       withCredentials: true,
     })
-      .then((response) => {
-        dispatch(findPwResult(response.data.respMsg));
+      .then((res) => {
+        console.log(res)
+        dispatch(findPwResult(res.data.respMsg));
       })
       .catch((error) => {
+        console.log(error)
         window.alert(error.response.data.message);
       });
   };
@@ -209,10 +235,13 @@ const userSlice = createSlice({
       state.isLogin = action.payload;
     },
     userInfo: (state, action) => {
+      console.log(state, action);
       console.log(action.payload);
       state.userInfo = action.payload;
     },
     findIdResult: (state, action) => {
+      console.log(action);
+      console.log(action);
       console.log(action.payload);
       state.findIdResult = action.payload;
     },
