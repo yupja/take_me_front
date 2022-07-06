@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect } from "react"
 import { useDispatch } from "react-redux";
+import { addSaveListRQ } from "../redux/modules/saveList"
 
 import Category from "./Category"
 
@@ -22,12 +23,12 @@ const FavoriteInput = ()=>{
   }
 
   const addFavorite=()=>{
-    console.log(itemName.current.value, category, price)
     const sendData = {
       categoryId : category,
-
+      itemName : itemName.current.value,
+      price : price
     }
-
+    dispatch(addSaveListRQ(sendData))
 
   }
     

@@ -7,8 +7,7 @@ import { instance } from "../../shared/axios";
 export const addFavoriteRQ = (data) => { // 내 즐겨찾기 추가 
   return function (dispatch) {
     try {
-      console.log(data)
-      //instance.post('/api/mypage/favorite', data);
+      instance.post('/api/mypage/favorite', data);
     } catch (error) {
       console.log(error)
     }
