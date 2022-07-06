@@ -19,7 +19,7 @@ import { AiOutlineStar } from 'react-icons/ai'
 function Save() {
   useEffect(() => {
     dispatch(myReadGoalRQ());
-    dispatch(readSaveListRQ());
+    //dispatch(readSaveListRQ());
   }, []);
 
   const [modalOpen, setModalOpen] = useState(false);

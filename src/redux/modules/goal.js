@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { instance } from "../../shared/axios";
 
 
@@ -7,7 +7,7 @@ import { instance } from "../../shared/axios";
 export const addGoalRQ = (data) => { // 기존에 없던 신규 목표태산 추가
   return function (dispatch) {
     try {
-      instance.post('/goalItem', data);
+      instance.post('/api/goalItem', data);
     } catch (error) {
       console.log(error)
     }
@@ -16,16 +16,17 @@ export const addGoalRQ = (data) => { // 기존에 없던 신규 목표태산 추
 
 
 //---------------------- READ ----------------------------
-export const myReadGoalRQ = () => { // 나의 태산 1개 
-  return async function (dispatch) {
+export const myReadGoalRQ = createAsyncThunk(
+  'read/myGoal',
+  async(dispatch)=> {
     try {
-      const data = await instance.get('/api/goalItem')
-      dispatch(readMyGoal(data))
+      const {data} = await instance.get('/api/goalItem')
+      return data;
     } catch (error) {
-
+      console.log(error);
     }
   }
-}
+)
 
 
 export const allReadGoalRQ = () => { // 모든 사람의 태산 항목
@@ -57,11 +58,12 @@ const goalSlice = createSlice({
   reducers: {
     readeAllGoal: (state, action) => {
       state.allGoalList = action.payload;
-    },
-    readMyGoal: (state, action) => {
-      state.myGoalList = action.payload;
     }
-
+  },
+  extraReducers:{
+    [myReadGoalRQ.fulfilled]: (state, action) =>{
+      state.myGoalList = action.payload
+    }
   }
 });
 

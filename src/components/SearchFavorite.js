@@ -112,7 +112,7 @@ function SearchFavorite() {
                 </AddFavoriteInput>
                 <AddButton onClick={() => {
                   openModal();
-                  setModalState(<FavoriteInput />)
+                  setModalState(<FavoriteInput closeModal={closeModal}/>)
                   setModalName("등록하기")
                 }}>+등록하기</AddButton>
               </DropDownItem>
