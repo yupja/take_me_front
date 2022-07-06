@@ -3,7 +3,7 @@ import reset from "./public/css/reset.css";
 import Router from "./shared/Router";
 import { createGlobalStyle } from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-// import { getUserInfoDB } from "./redux/modules/user";
+import { getUserInfoDB } from "./redux/modules/user";
 
 function App() {
   const state = useSelector((state) => state.user);
@@ -13,7 +13,7 @@ function App() {
   useEffect(() => {
     if (getToken) {
       setisLogin(true);
-      // dispatch(getUserInfoDB()); // 정보 요청 오류수정중
+      dispatch(getUserInfoDB()); // 정보 요청 오류수정중
     }
   }, [])
 

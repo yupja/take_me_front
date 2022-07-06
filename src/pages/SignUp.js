@@ -43,7 +43,9 @@ function SignUp() {
   const onEmailChange = () => {
     const email = emailRef.current.value;
     if (emailCheckStr.test(email)) {
-      setemailStrCheck(true)
+      setUserEmailAlert("")
+    } else {
+      setUserEmailAlert("🚨이메일 형식으로 적어주세요")
     }
   }
 
@@ -51,9 +53,9 @@ function SignUp() {
   const onIdChange = () => {
     const id = idRef.current.value;
     if (idCheckStr.test(id)) {
-      setUserIdAlert("사용가능한 아이디입니다")
+      setUserIdAlert("")
     } else {
-      setUserIdAlert("🚨아이디 형식이 맞지 않습니다")
+      setUserIdAlert("🚨3~10글자,영문,숫자로 작성해주세요")
     }
   }
 
@@ -62,7 +64,10 @@ function SignUp() {
   const onNickChange = () => {
     const nick = nickRef.current.value;
     if (nickCheckStr.test(nick)) {
-      setnickStrCheck(true)
+      setUserNickAlert("")
+    } else {
+      setUserNickAlert("🚨2~12글자, 특수문자를 제외하고 작성해주세요")
+      // 한글, 영문, 특수문자 (- _ .) 포함한 2 ~ 12글자 닉네임
     }
   }
 
@@ -71,7 +76,11 @@ function SignUp() {
     const pw = pwRef.current.value;
     console.log(pw);
     if (pwCheckStr.test(pw)) {
-      setUserPwAlert("잘 작성")
+      if (pw.search(/\s/) != -1) {
+        setUserPwAlert("공백 없이 입력해주세요")
+      } else {
+        setUserPwAlert("")
+      }
     } else {
       setUserPwAlert("🚨비밀번호는 영대문자, 소문자, 숫자, 특수문자를 포함해 총 8글자 이상이어야 합니다")
     }
@@ -81,7 +90,7 @@ function SignUp() {
     const pw = pwRef.current.value;
     const pwCheck = pwCheckRef.current.value;
     if (pwCheck === pw) {
-      setUserPwCheckAlert("잘 작성")
+      setUserPwCheckAlert("")
     } else {
       setUserPwCheckAlert("🚨두 비밀번호가 일치하지 않습니다")
     }
@@ -96,33 +105,18 @@ function SignUp() {
     dispatch(idCheckDB(id, setUserIdAlert))
   }
 
-
-
   // 이메일
   const emailCheck = (e) => {
     e.preventDefault();
     const email = emailRef.current.value;
-    const emailCheck = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
-
-    if (emailCheck.test(email)) {
-      dispatch(emailCheckDB(email))
-    } else {
-      setUserEmailAlert("🚨중복된 이메일입니다")
-    }
+    dispatch(emailCheckDB(email, setUserEmailAlert))
   }
 
   // 닉네임
   const nickCheck = (e) => {
     e.preventDefault();
     const nick = nickRef.current.value;
-    const nickCheck = /^[a-zA-Zㄱ-힣0-9-_.]{2,12}$/;
-    // 한글, 영문, 특수문자 (- _ .) 포함한 2 ~ 12글자 닉네임
-
-    if (nickCheck.test(nick)) {
-      dispatch(nickCheckDB(nick))
-    } else {
-      setUserNickAlert("🚨중복된 닉네임입니다")
-    }
+    dispatch(nickCheckDB(nick, setUserNickAlert))
   }
 
 
@@ -140,13 +134,24 @@ function SignUp() {
       window.alert("모든 항목은 필수입니다😊");
       return;
     }
-    if (userPw.search(/\s/) != -1) {
-      window.alert("비밀번호는 공백 없이 입력해주세요.");
-      return false;
+    if (!userIdAlert.includes('사용 가능한')) {
+      window.alert("아이디 중복체크 해주세요");
+      idRef.current.focus();
+      return;
     }
-    if (userPw !== userPwCheck) {
-      window.alert("비밀번호가 일치하지 않습니다.");
-      userPw.focus();
+    if (!userEmailAlert.includes('사용 가능한')) {
+      window.alert("이메일 중복체크 해주세요");
+      emailRef.current.focus();
+      return;
+    }
+    if (!userNickAlert.includes('사용 가능한')) {
+      window.alert("닉네임 중복체크 해주세요");
+      nickRef.current.focus();
+      return;
+    }
+    if (userPwAlert != '' && userPwAChecklert != '') {
+      window.alert("비밀번호 형식과 일치여부를 확인해주세요");
+      pwRef.current.focus();
       return;
     }
 
