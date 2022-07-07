@@ -11,7 +11,7 @@ import { loadCommentAc } from "../redux/modules/comment"
 import { deleteComment } from "../redux/modules/comment";
 import { updateCommentAc } from "../redux/modules/comment";
 import { loadpostsAc } from "../redux/modules/post";
-import { loadDetailAc } from "../redux/modules/postDetail"
+import { loadDetailAc } from "../redux/modules/post"
 
 function Detail(props) {
     const dispatch = useDispatch();

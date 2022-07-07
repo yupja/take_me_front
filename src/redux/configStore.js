@@ -5,10 +5,11 @@ import favorite from "./modules/favorite";
 import post from "./modules/post"
 import comment from "./modules/comment"
 import user from "./modules/user"
+import saved from "./modules/saved";
 
 
 const store = configureStore({
-  reducer: { save, goal, favorite, post, comment, user },
+  reducer: { save, goal, favorite, post, comment, user, saved },
 });
 
 export default store;

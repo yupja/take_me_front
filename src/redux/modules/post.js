@@ -1,22 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { instance } from "../../shared/axios";
-import axios from "axios";
-
-
-
-// 메인화면 포스트 리드
-// export const loadMainposts = () => {
-//   return async function (dispatch) {
-//      try{
-//         const {data} = await instance.get('/board')
-//         dispatch(roadPosts(data));
-//         console.log(data,"redux")
-//      }catch(err){
-//         console.log(err);
-//       };
-//   };
-// };
-
 
 
 
@@ -125,6 +108,9 @@ const postSlice = createSlice({
       state.post.likeNum = action.payload.likeNum;
       state.post.userLike = action.payload.userLike;
     },
+    loadDetail: (state, action) => {
+      state.postList = action.payload;
+    },
     changeTradeState: (state, action) => {
       state.postList = state.postList.map((post) => {
         if (post.postId === action.payload.id) {
@@ -139,5 +125,5 @@ const postSlice = createSlice({
   },
 });
 
-const { uploadPost, roadPosts, changeTradeState, setLike,  loadDetail } = postSlice.actions;
+const { uploadPost, roadPosts, changeTradeState, loadDetail } = postSlice.actions;
 export default postSlice.reducer;

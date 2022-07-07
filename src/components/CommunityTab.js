@@ -1,140 +1,120 @@
-import React, { useState, useEffect, useRef } from "react";
+import React,{ useState,useEffect,useRef}from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import ListModal from "../components/ListModal";
 import PostModal from "../components/PostModal";
 import { useSelector } from "react-redux/es/exports";
-import { loadpostsAc, deletePostAc } from "../redux/modules/post";
+import { loadpostsAc,deletePostAc } from "../redux/modules/post";
 import { useNavigate, useParams } from "react-router-dom"
-import { loadMoreContentDB } from "../redux/modules/post";
+import { loadsavedAc } from "../redux/modules/saved";
 
 const CommunityTab = () => {
+    
+    const dispatch = useDispatch();
+    const Navigate = useNavigate();
 
-  const dispatch = useDispatch();
-  const Navigate = useNavigate();
+    const params = useParams();
+    const boardIdex = params.boardId;
+   
 
-  const params = useParams();
-  console.log(params, "파람")
-  const boardIdex = params.boardId;
+    const Savedata = useSelector((state) => state.saved.savedItem);
+    console.log(Savedata,"savdata")
 
-  console.log(boardIdex, "boardIdex")
-
-  const [showModall, setShowModall] = useState(false);
-  const openModall = () => {
-    setShowModall(true)
-  }
-  const closeModall = () => {
-    setShowModall(false);
-  }
-  const [showModalll, setShowModalll] = useState(false);
-  const openModalll = () => {
-    setShowModalll(true)
-  }
-  const closeModalll = () => {
-    setShowModalll(false);
-  }
-
-  const Postdata = useSelector((state) => state.post.postList);
-  console.log(Postdata, "postdata")
-
-  React.useEffect(() => {
-    dispatch(loadpostsAc())
-  }, [])
-
-  const [isEdit, setIsEdit] = useState(false);
-  const openEdit = () => {
-    setIsEdit(true)
-  }
-  const editPost = (index) => {
-    window.location.replace(`/community/${index}`);
-  }
-
-  const [iLike, setILike] = useState(false);
-  const clickLike = () => {
-    setILike(true)
-  }
-
-  const [target, setTarget] = useState(null);
-  // 무한스크롤 관련 intersection observer
-  // page를 넘겨주면서 백엔드 쪽에서 몇번부터 시작해서 가져올지
-  const onIntersect = async ([entry], observer) => {
-    //entry.isIntersecting은 내가 지금 target을 보고있니?라는 뜻 그 요소가 화면에 들어오면 true 그전엔 false
-    if (entry.isIntersecting) {
-      observer.unobserve(entry.target); // 이제 그 target을 보지 않겠다는 뜻
-      await dispatch(loadMoreContentDB());
+    const [showModall, setShowModall] = useState(false);
+    const openModall = () => {
+        setShowModall(true)
     }
-  };
-
-  useEffect(() => {
-    let observer;
-    if (target) {
-      observer = new IntersectionObserver(onIntersect, {
-        threshold: 1,
-      });
-      observer.observe(target); // target을 보겠다!
+    const closeModall = () => {
+        setShowModall(false);
     }
-    return () => {
-      observer && observer.disconnect();
-    };
-  }, [target]);
+    const [showModalll, setShowModalll] = useState(false);
+    const openModalll = () => {
+        setShowModalll(true)
+    }
+    const closeModalll = () => {
+        setShowModalll(false);
+    }
+
+    const Postdata = useSelector((state) => state.post.postList);
+    console.log(Postdata,"postdata")
+
+    React.useEffect(() => {
+        dispatch(loadpostsAc())
+        dispatch(loadsavedAc())
+    },[])
+
+    const [isEdit, setIsEdit] = useState(false);
+    const openEdit = () => {
+        setIsEdit(true)
+    }
+    const editPost = (index) => {
+        window.location.replace(`/community/${index}`);
+    }
+
+    const [iLike, setILike ] = useState(false);
+    const clickLike = () => {
+        setILike(true)
+    }
+
+  
 
 
-
-  return (
+return(
     <Box>
-      {Postdata.map((postList, boardId) => {
-        return (
-          <div key={boardId}>
+        {Postdata.map((postList, index) => {
+            return(
+            <div key={postList.boardId}>
             {/* <div key={postList.id} ref={boardId === Postdata.length - 1 ? setTarget : null}> * */}
-            <>
-              <ContentBox>
-                <Left>
-                  {/* <Day>{postList.createAt}</Day> */}
-                  <ItemImage></ItemImage>
-                  <Profile /*src={postList.profileImg}*/></Profile>
-                </Left>
-                <Right>
-                  <Top>
-                    <GoalName onClick={() => { Navigate(`/detail/${postList.boardId}`) }}>
-                      {postList.goalItemName}</GoalName>
-                    <EditBtn>
-                      <ModiBtn onClick={() => { dispatch(editPost(postList.boardId)) }}>🛠</ModiBtn>
-                      <DelBtn onClick={() => { dispatch(deletePostAc(postList.boardId)) }}>🗑</DelBtn>
-                    </EditBtn>
-                  </Top>
-                  <Middle>
-                    <Nick onClick={() => { Navigate(`/detail/${postList.boardId}`) }}>
-                      {postList.nickname}&nbsp;&nbsp;{postList.contents}</Nick>
-                  </Middle>
-                  <Foot>
-                    <div style={{ fontSize: "0.5rem" }}>
-                      {iLike ? <>💚</> : <>🤍</>}
-                      {postList.likeCount == null ? <>{postList.likeCount}</> : <>0</>}
-                    </div>
-                    <div style={{ marginLeft: "1rem" }}>💬</div>
-                    <div onClick={() => { Navigate(`/detail/${postList.boardId}`) }}
-                      style={{ marginLeft: "0rem" }}>
-                      댓글 00 개 모두 보기</div>
-                    <div onClick={openModall} style={{ marginLeft: "auto" }}>📃</div>
-                    {showModall ?
-                      <ListModal showModall={showModall} closeModall={closeModall} />
-                      : null}
-                  </Foot>
-                </Right>
-              </ContentBox>
-            </>
-          </div>
-        )
-      }
-      )}
-      <BtnBox>
+                <>
+        <ContentBox>
+            <Left>
+            {/* <Day>{postList.createAt}</Day> */}
+        <ItemImage></ItemImage>
+        <Profile /*src={postList.profileImg}*/></Profile>
+        </Left>
+        <Right>
+            <Top>
+            <GoalName onClick={() => {Navigate(`/detail/${index}`)}}>
+                {postList.goalItemName}</GoalName>
+            <EditBtn>
+            <ModiBtn onClick={() => {dispatch(editPost(postList.boardId))}}>🛠</ModiBtn>
+            <DelBtn onClick={() => {dispatch(deletePostAc(postList.boardId))}}>🗑</DelBtn>
+            </EditBtn>
+            </Top>
+        <Middle>
+        <Nick onClick={() => {Navigate(`/detail/${index}`)}}>
+            {postList.nickname}&nbsp;&nbsp;{postList.contents}</Nick>
+        </Middle>
+        <Foot>
+        <div style={{fontSize:"0.5rem"}}>
+        {iLike ? <>💚</> : <>🤍</> }
+        {postList.likeCount == null ? <>{postList.likeCount}</> : <>0</>}
+        </div>
+            <div style={{marginLeft:"1rem"}}>💬</div>
+                <div onClick={() => {Navigate(`/detail/${postList.boardId}`)}}
+                    style={{marginLeft:"0rem"}}>
+                        댓글 00 개 모두 보기</div>
+            <div onClick={openModall} style={{marginLeft:"auto"}}>📃</div>
+            {showModall ?
+            <ListModal showModall={showModall} closeModall={closeModall} 
+            savedList = {postList.boardId}
+            />
+            : null}
+        </Foot>
+        </Right>
+        </ContentBox>
+        </>
+        </div>
+         )}
+         )}
+         <BtnBox>
         <FootBtn onClick={openModalll}>내 태산 % 공유</FootBtn>
         {showModalll ?
-          <PostModal showModalll={showModalll} closeModalll={closeModalll} />
-          : null}
-      </BtnBox>
+                                    <PostModal showModalll={showModalll} closeModalll={closeModalll} />
+                                    : null}
+        </BtnBox>
     </Box>
-  )
+)
 };
 
 const CreatAt = styled.div`

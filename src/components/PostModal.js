@@ -6,56 +6,54 @@ import { createPostAc } from "../redux/modules/post";
 
 const PostModal = (props) => {
 
-  const dispatch = useDispatch();
+    const dispatch = useDispatch();
 
-  const contents_ref = React.useRef();
-  const goalItemid_ref = React.useRef();
-  const [imgFile, setImgFile] = useState();
+    const contents_ref = React.useRef();
+    const goalItemid_ref = React.useRef();
+    const [imgFile, setImgFile] = useState();
 
-  const thumb = React.useRef();
+    const thumb = React.useRef();
 
-  const postAc = () => {
-
-    console.log(contents_ref.current.value, goalItemid_ref.current.value, "이건")
-    const post = {
-      contents: contents_ref.current.value,
-      goalItemId: goalItemid_ref.current.value
+    const postAc = () => {
+        const post = {
+            contents:contents_ref.current.value,
+            goalItemId:goalItemid_ref.current.value
+        }
+        console.log(post,"좀보자")
+        dispatch(createPostAc(post))
     }
-    console.log(post, "좀보자")
-    dispatch(createPostAc(post))
-  }
 
-
-  return (
-    <>
+  
+    return (
+      <>
       {props.showModalll ?
 
         <Background>
-          <ModalBox onClick={e => e.stopPropagation()}>
+            <ModalBox onClick={e => e.stopPropagation()}>
+            
+                <CommentBox>
+                    <Top>
+                    <Head>내 아낌 % 공유</Head>    
+                    <Close onClick={props.closeModalll}>X</Close>
+                    </Top>
+                    <Middle>
+                        <Profile></Profile>
+                        <Right>
+                            <DeImg>기본 이미지</DeImg>
+                            <AddImg>이미지 등록</AddImg>
+                        </Right>
+                    </Middle>
+                    <Goal ref={goalItemid_ref}></Goal>
+                    <Input ref={contents_ref}></Input>
+                    <Btn onClick={postAc}>공유하기</Btn>
 
-            <CommentBox>
-              <Top>
-                <Head>내 아낌 % 공유</Head>
-                <Close onClick={props.closeModalll}>X</Close>
-              </Top>
-              <Middle>
-                <Profile></Profile>
-                <Right>
-                  <DeImg>기본 이미지</DeImg>
-                  <AddImg>이미지 등록</AddImg>
-                </Right>
-              </Middle>
-              <Goal ref={goalItemid_ref}></Goal>
-              <Input ref={contents_ref}></Input>
-              <Btn onClick={postAc}>공유하기</Btn>
-
-            </CommentBox>
-          </ModalBox>
+                </CommentBox>
+            </ModalBox>
         </Background> : null}
-    </>
+</>
 
-  );
-};
+    );
+  };
 
 const Background = styled.div`
 position: fixed;
@@ -242,4 +240,4 @@ bottom: 0;
 //   overflow: hidden;
 // `;
 
-export default PostModal;
+  export default PostModal;
