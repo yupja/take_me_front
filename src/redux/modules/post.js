@@ -76,6 +76,19 @@ export const deletePostAc = (boardId) => {
   };
 };
 
+export const loadDetailAc = (boardIdex) => {
+  return function (dispatch) {
+      instance.get(`/board/${boardIdex}`)
+      .then(response => {
+        console.log(response.data, "redux_data");
+        dispatch(loadDetail(response.data));
+      })
+      .catch(error => {
+        console.log("get error", error)
+      })
+      
+  };
+};
 
 
 
@@ -101,6 +114,9 @@ const postSlice = createSlice({
       state.post.likeNum = action.payload.likeNum;
       state.post.userLike = action.payload.userLike;
     },
+    loadDetail: (state, action) => {
+      state.postList = action.payload;
+    },
     changeTradeState: (state, action) => {
       state.postList = state.postList.map((post) => {
         if (post.postId === action.payload.id) {
@@ -112,5 +128,5 @@ const postSlice = createSlice({
   },
 });
 
-const { uploadPost, roadPosts, changeTradeState, setLike } = postSlice.actions;
+const { uploadPost, roadPosts, changeTradeState, loadDetail } = postSlice.actions;
 export default postSlice.reducer;
