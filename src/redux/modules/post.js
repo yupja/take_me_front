@@ -19,6 +19,7 @@ import axios from "axios";
 
 
 
+
 export const createPostAc = (post) => {
   return function (dispatch) {
     instance.post('/board', post)
@@ -34,6 +35,9 @@ export const createPostAc = (post) => {
   };
 };
 
+
+
+
 export const loadpostsAc = () => {
   return function (dispatch) {
     instance.get('/board')
@@ -48,6 +52,23 @@ export const loadpostsAc = () => {
 };
 
 
+export const loadDetailAc = (boardIdex) => {
+  return function (dispatch) {
+      instance.get(`/board/${boardIdex}`)
+      .then(response => {
+        console.log(response.data, "redux_data");
+        dispatch(loadDetail(response.data));
+      })
+      .catch(error => {
+        console.log("get error", error)
+      })
+      
+  };
+};
+
+
+
+
 export const UpdatePost = (boardId) => {
   return async function (dispatch) {
     await instance
@@ -60,6 +81,9 @@ export const UpdatePost = (boardId) => {
     console.log(boardId, "수정아!")
   };
 };
+
+
+
 
 
 export const deletePostAc = (boardId) => {
@@ -109,8 +133,11 @@ const postSlice = createSlice({
         return post;
       });
     },
+    loadDetail : (state, action)=>{
+      state.postList = action.payload;
+    }
   },
 });
 
-const { uploadPost, roadPosts, changeTradeState, setLike } = postSlice.actions;
+const { uploadPost, roadPosts, changeTradeState, setLike,  loadDetail } = postSlice.actions;
 export default postSlice.reducer;
