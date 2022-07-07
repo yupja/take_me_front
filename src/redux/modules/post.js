@@ -1,21 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { instance } from "../../shared/axios";
-import axios from "axios";
-
-
-
-// 메인화면 포스트 리드
-// export const loadMainposts = () => {
-//   return async function (dispatch) {
-//      try{
-//         const {data} = await instance.get('/board')
-//         dispatch(roadPosts(data));
-//         console.log(data,"redux")
-//      }catch(err){
-//         console.log(err);
-//       };
-//   };
-// };
 
 
 
@@ -34,6 +18,9 @@ export const createPostAc = (post) => {
   };
 };
 
+
+
+
 export const loadpostsAc = () => {
   return function (dispatch) {
     instance.get('/board')
@@ -46,6 +33,23 @@ export const loadpostsAc = () => {
       })
   };
 };
+
+
+export const loadDetailAc = (boardIdex) => {
+  return function (dispatch) {
+      instance.get(`/board/${boardIdex}`)
+      .then(response => {
+        console.log(response.data, "redux_data");
+        dispatch(loadDetail(response.data));
+      })
+      .catch(error => {
+        console.log("get error", error)
+      })
+      
+  };
+};
+
+
 
 
 export const UpdatePost = (boardId) => {
@@ -62,6 +66,9 @@ export const UpdatePost = (boardId) => {
 };
 
 
+
+
+
 export const deletePostAc = (boardId) => {
   return async function (dispatch) {
     await instance
@@ -76,19 +83,6 @@ export const deletePostAc = (boardId) => {
   };
 };
 
-export const loadDetailAc = (boardIdex) => {
-  return function (dispatch) {
-      instance.get(`/board/${boardIdex}`)
-      .then(response => {
-        console.log(response.data, "redux_data");
-        dispatch(loadDetail(response.data));
-      })
-      .catch(error => {
-        console.log("get error", error)
-      })
-      
-  };
-};
 
 
 
@@ -125,6 +119,9 @@ const postSlice = createSlice({
         return post;
       });
     },
+    loadDetail : (state, action)=>{
+      state.postList = action.payload;
+    }
   },
 });
 

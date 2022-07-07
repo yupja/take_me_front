@@ -6,7 +6,6 @@ import PostModal from "../components/PostModal";
 import { useSelector } from "react-redux/es/exports";
 import { loadpostsAc,deletePostAc } from "../redux/modules/post";
 import { useNavigate, useParams } from "react-router-dom"
-import { loadMoreContentDB } from "../redux/modules/post";
 import { loadsavedAc } from "../redux/modules/saved";
 
 const CommunityTab = () => {
@@ -57,9 +56,7 @@ const CommunityTab = () => {
         setILike(true)
     }
 
-      const [target, setTarget] = useState(null);
-
-    
+  
 
 
 return(

@@ -19,7 +19,9 @@ const GoalADD = ()=>{
       itemName: itemName.current.value,
       price: Number(price.current.value),
       goalItemCount: Number(goalItemCount.current.value),
-      category: Number(category)
+      category: Number(category),
+      categoryId: -1,
+      itemId :-1
     }
     dispatch(addGoalRQ(data))
   }
