@@ -12,12 +12,7 @@ const CommunityTab = () => {
     
     const dispatch = useDispatch();
     const Navigate = useNavigate();
-
-    const params = useParams();
-    console.log(params,"파람")
-    const boardIdex = params.boardId;
-
-    console.log(boardIdex,"boardIdex")
+    
 
     const [showModall, setShowModall] = useState(false);
     const openModall = () => {
@@ -57,34 +52,34 @@ const CommunityTab = () => {
       const [target, setTarget] = useState(null);
     // 무한스크롤 관련 intersection observer
     // page를 넘겨주면서 백엔드 쪽에서 몇번부터 시작해서 가져올지
-    const onIntersect = async ([entry], observer) => {
-        //entry.isIntersecting은 내가 지금 target을 보고있니?라는 뜻 그 요소가 화면에 들어오면 true 그전엔 false
-        if (entry.isIntersecting) {
-            observer.unobserve(entry.target); // 이제 그 target을 보지 않겠다는 뜻
-            await dispatch(loadMoreContentDB());
-        }
-    };
+    // const onIntersect = async ([entry], observer) => {
+    //     //entry.isIntersecting은 내가 지금 target을 보고있니?라는 뜻 그 요소가 화면에 들어오면 true 그전엔 false
+    //     if (entry.isIntersecting) {
+    //         observer.unobserve(entry.target); // 이제 그 target을 보지 않겠다는 뜻
+    //         await dispatch(loadMoreContentDB());
+    //     }
+    // };
 
-    useEffect(() => {
-        let observer;
-        if (target) {
-            observer = new IntersectionObserver(onIntersect, {
-                threshold: 1,
-            });
-            observer.observe(target); // target을 보겠다!
-        }
-        return () => {
-            observer && observer.disconnect();
-        };
-    }, [target]);
+    // useEffect(() => {
+    //     let observer;
+    //     if (target) {
+    //         observer = new IntersectionObserver(onIntersect, {
+    //             threshold: 1,
+    //         });
+    //         observer.observe(target); // target을 보겠다!
+    //     }
+    //     return () => {
+    //         observer && observer.disconnect();
+    //     };
+    // }, [target]);
     
 
 
 return(
     <Box>
-        {Postdata.map((postList, boardId) => {
+        {Postdata.map((postList, index) => {
             return(
-            <div key={boardId}>
+            <div key={postList.boardId}>
             {/* <div key={postList.id} ref={boardId === Postdata.length - 1 ? setTarget : null}> * */}
                 <>
         <ContentBox>
@@ -95,7 +90,7 @@ return(
         </Left>
         <Right>
             <Top>
-            <GoalName onClick={() => {Navigate(`/detail/${postList.boardId}`)}}>
+            <GoalName onClick={() => {Navigate(`/detail/${index}`)}}>
                 {postList.goalItemName}</GoalName>
             <EditBtn>
             <ModiBtn onClick={() => {dispatch(editPost(postList.boardId))}}>🛠</ModiBtn>
@@ -103,7 +98,7 @@ return(
             </EditBtn>
             </Top>
         <Middle>
-        <Nick onClick={() => {Navigate(`/detail/${postList.boardId}`)}}>
+        <Nick onClick={() => {Navigate(`/detail/${index}`)}}>
             {postList.nickname}&nbsp;&nbsp;{postList.contents}</Nick>
         </Middle>
         <Foot>
@@ -112,7 +107,7 @@ return(
         {postList.likeCount == null ? <>{postList.likeCount}</> : <>0</>}
         </div>
             <div style={{marginLeft:"1rem"}}>💬</div>
-                <div onClick={() => {Navigate(`/detail/${postList.boardId}`)}}
+                <div onClick={() => {Navigate(`/detail/${index}`)}}
                     style={{marginLeft:"0rem"}}>
                         댓글 00 개 모두 보기</div>
             <div onClick={openModall} style={{marginLeft:"auto"}}>📃</div>
