@@ -45,12 +45,7 @@ export const LoginDB = (loginInfo, setModalStr, setNavToggles) => {
 // 로그인한 사용자 정보 조회 (모든 페이지? 필요한 페이지만 요청?)
 export const getUserInfoDB = () => {
   return async function (dispatch) {
-    await instance.get("/api/user/myInfo", {
-      // headers: {
-      //   Authorization: `Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJldW5qaW4xMjMiLCJhdXRoIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjU3MDczMDAzfQ.hIxttVUT7Q48sV-gcMY__idVriDAM4gKaIJspSKhzoGnhplDBdYPHcjY5hvPF2g0RY30Gyb09W1gwTRvY3QQEw`,
-      // "Content-Type": "application/json",
-      // withCredentials: true,
-      // }
+    await instance.get("/api/myInfo", {
       "Content-Type": "application/json",
       withCredentials: true,
     })

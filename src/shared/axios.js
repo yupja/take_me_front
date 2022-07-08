@@ -27,30 +27,17 @@ instance.interceptors.response.use(
     return response;
   },
   function (error) {
+    console.log(error.config.url)
     console.log(error.config.data)
+    const check = error.config.url
+    const checks = error.config.data
     // const originalRequest = error.config;
-
-    // if (error.config.data === undefined) { // 아니면 에러메시지도 가능(access토큰이 만료된 경우)
-    //   refreshToken();
-    // }
+    if (check.includes('/api/myInfo') && checks === undefined) {
+      refreshToken();
+    }
+    return Promise.reject(error);
   }
 );
-
-// 응답 인터셉터 추가
-// instance.interceptors.response.use(
-//   function (response) {
-//     console.log(response);
-//     // 응답 데이터를 가공
-//     // ...
-//     return response;
-//   },
-//   function (error) {
-//     console.log(error);
-//     // 오류 응답을 처리
-//     // ...
-//     return Promise.reject(error);
-//   });
-
 
 
 
