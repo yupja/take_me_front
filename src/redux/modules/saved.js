@@ -1,25 +1,49 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { instance } from "../../shared/axios";
 
 
-  export const loadsavedAc = () => {
-    return async function (dispatch) {
-        try{
-          const {data} = await instance.get('/savedItem')
-          console.log(data,"데이타")
-          dispatch(roadSaved(data))
-        }catch(error){
-          console.log(error)
-        }
-      }}
+//--------------------- CREATE ---------------------------
+export const addSavedListRQ = createAsyncThunk(
+  'saved/add',
+  async (sendData) =>{
+    try{
+       await instance.post('/api/savedItem',sendData)
+    }catch(error){
+
+    }
+  } 
+)
+
+
+//---------------------- READ ----------------------------
+
+export const loadsavedAc = () => {
+  return async function (dispatch) {
+      try{
+        const {data} = await instance.get('/savedItem')
+        console.log(data,"데이타")
+        dispatch(roadSaved(data))
+      }catch(error){
+        console.log(error)
+      }
+    }}
 
 
 
+//-------------------- UPDATE ---------------------------
+
+//-------------------- DELETE ---------------------------
+
+
+
+
+//-------------------- SLICE ----------------------------
 
   const savedSlice = createSlice({
     name: "saved",
     initialState: {
       savedItem: [],
+      saveList:[],
       save: {},
     },
     reducers: {
