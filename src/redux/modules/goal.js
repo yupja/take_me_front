@@ -4,16 +4,21 @@ import { instance } from "../../shared/axios";
 
 
 //--------------------- CREATE ---------------------------
-export const addGoalRQ = (data) => { // 기존에 없던 신규 목표태산 추가
-  return function (dispatch) {
-    try {
-      instance.post('/api/goalItem', data);
-    } catch (error) {
-      console.log(error)
+
+export const addGoalAPI = createAsyncThunk( // 골아이템 등록 
+  'add/mygoal',
+  async(formData) =>{
+    try{
+      await instance.post('/api/goalItem', formData,{
+        headers :  {
+          "Content-Type": "multipart/form-data",
+        }
+      });
+    }catch(error){
+
     }
   }
-}
-
+)
 
 //---------------------- READ ----------------------------
 export const myReadGoalRQ = createAsyncThunk(
@@ -54,6 +59,8 @@ const goalSlice = createSlice({
   initialState: {
     allGoalList: [],
     myGoalList: [],
+    addItem:[],
+    myGoal:[]
   },
   reducers: {
     readeAllGoal: (state, action) => {
@@ -63,9 +70,10 @@ const goalSlice = createSlice({
   extraReducers:{
     [myReadGoalRQ.fulfilled]: (state, action) =>{
       state.myGoalList = action.payload
-    }
+    },
+
   }
 });
 
-const { readeAllGoal, readMyGoal } = goalSlice.actions;
+const { readeAllGoal } = goalSlice.actions;
 export default goalSlice.reducer;
