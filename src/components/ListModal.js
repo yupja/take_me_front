@@ -10,14 +10,11 @@ const ListModal = (props) => {
   const dispatch = useDispatch();
   const params = useParams();
 
-  // const boardId = params.boardId;
-  // console.log(boardId,"boardId")
-
-  const Savedata = useSelector((state) => state.saved.savedItem.data);
+  const Savedata = useSelector((state) => state.saved.savedItem);
   console.log(Savedata,"save")
 
-  console.log(props.savedList,"props")
-  const boardId = (props.savedList)
+  console.log(props.forsaveId,"props")
+  const boardId = (props.forsaveId)
   console.log(boardId,"boardId")
 
   React.useEffect(() => {
@@ -44,8 +41,8 @@ const ListModal = (props) => {
                         <p><Spann>{Savedata.userId}</Spann>님의 goalItemName <Spann>KEEP</Spann></p>
                         <p style={{fontWeight:"700", marginTop:"2vw"}}>{Savedata.savedItemTotalPrice} 원</p>
                     </Middle>
-                    {Savedata.map((savedItem, inddex) => {
-                      return(
+                    {Savedata?.map((savedItem, inddex) => (
+                    
                     <List key={savedItem.boardId}>
                       <Left>
                       <CreateAt>{savedItem.createdAt}</CreateAt>
@@ -56,8 +53,8 @@ const ListModal = (props) => {
                       <Star>⭐</Star>
                       </Right>
                     </List>
-                      )
-                    })}
+                    
+                    ))}
                 </CommentBox>
             </ModalBox>
              <CloseBtn onClick={props.closeModall}>닫기</CloseBtn>

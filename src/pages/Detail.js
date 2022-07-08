@@ -19,28 +19,28 @@ function Detail(props) {
     const comment_ref = React.useRef();
     const commentEdit = React.useRef();
 
-    const boardIdex = params.boardId;
-    console.log(boardIdex, "idex")
+    const index = params.boardId;
+    console.log(index, "idex")
 
     React.useEffect(() => {
-        dispatch(loadCommentAc())
+        dispatch(loadCommentAc(index))
         dispatch(loadpostsAc())
         dispatch(loadDetailAc())
     }, []);
 
     const commentData = useSelector((state) => state.comment.commentList);
+    console.log(commentData, "코멘트")
     const Postdata = useSelector((state) => state.post.postList);
     console.log(Postdata, "postdata")
+    
 
-    const createComment = () => {
+    const createComment = (index) => {
         console.log(comment_ref.current.value, "확인");
-        const commentPost = {
+        const data = {
             comment: comment_ref.current.value,
-
         }
-        dispatch(createCommentAc(commentPost))
+        dispatch(createCommentAc(index, data))
     };
-    console.log(commentData, "commentdata");
 
     const state = "커뮤니티"
 
@@ -53,11 +53,11 @@ function Detail(props) {
                         <Commu>
                             <Left>
                                 <Profile></Profile>
-                                <GoalName>{Postdata[boardIdex].goalItemName}</GoalName>
+                                <GoalName>{Postdata.data[index].goalItemName}</GoalName>
                             </Left>
                             <span>🤍</span>
                         </Commu>
-                        <Content>{Postdata[boardIdex].contents}</Content>
+                        <Content>{Postdata.data[index].contents}</Content>
                     </Nopadding>
                 </Top>
                 {commentData && commentData.map((comment_list, index) => (

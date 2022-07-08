@@ -14,17 +14,19 @@ const CommunityTab = () => {
         dispatch(loadpostsAc())
         dispatch(loadsavedAc())
     },[])
-    
+
     const dispatch = useDispatch();
     const Navigate = useNavigate();
 
-    const params = useParams();
-    const boardIdex = params.boardId;
-    console.log(boardIdex,"parmas")
-   
+    const Postdata = useSelector((state) => state.post.postList.data);
+    console.log(Postdata,"postdata")
 
     const Savedata = useSelector((state) => state.saved.savedItem);
     console.log(Savedata,"savdata")
+
+    // const SavedId = Savedata.boardId
+    // console.log(SavedId)
+    // console.log(Savedata.data,"saveddata.boardid")
 
     const [showModall, setShowModall] = useState(false);
     const openModall = () => {
@@ -40,12 +42,6 @@ const CommunityTab = () => {
     const closeModalll = () => {
         setShowModalll(false);
     }
-
-    const Postdata = useSelector((state) => state.post.postList.data);
-    console.log(Postdata,"postdata")
-
-   
-
     const [isEdit, setIsEdit] = useState(false);
     const openEdit = () => {
         setIsEdit(true)
@@ -58,9 +54,6 @@ const CommunityTab = () => {
     const clickLike = () => {
         setILike(true)
     }
-
-  
-
 
 return(
     <Box>
@@ -96,7 +89,7 @@ return(
             <div onClick={openModall} style={{marginLeft:"auto"}}>📃</div>
             {showModall ?
             <ListModal showModall={showModall} closeModall={closeModall} 
-            savedList = {postList.boardId}
+            forsaveId = {Postdata[index].boardId}
             />
             : null}
         </Foot>

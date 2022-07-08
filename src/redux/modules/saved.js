@@ -7,9 +7,9 @@ import { instance } from "../../shared/axios";
         try{
           const {data} = await instance.get(`/api/board/save/${boardId}`)
           console.log(data,"데이타")
-          dispatch(roadSaved(data))
+          dispatch(loadSaved(data))
         }catch(error){
-          console.log(error)
+          console.log(error,"errr")
         }
       }}
 
@@ -19,14 +19,14 @@ import { instance } from "../../shared/axios";
   const savedSlice = createSlice({
     name: "saved",
     initialState: {
-      savedItem: {data:[]},
+      savedItem: [],
       save: [],
     },
     reducers: {
-      roadSaved: (state, action) => {
+      loadSaved: (state, action) => {
         state.savedItem = action.payload;
       }
     }});
 
-const { roadSaved } = savedSlice.actions;
+const { loadSaved } = savedSlice.actions;
 export default savedSlice.reducer;

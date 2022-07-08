@@ -9,6 +9,7 @@ import { instance } from "../../shared/axios";
         .then(response => {
             // console.log(response,"console create")
             dispatch(createComment(response.data));
+            console.log(response.data,"댓글등록")
         })
         .catch(error => {
           console.log("get error", error)
@@ -16,9 +17,9 @@ import { instance } from "../../shared/axios";
     };
   };
 
-export const loadCommentAc = (boardId, data) => {
+export const loadCommentAc = (boardId) => {
     return function (dispatch) {
-        instance.get(`/api/board/${boardId}/comment`,data)
+        instance.get(`/api/board/${boardId}/comment`)
         .then(response => {
             console.log(response.data,"console load")
             dispatch(loadComment(response.data));

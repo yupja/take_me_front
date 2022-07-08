@@ -3,12 +3,12 @@ import { instance } from "../../shared/axios";
 
 
 
-export const createPostAc = (post) => {
+export const createPostAc = (data) => {
   return function (dispatch) {
-    instance.post('/api/post/board',post)
+    instance.post('/api/post/board',data)
       .then((response) => {
         console.log(response);
-        dispatch(uploadPost(post))
+        dispatch(uploadPost(data))
         alert("등록 완료");
       })
       .catch((error) => {
@@ -39,8 +39,8 @@ export const loadDetailAc = (boardIdex, boardId) => {
   return function (dispatch) {
       instance.get(`/api/board/detail/${boardId}`)
       .then(response => {
-        console.log(response.data, "redux_data");
-        dispatch(loadDetail(response.data));
+        console.log(response, "redux_data");
+        dispatch(loadDetail(response));
       })
       .catch(error => {
         console.log("get error", error)
