@@ -19,7 +19,7 @@ import { instance } from "../../shared/axios";
   const savedSlice = createSlice({
     name: "saved",
     initialState: {
-      savedItem: [],
+      savedItem: {data:[]},
       save: [],
     },
     reducers: {

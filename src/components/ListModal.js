@@ -10,8 +10,10 @@ const ListModal = (props) => {
   const dispatch = useDispatch();
   const params = useParams();
 
-  const Savedata = useSelector((state) => state.saved.savedItem);
-  console.log(Savedata,"save")
+  const saveData = useSelector((state) => state.saved.savedItem.data.savedItemList);
+  const saveDataa = useSelector((state) => state.saved.savedItem.data);
+  console.log(saveData,"save")
+  console.log(saveDataa,"savee")
 
   console.log(props.forsaveId,"props")
   const boardId = (props.forsaveId)
@@ -38,14 +40,14 @@ const ListModal = (props) => {
                     <Close onClick={props.closeModall}>X</Close>
                     </Top>
                     <Middle>
-                        <p><Spann>{Savedata.userId}</Spann>님의 goalItemName <Spann>KEEP</Spann></p>
-                        <p style={{fontWeight:"700", marginTop:"2vw"}}>{Savedata.savedItemTotalPrice} 원</p>
+                        <p><Spann>{saveDataa.userId}</Spann>님의 {saveDataa.goalItemName} <Spann>KEEP</Spann></p>
+                        <p style={{fontWeight:"700", marginTop:"2vw"}}>{saveDataa.savedItemTotalPrice} 원</p>
                     </Middle>
-                    {Savedata?.map((savedItem, inddex) => (
+                    {saveData?.map((savedItem, inddex) => (
                     
-                    <List key={savedItem.boardId}>
+                    <List key={savedItem.inddex}>
                       <Left>
-                      <CreateAt>{savedItem.createdAt}</CreateAt>
+                      <CreateAt>{savedItem.createdDate}</CreateAt>
                       <SavedName>{savedItem.savedItemName}</SavedName>
                       </Left>
                       <Right>

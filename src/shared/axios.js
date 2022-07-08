@@ -31,9 +31,9 @@ instance.interceptors.response.use(
     const check = error.config.url
     const checks = error.config.data
     // const originalRequest = error.config;
-    if (check.includes('/api/myInfo') && checks === undefined) {
-      refreshToken();
-    }
+    // if (check.includes('/api/myInfo') && checks === undefined) {
+    //   refreshToken();
+    // }
     return Promise.reject(error);
   }
 );
