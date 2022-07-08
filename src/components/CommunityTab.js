@@ -9,12 +9,18 @@ import { useNavigate, useParams } from "react-router-dom"
 import { loadsavedAc } from "../redux/modules/saved";
 
 const CommunityTab = () => {
+
+    React.useEffect(() => {
+        dispatch(loadpostsAc())
+        dispatch(loadsavedAc())
+    },[])
     
     const dispatch = useDispatch();
     const Navigate = useNavigate();
 
     const params = useParams();
     const boardIdex = params.boardId;
+    console.log(boardIdex,"parmas")
    
 
     const Savedata = useSelector((state) => state.saved.savedItem);
@@ -35,13 +41,10 @@ const CommunityTab = () => {
         setShowModalll(false);
     }
 
-    const Postdata = useSelector((state) => state.post.postList);
+    const Postdata = useSelector((state) => state.post.postList.data);
     console.log(Postdata,"postdata")
 
-    React.useEffect(() => {
-        dispatch(loadpostsAc())
-        dispatch(loadsavedAc())
-    },[])
+   
 
     const [isEdit, setIsEdit] = useState(false);
     const openEdit = () => {
@@ -64,7 +67,6 @@ return(
         {Postdata.map((postList, index) => {
             return(
             <div key={postList.boardId}>
-            {/* <div key={postList.id} ref={boardId === Postdata.length - 1 ? setTarget : null}> * */}
                 <>
         <ContentBox>
             <Left>
@@ -86,10 +88,7 @@ return(
             {postList.nickname}&nbsp;&nbsp;{postList.contents}</Nick>
         </Middle>
         <Foot>
-        <div style={{fontSize:"0.5rem"}}>
-        {iLike ? <>💚</> : <>🤍</> }
-        {postList.likeCount == null ? <>{postList.likeCount}</> : <>0</>}
-        </div>
+   
             <div style={{marginLeft:"1rem"}}>💬</div>
                 <div onClick={() => {Navigate(`/detail/${postList.boardId}`)}}
                     style={{marginLeft:"0rem"}}>
@@ -110,8 +109,10 @@ return(
          <BtnBox>
         <FootBtn onClick={openModalll}>내 태산 % 공유</FootBtn>
         {showModalll ?
-                                    <PostModal showModalll={showModalll} closeModalll={closeModalll} />
-                                    : null}
+          <PostModal showModalll={showModalll} closeModalll={closeModalll}
+        //   savedList = {postList.boardId}
+          />
+        : null}
         </BtnBox>
     </Box>
 )

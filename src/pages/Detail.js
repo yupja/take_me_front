@@ -23,9 +23,9 @@ function Detail(props) {
     console.log(boardIdex, "idex")
 
     React.useEffect(() => {
-        dispatch(loadCommentAc(boardIdex))
-        dispatch(loadpostsAc(boardIdex))
-        // dispatch(loadDetailAc(boardIdex))
+        dispatch(loadCommentAc())
+        dispatch(loadpostsAc())
+        dispatch(loadDetailAc())
     }, []);
 
     const commentData = useSelector((state) => state.comment.commentList);
@@ -60,8 +60,8 @@ function Detail(props) {
                         <Content>{Postdata[boardIdex].contents}</Content>
                     </Nopadding>
                 </Top>
-                {commentData && commentData.map((comment_list, index) => {
-                    return (
+                {commentData && commentData.map((comment_list, index) => (
+                    
                         <CommentBox key={index}>
                             <CoProfile></CoProfile>
                             <Ddu>
@@ -79,8 +79,8 @@ function Detail(props) {
                                 <Comment>{comment_list.comment}</Comment>
                             </Ddu>
                         </CommentBox>
-                    )
-                })}
+                    
+                ))}
             </Box>
             <Enter>
                 <Input ref={comment_ref}></Input>

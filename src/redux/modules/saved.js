@@ -2,10 +2,10 @@ import { createSlice } from "@reduxjs/toolkit";
 import { instance } from "../../shared/axios";
 
 
-  export const loadsavedAc = () => {
+  export const loadsavedAc = (boardId) => {
     return async function (dispatch) {
         try{
-          const {data} = await instance.get('/savedItem')
+          const {data} = await instance.get(`/api/board/save/${boardId}`)
           console.log(data,"데이타")
           dispatch(roadSaved(data))
         }catch(error){
@@ -19,8 +19,8 @@ import { instance } from "../../shared/axios";
   const savedSlice = createSlice({
     name: "saved",
     initialState: {
-      savedItem: [],
-      save: {},
+      savedItem: {data:[]},
+      save: [],
     },
     reducers: {
       roadSaved: (state, action) => {

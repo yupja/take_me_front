@@ -13,16 +13,16 @@ const ListModal = (props) => {
   // const boardId = params.boardId;
   // console.log(boardId,"boardId")
 
-  const Savedata = useSelector((state) => state.saved.savedItem);
+  const Savedata = useSelector((state) => state.saved.savedItem.data);
   console.log(Savedata,"save")
 
   console.log(props.savedList,"props")
-  const postId = (props.savedList)
-  console.log(postId,"postId")
+  const boardId = (props.savedList)
+  console.log(boardId,"boardId")
 
   React.useEffect(() => {
-    dispatch(loadsavedAc(postId))
-    dispatch(loadCommentAc())
+    dispatch(loadsavedAc(boardId))
+    // dispatch(loadCommentAc())
 },[])
 
     return (
@@ -44,9 +44,9 @@ const ListModal = (props) => {
                         <p><Spann>{Savedata.userId}</Spann>님의 goalItemName <Spann>KEEP</Spann></p>
                         <p style={{fontWeight:"700", marginTop:"2vw"}}>{Savedata.savedItemTotalPrice} 원</p>
                     </Middle>
-                    { Savedata && Savedata.map((savedItem, boardId) => {
+                    {Savedata.map((savedItem, inddex) => {
                       return(
-                    <List>
+                    <List key={savedItem.boardId}>
                       <Left>
                       <CreateAt>{savedItem.createdAt}</CreateAt>
                       <SavedName>{savedItem.savedItemName}</SavedName>

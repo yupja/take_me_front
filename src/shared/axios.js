@@ -2,7 +2,7 @@ import axios from "axios";
 import { getCookie, setCookie, removeCookie } from "../redux/modules/cookie";
 
 export const instance = axios.create({
-  baseURL: "http://13.209.13.168/"
+  baseURL: "http://3.37.61.13/"
 });
 
 instance.interceptors.request.use(
@@ -30,9 +30,9 @@ instance.interceptors.response.use(
     console.log(error.config.data)
     // const originalRequest = error.config;
 
-    if (error.config.data === undefined) { // 아니면 에러메시지도 가능(access토큰이 만료된 경우)
-      refreshToken();
-    }
+    // if (error.config.data === undefined) { // 아니면 에러메시지도 가능(access토큰이 만료된 경우)
+    //   refreshToken();
+    // }
   }
 );
 
@@ -64,7 +64,7 @@ const refreshToken = () => {
     refreshToken: refreshToken
   }
   // console.log("토큰재발급할거야", token);
-  axios.post("http://13.209.13.168/api/user/reissue", token, {
+  axios.post("http://3.37.61.13/api/user/reissue", token, {
     "Content-Type": "application/json",
     withCredentials: true,
   })

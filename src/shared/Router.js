@@ -32,6 +32,7 @@ function Router() {
         <Route path="/findid" element={<FindId />} />
         <Route path="/findpw" element={<FindPw />} />
         <Route path="/findpwurl" element={<FindPwChange />} />
+        <Route path="/detail/:boarId" element={<Detail />} />
       </Routes>
     </BrowserRouter>
   );
