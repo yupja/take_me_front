@@ -9,13 +9,13 @@ import { useNavigate } from "react-router-dom";
 export const LoginDB = (loginInfo, setModalStr, setNavToggles) => {
   return async function (dispatch) {
     console.log(loginInfo);
-    await axios.post("http://13.209.13.168/api/user/login", loginInfo, {
+    await instance.post("/api/user/login", loginInfo, {
       "Content-Type": "application/json",
       withCredentials: true,
     })
       // .then(onLoginSuccess)
       .then((response) => {
-        console.log(response.data);
+        console.log(response);
         if (response.data.code === 1002) {
           setModalStr('로그인 실패! 아이디 또는 비밀번호를 확인해 주세요');
           setNavToggles(true);
@@ -74,7 +74,7 @@ export const getUserInfoDB = () => {
 export const addUserDB = (userInfo) => {
   return async function (dispatch) {
     console.log(userInfo);
-    await axios.post("http://13.209.13.168/api/user/register", userInfo, {
+    await instance.post("/api/user/register", userInfo, {
       "Content-Type": "application/json",
       withCredentials: true,
     })
@@ -91,7 +91,7 @@ export const addUserDB = (userInfo) => {
 // 아이디 중복 체크
 export const idCheckDB = (id, setUserIdAlert) => {
   return async function (dispatch) {
-    await axios.post("http://13.209.13.168/api/user/register/checkUsername", { username: id }, {
+    await instance.post("/api/user/register/checkUsername", { username: id }, {
       "Content-Type": "application/json",
       withCredentials: true,
     })
@@ -112,7 +112,7 @@ export const idCheckDB = (id, setUserIdAlert) => {
 export const emailCheckDB = (email, setUserEmailAlert) => {
   return async function (dispatch) {
     console.log(email);
-    await axios.post("http://13.209.13.168/api/user/register/checkEmail", { email: email }, {
+    await instance.post("/api/user/register/checkEmail", { email: email }, {
       "Content-Type": "application/json",
       withCredentials: true,
     })
@@ -133,7 +133,7 @@ export const emailCheckDB = (email, setUserEmailAlert) => {
 export const nickCheckDB = (nick, setUserNickAlert) => {
   return async function (dispatch) {
     console.log(nick);
-    await axios.post("http://13.209.13.168/api/user/register/checkNickname", { nickname: nick }, {
+    await instance.post("/api/user/register/checkNickname", { nickname: nick }, {
       "Content-Type": "application/json",
       withCredentials: true,
     })
@@ -154,7 +154,7 @@ export const nickCheckDB = (nick, setUserNickAlert) => {
 export const findIdDB = (email) => {
   return async function (dispatch) {
     console.log(email);
-    await axios.post("http://13.209.13.168/api/user/findId", { email: email }, {
+    await instance.post("/api/user/findId", { email: email }, {
       "Content-Type": "application/json",
       withCredentials: true,
     })
@@ -182,7 +182,7 @@ export const findIdDB = (email) => {
 export const findPwDB = (info, setfindPwPop) => {
   return async function (dispatch) {
     console.log(info);
-    await axios.post("https://13.209.13.168/api/user/findPassword", info, {
+    await instance.post("/api/user/findPassword", info, {
       "Content-Type": "application/json",
       withCredentials: true,
     })
@@ -200,7 +200,7 @@ export const findPwDB = (info, setfindPwPop) => {
 // 비밀번호 변경 post요청
 export const changePw = (data) => {
   return async function (dispatch) {
-    await axios.post("http://13.209.13.168/api/user/changePassword", (data), {
+    await instance.post("/api/user/changePassword", (data), {
       "Content-Type": "application/json",
       withCredentials: true,
       // Authorization : `Bearer ${accessToken}`, //토큰담아서 보내기

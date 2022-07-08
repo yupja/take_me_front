@@ -2,7 +2,7 @@ import axios from "axios";
 import { getCookie, setCookie, removeCookie } from "../redux/modules/cookie";
 
 export const instance = axios.create({
-  baseURL: "http://13.209.13.168/"
+  baseURL: "http://3.37.61.13"
 });
 
 instance.interceptors.request.use(
@@ -27,8 +27,7 @@ instance.interceptors.response.use(
     return response;
   },
   function (error) {
-    console.log(error.config.url)
-    console.log(error.config.data)
+    console.log(error)
     const check = error.config.url
     const checks = error.config.data
     // const originalRequest = error.config;
@@ -50,7 +49,7 @@ const refreshToken = () => {
     refreshToken: refreshToken
   }
   // console.log("토큰재발급할거야", token);
-  axios.post("http://13.209.13.168/api/user/reissue", token, {
+  instance.post("/api/user/reissue", token, {
     "Content-Type": "application/json",
     withCredentials: true,
   })
@@ -73,6 +72,8 @@ const refreshToken = () => {
     })
     .catch(function (error) { // refreshToken도 만료시 재로그인
       console.log(error)
+      console.log("만료!삭제할거야!")
+
       removeCookie('refreshToken');
       localStorage.clear();
       // window.location.replace = "/";
