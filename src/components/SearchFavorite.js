@@ -41,7 +41,7 @@ function SearchFavorite() {
   const [dropDownItemIndex, setDropDownItemIndex] = useState(-1); // 선택한 아이템의 인덱스
   const [dropDownList, setDropDownList] = useState(list); // 검색List 
 
-  
+
 
   const showDropDownList = () => {
     if (inputValue === '') {
@@ -90,17 +90,17 @@ function SearchFavorite() {
       <WholeBox>
 
         <InputBox isHaveInputValue={isHaveInputValue}>
-            <input
-              type='text'
-              value={inputValue}
-              onChange={changeInputValue}
-              onKeyUp={handleDropDownKey}
-              placeholder="오늘은 어떤걸 아끼셨나요?"
-            />
+          <input
+            type='text'
+            value={inputValue}
+            onChange={changeInputValue}
+            onKeyUp={handleDropDownKey}
+            placeholder="오늘은 어떤걸 아끼셨나요?"
+          />
 
 
-            <DeleteButton onClick={() => setInputValue('')}>&times;</DeleteButton>
-          </InputBox>
+          <DeleteButton onClick={() => setInputValue('')}>&times;</DeleteButton>
+        </InputBox>
 
         {isHaveInputValue && (
           <DropDownBox>
@@ -112,7 +112,7 @@ function SearchFavorite() {
                 </AddFavoriteInput>
                 <AddButton onClick={() => {
                   openModal();
-                  setModalState(<FavoriteInput closeModal={closeModal}/>)
+                  setModalState(<FavoriteInput closeModal={closeModal} />)
                   setModalName("등록하기")
                 }}>+등록하기</AddButton>
               </DropDownItem>
@@ -142,28 +142,28 @@ function SearchFavorite() {
 
       </WholeBox>
 
-      <ItemWrap>
-        {mylist.length===0? 
-        <FavoriteItem></FavoriteItem>
-        :
+      {/* <ItemWrap>
+        {mylist.length === 0 ?
+          <FavoriteItem></FavoriteItem>
+          :
           <> ⭐
             {mylist.map((item, itemIndex) => {
-                return (
-                  <FavoriteItem key={item.itemId} onClick={()=>{
-                    dispatch(addSaveListRQ(item))
-                  }}>
-                    {item.itemName}
-                    <BiX />
-                  </FavoriteItem>
-                )
+              return (
+                <FavoriteItem key={item.itemId} onClick={() => {
+                  dispatch(addSaveListRQ(item))
+                }}>
+                  {item.itemName}
+                  <BiX />
+                </FavoriteItem>
+              )
             })}
-           </>
+          </>
         }
 
-        </ItemWrap>
-      </>
-    )
-  }
+      </ItemWrap> */}
+    </>
+  )
+}
 
 
 const WholeBox = styled.div`
@@ -222,7 +222,7 @@ white-space: nowrap;
     display: none;
   }
 `;
- 
+
 
 const FavoriteItem = styled.div`
 margin-top: 5px;

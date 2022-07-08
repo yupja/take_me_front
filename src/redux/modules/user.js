@@ -15,7 +15,7 @@ export const LoginDB = (loginInfo, setModalStr, setNavToggles) => {
     })
       // .then(onLoginSuccess)
       .then((response) => {
-        console.log(response.data);
+        console.log(response);
         if (response.data.code === 1002) {
           setModalStr('로그인 실패! 아이디 또는 비밀번호를 확인해 주세요');
           setNavToggles(true);
