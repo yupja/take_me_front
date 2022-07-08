@@ -7,14 +7,14 @@ import { getUserInfoDB } from "./redux/modules/user";
 
 function App() {
   const state = useSelector((state) => state.user);
-  console.log(state)
+  // console.log(state)
   const dispatch = useDispatch();
   const [isLogin, setisLogin] = useState(false);
   const getToken = localStorage.getItem('accessToken');
   useEffect(() => {
     if (getToken) {
       setisLogin(true);
-      dispatch(getUserInfoDB()); // 정보 요청 오류수정중
+      dispatch(getUserInfoDB());
     }
   }, [])
 
