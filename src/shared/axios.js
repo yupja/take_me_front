@@ -50,7 +50,7 @@ const refreshToken = () => {
     refreshToken: refreshToken
   }
   // console.log("토큰재발급할거야", token);
-  axios.post("http://13.209.13.168/api/user/reissue", token, {
+  axios.post("http://3.37.61.13/api/user/reissue", token, {
     "Content-Type": "application/json",
     withCredentials: true,
   })
