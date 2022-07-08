@@ -1,3 +1,4 @@
+import React from "react";
 import styled from "styled-components";
 
 import { useLocation } from "react-router";
@@ -21,7 +22,7 @@ function MyPage() {
         </MyInfo>
         <MyMenu>
           <h2><span>석구</span>님<br />환영합니다!🖐</h2>
-          <ul>
+          <MenuList>
             <li>
               <Link to="/">
                 <div><img src="" alt="" /></div>
@@ -40,7 +41,7 @@ function MyPage() {
                 <p>프로필 편집</p>
               </Link>
             </li>
-          </ul>
+          </MenuList>
           <Box>
             <h3>고객 지원</h3>
             <ul>
@@ -62,9 +63,9 @@ function MyPage() {
               </li>
             </ul>
           </Box>
-          <button>로그아웃</button>
         </MyMenu>
       </MyPageWrap>
+      <LoginOutBtn>로그아웃</LoginOutBtn>
     </>
   )
 };
@@ -95,21 +96,10 @@ p {
   font-weight: 700;
 }
 `
-const MyMenu = styled.div`
-background:#F8F8F8;
-text-align: center;
-padding:25px;
+const MenuList = styled.ul`
+ display: flex;
+justify-content: space-between;
 
-  h2 {
-    font-size: 1.5rem;
-  }
-  span {
-    color:#26DFA6;
-  }
-  ul {
-    display: flex;
-    justify-content: space-between;
-  }
   li{
     position: relative;
     width: 6.24rem;
@@ -122,15 +112,83 @@ padding:25px;
     position: absolute;
     top: 50%; left: 50%;
     transform: translate(-50%,-50%);
+    width: 100%;
+    text-decoration: none;
   }
   div {
     width:2.5rem;
     height: 2.5rem;
+    margin: 0 auto;
     background: #D9D9D9;
     border-radius: 50%;
-    margin: 0 auto;
+  }
+  p{
+    margin-top: 5px;
+    font-size : 1.12rem;
+    letter-spacing: -3px;
+    font-weight: 700;
+    color: #333333;
+  }
+`
+const MyMenu = styled.div`
+height: 72.5vh;
+background:#F8F8F8;
+text-align: center;
+padding:25px;
+
+  h2 {
+    font-size: 1.5rem;
+    padding-bottom:25px;
+    
+  }
+  span {
+    color:#26DFA6;
   }
 `
 const Box = styled.div`
+width: 100%;
+margin-top: 50px;
+text-align: left;
 
+h3 {
+  font-size : 1.12rem;
+  letter-spacing: -3px;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+ul {
+  width: 100%;
+  overflow: hidden;
+}
+
+li{
+  width: 50%;
+  float: left;
+  margin-bottom: 10px;
+}
+div {
+  display: inline-block;
+  width: 1.25rem;
+  height: 1.25rem;
+  background: #D9D9D9;
+  border-radius: 50%;
+}
+span {
+  padding-left: 5px;
+  font-weight: 700;
+  letter-spacing: -3px;
+  color: #666666;
+}
+`
+const LoginOutBtn = styled.div`
+position: absolute;
+bottom: 50px; left: 50%;
+transform: translateX(-50%);
+text-decoration: underline;
+color: #999;
+letter-spacing: -3px;
+border: none;
+background: none;
+font-size: 1.12rem;
+font-weight: 700;
 `
