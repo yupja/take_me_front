@@ -5,7 +5,7 @@ import { instance } from "../../shared/axios";
 
 export const createPostAc = (post) => {
   return function (dispatch) {
-    instance.post('/board', post)
+    instance.post('/api/post/board', post)
       .then((response) => {
         console.log(response);
         dispatch(uploadPost())
@@ -23,7 +23,7 @@ export const createPostAc = (post) => {
 
 export const loadpostsAc = () => {
   return function (dispatch) {
-    instance.get('/board')
+    instance.get('/api/board')
       .then(response => {
         //   console.log(response.data, "redux_data");
         dispatch(roadPosts(response.data));
@@ -37,7 +37,7 @@ export const loadpostsAc = () => {
 
 export const loadDetailAc = (boardIdex) => {
   return function (dispatch) {
-      instance.get(`/board/${boardIdex}`)
+    instance.get(`/api/board/${boardIdex}`)
       .then(response => {
         console.log(response.data, "redux_data");
         dispatch(loadDetail(response.data));
@@ -45,7 +45,7 @@ export const loadDetailAc = (boardIdex) => {
       .catch(error => {
         console.log("get error", error)
       })
-      
+
   };
 };
 
@@ -119,7 +119,7 @@ const postSlice = createSlice({
         return post;
       });
     },
-    loadDetail : (state, action)=>{
+    loadDetail: (state, action) => {
       state.postList = action.payload;
     }
   },

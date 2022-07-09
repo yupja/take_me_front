@@ -203,7 +203,6 @@ export const changePw = (data) => {
     await instance.post("/api/user/changePassword", (data), {
       "Content-Type": "application/json",
       withCredentials: true,
-      // Authorization : `Bearer ${accessToken}`, //토큰담아서 보내기
     })
       .then((response) => {
         dispatch(findPwResult(response.data.respMsg));
@@ -214,6 +213,23 @@ export const changePw = (data) => {
   };
 };
 
+// 탈퇴
+export const userSecDB = (pw, modal, pwAlert) => {
+  return async function (dispatch) {
+    await instance.post("/api/mypage/profile", pw, {
+      "Content-Type": "application/json",
+      withCredentials: true,
+    })
+      .then((response) => {
+        dispatch(result(response));
+      })
+      .catch((error) => {
+        window.alert(error);
+      });
+  };
+};
+
+
 // 리듀서 
 const userSlice = createSlice({
   name: "user",
@@ -222,7 +238,8 @@ const userSlice = createSlice({
     userInfo: [],
     findIdResult: [],
     findPwResult: "",
-    idCheckResult: ""
+    idCheckResult: "",
+    // result: false,
   },
   reducers: {
     isLogin: (state, action) => {
@@ -235,8 +252,6 @@ const userSlice = createSlice({
       state.userInfo = action.payload;
     },
     findIdResult: (state, action) => {
-      console.log(action);
-      console.log(action);
       console.log(action.payload);
       state.findIdResult = action.payload;
     },
@@ -248,10 +263,14 @@ const userSlice = createSlice({
       console.log(action.payload);
       state.idCheckResult = action.payload;
     },
+    // result: (state, action) => {
+    //   console.log(action.payload);
+    //   state.result = action.payload;
+    // },
 
   }
 });
 
 // export const userActions = userSlice.actions;
-export const { isLogin, userInfo, findIdResult, findPwResult, idCheckResult } = userSlice.actions;
+export const { isLogin, userInfo, findIdResult, findPwResult, idCheckResult, result } = userSlice.actions;
 export default userSlice.reducer;

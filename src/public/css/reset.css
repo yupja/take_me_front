@@ -64,5 +64,8 @@ border-spacing: 0;
 * {
 box-sizing: border-box;
 }
-
+button {
+  border: none;
+  background-color: none
+}
 /* Reset CSS End */
