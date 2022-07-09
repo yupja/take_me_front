@@ -34,6 +34,8 @@ function Router() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/findid" element={<FindId />} />
         <Route path="/findpw" element={<FindPw />} />
+        <Route path="/findpwurl" element={<FindPwChange />} />
+        <Route path="/detail/:boardId" element={<Detail />} />
         <Route path="/Findpw/:id" element={<FindPwChange />} />
         <Route path="/favorite" element={<Favorite />} />
         <Route path="/history" element={<History />} />

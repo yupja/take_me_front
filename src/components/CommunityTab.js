@@ -7,18 +7,27 @@ import { useSelector } from "react-redux/es/exports";
 import { loadpostsAc,deletePostAc } from "../redux/modules/post";
 import { useNavigate, useParams } from "react-router-dom"
 import { loadsavedAc } from "../redux/modules/saved";
+import Like from "./Like";
 
 const CommunityTab = () => {
-    
+
+    React.useEffect(() => {
+        dispatch(loadpostsAc())
+        dispatch(loadsavedAc())
+    },[])
+
     const dispatch = useDispatch();
     const Navigate = useNavigate();
 
-    const params = useParams();
-    const boardIdex = params.boardId;
-   
+    const Postdata = useSelector((state) => state.post.postList.data);
+    console.log(Postdata,"postdata")
 
     const Savedata = useSelector((state) => state.saved.savedItem);
     console.log(Savedata,"savdata")
+
+    // const SavedId = Savedata.boardId
+    // console.log(SavedId)
+    // console.log(Savedata.data,"saveddata.boardid")
 
     const [showModall, setShowModall] = useState(false);
     const openModall = () => {
@@ -34,15 +43,6 @@ const CommunityTab = () => {
     const closeModalll = () => {
         setShowModalll(false);
     }
-
-    const Postdata = useSelector((state) => state.post.postList);
-    console.log(Postdata,"postdata")
-
-    React.useEffect(() => {
-        dispatch(loadpostsAc())
-        dispatch(loadsavedAc())
-    },[])
-
     const [isEdit, setIsEdit] = useState(false);
     const openEdit = () => {
         setIsEdit(true)
@@ -56,15 +56,11 @@ const CommunityTab = () => {
         setILike(true)
     }
 
-  
-
-
 return(
     <Box>
         {Postdata.map((postList, index) => {
             return(
             <div key={postList.boardId}>
-            {/* <div key={postList.id} ref={boardId === Postdata.length - 1 ? setTarget : null}> * */}
                 <>
         <ContentBox>
             <Left>
@@ -74,30 +70,39 @@ return(
         </Left>
         <Right>
             <Top>
-            <GoalName onClick={() => {Navigate(`/detail/${index}`)}}>
-                {postList.goalItemName}</GoalName>
+            <GoalName onClick={() => {
+                Navigate(`/detail/${index}`)}}>
+                {postList.goalItemName}
+                </GoalName>
             <EditBtn>
-            <ModiBtn onClick={() => {dispatch(editPost(postList.boardId))}}>🛠</ModiBtn>
-            <DelBtn onClick={() => {dispatch(deletePostAc(postList.boardId))}}>🗑</DelBtn>
+            <ModiBtn onClick={() => {dispatch(
+                editPost(postList.boardId))}}>🛠
+                </ModiBtn>
+            <DelBtn onClick={() => {dispatch(
+                deletePostAc(postList.boardId))}}>🗑
+                </DelBtn>
             </EditBtn>
             </Top>
         <Middle>
-        <Nick onClick={() => {Navigate(`/detail/${index}`)}}>
-            {postList.nickname}&nbsp;&nbsp;{postList.contents}</Nick>
+        <Nick onClick={() => 
+            {Navigate(`/detail/${index}`)}}>
+            {postList.nickname}&nbsp;&nbsp;{postList.contents}
+            </Nick>
         </Middle>
         <Foot>
-        <div style={{fontSize:"0.5rem"}}>
-        {iLike ? <>💚</> : <>🤍</> }
-        {postList.likeCount == null ? <>{postList.likeCount}</> : <>0</>}
-        </div>
+                {/* <Like
+                forLikeId = {postList.boardId}
+                likeCount = {postList.likeCount}
+                /> */}
             <div style={{marginLeft:"1rem"}}>💬</div>
-                <div onClick={() => {Navigate(`/detail/${postList.boardId}`)}}
+                <div onClick={() => {
+                    Navigate(`/detail/${postList.boardId}`)}}
                     style={{marginLeft:"0rem"}}>
                         댓글 00 개 모두 보기</div>
             <div onClick={openModall} style={{marginLeft:"auto"}}>📃</div>
             {showModall ?
             <ListModal showModall={showModall} closeModall={closeModall} 
-            savedList = {postList.boardId}
+                        forsaveId = {Postdata[index].boardId}
             />
             : null}
         </Foot>
@@ -110,8 +115,10 @@ return(
          <BtnBox>
         <FootBtn onClick={openModalll}>내 태산 % 공유</FootBtn>
         {showModalll ?
-                                    <PostModal showModalll={showModalll} closeModalll={closeModalll} />
-                                    : null}
+          <PostModal showModalll={showModalll} closeModalll={closeModalll}
+        //   savedList = {postList.boardId}
+          />
+        : null}
         </BtnBox>
     </Box>
 )

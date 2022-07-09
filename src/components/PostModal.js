@@ -8,19 +8,20 @@ const PostModal = (props) => {
 
     const dispatch = useDispatch();
 
+    const title_ref = React.useRef();
     const contents_ref = React.useRef();
-    const goalItemid_ref = React.useRef();
     const [imgFile, setImgFile] = useState();
 
     const thumb = React.useRef();
 
     const postAc = () => {
-        const post = {
+        const data = {
+            title : title_ref.current.value,
             contents:contents_ref.current.value,
-            goalItemId:goalItemid_ref.current.value
+            goalItemId: -1
         }
-        console.log(post,"좀보자")
-        dispatch(createPostAc(post))
+        console.log(data,"공유하기")
+        dispatch(createPostAc(data))
     }
 
   
@@ -43,7 +44,7 @@ const PostModal = (props) => {
                             <AddImg>이미지 등록</AddImg>
                         </Right>
                     </Middle>
-                    <Goal ref={goalItemid_ref}></Goal>
+                    <Goal ref={title_ref}></Goal>
                     <Input ref={contents_ref}></Input>
                     <Btn onClick={postAc}>공유하기</Btn>
 

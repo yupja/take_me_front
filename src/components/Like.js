@@ -3,23 +3,23 @@ import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { instance } from "../shared/axios";
 
-// import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-// import FavoriteIcon from "@mui/icons-material/Favorite";
-// import { orange } from "@mui/material/colors";
-
-const Like = ({ likeCount,boardId }) => {
+const Like = (props,{ likeCount,boardId }) => {
   const [isloaded, setIsloaded] = useState(false);
   const [like_count, setLike_count] = useState(likeCount);
   const [like, setLike] = useState();
 
-  const Postdata = useSelector((state) => state.post.postList);
-  console.log(Postdata,"likecount")
+  const Postdata = useSelector((state) => state.post.postList.data);
+  console.log(Postdata[0].boardId,"likecount")
+
+  boardId = (props.forLikeId)
 
   useEffect(() => {
     async function likeLoad(boardId) {
-      await instance.get(`/board/${boardId}}`).then((response) => {
-
+      await instance.get(`/api/board/${boardId}`)
+      .then((response) => {
+        console.log(response.data,"Like?")
         setLike(response.data);
+        debugger
       });
       setIsloaded(true);
     }
@@ -41,23 +41,21 @@ const Like = ({ likeCount,boardId }) => {
 
   return (
     <>
-      {isloaded && (
-        <LikeCnt>
+        <LikeCount>
              <div>
-                <p>좋아요{likeCount}개</p>
+                <span>{likeCount}</span>
               </div>
           {like ? (
-            <div onClick={addLike}>🤍</div>
+            <span onClick={addLike}>💚</span>
           ) : (
-            <div onClick={deleteLike}>💚</div>
+            <span onClick={deleteLike}>🤍</span>
           )}
-        </LikeCnt>
-      )}
+        </LikeCount>
     </>
   );
 };
 
-const LikeCnt = styled.div`
+const LikeCount = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;

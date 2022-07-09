@@ -16,7 +16,7 @@ function App() {
       setisLogin(true);
       dispatch(getUserInfoDB());
     }
-  }, [])
+  }, [getToken])
 
   return (
     <div className="App">

@@ -3,12 +3,12 @@ import { instance } from "../../shared/axios";
 
 
 
-export const createPostAc = (post) => {
+export const createPostAc = (data) => {
   return function (dispatch) {
-    instance.post('/board', post)
+    instance.post('/api/post/board',data)
       .then((response) => {
         console.log(response);
-        dispatch(uploadPost())
+        dispatch(uploadPost(data))
         alert("등록 완료");
       })
       .catch((error) => {
@@ -23,7 +23,7 @@ export const createPostAc = (post) => {
 
 export const loadpostsAc = () => {
   return function (dispatch) {
-    instance.get('/board')
+    instance.get('/api/board')
       .then(response => {
         //   console.log(response.data, "redux_data");
         dispatch(roadPosts(response.data));
@@ -35,12 +35,12 @@ export const loadpostsAc = () => {
 };
 
 
-export const loadDetailAc = (boardIdex) => {
+export const loadDetailAc = (boardIdex, boardId) => {
   return function (dispatch) {
-      instance.get(`/board/${boardIdex}`)
+      instance.get(`/api/board/detail/${boardId}`)
       .then(response => {
-        console.log(response.data, "redux_data");
-        dispatch(loadDetail(response.data));
+        console.log(response, "redux_data");
+        dispatch(loadDetail(response));
       })
       .catch(error => {
         console.log("get error", error)
@@ -55,7 +55,7 @@ export const loadDetailAc = (boardIdex) => {
 export const UpdatePost = (boardId) => {
   return async function (dispatch) {
     await instance
-      .put(`/board/${boardId}}`, boardId)
+      .put(`/api/board/${boardId}`, boardId)
       .then((re) => {
       })
       .catch((err) => {
@@ -72,7 +72,7 @@ export const UpdatePost = (boardId) => {
 export const deletePostAc = (boardId) => {
   return async function (dispatch) {
     await instance
-      .delete(`/board/${boardId}`)
+      .delete(`/api/board/${boardId}`)
       .then((response) => {
         dispatch(deletePostAc(boardId));
       })
@@ -90,8 +90,8 @@ export const deletePostAc = (boardId) => {
 const postSlice = createSlice({
   name: "post",
   initialState: {
-    postList: [],
-    post: {},
+    postList: {data:[]},
+    post: [],
   },
   reducers: {
     uploadPost: (state, action) => {
