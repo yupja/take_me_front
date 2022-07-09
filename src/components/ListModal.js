@@ -66,34 +66,34 @@ const ListModal = (props) => {
     );
   };
 
-const Background = styled.div`
-position: fixed;
-top: 0;
-left: 0;
-bottom: 0;
-right: 0;
-background-color: rgb(0,0,0,0.3);
-/* background-color: rgba(41,41,41,0.85); */
-`;
-
-const ModalBox = styled.div`
-position: fixed;
-left: 50%;
-top: 50%;
-transform: translate(-50%, -50%);
-width: 580px;
-min-height: 50vh;
-/* border: 5px solid red; */
-box-shadow: rgb(0 0 0 / 9%) 0px 2px 12px 0px;
-display: flex;
-z-index: 99;
-  @media screen and (max-width:600px){
-    width: 100vw;
-    height: 100vh;
-    padding: 20px;
-}
-`;
-
+  const Background = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgb(0,0,0,0.3);
+  /* background-color: rgba(41,41,41,0.85); */
+  `;
+  
+  const ModalBox = styled.div`
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 580px;
+  min-height: 50vh;
+  /* border: 5px solid red; */
+  box-shadow: rgb(0 0 0 / 9%) 0px 2px 12px 0px;
+  display: flex;
+  z-index: 99;
+    @media screen and (max-width:600px){
+      width: 100vw;
+      height: 100vh;
+      padding: 20px;
+  }
+  `;
+  
 const Close = styled.button`
 /* border: 5px solid violet; */
 width: 5vw;

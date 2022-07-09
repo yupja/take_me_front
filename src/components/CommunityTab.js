@@ -7,6 +7,7 @@ import { useSelector } from "react-redux/es/exports";
 import { loadpostsAc,deletePostAc } from "../redux/modules/post";
 import { useNavigate, useParams } from "react-router-dom"
 import { loadsavedAc } from "../redux/modules/saved";
+import Like from "./Like";
 
 const CommunityTab = () => {
 
@@ -69,27 +70,39 @@ return(
         </Left>
         <Right>
             <Top>
-            <GoalName onClick={() => {Navigate(`/detail/${index}`)}}>
-                {postList.goalItemName}</GoalName>
+            <GoalName onClick={() => {
+                Navigate(`/detail/${index}`)}}>
+                {postList.goalItemName}
+                </GoalName>
             <EditBtn>
-            <ModiBtn onClick={() => {dispatch(editPost(postList.boardId))}}>🛠</ModiBtn>
-            <DelBtn onClick={() => {dispatch(deletePostAc(postList.boardId))}}>🗑</DelBtn>
+            <ModiBtn onClick={() => {dispatch(
+                editPost(postList.boardId))}}>🛠
+                </ModiBtn>
+            <DelBtn onClick={() => {dispatch(
+                deletePostAc(postList.boardId))}}>🗑
+                </DelBtn>
             </EditBtn>
             </Top>
         <Middle>
-        <Nick onClick={() => {Navigate(`/detail/${index}`)}}>
-            {postList.nickname}&nbsp;&nbsp;{postList.contents}</Nick>
+        <Nick onClick={() => 
+            {Navigate(`/detail/${index}`)}}>
+            {postList.nickname}&nbsp;&nbsp;{postList.contents}
+            </Nick>
         </Middle>
         <Foot>
-   
+                {/* <Like
+                forLikeId = {postList.boardId}
+                likeCount = {postList.likeCount}
+                /> */}
             <div style={{marginLeft:"1rem"}}>💬</div>
-                <div onClick={() => {Navigate(`/detail/${postList.boardId}`)}}
+                <div onClick={() => {
+                    Navigate(`/detail/${postList.boardId}`)}}
                     style={{marginLeft:"0rem"}}>
                         댓글 00 개 모두 보기</div>
             <div onClick={openModall} style={{marginLeft:"auto"}}>📃</div>
             {showModall ?
             <ListModal showModall={showModall} closeModall={closeModall} 
-            forsaveId = {Postdata[index].boardId}
+                        forsaveId = {Postdata[index].boardId}
             />
             : null}
         </Foot>
