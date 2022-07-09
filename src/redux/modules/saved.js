@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { instance } from "../../shared/axios";
 
 
@@ -12,14 +12,37 @@ import { instance } from "../../shared/axios";
           console.log(error,"errr")
         }
       }}
+//--------------------- CREATE ---------------------------
+export const addSavedListRQ = createAsyncThunk(
+  'saved/add',
+  async (sendData) =>{
+    try{
+       await instance.post('/api/savedItem',sendData)
+    }catch(error){
+
+    }
+  } 
+)
+
+
+//---------------------- READ ----------------------------
 
 
 
+//-------------------- UPDATE ---------------------------
+
+//-------------------- DELETE ---------------------------
+
+
+
+
+//-------------------- SLICE ----------------------------
 
   const savedSlice = createSlice({
     name: "saved",
     initialState: {
       savedItem: {data:[]},
+      saveList:[],
       save: [],
     },
     reducers: {

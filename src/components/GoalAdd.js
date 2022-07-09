@@ -2,42 +2,96 @@ import React, {useRef, useState} from "react"
 import { useDispatch } from "react-redux"
 
 import Category from "./Category"
-import { addGoalRQ } from "../redux/modules/goal"
+import { addItem } from "../redux/modules/item"
 
 import styled from "styled-components";
+import user from "../redux/modules/user";
 
 const GoalADD = ()=>{
   const dispatch = useDispatch()
-  const [category , setCategory] = useState()
 
-  const itemName = useRef()
-  const price = useRef()
-  const goalItemCount = useRef()
+  const [category , setCategory] = useState();
+  const [image, setImage] = useState("null");
+  const [imageFile, setImageFile] = useState("null");
+
+  const itemName=useRef();
+  const price=useRef();
+  const goalItemCount=useRef();
+
+
+  const imageUpLoad = async (e)=>{
+    imagePreview(e.target.files[0]);
+    setImageFile(e.target.files[0]);
+  }
+
+  const imagePreview = (fileBlob) =>{
+    const reader = new FileReader();
+    reader.readAsDataURL(fileBlob);
+    return new Promise((resolve) =>{
+      reader.onload = () => {
+        setImage(reader.result);
+        resolve();
+      }
+    })
+  }
+
+
 
   const sendData = () =>{
     const data = {
       itemName: itemName.current.value,
       price: Number(price.current.value),
       goalItemCount: Number(goalItemCount.current.value),
-      category: Number(category),
-      categoryId: -1,
-      itemId :-1
+      categoryId: Number(category),
+      image: imageFile
     }
-    dispatch(addGoalRQ(data))
+
+    dispatch(addItem(data));
   }
+
+
+
 
  return (
     <>
-    <ModalBody> 
-      <div><Category  setCategory={setCategory}/></div>
-      <div> <p>ItemName</p> <input type='text' ref={itemName}/></div>
-      <div> <p>Price</p> <input type='text' ref={price}/></div> 
-      <div><p>수량</p> <input type="Number" ref={goalItemCount}/></div>
-    </ModalBody>
+      <ModalBody>
+        <div>
+          <img src={image}/><br/>
+          <input 
+            type="file" 
+            name="image" 
+            multiple="multiple"
+            onChange={imageUpLoad}/>
+        </div> 
+        <div>
+          <Category  setCategory={setCategory}/>
+        </div>
+        
+        <div> 
+          <p>ItemName</p>
+          <input 
+            type='text' 
+            ref={itemName} />
+        </div>
 
-    <Footer onClick={sendData}>
-      <label>티끌 등록하기</label>
-    </Footer>
+        <div> 
+          <p>Price</p>
+          <input 
+            type='text' 
+            ref={price} />
+        </div> 
+        
+        <div>
+          <p>수량</p> 
+          <input 
+            type="Number" 
+            ref={goalItemCount}/>
+        </div>
+      </ModalBody>
+
+      <Footer onClick={sendData}>
+        티끌 등록하기
+      </Footer>
     </>
   )
 
@@ -61,7 +115,7 @@ p{
 `;
 
 
-const Footer = styled.div`
+const Footer = styled.button`
 padding: 1rem;
 background: #26DFA6;
 text-align: right;
