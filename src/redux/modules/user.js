@@ -155,6 +155,7 @@ export const findIdDB = (email) => {
   return async function (dispatch) {
     console.log(email);
     await instance.post("/api/user/findId", { email: email }, {
+
       "Content-Type": "application/json",
       withCredentials: true,
     })

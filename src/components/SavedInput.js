@@ -8,12 +8,15 @@ import { BiMinus } from 'react-icons/bi'
 import styled from "styled-components";
 
 
-const FavoriteInput = (props)=>{
+const SavedInput = (props)=>{
   const dispatch = useDispatch();
+
 
   const itemName = useRef()
   const [category , setCategory] = useState("")
   const [price, setPrice] = useState(0)
+
+  console.log(props.goalItemId)
     
 
  function onlynumber(e) { // 천원단위 끊는거 구현하기 
@@ -25,7 +28,8 @@ const FavoriteInput = (props)=>{
     const sendData = {
       categoryId : Number(category),
       itemName : itemName.current.value,
-      price : Number(price)
+      price : Number(price),
+      goalItemId : Number(props.goalItemId)
     }
     dispatch(addSavedListRQ(sendData))
     props.closeModal();
@@ -130,4 +134,4 @@ justify-content: center;
 
 
 
-export default FavoriteInput
+export default SavedInput

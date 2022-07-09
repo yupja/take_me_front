@@ -23,8 +23,8 @@ export const addItem = createAsyncThunk(
 
       const goalItem = {
         categoryId : itemData.categoryId,
-        price :data?.data.defaultPrice,
-        itemId : data?.data.id,
+        price :itemData.price,
+        itemId : data?.data.itemId,
         goalItemCount: itemData.goalItemCount
       }
       const json = JSON.stringify(goalItem);
@@ -43,12 +43,18 @@ export const addItem = createAsyncThunk(
 
 
 export const addSavedItem = createAsyncThunk(
-  'item/add',
+  'item/addSaved',
   async (sendData, thunkAPI) =>{
     try{
+      const {data} = await instance.post('api/item',sendData);
+      const savedInput ={
+        // itemId :
+        // price : 
+        // goalItemId : 
 
-      //const {sendData} = await instance.post('api/item',itemAdd);
-      //thunkAPI.dispatch(addGoalAPI(formData))
+      }
+
+      thunkAPI.dispatch(addSavedListRQ())
 
     }catch(error){
       console.log(error)
@@ -59,16 +65,18 @@ export const addSavedItem = createAsyncThunk(
 
 //---------------------- READ ----------------------------
 
-export const allItemListRQ = () => { // 모든 사람의 태산 항목
-  return async function (dispatch) {
-    try {
+export const allItemListRQ = createAsyncThunk(
+  'item/read',
+  async(dispatch) =>{
+    try{
       const { data } = await instance.get('/api/item')
-      dispatch(readeAllItem(data))
-    } catch (error) {
-      console.log(error);
+      
+      return data;
+    }catch(error){
+
     }
   }
-}
+)
 
 //-------------------- UPDATE ---------------------------
 
@@ -84,10 +92,12 @@ const itemSlice = createSlice({
     allItemList: [],
   },
   reducers: {
-    readeAllItem: (state, action) => {
-      state.allItemList = action.payload;
-    }
-  },
+ },
+  extraReducers:{
+    [allItemListRQ.fulfilled]: (state, action) =>{
+      state.allItemList = action.payload
+    },
+  }
   
 });
 

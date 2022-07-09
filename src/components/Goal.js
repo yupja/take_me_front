@@ -1,8 +1,8 @@
 import styled, { keyframes } from "styled-components";
 
-function DountChart({ color, percent, size }) {
+function DountChart({ color, percent, size, image }) {
   return (
-    <Chart size={size}>
+    <Chart size={size+'px'}>
       <AniSvg viewBox="0 0 200 200">
         <circle
           cx="100"
@@ -26,10 +26,10 @@ function DountChart({ color, percent, size }) {
           strokeDashoffset={2 * Math.PI * 90 * 0.25}
         />
       </AniSvg>
-
+   {console.log(size)}
       <Img 
-      size={size}
-      src="https://item.kakaocdn.net/do/c5c470298d527ef65eb52883f0f186c49f17e489affba0627eb1eb39695f93dd"/>
+      size={size/1.4+'px'}
+      src={image}/>
     </Chart>
   );
 }
@@ -62,6 +62,7 @@ const AnimatedCircle = styled.circle`
 
 const Img = styled.img`
   position: absolute;
-  width: ${({ size }) => size};
+  border-radius: 50%;
+  width: ${({ size }) => size}*0.5;
   height: ${({ size }) => size};
 `;

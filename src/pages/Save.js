@@ -4,7 +4,7 @@ import { myReadGoalRQ } from "../redux/modules/goal"
 import { readSaveListRQ } from "../redux/modules/saved"
 
 import DayModal from "../components/DayModal";
-import SearchFavorite from "../components/SearchFavorite";
+import SearchSavedItem from "../components/SearchSavedItem";
 import HeaderMenue from "../components/HeaderMenu";
 import DountChart from "../components/Goal";
 import GoalADD from "../components/GoalAdd"
@@ -35,7 +35,8 @@ function Save() {
   const openModal = () => { setModalOpen(true); };
   const closeModal = () => { setModalOpen(false); };
 
-  const myGoalList = useSelector((state=> state.goal.allGoalList));
+  const myGoalList = useSelector((state=> state.goal.myGoalList));
+  const goalPercent = myGoalList.data?.goalPercent;
   const mySavedList = useSelector((state) => state.saved.saveList);
   console.log(myGoalList)
   const state = "데일리 티끌"
@@ -45,7 +46,7 @@ function Save() {
       <TopWrap>
         <HeaderMenue state={state} />
         <GoalMain>
-          { isGoalItem ===-1?
+          { !(myGoalList.data?.goalItemId)?
             <>  <Circle onClick={() => {
               openModal();
               setModalName("내 목표 만들기!")
@@ -57,7 +58,7 @@ function Save() {
             </>
             :
             <>
-              <DountChart color="#9bd728" percent={0.75} size="200px" />
+              <DountChart color="#9bd728" image={myGoalList.data?.image} percent={myGoalList.data?.goalPercent} size="200" />
               <div className="circle" style={{ background: "rgba(0, 0, 0, 0.5)" }}>
                 <div className="isGoalSubmenuBox">
                   <div>
@@ -77,7 +78,7 @@ function Save() {
       </TopWrap>
 
       <FavoriteArea>
-        <SearchFavorite />
+        <SearchSavedItem goalItemId={myGoalList.data?.goalItemId}/>
       </FavoriteArea>
 
       <SavedList>

@@ -13,7 +13,9 @@ export const addGoalAPI = createAsyncThunk( // 골아이템 등록
         headers :  {
           "Content-Type": "multipart/form-data",
         }
-      });
+      }
+      
+      );
     }catch(error){
 
     }
