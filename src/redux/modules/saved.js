@@ -7,7 +7,8 @@ export const addSavedListRQ = createAsyncThunk(
   'saved/add',
   async (sendData) =>{
     try{
-       await instance.post('/api/savedItem',sendData)
+      console.log(sendData);
+       //await instance.post('/api/savedItem',)
     }catch(error){
 
     }

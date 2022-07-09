@@ -154,7 +154,7 @@ export const nickCheckDB = (nick, setUserNickAlert) => {
 export const findIdDB = (email) => {
   return async function (dispatch) {
     console.log(email);
-    await axios.post("http://13.209.13.168/api/user/findId", { email: email }, {
+    await axios.post("http://3.37.61.13/api/user/findId", { email: email }, {
       "Content-Type": "application/json",
       withCredentials: true,
     })

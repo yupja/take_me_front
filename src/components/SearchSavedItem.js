@@ -12,7 +12,7 @@ import SavedInput from "./SavedInput"
 
 
 
-function SearchFavorite() {
+function SearchFavorite(props) {
 
   useEffect(() => {
     dispatch(myFavoriteListRQ());
@@ -23,11 +23,13 @@ function SearchFavorite() {
   const dispatch = useDispatch();
   const list = useSelector((state) => state.item.allItemList);
   const mylist = useSelector((state) => state.favorite.myFavoriteList);
-  
-  const allFavoriteList = [];
+  //console.log(list);
+  const allItemList = [];
   const makeList = list.data?.map((item) => {
-    allFavoriteList.push(item.itemName);
+    allItemList.push(item.itemName);
   })
+
+  console.log(list)
 
   //-------------- 모달
   const [modalOpen, setModalOpen] = useState(false);
@@ -50,22 +52,30 @@ function SearchFavorite() {
       setIsHaveInputValue(false);
       setDropDownList([]);
     } else {
-      const choosenTextList = allFavoriteList.filter(textItem =>
+      const choosenTextList = allItemList.filter(textItem =>
         textItem.includes(inputValue)
       )
       setDropDownList(choosenTextList);
     }
-  }
+  };
 
   const changeInputValue = event => {
     setInputValue(event.target.value);
     setIsHaveInputValue(true);
-  }
+  };
 
   const clickDropDownItem = clickedItem => {
     setInputValue(clickedItem);
+    savedItem();
     setIsHaveInputValue(false);
-  }
+  };
+
+  const savedItem =() =>{
+    const choosenItemIndex = list.data?.findIndex(inputValue)
+      console.log(choosenItemIndex);
+
+  };
+
 
   const handleDropDownKey = event => {
     if (isHaveInputValue) {
@@ -114,7 +124,7 @@ function SearchFavorite() {
                 </AddFavoriteInput>
                 <AddButton onClick={() => {
                   openModal();
-                  setModalState(<SavedInput closeModal={closeModal}/>)
+                  setModalState(<SavedInput closeModal={closeModal} goalItemId={props.goalItemId}/>)
                   setModalName("등록하기")
                 }}>+등록하기</AddButton>
               </DropDownItem>

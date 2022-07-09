@@ -57,7 +57,7 @@ const HeaderMenu=(props)=>{
                   
                   <Footer>
                     {localStorage.getItem('accessToken')? 
-                      <p onClick={localStorage.removeItem('accessToken')}>로그아웃</p>
+                      <p onClick={()=>{localStorage.removeItem('accessToken')}}>로그아웃</p>
                       :
                       <>
                        <p onClick={()=>{
