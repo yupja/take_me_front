@@ -1,12 +1,14 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 
 import { useLocation } from "react-router";
 import { Link } from "@mui/material";
 import SearchSavedItem from "../components/SearchSavedItem";
+import FavoriteAdd from "../components/FavoriteAdd";
 
 import Header from "../components/Header";
+import DayModal from "../components/DayModal"
 import { ReactComponent as Trash } from "../public/img/svg/Trash.svg";
 
 import { addFavoriteRQ } from "../redux/modules/favorite"
@@ -16,6 +18,13 @@ function Favorite() {
   const [selectInputValue , setSelectInputValue] = useState([]); 
   const priceInput = useRef();
   const dispatch = useDispatch();
+
+  const [modalOpen, setModalOpen] = useState(false);
+  // const [modalState, setModalState] = useState();
+  const [modalName, setModalName] = useState("");
+  const openModal = () => { setModalOpen(true); };
+  const closeModal = () => { setModalOpen(false); };
+
 
   console.log(selectInputValue);
 
@@ -29,6 +38,7 @@ function Favorite() {
     dispatch(addFavoriteRQ(sendData));
 
   }
+
 
   return (
     <Wrap>
@@ -52,7 +62,7 @@ function Favorite() {
                       type="Number"
                       ref={priceInput}/>
                     <button onClick={addFavoriteData}>등록</button>
-                    {/* <button onClick={}> 새로운 아이템등록 </button> */}
+                    <button onClick={openModal}> 새로운 아이템등록 </button>
                   </div>
                 </div>
             </li>
@@ -77,9 +87,16 @@ function Favorite() {
               <Trash className="trash" />
             </li>
           </ul>
+
+          <DayModal open={modalOpen}
+            close={closeModal}
+            header={"즐겨찾기등록"}>
+            <FavoriteAdd/>
+          </DayModal>
         </FavList>
       </FavoriteWrap>
     </Wrap>
+    
   )
 };
 
