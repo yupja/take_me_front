@@ -4,18 +4,8 @@ import { instance } from "../../shared/axios";
 
 
 //--------------------- CREATE ---------------------------
-// export const addFavoriteRQ = (data) => { // 내 즐겨찾기 추가 
-//   return function (dispatch) {
 
-//     // try {
-//     //   instance.post('/api/mypage/favorite', data);
-//     // } catch (error) {
-//     //   console.log(error)
-//     // }
-//   }
-// }
-
-export const addFavoriteRQ = createAsyncThunk( // 골아이템 등록 
+export const addFavoriteRQ = createAsyncThunk( // 내 즐겨찾기 등록 
   'add/addFavorite',
   async (sendData) => {
     try {
@@ -28,17 +18,18 @@ export const addFavoriteRQ = createAsyncThunk( // 골아이템 등록
 
 
 //---------------------- READ ----------------------------
-export const myFavoriteListRQ = () => {  // 나의 즐겨찾기 리스트 
-  return async function (dispatch) {
-    try {
+
+export const myFavoriteListRQ = createAsyncThunk(
+  'get/readMyFavorite',
+   async function(dispatch){
+    try{
       const { data } = await instance.get('/api/mypage/favorite')
-      dispatch(readMyFavorite(data))
-    } catch (error) {
+      return data;
+    }catch(error){
       console.log(error)
     }
   }
-}
-
+)
 //-------------------- UPDATE ---------------------------
 export const favoriteUpdate = (price, itemId) => {
   return async function (dispatch) {
@@ -76,12 +67,13 @@ const goalSlice = createSlice({
 
   },
   reducers: {
-    readMyFavorite: (state, action) => {
-      state.myFavoriteList = action.payload;
+  },
+  extraReducers:{
+    [myFavoriteListRQ.fulfilled]: (state, action) =>{
+      state.myFavoriteList = action.payload
     },
-
   }
 });
 
-const { readMyFavorite } = goalSlice.actions;
+const {  } = goalSlice.actions;
 export default goalSlice.reducer;

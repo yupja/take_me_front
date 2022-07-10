@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { myReadGoalRQ } from "../redux/modules/goal"
 import {addSavedListRQ} from "../redux/modules/saved"
+import { myFavoriteListRQ } from "../redux/modules/favorite";
 
 import DayModal from "../components/DayModal";
 import SearchSavedItem from "../components/SearchSavedItem";
@@ -9,6 +10,7 @@ import HeaderMenue from "../components/HeaderMenu";
 import DountChart from "../components/Goal";
 import GoalADD from "../components/GoalAdd"
 import CurrentSavedItem from "../components/CurrentSavedItem";
+import PostModal from "../components/PostModal";
 
 
 import styled from "styled-components";
@@ -20,11 +22,13 @@ import { IoArrowRedoOutline } from 'react-icons/io5'
 function Save() {
   useEffect(() => {
     dispatch(myReadGoalRQ());
+    dispatch(myFavoriteListRQ());
   }, []);
 
   const [modalOpen, setModalOpen] = useState(false);
   const [modalState, setModalState] = useState();
   const [modalName, setModalName] = useState("");
+  const [showPostModal, setShowPostModal] = useState("");
 
   const [isGoalItem, setGoalItem] = useState(-1);
   const [selectInputValue , setSelectInputValue] = useState([]); 
@@ -33,6 +37,9 @@ function Save() {
 
   const openModal = () => { setModalOpen(true); };
   const closeModal = () => { setModalOpen(false); };
+  const openPostModal = () => {setShowPostModal(true)};
+  const closePostModal = () => {setShowPostModal(false)};
+  
 
   const myGoalList = useSelector((state=> state.goal.myGoalList));
   const goal = {
@@ -94,7 +101,12 @@ function Save() {
                   </div>
                   <div>
                     <IoArrowRedoOutline size="15" />
-                    <p>내 현황 공유</p>
+                    <p onClick={() => {
+                      openPostModal();
+                      }}>내 현황 공유</p>
+                    {showPostModal ?
+                      <PostModal showModalll={showPostModal} closeModalll={closePostModal}/>
+                      : null}
                   </div>
                 </div>
               </div>
