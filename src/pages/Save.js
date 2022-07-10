@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { myReadGoalRQ } from "../redux/modules/goal"
-import { readSaveListRQ } from "../redux/modules/saveList"
+import { readSaveListRQ } from "../redux/modules/saved"
 
 import DayModal from "../components/DayModal";
 import SearchFavorite from "../components/SearchFavorite";
@@ -26,15 +26,18 @@ function Save() {
   const [modalState, setModalState] = useState();
   const [modalName, setModalName] = useState("");
 
+  const [isGoalItem, setGoalItem] = useState(-1);
+
+
   const dispatch = useDispatch();
 
 
   const openModal = () => { setModalOpen(true); };
   const closeModal = () => { setModalOpen(false); };
 
-  const myGoalList = [];
-  const mySavedList = useSelector((state) => state.save.saveList);
-  console.log(mySavedList)
+  const myGoalList = useSelector((state=> state.goal.allGoalList));
+  const mySavedList = useSelector((state) => state.saved.saveList);
+  console.log(myGoalList)
   const state = "데일리 티끌"
 
   return (
@@ -42,7 +45,7 @@ function Save() {
       <TopWrap>
         <HeaderMenue state={state} />
         <GoalMain>
-          {myGoalList.length === 0 ?
+          { isGoalItem ===-1?
             <>  <Circle onClick={() => {
               openModal();
               setModalName("내 목표 만들기!")
@@ -79,7 +82,7 @@ function Save() {
 
       <SavedList>
 
-        {mySavedList.length === 0 ?
+        {/* {mySavedList.length === 0 ? */}
           <>
             <NoSaveList>
               👆
@@ -104,7 +107,7 @@ function Save() {
               </>
             ))}
           </>
-        }
+        {/* } */}
       </SavedList>
 
       <DayModal open={modalOpen}

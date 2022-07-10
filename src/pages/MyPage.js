@@ -5,24 +5,19 @@ import { useDispatch, useSelector } from "react-redux";
 
 import Header from "../components/Header";
 import { userSecDB } from "../redux/modules/user";
+import { getInfo } from "../redux/modules/info";
 
 function MyPage() {
   const dispatch = useDispatch();
-  const state = useSelector((state) => state.user);
+  const state = useSelector((state) => state.info.infoList);
   const [openModal, setOpenModal] = useState(false);
   const [pwAlertStr, setPwAlertStr] = useState('');
   console.log(state)
   // const state = useSelector((state) => state.user);
 
-  // useEffect(() => {
-  //   console.log(state.result);
-  //   if (state.result === true) {
-  //     setOpenModal(false);
-  //   }
-  //   if (state.result === false) {
-  //     setPwAlertStr('잘못된 비밀번호입니다.')
-  //   }
-  // }, [state])
+  useEffect(() => {
+    dispatch(getInfo())
+  }, [dispatch])
 
   const pwRef = useRef();
 
@@ -34,33 +29,35 @@ function MyPage() {
     setOpenModal(false)
   };
 
-  const secession = (e) => {
+  // 탈퇴하기
+  const secession = async () => {
     const pw = pwRef.current.value;
+    const username = state.infoList.username;
 
     if (pw === '') {
       setPwAlertStr('비밀번호를 입력해주세요.')
       pwRef.current.focus();
       return;
     }
-    dispatch(userSecDB(pw, setOpenModal, setPwAlertStr))
-
+    await dispatch(userSecDB(pw, username, setOpenModal, setPwAlertStr))
+    console.log("디스패치 끝!")
   };
 
-  console.log(openModal)
+  console.log(state.introDesc)
 
   return (
     <>
       <Header />
       <MyPageWrap>
         <MyInfo>
-          <div><img src="" alt="" /></div>
-          <p>
-            내가 나를 소개하는 글을 적어보도록 하겠습니다.
-            바로 이자리에 말이죠 글자는 2줄로 지정 해보겠습니다.
+          <div><img src={state.profileImg} alt="" /></div>
+          <p>{state.introDesc === null ?
+            "기본 소개글" : state.introDesc
+          }
           </p>
         </MyInfo>
         <MyMenu>
-          <h2><span>석구</span>님<br />환영합니다!🖐</h2>
+          <h2><span>{state.nickname}</span>님<br />환영합니다!🖐</h2>
           <MenuList>
             <li>
               <Link to="/favorite">
@@ -113,7 +110,7 @@ function MyPage() {
             <Info>
               <div>
                 <span>아이디</span>
-                <input type="text" defaultValue="id" readOnly />
+                <input type="text" defaultValue={state.infoList.username} readOnly />
               </div>
               <div>
                 <span>비밀번호</span>
@@ -182,6 +179,11 @@ div {
   height: 7.5rem;
   background: #d9d9d9;
   margin: auto;
+  border-radius: 50%;
+}
+img{
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
 }
 p {

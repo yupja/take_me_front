@@ -1,38 +1,119 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
-import { useLocation } from "react-router";
 
 import Header from "../components/Header";
+import { useDispatch, useSelector } from "react-redux";
+import { getInfo, infoUpdate } from "../redux/modules/info";
 
 function Proflie() {
-  const { state } = useLocation();
+  const dispatch = useDispatch();
+  const infoState = useSelector((state) => state.info.infoList);
+
+  useEffect(() => {
+    dispatch(getInfo())
+    // console.log(infoState)
+  }, [dispatch])
+
+
+  const introDescRef = useRef(null);
+  const nickRef = useRef();
+  // const fileRef = useRef();
+
+  console.log(infoState)
+  const [image, setImage] = useState('');
+  const [previewImg, setPreviewImg] = useState('');
+  const [email, setEmail] = useState('');
+
+
+  useEffect(() => {
+    setImage(infoState.profileImg)
+    setEmail(infoState.email)
+    setPreviewImg(infoState.profileImg)
+  }, [infoState])
+
+
+
+  const imageUpLoad = async (e) => {
+    imagePreview(e.target.files[0]);
+    setPreviewImg(e.target.files[0]);
+  }
+
+
+  const infoChange = (e) => {
+    const introDesc = introDescRef.current.value;
+    const nick = nickRef.current.value;
+
+    const formData = new FormData();
+    console.log(introDesc);
+    formData.append('image', previewImg);
+
+    const changeInfo = {
+      introDesc: introDesc, // 미작성시 그대로 저장!
+      nickname: nick,
+      email: email,
+    }
+    const json = JSON.stringify(changeInfo);
+    const blob = new Blob([json], { type: "application/json" });
+    formData.append('changeInfo', blob);
+
+    console.log(changeInfo);
+
+    dispatch(infoUpdate(formData));
+
+  }
+
+  console.log(infoState.introDesc);
+
+
+
+  // 미리보기
+  const imagePreview = (fileBlob) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(fileBlob);
+    return new Promise((resolve) => {
+      reader.onload = () => {
+        setImage(reader.result);
+        resolve();
+      }
+    })
+  }
+
 
   return (
     <>
       <Header />
       <ProflieWrap>
         <MyInfo>
-          <ProflieImg><img src="" alt="" /><div className="icon"></div></ProflieImg>
-          <Nick><span>석구</span>님</Nick>
-          <p className="word">
-            내가 나를 소개하는 글을 적어보도록 하겠습니다.
-            바로 이자리에 말이죠 글자는 2줄로 지정 해보겠습니다.
-          </p>
+          <ProflieImg>
+            <img src={image} alt="" />
+            <label htmlFor="file">편집</label>
+            <input type="file" id="file" className="icon"
+              onChange={imageUpLoad}
+              multiple="multiple"
+              accept=".jpg, .png, image/jpeg, .svg" />
+          </ProflieImg>
+          <Nick><span>{infoState.nickname}</span>님</Nick>
+          <Nick><input type="text" defaultValue={infoState.nickname} ref={nickRef} /> 님</Nick>
+          <input type="text" className="word" ref={introDescRef} defaultValue={
+            infoState.introDesc === null ?
+              "기본 소개글" : infoState.introDesc
+          }>
+          </input>
           <SubInfo>
             <div>
               <span>아이디</span>
-              <p>eunjin123</p>
+              <p>{infoState.username}</p>
             </div>
             <div>
               <span>이메일</span>
-              <p>eunjin@naver.com</p>
+              <p>{email}</p>
               <button>변경</button>
             </div>
           </SubInfo>
         </MyInfo>
-        <EditBtn>적용하기</EditBtn>
-        <LoginOutBtn>로그아웃</LoginOutBtn>
+        <EditBtn onClick={infoChange}>적용하기</EditBtn>
+        <LoginOutBtn >로그아웃</LoginOutBtn>
       </ProflieWrap>
     </>
   )
@@ -78,14 +159,34 @@ const ProflieImg = styled.div`
   background: #d9d9d9;
   margin: auto;
   border-radius: 50%;
+  label {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    border-radius: 50%;
+    background: #666;
+    width: 2.5rem;
+    height: 2.5rem;
+    line-height: 2.5rem;
+  }
+  img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+  }
   .icon{
     position: absolute;
     right: 0; bottom:0;
     border-radius: 50%;
     background: #666;
-    width: 2.5rem;
-    height: 2.5rem;
   }
+  input[type="file"] {
+    width: 0;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+}
 `
 const SubInfo = styled.div`
 padding-top: 30px; 

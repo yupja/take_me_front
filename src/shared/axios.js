@@ -3,11 +3,12 @@ import { getCookie, setCookie, removeCookie } from "../redux/modules/cookie";
 
 export const instance = axios.create({
   baseURL: "http://3.37.61.13"
+  // baseURL: "http://13.209.13.168"
 });
 
 instance.interceptors.request.use(
   (config) => {
-    config.headers["Content-Type"] = "application/json";
+    // config.headers["Content-Type"] = "application/json";
     config.withCredentials = true;
 
     const accessToken = localStorage.getItem("accessToken");
@@ -23,11 +24,11 @@ instance.interceptors.request.use(
 
 instance.interceptors.response.use(
   function (response) {
-    console.log(response);
+    // console.log(response);
     return response;
   },
   function (error) {
-    console.log(error.response.data.code)
+    // console.log(error)
     const errMsg = error.response.data.code
     // const originalRequest = error.config;
     if (errMsg === 444) {

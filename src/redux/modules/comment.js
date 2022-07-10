@@ -3,12 +3,13 @@ import { instance } from "../../shared/axios";
 
 
 
-  export const createCommentAc = (data) => {
+  export const createCommentAc = (data, boardId) => {
     return function (dispatch) {
-        instance.post('/comment', data)
+        instance.post(`/api/board/${boardId}/comment`, data)
         .then(response => {
             // console.log(response,"console create")
             dispatch(createComment(response.data));
+            console.log(response.data,"댓글등록")
         })
         .catch(error => {
           console.log("get error", error)
@@ -16,9 +17,9 @@ import { instance } from "../../shared/axios";
     };
   };
 
-export const loadCommentAc = () => {
+export const loadCommentAc = (boardId) => {
     return function (dispatch) {
-        instance.get('/comment')
+        instance.get(`/api/board/${boardId}/comment`)
         .then(response => {
             console.log(response.data,"console load")
             dispatch(loadComment(response.data));
@@ -29,9 +30,9 @@ export const loadCommentAc = () => {
   };
 }
 
-export const updateCommentAc = (boardId, commentId,data) => {
+export const updateCommentAc = (boardId, commentId, data) => {
     return function (dispatch) {
-        instance.put(`/comment/${commentId}`,data)
+        instance.put(`/api/board/${boardId}/comment/${commentId}`,data)
         .then((response)=>{
       }).catch((error) => {
         console.log(error)
@@ -41,10 +42,10 @@ export const updateCommentAc = (boardId, commentId,data) => {
   };
 
 
-export const deleteComment = (commentId) => {
+export const deleteComment = (boardId, commentId) => {
     return async function (dispatch) {
       await instance
-        .delete(`/comment/${commentId}`)
+        .delete(`/api/board/${boardId}/comment/${commentId}`)
         .then((response) => {
         })
         .catch((err) => {

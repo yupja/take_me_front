@@ -5,12 +5,21 @@ import styled from "styled-components";
 import { useLocation } from "react-router";
 import { Link } from "@mui/material";
 import SearchFavorite from "../components/SearchFavorite";
+import { myFavoriteListRQ } from "../redux/modules/favorite";
 
 import Header from "../components/Header";
 import { ReactComponent as Trash } from "../public/img/svg/Trash.svg";
 
 function Favorite() {
-  const { state } = useLocation();
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(myFavoriteListRQ());
+  }, []);
+
+  const mylist = useSelector((state) => state.favorite.myFavoriteList);
+
+  console.log(mylist)
 
   return (
     <Wrap>

@@ -62,7 +62,8 @@ export const getUserInfoDB = () => {
         }
         console.log(userInfo)
 
-        dispatch(userInfo(userInfo))
+        dispatch(infoList(userInfo))
+
       })
       .catch((error) => {
         console.log(error);
@@ -214,17 +215,28 @@ export const changePw = (data) => {
 };
 
 // 탈퇴
-export const userSecDB = (pw, modal, pwAlert) => {
+export const userSecDB = (pw, id, modal, pwAlert) => {
   return async function (dispatch) {
-    await instance.post("/api/mypage/profile", pw, {
-      "Content-Type": "application/json",
-      withCredentials: true,
+    console.log(pw, id);
+    await instance.post("/api/user/resign", {
+      username: id,
+      password: pw
     })
       .then((response) => {
-        dispatch(result(response));
+        console.log(response)
+        dispatch(result(true));
+        console.log("then끝!")
+        console.log("then끝!")
+        console.log("then끝!")
+        console.log("then끝!")
       })
       .catch((error) => {
-        window.alert(error);
+        console.log("에러 끝!")
+        console.log("에러 끝!")
+        console.log("에러 끝!")
+        console.log("에러 끝!")
+        console.log("에러 끝!")
+        console.log(error);
       });
   };
 };
@@ -235,21 +247,19 @@ const userSlice = createSlice({
   name: "user",
   initialState: {
     isLogin: false,
-    userInfo: [],
+    infoList: [],
     findIdResult: [],
     findPwResult: "",
     idCheckResult: "",
-    // result: false,
+    result: false,
   },
   reducers: {
     isLogin: (state, action) => {
       console.log(action.payload);
       state.isLogin = action.payload;
     },
-    userInfo: (state, action) => {
-      console.log(state, action);
-      console.log(action.payload);
-      state.userInfo = action.payload;
+    infoList: (state, action) => {
+      state.infoList = action.payload;
     },
     findIdResult: (state, action) => {
       console.log(action.payload);
@@ -263,14 +273,15 @@ const userSlice = createSlice({
       console.log(action.payload);
       state.idCheckResult = action.payload;
     },
-    // result: (state, action) => {
-    //   console.log(action.payload);
-    //   state.result = action.payload;
-    // },
+    result: (state, action) => {
+      console.log("리듀서끝!")
+      console.log(action.payload);
+      state.result = action.payload;
+    },
 
   }
 });
 
 // export const userActions = userSlice.actions;
-export const { isLogin, userInfo, findIdResult, findPwResult, idCheckResult, result } = userSlice.actions;
+export const { isLogin, infoList, findIdResult, findPwResult, idCheckResult, result } = userSlice.actions;
 export default userSlice.reducer;
