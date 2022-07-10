@@ -4,10 +4,11 @@ import { instance } from "../../shared/axios";
 
 
   export const createCommentAc = (data, boardId) => {
-    return function (dispatch) {
-        instance.post(`/api/board/${boardId}/comment`, data)
+    return async function (dispatch) {
+      // console.log(data.comment,"data")
+        await instance.post(`/api/board/${boardId}/comment`,data)
         .then(response => {
-            // console.log(response,"console create")
+            console.log(response,"comment")
             dispatch(createComment(response.data));
             console.log(response.data,"댓글등록")
         })
@@ -15,6 +16,7 @@ import { instance } from "../../shared/axios";
           console.log("get error", error)
         })
     };
+    
   };
 
 export const loadCommentAc = (boardId) => {

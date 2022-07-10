@@ -20,14 +20,25 @@ export const likeChange = createAsyncThunk(  // 라이크 변경
 
 export const createPostAc = (data) => {
   return async function (dispatch) {
-    console.log(data);
-    await instance.post('/api/post/board', data, {
-      "Content-Type": "application/json",
-      withCredentials: true,
+    const formData = new FormData();
+
+    const request = {
+      title : data.title,
+      contents : data.contents
+    }
+    const json = JSON.stringify(request);
+    const blob = new Blob([json], { type : "application/json"});
+
+    formData.append('image',data.image)
+    formData.append('request', blob)
+    await instance.post('/api/post/board',formData,{
+      headers : {
+        "Content-Type": "multipart/form-data",
+      }
     })
       .then((response) => {
         console.log(response);
-        dispatch(uploadPost(data))
+        dispatch(uploadPost(formData))
         alert("등록 완료");
       })
       .catch((error) => {
