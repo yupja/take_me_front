@@ -5,9 +5,10 @@ import styled from "styled-components";
 import SearchSavedItem from "../components/SearchSavedItem";
 import FavoriteList from "../components/FavoriteList"
 import { myFavoriteListRQ } from "../redux/modules/favorite";
+import FavoriteAdd from "../components/FavoriteAdd";
 
 import Header from "../components/Header";
-import { ReactComponent as Trash } from "../public/img/svg/Trash.svg";
+import DayModal from "../components/DayModal"
 
 import { addFavoriteRQ } from "../redux/modules/favorite"
 
@@ -17,6 +18,14 @@ function Favorite() {
   const priceRef = useRef();
   const dispatch = useDispatch();
 
+  const [modalOpen, setModalOpen] = useState(false);
+  // const [modalState, setModalState] = useState();
+  const [modalName, setModalName] = useState("");
+  const openModal = () => { setModalOpen(true); };
+  const closeModal = () => { setModalOpen(false); };
+
+
+  console.log(selectInputValue);
 
   const addFavoriteData = () => {
     const sendData = {
@@ -67,7 +76,7 @@ function Favorite() {
                       type="Number"
                       ref={priceInput} />
                     <button onClick={addFavoriteData}>등록</button>
-                    {/* <button onClick={}> 새로운 아이템등록 </button> */}
+                    <button onClick={openModal}> 새로운 아이템등록 </button>
                   </div>
                 </div>
               </li>
@@ -80,9 +89,16 @@ function Favorite() {
               />
             ))}
           </ul>
+
+          <DayModal open={modalOpen}
+            close={closeModal}
+            header={"즐겨찾기등록"}>
+            <FavoriteAdd />
+          </DayModal>
         </FavList>
       </FavoriteWrap>
     </Wrap>
+
   )
 };
 
