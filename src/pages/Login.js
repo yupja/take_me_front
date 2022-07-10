@@ -58,7 +58,8 @@ function Login() {
       return;
     }
     dispatch(LoginDB(loginInfo, setModalStr, setNavToggles));
-    // navigate(-1);
+    navigate("/save");
+
   }
 
   return (

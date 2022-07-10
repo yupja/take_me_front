@@ -38,8 +38,8 @@ function Save() {
   const goal = {
     goalImage : myGoalList.data?.image,
     goalItemId : myGoalList.data?.goalItemId,
-    goalPercent : (myGoalList.data?.goalPercent)*0.01
-
+    goalPercent : (myGoalList.data?.goalPercent)*0.01,
+    goalitemName: myGoalList.data?.itemName
   }
 
   const state = "데일리 티끌"
@@ -98,7 +98,7 @@ function Save() {
                   </div>
                 </div>
               </div>
-              <p className="goalTitle">{goal.itemName} {goal.goalPercent*100}%</p>
+              <p className="goalTitle">{goal.goalitemName} {goal.goalPercent*100}%</p>
             </>
           }
         </GoalMain>

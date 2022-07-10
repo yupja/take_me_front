@@ -23,14 +23,15 @@ function Router() {
       <Routes>
         {/* <Route path="*" element={<NotFound />} /> */}
         {/* <Route path="/main" element={<Main />} />  */}
-        <Route path="/" element={<Save />} />
+        <Route path="/save" element={<Save />} />
         {/* <Route path="/statistics" element={<Statistics />} /> */}
         {/* <Route path="/detail/:boardId" element={<Detail />} /> */}
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/community" element={<Community />} />
         <Route path="/community/:id" element={<Community />} />
         <Route path="/ranking" element={<Ranking />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Login />} />
+        {/* <Route path="/login" element={<Login />} /> */}
         <Route path="/signup" element={<SignUp />} />
         <Route path="/findid" element={<FindId />} />
         <Route path="/findpw" element={<FindPw />} />
