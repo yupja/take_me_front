@@ -42,6 +42,7 @@ function Detail(props) {
             comment: comment_ref.current.value,
         }
         dispatch(createCommentAc(data, boardId))
+        console.log(data, boardId,"dispatch")
     };
 
     const state = "커뮤니티"
