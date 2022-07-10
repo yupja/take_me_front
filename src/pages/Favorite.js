@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
@@ -9,18 +9,54 @@ import SearchSavedItem from "../components/SearchSavedItem";
 import Header from "../components/Header";
 import { ReactComponent as Trash } from "../public/img/svg/Trash.svg";
 
+import { addFavoriteRQ } from "../redux/modules/favorite"
+
 function Favorite() {
   const { state } = useLocation();
+  const [selectInputValue , setSelectInputValue] = useState([]); 
+  const priceInput = useRef();
+
+  console.log(selectInputValue);
+
+  const addFavoriteData = ()=>{
+    const sendData = {
+      categoryId:selectInputValue.categoryId,
+      itemName:selectInputValue.itemName,
+      itemId:selectInputValue.itemId,
+      price: priceInput.current.value
+    }
+
+    console.log(sendData)
+
+  }
 
   return (
     <Wrap>
       <Header />
       <FavoriteWrap>
         <Category>카테고리 영역</Category>
-        <SearchSavedItem />
+        <SearchSavedItem 
+          state={"favoriteState"}
+          setSelectInputValue={setSelectInputValue}/>
         <FavList>
           <Total>00개</Total>
           <ul>
+            {selectInputValue.length===0? "" 
+            : 
+              <li>
+                <div>
+                  <span>⭐</span>
+                  <p>{selectInputValue.itemName}</p>
+                  <div>
+                    <input 
+                      type="Number"
+                      ref={priceInput}/>
+                    <button onClick={addFavoriteData}>등록</button>
+                  </div>
+                </div>
+            </li>
+            }
+   
             <li>
               <span>2022<br />07.07</span>
               <h2>택시비</h2>

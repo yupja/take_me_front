@@ -117,8 +117,7 @@ function Save() {
             <div>
               <input 
                 type="Number"
-                ref={priceInput}
-              ></input>
+                ref={priceInput}/>
               <button onClick={addSaveData}>등록</button>
             </div>
         </AddSavedStyle>
