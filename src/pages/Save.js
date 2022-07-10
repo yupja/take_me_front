@@ -8,7 +8,6 @@ import SearchSavedItem from "../components/SearchSavedItem";
 import HeaderMenue from "../components/HeaderMenu";
 import DountChart from "../components/Goal";
 import GoalADD from "../components/GoalAdd"
-import SaveList from "../components/CurrentSavedItem"
 import CurrentSavedItem from "../components/CurrentSavedItem";
 
 
