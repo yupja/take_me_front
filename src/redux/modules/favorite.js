@@ -17,10 +17,10 @@ import { instance } from "../../shared/axios";
 
 export const addFavoriteRQ = createAsyncThunk( // 골아이템 등록 
   'add/addFavorite',
-  async(sendData) =>{
-    try{
-      await instance.post("/api/mypage/favorite",sendData) 
-    }catch(error){
+  async (sendData) => {
+    try {
+      await instance.post("/api/mypage/favorite", sendData)
+    } catch (error) {
       console.log(error);
     }
   }
@@ -28,11 +28,10 @@ export const addFavoriteRQ = createAsyncThunk( // 골아이템 등록
 
 
 //---------------------- READ ----------------------------
-
-export const myFavoriteListRQ = ()=>{  // 나의 즐겨찾기 리스트 
+export const myFavoriteListRQ = () => {  // 나의 즐겨찾기 리스트 
   return async function (dispatch) {
     try {
-      const { data } = await instance.get('/favoriteItem')
+      const { data } = await instance.get('/api/mypage/favorite')
       dispatch(readMyFavorite(data))
     } catch (error) {
       console.log(error)
@@ -41,10 +40,32 @@ export const myFavoriteListRQ = ()=>{  // 나의 즐겨찾기 리스트
 }
 
 //-------------------- UPDATE ---------------------------
-
+export const favoriteUpdate = (price, itemId) => {
+  return async function (dispatch) {
+    await instance.put(`/api/mypage/favorite/${itemId}`, price, {
+      "Content-Type": "application/json",
+      withCredentials: true,
+    })
+      .then((response) => {
+        console.log(response)
+      })
+      .catch((error) => {
+        console.log(error)
+      });
+  };
+};
 //-------------------- DELETE ---------------------------
-
-
+export const favoriteDel = (itemId) => {
+  return async function (dispatch) {
+    await instance.delete(`/api/mypage/favorite/${itemId}`)
+      .then((response) => {
+        console.log(response)
+      })
+      .catch((error) => {
+        console.log(error)
+      });
+  };
+};
 
 
 //-------------------- SLICE ----------------------------

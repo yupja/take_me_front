@@ -32,9 +32,9 @@ function Router() {
         <Route path="/" element={<Login />} />
         {/* <Route path="/login" element={<Login />} /> */}
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/findid" element={<FindId />} />
-        <Route path="/findpw" element={<FindPw />} />
-        <Route path="/findpwurl" element={<FindPwChange />} />
+        <Route path="/user/findid" element={<FindId />} />
+        <Route path="/user/findpw" element={<FindPw />} />
+        <Route path="/user/changePassword/:token" element={<FindPwChange />} />
         <Route path="/detail/:boardId" element={<Detail />} />
         <Route path="/Findpw/:id" element={<FindPwChange />} />
         <Route path="/favorite" element={<Favorite />} />
