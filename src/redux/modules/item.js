@@ -42,26 +42,26 @@ export const addItem = createAsyncThunk(
 
 
 
-export const addSavedItem = createAsyncThunk(
-  'item/addSaved',
-  async (sendData, thunkAPI) =>{
-    try{
-      const {data} = await instance.post('api/item',sendData);
-      const savedInput ={
-        // itemId :
-        // price : 
-        // goalItemId : 
+// export const addSavedItem = createAsyncThunk(
+//   'item/addSaved',
+//   async (sendData, thunkAPI) =>{
+//     try{
+//       const {data} = await instance.post('api/item',sendData);
+//       const savedInput ={
+//         // itemId :
+//         // price : 
+//         // goalItemId : 
 
-      }
+//       }
 
-      thunkAPI.dispatch(addSavedListRQ())
+//       thunkAPI.dispatch(addSavedListRQ())
 
-    }catch(error){
-      console.log(error)
+//     }catch(error){
+//       console.log(error)
 
-    }
-  }
-)
+//     }
+//   }
+// )
 
 //---------------------- READ ----------------------------
 

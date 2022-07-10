@@ -5,7 +5,6 @@ import { createPostAc } from "../redux/modules/post";
 
 
 const PostModal = (props) => {
-
     const dispatch = useDispatch();
 
     const title_ref = React.useRef();
@@ -13,7 +12,7 @@ const PostModal = (props) => {
     const [imgFile, setImgFile] = useState();
 
     const thumb = React.useRef();
-
+    
     const postAc = () => {
         const data = {
             title : title_ref.current.value,

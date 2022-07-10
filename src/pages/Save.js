@@ -1,25 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { myReadGoalRQ } from "../redux/modules/goal"
-import { readSaveListRQ } from "../redux/modules/saved"
+import {addSavedListRQ} from "../redux/modules/saved"
 
 import DayModal from "../components/DayModal";
 import SearchSavedItem from "../components/SearchSavedItem";
 import HeaderMenue from "../components/HeaderMenu";
 import DountChart from "../components/Goal";
 import GoalADD from "../components/GoalAdd"
+import SaveList from "../components/CurrentSavedItem"
+import CurrentSavedItem from "../components/CurrentSavedItem";
+
 
 import styled from "styled-components";
 import "../public/css/saveMain.css"
 import { FaRegEdit } from 'react-icons/fa'
 import { IoArrowRedoOutline } from 'react-icons/io5'
-import { AiOutlineStar } from 'react-icons/ai'
 
 
 function Save() {
   useEffect(() => {
     dispatch(myReadGoalRQ());
-    //dispatch(readSaveListRQ());
   }, []);
 
   const [modalOpen, setModalOpen] = useState(false);
@@ -27,26 +28,53 @@ function Save() {
   const [modalName, setModalName] = useState("");
 
   const [isGoalItem, setGoalItem] = useState(-1);
-
+  const [selectInputValue , setSelectInputValue] = useState([]); 
 
   const dispatch = useDispatch();
-
 
   const openModal = () => { setModalOpen(true); };
   const closeModal = () => { setModalOpen(false); };
 
   const myGoalList = useSelector((state=> state.goal.myGoalList));
-  const goalPercent = myGoalList.data?.goalPercent;
-  const mySavedList = useSelector((state) => state.saved.saveList);
-  console.log(myGoalList)
+  const goal = {
+    goalImage : myGoalList.data?.image,
+    goalItemId : myGoalList.data?.goalItemId,
+    goalPercent : (myGoalList.data?.goalPercent)*0.01
+
+  }
+
   const state = "데일리 티끌"
+  const priceInput = useRef();
+
+  const addSaveData = () =>{
+    let sendData={}
+
+    if(myGoalList.length===0){
+        sendData ={
+        itemId : selectInputValue.itemId,
+        price :priceInput.current.value,
+        goalItemId:-1
+      }
+      
+    }else{
+      sendData ={
+        itemId : selectInputValue.itemId,
+        price :priceInput.current.value,
+        goalItemId: goal.goalItemId
+      }
+
+    }
+
+    dispatch(addSavedListRQ(sendData));
+    setSelectInputValue([])
+  }
 
   return (
     <div className="wrap">
       <TopWrap>
         <HeaderMenue state={state} />
         <GoalMain>
-          { !(myGoalList.data?.goalItemId)?
+          {myGoalList.data==null?
             <>  <Circle onClick={() => {
               openModal();
               setModalName("내 목표 만들기!")
@@ -58,7 +86,7 @@ function Save() {
             </>
             :
             <>
-              <DountChart color="#9bd728" image={myGoalList.data?.image} percent={myGoalList.data?.goalPercent} size="200" />
+              <DountChart color="#26DFA6" image={goal.goalImage} percent={goal.goalPercent} size="200" />
               <div className="circle" style={{ background: "rgba(0, 0, 0, 0.5)" }}>
                 <div className="isGoalSubmenuBox">
                   <div>
@@ -71,64 +99,44 @@ function Save() {
                   </div>
                 </div>
               </div>
-              <p className="goalTitle">로봇청소기</p>
+              <p className="goalTitle">{goal.itemName} {goal.goalPercent*100}%</p>
             </>
           }
         </GoalMain>
       </TopWrap>
 
       <FavoriteArea>
-        <SearchSavedItem goalItemId={myGoalList.data?.goalItemId}/>
+        <SearchSavedItem setSelectInputValue={setSelectInputValue}
+                         state={"saveState"}/>
       </FavoriteArea>
 
-      <SavedList>
+      {selectInputValue.length!==0? 
+        <>      
+        <AddSavedStyle>
+          <div>⭐</div>
+          <p>{selectInputValue.itemName}</p>
+            <div>
+              <input 
+                type="Number"
+                ref={priceInput}
+              ></input>
+              <button onClick={addSaveData}>등록</button>
+            </div>
+        </AddSavedStyle>
+      </>
+      :""}
 
-        {/* {mySavedList.length === 0 ? */}
-          <>
-            <NoSaveList>
-              👆
-              <p>오늘은</p>
-              <p>무엇을 아끼셨나요?</p>
-              <p style={{ color: "#26DFA6" }}>등록해 보세요!</p>
-
-            </NoSaveList>
-          </>
-          :
-          <>
-            {mySavedList && mySavedList.map((savedItem, savedItemIndex) => (
-              <>
-                <div className="sListWrap">
-                  <div className="star"><AiOutlineStar /></div>
-                  <p className="date">{savedItem.createdAt}<br /></p>
-                  <p>{savedItem.categoryName}</p>
-                  <p>{savedItem.itemName}</p>
-                  <button>수정</button>
-                  <button>삭제</button>
-                </div>
-              </>
-            ))}
-          </>
-        {/* } */}
-      </SavedList>
-
-      <DayModal open={modalOpen}
+     
+      <CurrentSavedItem goalItemId={goal.goalItemId}/>
+        
+        <DayModal open={modalOpen}
         close={closeModal}
         header={modalName}>
         {modalState}
-      </DayModal>
-    </div>
+        </DayModal>
+      </div>
   );
 }
-
-
-const NoSaveList = styled.div`
-display: flex;
-flex-direction: column;
-text-align: center;
-justify-content: center;
-font-size: 2rem;
-
-`;
 
 const TopWrap = styled.div`
 display: flex;
@@ -147,7 +155,6 @@ justify-content: center;
 flex-direction: column;
 align-items: center;
 height: 100%;
-
 
 `;
 
@@ -173,13 +180,13 @@ flex-direction: column;
 `;
 
 
-const SavedList = styled.div`
-display: flex;
-height: 30vh;
-p{
-    padding-top: 1rem;
-}
 
+
+const AddSavedStyle = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 2%;
 `;
 
 export default Save;
