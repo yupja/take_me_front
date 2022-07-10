@@ -26,7 +26,6 @@ function DountChart({ color, percent, size, image }) {
           strokeDashoffset={2 * Math.PI * 90 * 0.25}
         />
       </AniSvg>
-   {console.log(size)}
       <Img 
       size={size/1.4+'px'}
       src={image}/>
