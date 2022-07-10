@@ -15,6 +15,7 @@ function Favorite() {
   const { state } = useLocation();
   const [selectInputValue , setSelectInputValue] = useState([]); 
   const priceInput = useRef();
+  const dispatch = useDispatch();
 
   console.log(selectInputValue);
 
@@ -23,16 +24,15 @@ function Favorite() {
       categoryId:selectInputValue.categoryId,
       itemName:selectInputValue.itemName,
       itemId:selectInputValue.itemId,
-      price: priceInput.current.value
+      price: Number(priceInput.current.value)
     }
-
-    console.log(sendData)
+    dispatch(addFavoriteRQ(sendData));
 
   }
 
   return (
     <Wrap>
-      <Header />
+      <Header/>
       <FavoriteWrap>
         <Category>카테고리 영역</Category>
         <SearchSavedItem 
@@ -52,6 +52,7 @@ function Favorite() {
                       type="Number"
                       ref={priceInput}/>
                     <button onClick={addFavoriteData}>등록</button>
+                    {/* <button onClick={}> 새로운 아이템등록 </button> */}
                   </div>
                 </div>
             </li>

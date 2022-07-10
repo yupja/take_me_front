@@ -1,18 +1,30 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { instance } from "../../shared/axios";
 
 
 
 //--------------------- CREATE ---------------------------
-export const addFavoriteRQ = (data) => { // 내 즐겨찾기 추가 
-  return function (dispatch) {
-    try {
-      instance.post('/api/mypage/favorite', data);
-    } catch (error) {
-      console.log(error)
+// export const addFavoriteRQ = (data) => { // 내 즐겨찾기 추가 
+//   return function (dispatch) {
+
+//     // try {
+//     //   instance.post('/api/mypage/favorite', data);
+//     // } catch (error) {
+//     //   console.log(error)
+//     // }
+//   }
+// }
+
+export const addFavoriteRQ = createAsyncThunk( // 골아이템 등록 
+  'add/addFavorite',
+  async(sendData) =>{
+    try{
+      await instance.post("/api/mypage/favorite",sendData) 
+    }catch(error){
+      console.log(error);
     }
   }
-}
+)
 
 
 //---------------------- READ ----------------------------

@@ -18,9 +18,6 @@ const GoalADD = ()=>{
   const [imageFile, setImageFile] = useState("null");
   const [selectInputValue , setSelectInputValue] = useState([]); 
 
-  console.log(selectInputValue);
-
-
   const itemName=useRef();
   const price=useRef();
   const goalItemCount=useRef();

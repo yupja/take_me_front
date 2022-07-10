@@ -97,10 +97,11 @@ const CommunityTab = () => {
                     </Nick>
                   </Middle>
                   <Foot>
-                    {/* <Like
-                forLikeId = {postList.boardId}
-                likeCount = {postList.likeCount}
-                /> */}
+                    <Like
+                      isLike={postList.checkLike}
+                      forLikeId = {postList.boardId}
+                      likeCount = {postList.likeCount}
+                    />
                     <div style={{ marginLeft: "1rem" }}>💬</div>
                     <div onClick={() => {
                       Navigate(`/detail/${postList.boardId}`)

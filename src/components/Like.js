@@ -1,43 +1,30 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { instance } from "../shared/axios";
+import {likeChange} from "../redux/modules/post";
 
 const Like = (props,{ likeCount,boardId }) => {
   const [isloaded, setIsloaded] = useState(false);
   const [like_count, setLike_count] = useState(likeCount);
-  const [like, setLike] = useState();
+  const [ like, setLike] = useState(props.isLike);
+  const [ likeImage, setLikeImage] = useState();
+
 
   const Postdata = useSelector((state) => state.post.postList.data);
-  console.log(Postdata[0].boardId,"likecount")
-
+  // console.log(Postdata[0].boardId,"likecount")
   boardId = (props.forLikeId)
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    async function likeLoad(boardId) {
-      await instance.get(`/api/board/${boardId}`)
-      .then((response) => {
-        console.log(response.data,"Like?")
-        setLike(response.data);
-        debugger
-      });
-      setIsloaded(true);
+  const changeHeart = () =>{
+    if(like){
+      setLikeImage("🤍")
+      setLike(false)
+    }else if(!like){
+      setLikeImage("💚")
+      setLike(true)
     }
-    likeLoad();
-  }, []);
-
-  // 좋아요 추가
-  const addLike = async (boardId) => {
-    await instance.post(`/board/${boardId}`);
-    setLike_count(likeCount + 1);
-    setLike(false)
-  };
-  // 좋아요 취소
-  const deleteLike = async (boardId) => {
-    await instance.post(`/board/${boardId}`);
-    setLike_count(likeCount - 1);
-    setLike(true)
-  };
+  }
 
   return (
     <>
@@ -45,11 +32,16 @@ const Like = (props,{ likeCount,boardId }) => {
              <div>
                 <span>{likeCount}</span>
               </div>
-          {like ? (
-            <span onClick={addLike}>💚</span>
-          ) : (
-            <span onClick={deleteLike}>🤍</span>
-          )}
+          <div onClick={()=>{
+              changeHeart();
+              dispatch(likeChange(boardId));
+              }}>   
+            {like ? 
+              <span>💚</span>
+            :  
+              <span>🤍</span>
+            }
+          </div>
         </LikeCount>
     </>
   );
