@@ -32,7 +32,7 @@ function MyPage() {
   // 탈퇴하기
   const secession = async () => {
     const pw = pwRef.current.value;
-    const username = state.infoList.username;
+    const username = state.username;
 
     if (pw === '') {
       setPwAlertStr('비밀번호를 입력해주세요.')
@@ -110,7 +110,7 @@ function MyPage() {
             <Info>
               <div>
                 <span>아이디</span>
-                <input type="text" defaultValue={state.infoList.username} readOnly />
+                <input type="text" defaultValue={state.username} readOnly />
               </div>
               <div>
                 <span>비밀번호</span>

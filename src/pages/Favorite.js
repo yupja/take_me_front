@@ -21,6 +21,22 @@ function Favorite() {
 
   console.log(mylist)
 
+  const mylistTest = [
+    {
+      "categoryId": 4,
+      "categoryName": "식품",
+      "itemId": 8,
+      "itemName": "김밥",
+      "price": 3000
+    },
+    {
+      "categoryId": 5,
+      "categoryName": "기타",
+      "itemId": 9,
+      "itemName": "택시비",
+      "price": 7000
+    }
+  ]
   return (
     <Wrap>
       <Header />
@@ -30,7 +46,18 @@ function Favorite() {
         <FavList>
           <Total>00개</Total>
           <ul>
-            <li>
+            {mylistTest && mylistTest.map((list, idx) => (
+              <li key={list.categoryId}>
+                <span>2022<br />07.07</span>
+                <h2>{list.itemName}</h2>
+                <div className="price">
+                  <input type="number" min="10" onKeyDown={(evt) => evt.key === 'e' && evt.preventDefault()} defaultValue={list.price} />
+                  <button>적용</button>
+                </div>
+                <Trash className="trash" />
+              </li>
+            ))}
+            {/* <li>
               <span>2022<br />07.07</span>
               <h2>택시비</h2>
               <div className="price">
@@ -38,16 +65,7 @@ function Favorite() {
                 <button>적용</button>
               </div>
               <Trash className="trash" />
-            </li>
-            <li>
-              <span>2022<br />07.07</span>
-              <h2>택시비</h2>
-              <div className="price">
-                <input type="number" min="10" onKeyDown={(evt) => evt.key === 'e' && evt.preventDefault()} />
-                <button>적용</button>
-              </div>
-              <Trash className="trash" />
-            </li>
+            </li> */}
           </ul>
         </FavList>
       </FavoriteWrap>

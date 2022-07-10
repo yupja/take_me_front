@@ -221,21 +221,15 @@ export const userSecDB = (pw, id, modal, pwAlert) => {
     await instance.post("/api/user/resign", {
       username: id,
       password: pw
+    }, {
+      "Content-Type": "application/json",
+      withCredentials: true,
     })
       .then((response) => {
         console.log(response)
         dispatch(result(true));
-        console.log("then끝!")
-        console.log("then끝!")
-        console.log("then끝!")
-        console.log("then끝!")
       })
       .catch((error) => {
-        console.log("에러 끝!")
-        console.log("에러 끝!")
-        console.log("에러 끝!")
-        console.log("에러 끝!")
-        console.log("에러 끝!")
         console.log(error);
       });
   };
