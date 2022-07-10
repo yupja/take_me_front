@@ -16,21 +16,21 @@ import Favorite from "../pages/Favorite"; // 즐겨찾기
 import History from "../pages/History"; // 히스토리
 import Proflie from "../pages/Proflie"; // 프로필
 
-
 function Router() {
   return (
     <BrowserRouter>
       <Routes>
         {/* <Route path="*" element={<NotFound />} /> */}
         {/* <Route path="/main" element={<Main />} />  */}
-        <Route path="/" element={<Save />} />
+        <Route path="/save" element={<Save />} />
         {/* <Route path="/statistics" element={<Statistics />} /> */}
         {/* <Route path="/detail/:boardId" element={<Detail />} /> */}
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/community" element={<Community />} />
         <Route path="/community/:id" element={<Community />} />
         <Route path="/ranking" element={<Ranking />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Login />} />
+        {/* <Route path="/login" element={<Login />} /> */}
         <Route path="/signup" element={<SignUp />} />
         <Route path="/user/findid" element={<FindId />} />
         <Route path="/user/findpw" element={<FindPw />} />

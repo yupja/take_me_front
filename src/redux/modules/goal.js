@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { instance } from "../../shared/axios";
-
+import {mySavedListRQ} from "../modules/saved";
 
 
 //--------------------- CREATE ---------------------------
@@ -12,10 +12,8 @@ export const addGoalAPI = createAsyncThunk( // 골아이템 등록
       await instance.post('/api/goalItem', formData,{
         headers :  {
           "Content-Type": "multipart/form-data",
-        }
-      });
+    }});
     }catch(error){
-
     }
   }
 )
@@ -23,7 +21,7 @@ export const addGoalAPI = createAsyncThunk( // 골아이템 등록
 //---------------------- READ ----------------------------
 export const myReadGoalRQ = createAsyncThunk(
   'read/myGoal',
-  async(dispatch)=> {
+  async(thunkAPI)=> {
     try {
       const {data} = await instance.get('/api/goalItem')
       return data;

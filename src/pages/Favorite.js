@@ -1,71 +1,84 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
-import { useLocation } from "react-router";
-import { Link } from "@mui/material";
-import SearchFavorite from "../components/SearchFavorite";
+import SearchSavedItem from "../components/SearchSavedItem";
+import FavoriteList from "../components/FavoriteList"
 import { myFavoriteListRQ } from "../redux/modules/favorite";
 
 import Header from "../components/Header";
 import { ReactComponent as Trash } from "../public/img/svg/Trash.svg";
 
-function Favorite() {
+import { addFavoriteRQ } from "../redux/modules/favorite"
 
+function Favorite() {
+  const [selectInputValue, setSelectInputValue] = useState([]);
+  const priceInput = useRef();
+  const priceRef = useRef();
   const dispatch = useDispatch();
+
+
+  const addFavoriteData = () => {
+    const sendData = {
+      categoryId: selectInputValue.categoryId,
+      itemName: selectInputValue.itemName,
+      itemId: selectInputValue.itemId,
+      price: Number(priceInput.current.value)
+    }
+    dispatch(addFavoriteRQ(sendData));
+
+  }
+
   useEffect(() => {
     dispatch(myFavoriteListRQ());
   }, []);
 
-  const mylist = useSelector((state) => state.favorite.myFavoriteList);
-
+  const mylist = useSelector((state) => state.favorite.myFavoriteList.data);
   console.log(mylist)
+  const changePrice = (e) => {
+    const price = Number(priceRef.current.value);
+    console.log(price)
+  }
 
-  const mylistTest = [
-    {
-      "categoryId": 4,
-      "categoryName": "식품",
-      "itemId": 8,
-      "itemName": "김밥",
-      "price": 3000
-    },
-    {
-      "categoryId": 5,
-      "categoryName": "기타",
-      "itemId": 9,
-      "itemName": "택시비",
-      "price": 7000
-    }
-  ]
+  const changePriceInput = (e) => {
+    const price = Number(priceRef.current.value);
+    console.log(price)
+  }
+
+
   return (
     <Wrap>
       <Header />
       <FavoriteWrap>
         <Category>카테고리 영역</Category>
-        <SearchFavorite />
+        <SearchSavedItem
+          state={"favoriteState"}
+          setSelectInputValue={setSelectInputValue} />
         <FavList>
-          <Total>00개</Total>
+          <Total>{mylist && mylist.length}개</Total>
           <ul>
-            {mylistTest && mylistTest.map((list, idx) => (
-              <li key={list.categoryId}>
-                <span>2022<br />07.07</span>
-                <h2>{list.itemName}</h2>
-                <div className="price">
-                  <input type="number" min="10" onKeyDown={(evt) => evt.key === 'e' && evt.preventDefault()} defaultValue={list.price} />
-                  <button>적용</button>
+            {selectInputValue.length === 0 ? ""
+              : <li>
+                <div>
+                  <span>⭐</span>
+                  <p>{selectInputValue.itemName}</p>
+                  <div>
+                    <input
+                      type="Number"
+                      ref={priceInput} />
+                    <button onClick={addFavoriteData}>등록</button>
+                    {/* <button onClick={}> 새로운 아이템등록 </button> */}
+                  </div>
                 </div>
-                <Trash className="trash" />
               </li>
+            }
+            {mylist && mylist.map((list, idx) => (
+              <FavoriteList key={list.itemId + idx}
+                itemName={list.itemName}
+                price={list.price}
+                favoriteId={list.favoriteItemId}
+              />
             ))}
-            {/* <li>
-              <span>2022<br />07.07</span>
-              <h2>택시비</h2>
-              <div className="price">
-                <input type="number" min="10" onKeyDown={(evt) => evt.key === 'e' && evt.preventDefault()} />
-                <button>적용</button>
-              </div>
-              <Trash className="trash" />
-            </li> */}
           </ul>
         </FavList>
       </FavoriteWrap>

@@ -11,114 +11,131 @@ import Like from "./Like";
 
 const CommunityTab = () => {
 
-    React.useEffect(() => {
-        dispatch(loadpostsAc())
-        dispatch(loadsavedAc())
-    },[])
+  React.useEffect(() => {
+    dispatch(loadpostsAc())
+    dispatch(loadsavedAc())
+  }, [])
 
-    const dispatch = useDispatch();
-    const Navigate = useNavigate();
+  const dispatch = useDispatch();
+  const Navigate = useNavigate();
+  
+  const  [savedListIndex, setSavedListIndex] = useState();
 
-    const Postdata = useSelector((state) => state.post.postList.data);
-    console.log(Postdata,"postdata")
+  const Postdata = useSelector((state) => state.post.postList.data);
+  console.log(Postdata, "postdata")
 
-    const Savedata = useSelector((state) => state.saved.savedItem);
-    console.log(Savedata,"savdata")
+  const Savedata = useSelector((state) => state.saved.savedItem);
+  console.log(Savedata, "savdata")
 
-    // const SavedId = Savedata.boardId
-    // console.log(SavedId)
-    // console.log(Savedata.data,"saveddata.boardid")
+  // const SavedId = Savedata.boardId
+  // console.log(SavedId)
+  // console.log(Savedata.data,"saveddata.boardid")
 
-    const [showModall, setShowModall] = useState(false);
-    const openModall = () => {
-        setShowModall(true)
-    }
-    const closeModall = () => {
-        setShowModall(false);
-    }
-    const [showModalll, setShowModalll] = useState(false);
-    const openModalll = () => {
-        setShowModalll(true)
-    }
-    const closeModalll = () => {
-        setShowModalll(false);
-    }
-    const [isEdit, setIsEdit] = useState(false);
-    const openEdit = () => {
-        setIsEdit(true)
-    }
-    const editPost = (index) => {
-        window.location.replace(`/community/${index}`);
-    }
+  const [showModall, setShowModall] = useState(false);
+  const openModall = (index) => {
+    setSavedListIndex(index);   
+    setShowModall(true)
+  }
+  const closeModall = () => {
+    setShowModall(false);
+  }
+  const [showModalll, setShowModalll] = useState(false);
+  const openModalll = () => {
+    setShowModalll(true)
+  }
+  const closeModalll = () => {
+    setShowModalll(false);
+  }
+  const [isEdit, setIsEdit] = useState(false);
+  const openEdit = () => {
+    setIsEdit(true)
+  }
+  const editPost = (index) => {
+    window.location.replace(`/community/${index}`);
+  }
 
-    const [iLike, setILike ] = useState(false);
-    const clickLike = () => {
-        setILike(true)
-    }
+  const [iLike, setILike] = useState(false);
+  const clickLike = () => {
+    setILike(true)
+  }
 
-return(
+  return (
     <Box>
-        {Postdata.map((postList, index) => {
-            return(
-            <div key={postList.boardId}>
-                <>
-        <ContentBox>
-            <Left>
-            {/* <Day>{postList.createAt}</Day> */}
-        <ItemImage></ItemImage>
-        <Profile /*src={postList.profileImg}*/></Profile>
-        </Left>
-        <Right>
-            <Top>
-            <GoalName onClick={() => {
-                Navigate(`/detail/${index}`)}}>
-                {postList.goalItemName}
-                </GoalName>
-            <EditBtn>
-            <ModiBtn onClick={() => {dispatch(
-                editPost(postList.boardId))}}>🛠
-                </ModiBtn>
-            <DelBtn onClick={() => {dispatch(
-                deletePostAc(postList.boardId))}}>🗑
-                </DelBtn>
-            </EditBtn>
-            </Top>
-        <Middle>
-        <Nick onClick={() => 
-            {Navigate(`/detail/${index}`)}}>
-            {postList.nickname}&nbsp;&nbsp;{postList.contents}
-            </Nick>
-        </Middle>
-        <Foot>
-                {/* <Like
-                forLikeId = {postList.boardId}
-                likeCount = {postList.likeCount}
-                /> */}
-            <div style={{marginLeft:"1rem"}}>💬</div>
-                <div onClick={() => {
-                    Navigate(`/detail/${postList.boardId}`)}}
-                    style={{marginLeft:"0rem"}}>
-                        댓글 00 개 모두 보기</div>
-            <div onClick={openModall} style={{marginLeft:"auto"}}>📃</div>
-            {showModall ?
-            <ListModal showModall={showModall} closeModall={closeModall} 
-                        forsaveId = {Postdata[index].boardId}
-            />
-            : null}
-        </Foot>
-        </Right>
-        </ContentBox>
-        </>
-        </div>
-         )}
-         )}
+      {Postdata.map((postList, index) => {
+        return (
+          <div key={postList.boardId}>
+            <>
+              <ContentBox>
+                <Left>
+                  {/* <Day>{postList.createAt}</Day> */}
+                  <ItemImage></ItemImage>
+                  <Profile /*src={postList.profileImg}*/></Profile>
+                </Left>
+                <Right>
+                  <Top>
+                    <GoalName onClick={() => {
+                      Navigate(`/detail/${index}`)
+                    }}>
+                      {postList.goalItemName}
+                    </GoalName>
+                    <EditBtn>
+                      <ModiBtn onClick={() => {
+                        dispatch(
+                          editPost(postList.boardId))
+                      }}>🛠
+                      </ModiBtn>
+                      <DelBtn onClick={() => {
+                        dispatch(
+                          deletePostAc(postList.boardId))
+                      }}>🗑
+                      </DelBtn>
+                    </EditBtn>
+                  </Top>
+                  <Middle>
+                    <Nick onClick={() => { Navigate(`/detail/${index}`) }}>
+                      {postList.nickname}&nbsp;&nbsp;{postList.contents}
+                    </Nick>
+                  </Middle>
+                  <Foot>
+                    <Like
+                      isLike={postList.checkLike}
+                      forLikeId = {postList.boardId}
+                      likeCount = {postList.likeCount}
+                    />
+                    <div style={{ marginLeft: "1rem" }}>💬</div>
+                    <div onClick={() => {
+                      Navigate(`/detail/${postList.boardId}`)
+                    }}
+                      style={{ marginLeft: "0rem" }}>
+                      댓글 00 개 모두 보기</div>
+                    <div onClick={()=>{openModall(index)}} style={{ marginLeft: "auto" }}>📃</div>
+                  </Foot>
+                </Right>
+              </ContentBox>
+            </>
+          </div>
+        )
+      }
+      )}
+
+
+
          <BtnBox>
         <FootBtn onClick={openModalll}>내 태산 % 공유</FootBtn>
+
+        {/* 세이브리스트모달 */}
+        {showModall ?
+            <ListModal showModall={showModall} closeModall={closeModall} 
+                        forsaveId = {Postdata[savedListIndex].boardId}
+                        />
+            : null}
+        {/* 게시글등록모달     */}
         {showModalll ?
           <PostModal showModalll={showModalll} closeModalll={closeModalll}
         //   savedList = {postList.boardId}
           />
         : null}
+
         </BtnBox>
     </Box>
 )

@@ -2,31 +2,30 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from "react-redux"
 import { myFavoriteListRQ } from "../redux/modules/favorite"
 import {allItemListRQ} from "../redux/modules/item"
-import {addSavedListRQ} from "../redux/modules/saved"
+
 
 import styled from 'styled-components'
-import { BiX } from 'react-icons/bi'
 
 import DayModal from "./DayModal"
 import SavedInput from "./SavedInput"
 
 
 
-function SearchFavorite() {
+function SearchFavorite(props) {
 
   useEffect(() => {
     dispatch(myFavoriteListRQ());
     dispatch(allItemListRQ());
   }, []);
 
-
   const dispatch = useDispatch();
   const list = useSelector((state) => state.item.allItemList);
   const mylist = useSelector((state) => state.favorite.myFavoriteList);
-  
-  const allFavoriteList = [];
+  const [selecState, setSelectState] = useState(props.state);
+
+  const allItemList = [];
   const makeList = list.data?.map((item) => {
-    allFavoriteList.push(item.itemName);
+    allItemList.push(item.itemName);
   })
 
   //-------------- 모달
@@ -43,29 +42,37 @@ function SearchFavorite() {
   const [dropDownItemIndex, setDropDownItemIndex] = useState(-1); // 선택한 아이템의 인덱스
   const [dropDownList, setDropDownList] = useState(list); // 검색List 
 
-  
 
   const showDropDownList = () => {
     if (inputValue === '') {
       setIsHaveInputValue(false);
       setDropDownList([]);
     } else {
-      const choosenTextList = allFavoriteList.filter(textItem =>
+      const choosenTextList = allItemList.filter(textItem =>
         textItem.includes(inputValue)
       )
       setDropDownList(choosenTextList);
     }
-  }
+  };
 
   const changeInputValue = event => {
     setInputValue(event.target.value);
     setIsHaveInputValue(true);
-  }
+  };
 
   const clickDropDownItem = clickedItem => {
     setInputValue(clickedItem);
+    savedItem(clickedItem);
     setIsHaveInputValue(false);
-  }
+  };
+
+  const savedItem =(clickedItem) =>{
+    const choosenItemIndex = allItemList?.indexOf(clickedItem)
+    console.log(choosenItemIndex)
+    props.setSelectInputValue(list.data[choosenItemIndex])
+   
+  };
+
 
   const handleDropDownKey = event => {
     if (isHaveInputValue) {
@@ -90,7 +97,6 @@ function SearchFavorite() {
   return (
     <>
       <WholeBox>
-
         <InputBox isHaveInputValue={isHaveInputValue}>
             <input
               type='text'
@@ -114,7 +120,8 @@ function SearchFavorite() {
                 </AddFavoriteInput>
                 <AddButton onClick={() => {
                   openModal();
-                  setModalState(<SavedInput closeModal={closeModal}/>)
+                  setModalState(<SavedInput closeModal={closeModal} 
+                                          goalItemId={props.goalItemId}/>)
                   setModalName("등록하기")
                 }}>+등록하기</AddButton>
               </DropDownItem>
@@ -138,31 +145,29 @@ function SearchFavorite() {
         )}
 
 
-        <DayModal open={modalOpen} close={closeModal} header={modalName}>
-          {modalState}
+        {selecState=="saveState"? 
+         <DayModal open={modalOpen} close={closeModal} header={modalName}>
+         {modalState}
         </DayModal>
+        :""}
 
       </WholeBox>
 
-      <ItemWrap>
+      {/* <ItemWrap>
         {mylist.length===0? 
         <FavoriteItem></FavoriteItem>
         :
-          <> ⭐
+          <> 
             {mylist.map((item, itemIndex) => {
-                return (
-                  <FavoriteItem key={item.itemId} onClick={()=>{
-                    dispatch(addSavedListRQ(item))
-                  }}>
+                  <FavoriteItem key={item.itemId}>
                     {item.itemName}
                     <BiX />
                   </FavoriteItem>
-                )
             })}
            </>
         }
 
-        </ItemWrap>
+        </ItemWrap> */}
       </>
     )
   }

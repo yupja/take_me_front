@@ -8,7 +8,7 @@ export const instance = axios.create({
 
 instance.interceptors.request.use(
   (config) => {
-    // config.headers["Content-Type"] = "application/json";
+    config.headers["Content-Type"] = "application/json";
     config.withCredentials = true;
 
     const accessToken = localStorage.getItem("accessToken");
