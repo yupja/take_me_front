@@ -6,6 +6,7 @@ import { useSelector } from "react-redux/es/exports";
 import { useParams } from "react-router-dom";
 
 import HeaderMenue from "../components/HeaderMenu";
+import Like from "../components/Like";
 import { createCommentAc } from "../redux/modules/comment"
 import { loadCommentAc } from "../redux/modules/comment"
 import { deleteComment } from "../redux/modules/comment";
@@ -19,11 +20,11 @@ function Detail(props) {
     const comment_ref = React.useRef();
     const commentEdit = React.useRef();
 
-    const index = params.boardId;
-    console.log(index, "idex")
+    const boardIdex = params.boardId;
+    console.log(boardIdex, "idex")
 
     React.useEffect(() => {
-        dispatch(loadCommentAc(index))
+        dispatch(loadCommentAc(boardIdex))
         dispatch(loadpostsAc())
         dispatch(loadDetailAc())
     }, []);
@@ -31,15 +32,16 @@ function Detail(props) {
     const commentData = useSelector((state) => state.comment.commentList);
     console.log(commentData, "코멘트")
     const Postdata = useSelector((state) => state.post.postList);
-    console.log(Postdata, "postdata")
-    
+    console.log(Postdata.data[boardIdex].boardId, "postdata")
+    const boardId = Postdata.data[boardIdex].boardId
+     
 
-    const createComment = (index) => {
+    const createComment = (boardId) => {
         console.log(comment_ref.current.value, "확인");
         const data = {
             comment: comment_ref.current.value,
         }
-        dispatch(createCommentAc(index, data))
+        dispatch(createCommentAc(data, boardId))
     };
 
     const state = "커뮤니티"
@@ -48,19 +50,20 @@ function Detail(props) {
         <>
             <HeaderMenue state={state} />
             <Box>
-                <Top>
-                    <Nopadding>
+                <Img>
                         <Commu>
-                            <Left>
-                                <Profile></Profile>
-                                <GoalName>{Postdata.data[index].goalItemName}</GoalName>
-                            </Left>
-                            <span>🤍</span>
+                            <Top>
+                                <GoalName>{Postdata.data[boardIdex].nickname}</GoalName>
+                                <GoalName>{Postdata.data[boardIdex].createdAt}</GoalName>
+                                <GoalName>{Postdata.data[boardIdex].goalItemName}</GoalName>
+                            </Top>
                         </Commu>
-                        <Content>{Postdata.data[index].contents}</Content>
-                    </Nopadding>
-                </Top>
-                {commentData && commentData.map((comment_list, index) => (
+                        <Content>{Postdata.data[boardIdex].contents}</Content>
+                        <Bottom>
+                            <Like />&nbsp;<span>조회수&nbsp;{Postdata.data[boardIdex].viewCount}</span>
+                        </Bottom>
+                </Img>
+                {/* {commentData?.map((comment_list, index) => (
                     
                         <CommentBox key={index}>
                             <CoProfile></CoProfile>
@@ -80,7 +83,7 @@ function Detail(props) {
                             </Ddu>
                         </CommentBox>
                     
-                ))}
+                ))} */}
             </Box>
             <Enter>
                 <Input ref={comment_ref}></Input>
@@ -92,33 +95,32 @@ function Detail(props) {
 };
 
 const Box = styled.div`
-padding: 3vw;
-/* border: 3px solid red; */
+width: 100%;
+height: 70vw;
+border: 3px solid red;
 `;
 
 
-const Top = styled.div`
-width: cal(100%+3*2);
-margin: 3vw -3vw 3vw -3vw;
-height: 40vw;
+const Img = styled.div`
+width: 100%;
+height: 100%;
 background-color: #F5F5F5;
-`;
-
-const Nopadding = styled.div`
-padding: 3vw;
+border: 1px solid blue;
 `;
 
 const Commu = styled.div`
 width: 100%;
-height: 50%;
-/* border: 1px solid blue; */
+height: 30%;
+border: 3px solid blue;
 display: flex;
-justify-content: space-between;
+justify-content: center;
 align-items: center;
 `;
 
-const Left = styled.div`
+const Top = styled.div`
 display: flex;
+flex-direction: column;
+border: 3px solid violet;
 `;
 
 const Profile = styled.div`
@@ -139,8 +141,19 @@ color: black;
 
 const Content = styled.div`
 width: 100%;
-height: 50%;
+height: 30%;
 padding: 3vw;
+border: 2px solid orange;
+`;
+
+const Bottom = styled.div`
+width: 100%;
+height: 30%;
+border: 3px solid green;
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
 `;
 
 const CommentBox = styled.div`
