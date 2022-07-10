@@ -33,7 +33,6 @@ function Detail(props) {
     console.log(commentData, "코멘트")
     const Postdata = useSelector((state) => state.post.postList);
     console.log(Postdata.data[boardIdex].boardId, "postdata")
-    const boardId = Postdata.data[boardIdex].boardId
      
 
     const createComment = (boardId) => {
@@ -41,7 +40,7 @@ function Detail(props) {
         const data = {
             comment: comment_ref.current.value,
         }
-        dispatch(createCommentAc(data, boardId))
+        dispatch(createCommentAc(data, Postdata.data[boardIdex].boardId))
     };
 
     const state = "커뮤니티"
@@ -51,21 +50,20 @@ function Detail(props) {
             <HeaderMenue state={state} />
             <Box>
                 <Img>
-                        <Commu>
-                            <Top>
-                                <GoalName>{Postdata.data[boardIdex].nickname}</GoalName>
-                                <GoalName>{Postdata.data[boardIdex].createdAt}</GoalName>
-                                <GoalName>{Postdata.data[boardIdex].goalItemName}</GoalName>
-                            </Top>
-                        </Commu>
-                        <Content>{Postdata.data[boardIdex].contents}</Content>
-                        <Bottom>
-                            <Like />&nbsp;<span>조회수&nbsp;{Postdata.data[boardIdex].viewCount}</span>
-                        </Bottom>
+                    <Commu>
+                        <Top>
+                            <GoalName>{Postdata.data[boardIdex].nickname}</GoalName>
+                            <GoalName>{Postdata.data[boardIdex].createdAt}</GoalName>
+                            <GoalName>{Postdata.data[boardIdex].goalItemName}</GoalName>
+                        </Top>
+                    </Commu>
+                    <Content>{Postdata.data[boardIdex].contents}</Content>
+                    <Bottom>
+                        <Like />&nbsp;<span>조회수&nbsp;{Postdata.data[boardIdex].viewCount}</span>
+                    </Bottom>
                 </Img>
-                {/* {commentData?.map((comment_list, index) => (
-                    
-                        <CommentBox key={index}>
+                {commentData.data&&commentData.data?.map((comment_list, index) => (
+                    <CommentBox key={index}>
                             <CoProfile></CoProfile>
                             <Ddu>
                                 <span>{comment_list.nickname}</span>
@@ -83,11 +81,11 @@ function Detail(props) {
                             </Ddu>
                         </CommentBox>
                     
-                ))} */}
+                ))}
             </Box>
             <Enter>
                 <Input ref={comment_ref}></Input>
-                <PostBtn onClick={createComment}>게시</PostBtn>
+                <PostBtn onClick={createComment}>게시</PostBtn>ß
             </Enter>
 
         </>
