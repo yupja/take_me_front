@@ -12,12 +12,10 @@ const ListModal = (props) => {
 
   const saveData = useSelector((state) => state.saved.savedItem.data.savedItemList);
   const saveDataa = useSelector((state) => state.saved.savedItem.data);
-  console.log(saveData,"save")
-  console.log(saveDataa,"savee")
-
-  console.log(props.forsaveId,"props")
   const boardId = (props.forsaveId)
-  console.log(boardId,"boardId")
+
+  console.log(boardId);
+  
 
   React.useEffect(() => {
     dispatch(loadsavedAc(boardId))

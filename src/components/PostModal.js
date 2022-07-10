@@ -5,19 +5,35 @@ import { createPostAc } from "../redux/modules/post";
 
 
 const PostModal = (props) => {
+
     const dispatch = useDispatch();
+    const [image, setImage] = useState("null");
+    const [imageFile, setImageFile] = useState("null");
 
     const title_ref = React.useRef();
     const contents_ref = React.useRef();
-    const [imgFile, setImgFile] = useState();
 
-    const thumb = React.useRef();
+    const imageUpLoad = async (e)=>{
+        imagePreview(e.target.files[0]);
+        setImageFile(e.target.files[0]);
+      }
     
+      const imagePreview = (fileBlob) =>{
+        const reader = new FileReader();
+        reader.readAsDataURL(fileBlob);
+        return new Promise((resolve) =>{
+          reader.onload = () => {
+            setImage(reader.result);
+            resolve();
+          }
+        })
+      }
+
     const postAc = () => {
         const data = {
             title : title_ref.current.value,
             contents:contents_ref.current.value,
-            goalItemId: -1
+            image: imageFile
         }
         console.log(data,"공유하기")
         dispatch(createPostAc(data))
@@ -37,10 +53,26 @@ const PostModal = (props) => {
                     <Close onClick={props.closeModalll}>X</Close>
                     </Top>
                     <Middle>
-                        <Profile></Profile>
+                        <Profile src={image}></Profile>
                         <Right>
                             <DeImg>기본 이미지</DeImg>
-                            <AddImg>이미지 등록</AddImg>
+                            {/* <AddImg 
+                            // <input
+                            //  type="file" 
+                            //          name="image" 
+                            //          multiple="multiple"
+                            //          onChange={imageUpLoad}>
+                                     >이미지 등록
+                                     {/* </input> */}
+                                    {/* </AddImg> */}
+                                    <AddImg className="filebox">
+                                    <label htmlFor="ex_file" style={{magin:" 0 auto"}}>이미지 등록</label>
+                                    <input type="file"
+                                    name="image" 
+                                             multiple="multiple"
+                                             onChange={imageUpLoad}
+                                    id="ex_file" style={{display:"none"}}/> 
+                                    </AddImg>
                         </Right>
                     </Middle>
                     <Goal ref={title_ref}></Goal>
@@ -167,7 +199,7 @@ margin: auto;
 background-color: #FFB7D9;
 `;
 
-const AddImg = styled.button`
+const AddImg = styled.div`
 width: 100%;
 height: 15vw;
 border: none;

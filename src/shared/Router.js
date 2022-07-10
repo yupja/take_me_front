@@ -16,7 +16,6 @@ import Favorite from "../pages/Favorite"; // 즐겨찾기
 import History from "../pages/History"; // 히스토리
 import Proflie from "../pages/Proflie"; // 프로필
 
-
 function Router() {
   return (
     <BrowserRouter>
