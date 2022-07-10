@@ -7,10 +7,10 @@ import { instance } from "../../shared/axios";
 
 export const addFavoriteRQ = createAsyncThunk( // 내 즐겨찾기 등록 
   'add/addFavorite',
-  async(sendData) =>{
-    try{
-      await instance.post("/api/mypage/favorite",sendData) 
-    }catch(error){
+  async (sendData) => {
+    try {
+      await instance.post("/api/mypage/favorite", sendData)
+    } catch (error) {
       console.log(error);
     }
   }
@@ -31,10 +31,32 @@ export const myFavoriteListRQ = createAsyncThunk(
   }
 )
 //-------------------- UPDATE ---------------------------
-
+export const favoriteUpdate = (price, itemId) => {
+  return async function (dispatch) {
+    await instance.put(`/api/mypage/favorite/${itemId}`, price, {
+      "Content-Type": "application/json",
+      withCredentials: true,
+    })
+      .then((response) => {
+        console.log(response)
+      })
+      .catch((error) => {
+        console.log(error)
+      });
+  };
+};
 //-------------------- DELETE ---------------------------
-
-
+export const favoriteDel = (itemId) => {
+  return async function (dispatch) {
+    await instance.delete(`/api/mypage/favorite/${itemId}`)
+      .then((response) => {
+        console.log(response)
+      })
+      .catch((error) => {
+        console.log(error)
+      });
+  };
+};
 
 
 //-------------------- SLICE ----------------------------

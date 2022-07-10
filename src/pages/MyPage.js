@@ -1,42 +1,78 @@
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
-
-import { useLocation } from "react-router";
-import { Link } from "@mui/material";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 import Header from "../components/Header";
+import { userSecDB } from "../redux/modules/user";
+import { getInfo } from "../redux/modules/info";
 
 function MyPage() {
-  const { state } = useLocation();
+  const dispatch = useDispatch();
+  const state = useSelector((state) => state.info.infoList);
+  const [openModal, setOpenModal] = useState(false);
+  const [pwAlertStr, setPwAlertStr] = useState('');
+  console.log(state)
+  // const state = useSelector((state) => state.user);
+
+  useEffect(() => {
+    dispatch(getInfo())
+  }, [dispatch])
+
+  const pwRef = useRef();
+
+  const onPopup = (e) => {
+    setOpenModal(true)
+  };
+
+  const closePopup = (e) => {
+    setOpenModal(false)
+  };
+
+  // 탈퇴하기
+  const secession = async () => {
+    const pw = pwRef.current.value;
+    const username = state.username;
+
+    if (pw === '') {
+      setPwAlertStr('비밀번호를 입력해주세요.')
+      pwRef.current.focus();
+      return;
+    }
+    await dispatch(userSecDB(pw, username, setOpenModal, setPwAlertStr))
+    console.log("디스패치 끝!")
+  };
+
+  console.log(state.introDesc)
 
   return (
     <>
       <Header />
       <MyPageWrap>
         <MyInfo>
-          <div><img src="" alt="" /></div>
-          <p>
-            내가 나를 소개하는 글을 적어보도록 하겠습니다.
-            바로 이자리에 말이죠 글자는 2줄로 지정 해보겠습니다.
+          <div><img src={state.profileImg} alt="" /></div>
+          <p>{state.introDesc === null ?
+            "기본 소개글" : state.introDesc
+          }
           </p>
         </MyInfo>
         <MyMenu>
-          <h2><span>석구</span>님<br />환영합니다!🖐</h2>
+          <h2><span>{state.nickname}</span>님<br />환영합니다!🖐</h2>
           <MenuList>
             <li>
-              <Link to="/">
+              <Link to="/favorite">
                 <div><img src="" alt="" /></div>
                 <p>즐겨찾기</p>
               </Link>
             </li>
             <li>
-              <Link to="/">
+              <Link to="/history">
                 <div><img src="" alt="" /></div>
                 <p>히스토리</p>
               </Link>
             </li>
             <li>
-              <Link to="/">
+              <Link to="/proflie">
                 <div><img src="" alt="" /></div>
                 <p>프로필 편집</p>
               </Link>
@@ -57,7 +93,7 @@ function MyPage() {
                 <div><img src="" alt="" /></div>
                 <span>고객의 소리</span>
               </li>
-              <li>
+              <li onClick={() => setOpenModal(true)}>
                 <div><img src="" alt="" /></div>
                 <span>회원 탈퇴</span>
               </li>
@@ -66,6 +102,33 @@ function MyPage() {
         </MyMenu>
       </MyPageWrap>
       <LoginOutBtn>로그아웃</LoginOutBtn>
+      {openModal ?
+        <PopupBack>
+          <PopupWrap>
+            <Title>회원 탈퇴</Title>
+            <p>정말 탈퇴하시겠어요?😥</p>
+            <Info>
+              <div>
+                <span>아이디</span>
+                <input type="text" defaultValue={state.username} readOnly />
+              </div>
+              <div>
+                <span>비밀번호</span>
+                <input type="password" placeholder="비밀번호를 입력해 주세요." ref={pwRef} />
+                <p>{pwAlertStr}</p>
+              </div>
+            </Info>
+            <div>
+              <button onClick={secession}>탈퇴하기</button>
+              <button onClick={closePopup}>아니오</button>
+            </div>
+            <CloseBtn onClick={closePopup}>
+              <span></span>
+              <span></span>
+            </CloseBtn>
+          </PopupWrap>
+        </PopupBack> : null
+      }
     </>
   )
 };
@@ -73,6 +136,36 @@ function MyPage() {
 
 export default MyPage;
 
+// 탈퇴 팝업
+const PopupBack = styled.div`
+position: fixed;
+top: 0; left: 0;
+width: 100%;
+height: 100vh;
+background: #333;
+padding: 0 25px;
+`
+
+const PopupWrap = styled.div`
+position: absolute;
+top: 50%; left: 50%;
+transform: translate(-50%,-50%);
+width: 100%;
+height: 200px;
+background: #fff;
+`
+
+const Title = styled.h1`
+
+`
+const Info = styled.h1`
+
+`
+
+
+
+
+// 마이페이지
 const MyPageWrap = styled.div`
 width: 100%;
 /* padding: 0 25px; */
@@ -88,6 +181,11 @@ div {
   margin: auto;
   border-radius: 50%;
 }
+img{
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
 p {
   padding-top: 10px;
   font-size: 0.87rem;
@@ -97,8 +195,8 @@ p {
 }
 `
 const MenuList = styled.ul`
- display: flex;
-justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 
   li{
     position: relative;
@@ -192,3 +290,26 @@ background: none;
 font-size: 1.12rem;
 font-weight: 700;
 `
+const CloseBtn = styled.div`
+width:1rem; //180px
+height: 1rem;
+margin-top: 10px;
+position:absolute;
+top: 0; right: 3%;
+
+span {
+  display:block;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width:100%;
+  height:2px;
+  background-color: #999999;
+}
+span:first-child{
+  transform: rotate(45deg) translateX(0%);
+  }
+span:last-child{
+  transform: rotate(135deg) translateX(0%);
+  }
+`;
