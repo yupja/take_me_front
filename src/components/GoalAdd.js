@@ -102,7 +102,7 @@ const GoalADD = ()=>{
       </ModalBody>
       {selectInputValue.length===0? 
         <Footer onClick={sendNewData}>
-          티끌 등록하기
+          태산 등록하기
         </Footer>
       :
         <Footer onClick={sendData}>

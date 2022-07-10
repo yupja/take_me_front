@@ -42,13 +42,10 @@ export const createPostAc = (data) => {
         alert("등록 완료");
       })
       .catch((error) => {
-        console.log(error);
-        alert("error")
+        window.alert(error.response.data.message);
       });
   };
 };
-
-
 
 
 export const loadpostsAc = () => {
@@ -67,7 +64,7 @@ export const loadpostsAc = () => {
 
 export const loadDetailAc = (boardIdex, boardId) => {
   return function (dispatch) {
-      instance.get(`/api/board/detail/${boardId}`)
+    instance.get(`/api/board/detail/${boardId}`)
       .then(response => {
         console.log(response, "redux_data");
         dispatch(loadDetail(response));
@@ -75,7 +72,7 @@ export const loadDetailAc = (boardIdex, boardId) => {
       .catch(error => {
         console.log("get error", error)
       })
-      
+
   };
 };
 
@@ -120,7 +117,7 @@ export const deletePostAc = (boardId) => {
 const postSlice = createSlice({
   name: "post",
   initialState: {
-    postList: {data:[]},
+    postList: { data: [] },
     post: [],
     likeList : [],
   },
@@ -150,7 +147,7 @@ const postSlice = createSlice({
         return post;
       });
     },
-    loadDetail : (state, action)=>{
+    loadDetail: (state, action) => {
       state.postList = action.payload;
     }
   },
