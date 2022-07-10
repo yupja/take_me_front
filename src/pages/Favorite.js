@@ -36,6 +36,7 @@ function Favorite() {
       price: Number(priceInput.current.value)
     }
     dispatch(addFavoriteRQ(sendData));
+    setSelectInputValue([]);
 
   }
 
@@ -91,7 +92,7 @@ function Favorite() {
           <DayModal open={modalOpen}
             close={closeModal}
             header={"즐겨찾기등록"}>
-            <FavoriteAdd/>
+            <FavoriteAdd setSelectInputValue={setSelectInputValue}/>
           </DayModal>
         </FavList>
       </FavoriteWrap>
