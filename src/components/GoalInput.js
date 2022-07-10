@@ -5,13 +5,13 @@ import Category from "./Category"
 import SearchSavedItem from "./SearchSavedItem"
 
 import { addItem } from "../redux/modules/item"
-import { addGoalAPI } from "../redux/modules/goal"
+import { addGoalAPI, updateGoalAPI } from "../redux/modules/goal"
 
 
 import styled from "styled-components";
 import user from "../redux/modules/user";
 
-const GoalADD = ()=>{
+const GoalADD = (props)=>{
   const dispatch = useDispatch()
 
   const [category , setCategory] = useState();
@@ -27,7 +27,7 @@ const GoalADD = ()=>{
     setImageFile(e.target.files[0]);
   }
   
-  const sendNewData = () =>{
+  const sendNewData = (state) =>{
     const data = {
       itemName: itemName.current.value,
       price: Number(price.current.value),
@@ -36,12 +36,19 @@ const GoalADD = ()=>{
       image: imageFile
     }
 
-    dispatch(addItem(data));
+    console.log("새로운거")
+
+    if(state==="ADD"){
+      dispatch(addItem(data));
+    }else if(state==="Update"){
+      console.log("업데이트")
+    }
   }
 
 
-  const sendData = () =>{
+  const sendData = (state) =>{
     const formData = new FormData();
+    console.log()
 
     formData.append("image",imageFile)
 
@@ -51,11 +58,22 @@ const GoalADD = ()=>{
       goalItemCount:Number(goalItemCount.current.value),
       price: Number(price.current.value),
     }
+    
     const json = JSON.stringify(data);
     const blob = new Blob([json], { type: "application/json" });
     formData.append('goalItem',blob);
 
-    dispatch(addGoalAPI(formData));
+    console.log("있던거")
+    console.log(data);
+    console.log(formData)
+  
+    if(state==="ADD"){
+      dispatch(addGoalAPI(formData));
+    }else if(state==="Update"){
+     dispatch(updateGoalAPI(formData, props.goalItemId));
+    }
+
+    // );
 
   }
 
@@ -101,11 +119,11 @@ const GoalADD = ()=>{
         </div>
       </ModalBody>
       {selectInputValue.length===0? 
-        <Footer onClick={sendNewData}>
+        <Footer onClick={()=>{sendNewData(props.state)}}>
           태산 등록하기
         </Footer>
       :
-        <Footer onClick={sendData}>
+        <Footer onClick={()=>{sendData(props.state)}}>
           태산 등록하기
         </Footer>}
 
