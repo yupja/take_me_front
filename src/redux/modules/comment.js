@@ -5,12 +5,8 @@ import { instance } from "../../shared/axios";
 
   export const createCommentAc = (data, boardId) => {
     return async function (dispatch) {
-      // console.log(data.comment,"data")
         await instance.post(`/api/board/${boardId}/comment`,data)
         .then(response => {
-            console.log(response,"comment")
-            dispatch(createComment(response.data));
-            console.log(response.data,"댓글등록")
         })
         .catch(error => {
           console.log("get error", error)
@@ -18,6 +14,7 @@ import { instance } from "../../shared/axios";
     };
     
   };
+  
 
 export const loadCommentAc = (boardId) => {
     return function (dispatch) {
@@ -39,7 +36,7 @@ export const updateCommentAc = (boardId, commentId, data) => {
       }).catch((error) => {
         console.log(error)
       })
-      console.log(commentId)
+      console.log(commentId,"comment",boardId,"board", data,"data")
     }
   };
 
@@ -69,15 +66,8 @@ export const deleteComment = (boardId, commentId) => {
         state.commentList = action.payload;
       },
       createComment: (state, action) => {
-        state.commentList.unshift(action.payload);
-      },
-      updateComment:(state, action) => {
-        const index = state.commentList.findIndex(
-          (comment) => comment.id === action.payload.commentId
-        );
-        state.commentList[index] = action.payload;
-      },
-      
+         state.commentList.push(action.payload);
+      }
     }
     
   });
