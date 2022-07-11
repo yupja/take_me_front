@@ -35,7 +35,7 @@ export const addItem = createAsyncThunk(
       if(itemData.state==="ADD"){
         thunkAPI.dispatch(addGoalAPI(formData))
       }else{
-        //thunkAPI.dispatch(updateGoalAPI(formData, itemData.goalId))
+        //thunkAPI.dispatch(updateGoalAPI({formData, itemData.goalId}))
       }
    
 
