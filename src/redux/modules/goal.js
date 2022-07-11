@@ -49,6 +49,7 @@ export const allReadGoalRQ = () => { // 모든 사람의 태산 항목
 export const updateGoalAPI = (formData, goalItemId) => { // 모든 사람의 태산 항목
   return async function (dispatch) {
     try {
+      console.log(goalItemId)
       await instance.put(`/api/goalItem/${goalItemId}`, formData,{
         headers :  {
           "Content-Type": "multipart/form-data",
@@ -56,7 +57,7 @@ export const updateGoalAPI = (formData, goalItemId) => { // 모든 사람의 태
       })
       dispatch(myReadGoalRQ());
     } catch (error) {
-      
+
     }
   }
 

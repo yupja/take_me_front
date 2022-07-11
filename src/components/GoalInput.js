@@ -28,12 +28,28 @@ const GoalADD = (props)=>{
   }
   
   const sendNewData = (state) =>{
-    const data = {
-      itemName: itemName.current.value,
-      price: Number(price.current.value),
-      goalItemCount: Number(goalItemCount.current.value),
-      categoryId: Number(category),
-      image: imageFile
+    let data = {} 
+    
+
+    if(state==="Update"){
+      data ={
+        itemName: itemName.current.value,
+        price: Number(price.current.value),
+        goalItemCount: Number(goalItemCount.current.value),
+        categoryId: Number(category),
+        image: imageFile,
+        state: state,
+        goalId:props.goalId
+      }
+    }else {
+      data ={
+        itemName: itemName.current.value,
+        price: Number(price.current.value),
+        goalItemCount: Number(goalItemCount.current.value),
+        categoryId: Number(category),
+        image: imageFile,
+        state: state,
+      }
     }
 
     console.log("새로운거")
@@ -41,7 +57,7 @@ const GoalADD = (props)=>{
     if(state==="ADD"){
       dispatch(addItem(data));
     }else if(state==="Update"){
-      console.log("업데이트")
+      dispatch(addItem(data));
     }
   }
 
@@ -64,8 +80,6 @@ const GoalADD = (props)=>{
     formData.append('goalItem',blob);
 
     console.log("있던거")
-    console.log(data);
-    console.log(formData)
   
     if(state==="ADD"){
       dispatch(addGoalAPI(formData));
@@ -93,15 +107,17 @@ const GoalADD = (props)=>{
         <SelectedBoxDiv>
           <SearchSavedItem state={"goalState"}
                            setSelectInputValue={setSelectInputValue}/>
-          {/* <Category  setCategory={setCategory}/> */}
+         
         </SelectedBoxDiv>
         {selectInputValue.length===0? 
+        <>
+          <Category  setCategory={setCategory}/>
           <div> 
             <p>ItemName</p>
             <input 
               type='text' 
               ref={itemName} />
-            </div>
+            </div></>
        :""}
 
         <div> 

@@ -22,11 +22,10 @@ export const addSavedListRQ = createAsyncThunk(
 export const mySavedListRQ = createAsyncThunk(
   'saved/readMyList',
   async (inputData) =>{
-    const goaldata={
-      goalItemId : Number(inputData)
-    }
     try {
-      const {data} = await instance.get('/api/savedItem',{goaldata})
+      const {data} = await instance.get('/api/savedItem',{
+        "goalItemId" : Number(inputData)
+      })
 
       return data;
     } catch (error) {
