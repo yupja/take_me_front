@@ -36,7 +36,7 @@ export const updateCommentAc = (boardId, commentId, data) => {
       }).catch((error) => {
         console.log(error)
       })
-      console.log(commentId)
+      console.log(commentId,"comment",boardId,"board", data,"data")
     }
   };
 
@@ -67,14 +67,7 @@ export const deleteComment = (boardId, commentId) => {
       },
       createComment: (state, action) => {
          state.commentList.push(action.payload);
-      },
-      updateComment:(state, action) => {
-        const index = state.commentList.findIndex(
-          (comment) => comment.id === action.payload.commentId
-        );
-        state.commentList[index] = action.payload;
-      },
-      
+      }
     }
     
   });
