@@ -44,10 +44,11 @@ function CommentList(props) {
     const editComment = () => {
         console.log(comment_ref.current.value,"ref")
         const data = {
-            comment: comment_ref.current.value
+            comment: comment_ref.current.value,
+            boardId : Postdata.data[boardIdex].boardId,
+            commentId :  commentData.data[boardIdex].commentId
         };
-        dispatch(updateCommentAc(Postdata.data[boardIdex].boardId, 
-            commentData.data[boardIdex].commentId,data))
+        dispatch(updateCommentAc(data));
         setIsEdit(false)
         console.log(Postdata.data[boardIdex].boardId,"editcom")
     }

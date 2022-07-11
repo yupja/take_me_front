@@ -22,7 +22,7 @@ const CurrentSavedItem =(props)=>{
     return (
         
         <SavedList>
-        {mySavedList && mySavedList.map((savedItem, savedItemIndex) => (
+        {mySavedList&&mySavedList.data?.map((savedItem, savedItemIndex) => (
             <>
               <div className="sListWrap">
                 <div className="star"><AiOutlineStar /></div>

@@ -29,16 +29,18 @@ export const loadCommentAc = (boardId) => {
   };
 }
 
-export const updateCommentAc = (boardId, commentId, data) => {
+
+export const updateCommentAc = (data) => {
     return function (dispatch) {
-        instance.put(`/api/board/${boardId}/comment/${commentId}`,data)
+      console.log(data)
+        instance.put(`/api/board/${data.boardId}/comment/${data.commentId}`,{"comment" : data.comment})
         .then((response)=>{
       }).catch((error) => {
         console.log(error)
       })
-      console.log(commentId,"comment",boardId,"board", data,"data")
+
     }
-  };
+   };
 
 
 export const deleteComment = (boardId, commentId) => {

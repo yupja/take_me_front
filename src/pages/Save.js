@@ -8,7 +8,7 @@ import DayModal from "../components/DayModal";
 import SearchSavedItem from "../components/SearchSavedItem";
 import HeaderMenue from "../components/HeaderMenu";
 import DountChart from "../components/Goal";
-import GoalADD from "../components/GoalAdd"
+import GoalInput from "../components/GoalInput"
 import CurrentSavedItem from "../components/CurrentSavedItem";
 import PostModal from "../components/PostModal";
 
@@ -30,7 +30,6 @@ function Save() {
   const [modalName, setModalName] = useState("");
   const [showPostModal, setShowPostModal] = useState("");
 
-  const [isGoalItem, setGoalItem] = useState(-1);
   const [selectInputValue , setSelectInputValue] = useState([]); 
 
   const dispatch = useDispatch();
@@ -83,8 +82,8 @@ function Save() {
           {myGoalList.data==null?
             <>  <Circle onClick={() => {
               openModal();
-              setModalName("내 목표 만들기!")
-              setModalState(<GoalADD />)
+              setModalName("내 태산 만들기!")
+              setModalState(<GoalInput state={"ADD"}/>)
             }}>
               <p className="circleInP">+ 태산 만들기!</p>
             </Circle>
@@ -95,10 +94,18 @@ function Save() {
               <DountChart color="#26DFA6" image={goal.goalImage} percent={goal.goalPercent} size="200" />
               <div className="circle" style={{ background: "rgba(0, 0, 0, 0.5)" }}>
                 <div className="isGoalSubmenuBox">
+               
                   <div>
                     <FaRegEdit size="15" />
-                    <p>목표 변경</p>
+                    <p onClick={() => {
+                        openModal();
+                        setModalName("태산 수정하기!")
+                        setModalState(<GoalInput 
+                                        state={"Update"}
+                                        goalItemId={goal.goalItemId}/>)
+                      }}>목표 변경</p>
                   </div>
+                  <button>삭제하기</button>
                   <div>
                     <IoArrowRedoOutline size="15" />
                     <p onClick={() => {
