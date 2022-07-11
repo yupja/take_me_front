@@ -29,7 +29,7 @@ export const createPostAc = (data) => {
     const json = JSON.stringify(request);
     const blob = new Blob([json], { type : "application/json"});
 
-    formData.append('image',data.image)
+    formData.append('file',data.file)
     formData.append('request', blob)
     await instance.post('/api/post/board',formData,{
       headers : {
@@ -79,16 +79,32 @@ export const loadDetailAc = (boardIdex, boardId) => {
 
 
 
-export const UpdatePost = (boardId) => {
+export const UpdatePost = (data) => {
   return async function (dispatch) {
+    const formData = new FormData();
+
+    const request = {
+      title : data.title,
+      contents : data.contents
+    }
+    const json = JSON.stringify(request);
+    const blob = new Blob([json], { type : "application/json"});
+
+    formData.append('image',data.image)
+    formData.append('request', blob)
+
     await instance
-      .put(`/api/board/${boardId}`, boardId)
+      .put(`/api/board/${data.boardId}`, formData,{
+        headers : {
+          "Content-Type": "multipart/form-data",
+        }
+      })
       .then((re) => {
       })
       .catch((err) => {
         console.log(err);
       });
-    console.log(boardId, "수정아!")
+    console.log(data.boardId, "수정아!")
   };
 };
 

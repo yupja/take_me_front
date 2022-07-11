@@ -8,10 +8,12 @@ import { useParams } from "react-router-dom";
 import HeaderMenue from "../components/HeaderMenu";
 import Like from "../components/Like";
 import CommentList from "../components/CommentList";
+import ModifyModal from "../components/ModifyModal";
 import { createCommentAc } from "../redux/modules/comment"
 import { loadCommentAc } from "../redux/modules/comment"
 import { loadpostsAc } from "../redux/modules/post";
 import { loadDetailAc } from "../redux/modules/post"
+import { deletePostAc} from "../redux/modules/post"
 
 function Detail(props) {
     const dispatch = useDispatch();
@@ -48,6 +50,15 @@ function Detail(props) {
         setUserNav(user_nav =>user_nav ?false :true)
     }
 
+
+    const [showModall, setShowModall] = useState(false);
+    const openModall = () => {
+      setShowModall(true)
+    }
+    const closeModall = () => {
+      setShowModall(false);
+    }
+
     const state = "커뮤니티"
 
     return (
@@ -81,13 +92,23 @@ function Detail(props) {
                 <PostBtn onClick={createComment}>게시</PostBtn>ß
             </Enter>
             {user_nav && (
-                                <UserInfoNav>
-                                    <div>
-                                   <div>수정하기</div>
-                                   <div>삭제하기</div>
-                                    </div>
-                                </UserInfoNav>
-                            )}   
+                <UserInfoNav>
+                    <div>
+                    <div onClick={() => {openModall()}}>수정하기</div>
+                    <div onClick={() => {
+                        dispatch(
+                        deletePostAc(Postdata.data[boardIdex].boardId))
+                    }}>삭제하기</div>
+                    </div>
+                </UserInfoNav>
+                
+            )}  
+            {/* 게시글 수정모달 */}
+             {showModall ?
+            <ModifyModal showModall={showModall} closeModall={closeModall} 
+                        formodiId = {Postdata.data[boardIdex].boardId}
+                        />
+            : null} 
         </>
         
     )
