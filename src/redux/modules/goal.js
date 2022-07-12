@@ -64,9 +64,18 @@ export const updateGoalAPI = (formData, goalItemId) => { // 모든 사람의 태
 }
 
 
-
-
 //-------------------- DELETE ---------------------------
+
+export const deleteGoalRQ = (goalItemId) =>{
+  return async function(dispatch){
+    try{
+      await instance.delete(`/api/goalItem/${goalItemId}`)
+      dispatch(myReadGoalRQ())
+    }catch(error){
+      console.log(error)
+    }
+  }
+}
 
 
 

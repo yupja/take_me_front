@@ -6,9 +6,11 @@ import { instance } from "../../shared/axios";
 //--------------------- CREATE ---------------------------
 export const addSavedListRQ = createAsyncThunk(
   'saved/add',
-  async (sendData) =>{
+  async (sendData, thunkAPI) =>{
     try {
       await instance.post('/api/savedItem',sendData)
+      thunkAPI.dispatch(mySavedListRQ(sendData.goalItemId))
+      
     } catch (error) {
 
     }
@@ -49,7 +51,16 @@ export const loadsavedAc = (boardId) => {
 
 //-------------------- DELETE ---------------------------
 
-
+export const deleteSavedList = (itemId) =>{
+  return async function (dispatch) {
+    console.log(itemId)
+    try{
+      await instance.delete(`/api/savedItem/${itemId}`)
+    }catch(error){
+      console.log(error);
+    }
+  }
+}
 
 
 //-------------------- SLICE ----------------------------
