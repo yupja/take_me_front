@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { myReadGoalRQ } from "../redux/modules/goal"
+import { myReadGoalRQ, deleteGoalRQ } from "../redux/modules/goal"
 import {addSavedListRQ} from "../redux/modules/saved"
 import { myFavoriteListRQ } from "../redux/modules/favorite";
 
@@ -16,10 +16,12 @@ import PostModal from "../components/PostModal";
 import styled from "styled-components";
 import "../public/css/saveMain.css"
 import { FaRegEdit } from 'react-icons/fa'
+
 import { IoArrowRedoOutline } from 'react-icons/io5'
 
 
 function Save() {
+
   useEffect(() => {
     dispatch(myReadGoalRQ());
     dispatch(myFavoriteListRQ());
@@ -48,13 +50,17 @@ function Save() {
     goalitemName: myGoalList.data?.itemName
   }
 
+
+  const mylist = useSelector((state) => state.favorite.myFavoriteList);
+
+
   const state = "데일리 티끌"
   const priceInput = useRef();
 
   const addSaveData = () =>{
     let sendData={}
 
-    if(myGoalList.length===0){
+    if(myGoalList.length===0 || goal.goalitemName=== "이름 없음"){
         sendData ={
         itemId : selectInputValue.itemId,
         price :priceInput.current.value,
@@ -69,17 +75,37 @@ function Save() {
       }
 
     }
-
     dispatch(addSavedListRQ(sendData));
     setSelectInputValue([])
   }
+
+
+  const addFavoriteSaved = (itemIndex)=>{
+    let sendData={}
+
+    if(myGoalList.length===0 || goal.goalitemName=== "이름 없음"){
+      sendData ={
+        itemId : mylist.data[itemIndex].itemId,
+        price :mylist.data[itemIndex].price,
+        goalItemId: -1
+      }
+    }else{
+      sendData ={
+        itemId : mylist.data[itemIndex].itemId,
+        price :mylist.data[itemIndex].price,
+        goalItemId: goal.goalItemId
+      }
+    }
+    dispatch(addSavedListRQ(sendData));
+  }
+
 
   return (
     <div className="wrap">
       <TopWrap>
         <HeaderMenue state={state} />
         <GoalMain>
-          {myGoalList.data==null?
+          {myGoalList.data==null || goal.goalitemName=== "이름 없음" ?
             <>  <Circle onClick={() => {
               openModal();
               setModalName("내 태산 만들기!")
@@ -105,7 +131,9 @@ function Save() {
                                         goalItemId={goal.goalItemId}/>)
                       }}>목표 변경</p>
                   </div>
-                  <button>삭제하기</button>
+                  <button onClick={()=>{
+                    dispatch(deleteGoalRQ(goal.goalItemId))
+                  }}>삭제하기</button>
                   <div>
                     <IoArrowRedoOutline size="15" />
                     <p onClick={() => {
@@ -117,16 +145,33 @@ function Save() {
                   </div>
                 </div>
               </div>
-              <p className="goalTitle">{goal.goalitemName} {goal.goalPercent*100}%</p>
+              <p className="goalTitle">{goal.goalitemName} {Math.floor(goal.goalPercent*100)}%</p>
             </>
           }
         </GoalMain>
       </TopWrap>
 
-      <FavoriteArea>
+      <SearchArea>
         <SearchSavedItem setSelectInputValue={setSelectInputValue}
                          state={"saveState"}/>
-      </FavoriteArea>
+      </SearchArea>
+
+      <FavoriteTag>
+        {mylist.length===0? 
+        <FavoriteItem></FavoriteItem>
+        :
+          <> 
+            {mylist.data?.map((item, itemIndex) => {
+              return(
+                <FavoriteItem 
+                  key={item.favoriteItemId}
+                  onClick={()=>{addFavoriteSaved(itemIndex)}}>
+                    {item.itemName}
+                </FavoriteItem>
+            )})}
+            </>
+        }
+      </FavoriteTag>
 
       {selectInputValue.length!==0? 
         <>      
@@ -144,7 +189,7 @@ function Save() {
       :""}
 
      
-      <CurrentSavedItem goalItemId={goal.goalItemId}/>
+        <CurrentSavedItem goalItemId={goal.goalItemId}/>
         
         <DayModal open={modalOpen}
         close={closeModal}
@@ -188,14 +233,37 @@ justify-content: center;
 `;
 
 
-const FavoriteArea = styled.div`
+const SearchArea = styled.div`
 padding: 0.2rem;
 width: 95%;
-height: 10vh;
+height: 5vh;
 display: flex;
 flex-direction: column;
 `;
 
+const FavoriteTag = styled.div`
+height: 5vh;
+display: flex;
+align-items: center;
+width:350px;
+overflow-x:scroll;
+
+white-space: nowrap;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;
+
+const FavoriteItem = styled.div`
+margin-top: 5px;
+display :inline-block;
+background: #EFEFEF;
+border-radius: 20px;
+font-size: 15px;
+padding: 5px;
+margin-left: 10px;
+`;
 
 
 
