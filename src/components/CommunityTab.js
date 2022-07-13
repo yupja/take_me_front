@@ -89,8 +89,12 @@ const CommunityTab = () => {
               <ContentBox>
                 <Left>
                   {/* <Day>{postList.createAt}</Day> */}
-                  <ItemImage></ItemImage>
-                  <Profile /*src={postList.profileImg}*/></Profile>
+                  <ItemImgBox>
+                  <ItemImage src={postList.image}></ItemImage>
+                  </ItemImgBox>
+                  <ProfileBox>
+                  <Profile src={postList.profileImg}></Profile>
+                  </ProfileBox>
                 </Left>
                 <Right>
                   <Top>
@@ -112,8 +116,7 @@ const CommunityTab = () => {
                       likeCount = {postList.likeCount}
                     />
                     <div style={{ marginLeft: "1rem" }}>💬</div>
-                    <div onClick={() => {
-                      Navigate(`/detail/${postList.boardId}`)
+                    <div  onClick={() => { Navigate(`/detail/${index}`)
                       }}>
                       댓글 00 개 모두 보기</div>
                     <div onClick={()=>{openModall(index)}} style={{ marginLeft: "auto" }}>📃</div>
@@ -170,12 +173,6 @@ display: flex;
 flex-direction: column;
 `;
 
-const Header = styled.div`
-width: 100%;
-height: 10vh;
-/* border: 1px solid black; */
-`;
-
 const ContentBox = styled.div`
 width: 100%;
 height: 20vh;
@@ -193,18 +190,27 @@ border: none;
 position: relative;
 `;
 
+const ProfileBox = styled.div`
+width: 12vw;
+height: 12vw;
+/* border: 1px solid red; */
+position: absolute;
+top: 0
+`;
+
 const Profile = styled.img`
-width: 35px;
-height: 35px;
-background-color: gray;
+width: 100%;
+height: 100%;
+/* background-color: gray; */
 border-radius: 35px;
 border: none;
-position: absolute;
-top: 5%
+
 `;
 
 const Nick = styled.div`
-border: 1px solid red;
+/* border: 1px solid red; */
+height: 20vw;
+margin-top: 1vw;
 display: flex;
 text-overflow: ellipsis;  
 	overflow : hidden;
@@ -219,14 +225,20 @@ font-size: 1.5rem;
 margin-left: auto;
 `
 
-const ItemImage = styled.div`
-width: 110px;
-height: 110px;
-border: 1px solid red;
-margin: 0 auto;
+const ItemImage = styled.img`
+width: 100%;
+height: 100%;
+/* border: 1px solid red; */
+/* margin: 0 auto; */
 border-radius: 50rem;
-position: absolute;
+/* position: absolute; */
 top: 5%
+`;
+
+const ItemImgBox = styled.div`
+/* border: 1px solid red; */
+width: 31vw;
+height: 31vw;
 `;
 
 const Foot = styled.div`
@@ -293,7 +305,7 @@ const Top = styled.div`
 width: 100%;
 /* border: 1px solid blue; */
 display: flex;
-justify-content: end;
+justify-content: flex-start;
 padding: 0 1rem;
 `;
 
