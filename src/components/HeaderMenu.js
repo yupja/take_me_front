@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import styled, { keyframes } from "styled-components";
 import { GiHamburgerMenu } from 'react-icons/gi'
+import { useCookies } from "react-cookie";
 
 
 const slider = keyframes`
@@ -16,6 +17,14 @@ const slider = keyframes`
 
 
 const HeaderMenu = (props) => {
+
+  const [, , removeCookie] = useCookies(['refreshToken']);
+
+  // 로그아웃
+  const logout = (e) => {
+    localStorage.clear();
+    removeCookie('refreshToken', { path: '/' });
+  }
 
   // 모달 상태관리
   const [modalOpen, setModalOpen] = useState(false);
@@ -57,8 +66,8 @@ const HeaderMenu = (props) => {
 
                   <Footer>
 
-                    {localStorage.getItem('accessToken')? 
-                      <p onClick={()=>{localStorage.removeItem('accessToken')}}>로그아웃</p>
+                    {localStorage.getItem('accessToken') ?
+                      <p onClick={logout}>로그아웃</p>
                       :
                       <>
                         <p onClick={() => {
