@@ -7,29 +7,27 @@ import { useSelector } from "react-redux/es/exports";
 import { loadpostsAc,deletePostAc } from "../redux/modules/post";
 import { useNavigate, useParams } from "react-router-dom"
 import { loadsavedAc } from "../redux/modules/saved";
+import {getUserInfoDB} from "../redux/modules/user";
 import Like from "./Like";
+import { loadMoreContentDB } from "../redux/modules/post";
 
 const CommunityTab = () => {
 
   React.useEffect(() => {
     dispatch(loadpostsAc())
-    dispatch(loadsavedAc())
+    dispatch(getUserInfoDB())
   }, [])
 
   const dispatch = useDispatch();
   const Navigate = useNavigate();
   
   const  [savedListIndex, setSavedListIndex] = useState();
-
+  const userinfo = useSelector((state) => state.user.infoList)
+  console.log(userinfo,"userinfo")
   const Postdata = useSelector((state) => state.post.postList.data);
   console.log(Postdata, "postdata")
 
   const Savedata = useSelector((state) => state.saved.savedItem);
-  console.log(Savedata, "savdata")
-
-  // const SavedId = Savedata.boardId
-  // console.log(SavedId)
-  // console.log(Savedata.data,"saveddata.boardid")
 
   const [showModall, setShowModall] = useState(false);
   const openModall = (index) => {
@@ -58,12 +56,35 @@ const CommunityTab = () => {
   const clickLike = () => {
     setILike(true)
   }
+  
+  const [target, setTarget] = useState(null);
+  const onIntersect = async ([entry], observer) => {
+      if (entry.isIntersecting) {
+          observer.unobserve(entry.target);
+          await dispatch(loadMoreContentDB());
+      }
+  };
+
+  useEffect(() => {
+      let observer;
+      if (target) {
+          observer = new IntersectionObserver(onIntersect, {
+              threshold: 1,
+          });
+          observer.observe(target);
+      }
+      return () => {
+          observer && observer.disconnect();
+      };
+  }, [target]);
+  console.log(Postdata,"확인")
+
 
   return (
     <Box>
       {Postdata.map((postList, index) => {
         return (
-          <div key={postList.boardId}>
+          <div key={postList.boardId} ref={index === Postdata.length - 1 ? setTarget : null}> 
             <>
               <ContentBox>
                 <Left>
@@ -74,22 +95,10 @@ const CommunityTab = () => {
                 <Right>
                   <Top>
                     <GoalName onClick={() => {
-                      Navigate(`/detail/${index}`)
+                      Navigate(`/detail/${index.boardId}`)
                     }}>
                       {postList.goalItemName}
                     </GoalName>
-                    <EditBtn>
-                      <ModiBtn onClick={() => {
-                        dispatch(
-                          editPost(postList.boardId))
-                      }}>🛠
-                      </ModiBtn>
-                      <DelBtn onClick={() => {
-                        dispatch(
-                          deletePostAc(postList.boardId))
-                      }}>🗑
-                      </DelBtn>
-                    </EditBtn>
                   </Top>
                   <Middle>
                     <Nick onClick={() => { Navigate(`/detail/${index}`) }}>
@@ -105,8 +114,7 @@ const CommunityTab = () => {
                     <div style={{ marginLeft: "1rem" }}>💬</div>
                     <div onClick={() => {
                       Navigate(`/detail/${postList.boardId}`)
-                    }}
-                      style={{ marginLeft: "0rem" }}>
+                      }}>
                       댓글 00 개 모두 보기</div>
                     <div onClick={()=>{openModall(index)}} style={{ marginLeft: "auto" }}>📃</div>
                   </Foot>
@@ -117,6 +125,7 @@ const CommunityTab = () => {
         )
       }
       )}
+      <BlankBox></BlankBox>
 
 
 
@@ -195,7 +204,7 @@ top: 5%
 `;
 
 const Nick = styled.div`
-/* border: 1px solid red; */
+border: 1px solid red;
 display: flex;
 text-overflow: ellipsis;  
 	overflow : hidden;
@@ -310,6 +319,12 @@ text-align: center;
 const DelBtn = styled.button`
 width: 20%;
 height: 50%;
+`;
+
+const BlankBox = styled.div`
+width: 100%;
+height: 10vw;
+border: none;
 `;
 
 

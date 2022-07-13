@@ -14,27 +14,31 @@ import { loadCommentAc } from "../redux/modules/comment"
 import { loadpostsAc } from "../redux/modules/post";
 import { loadDetailAc } from "../redux/modules/post"
 import { deletePostAc} from "../redux/modules/post"
+import {getUserInfoDB} from "../redux/modules/user";
 
 function Detail(props) {
     const dispatch = useDispatch();
     const params = useParams();
     const comment_ref = React.useRef();
-    const commentEdit = React.useRef();
 
-    const boardIdex = params.boardId;
-    // console.log(boardIdex, "idex")
+    const boardIdex = params.boardId -1 ;
+    console.log(boardIdex, "idex")
+   
 
     React.useEffect(() => {
         dispatch(loadCommentAc(boardIdex))
         dispatch(loadpostsAc())
-        dispatch(loadDetailAc())
+        // dispatch(loadDetailAc(boardIdex))
+        dispatch(getUserInfoDB())
     }, []);
 
     const commentData = useSelector((state) => state.comment.commentList);
-    // console.log(commentData.createdAt,"comda")
-    // console.log(commentData.data[boardIdex].commentId, "comentId")
     const Postdata = useSelector((state) => state.post.postList);
-    // console.log(Postdata.data[boardIdex].boardId, "boardId")
+    const userinfo = useSelector((state) => state.user.infoList)
+  console.log(userinfo.username,"userinfo")
+  console.log(Postdata.data[boardIdex].userId,"postdata")
+  console.log(Postdata.data[boardIdex].boardId,"boardId")
+  console.log(commentData,"comment")
 
     const createComment = (boardId) => {
         console.log(comment_ref.current.value, "create확인");
@@ -43,6 +47,7 @@ function Detail(props) {
         }
         dispatch(createCommentAc(data, Postdata.data[boardIdex].boardId))
     };
+    // console.log(Postdata.data[boardIdex].boardId - 1,"??")
 
     const [user_nav, setUserNav] = useState(false)
 
@@ -66,43 +71,54 @@ function Detail(props) {
             <HeaderMenue state={state} />
             <Box>
                 <Img>
+                {userinfo.username === Postdata.data[boardIdex].userId ?
+                         <>
+                        <Toggle onClick={onClickNav}>...</Toggle>
+                        {user_nav && (
+                            <UserInfoNav>
+                                <div>
+                                <div onClick={() => {openModall()}}>수정하기</div>
+                                <div onClick={() => {
+                                    dispatch(
+                                    deletePostAc(Postdata.data[boardIdex].boardId))
+                                }}>삭제하기</div>
+                                </div>
+                            </UserInfoNav>
+                        )}
+                        </>
+                         : null
+                         }
+                         <ContentsBox>
                     <Commu>
                         <Top>
                             <GoalName>{Postdata.data[boardIdex].nickname}</GoalName>
                             <GoalName>{Postdata.data[boardIdex].createdAt}</GoalName>
                             <GoalName>{Postdata.data[boardIdex].goalItemName}</GoalName>
                         </Top>
-                        <Toggle onClick={onClickNav}>...</Toggle>
                     </Commu>
                     <Content>{Postdata.data[boardIdex].contents}</Content>
                     <Bottom>
                         <Like />&nbsp;<span>조회수&nbsp;{Postdata.data[boardIdex].viewCount}</span>
                     </Bottom>
+                    </ContentsBox>
                 </Img>
                 {commentData.data&&commentData.data?.map((comment_list, index) => (
                     <CommentList key={index}
                     nickname = {comment_list.nickname}
                     createdAtt = {comment_list.createdAt}
                     comment = {comment_list.comment}
+                    user = {userinfo.username}
+                   idUser = {Postdata.data[boardIdex].userId}
                     />
                 ))}
             </Box>
             <Enter>
                 <Input ref={comment_ref}></Input>
-                <PostBtn onClick={createComment}>게시</PostBtn>ß
+                <PostBtn onClick={createComment}>게시</PostBtn>
             </Enter>
-            {user_nav && (
-                <UserInfoNav>
-                    <div>
-                    <div onClick={() => {openModall()}}>수정하기</div>
-                    <div onClick={() => {
-                        dispatch(
-                        deletePostAc(Postdata.data[boardIdex].boardId))
-                    }}>삭제하기</div>
-                    </div>
-                </UserInfoNav>
-                
-            )}  
+            
+            
+            
             {/* 게시글 수정모달 */}
              {showModall ?
             <ModifyModal showModall={showModall} closeModall={closeModall} 
@@ -116,7 +132,7 @@ function Detail(props) {
 
 const Box = styled.div`
 width: 100%;
-height: 70vw;
+height: 80vw;
 border: 3px solid red;
 `;
 
@@ -199,6 +215,16 @@ const CreateAt = styled.span`
 margin-right: 3vw;
 font-size: 0.8rem;
 color: #999999;
+`;
+
+const ContentsBox = styled.div`
+width: 100%;
+border: 5px solid purple;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+margin-top: auto 0;
 `;
 
 const DelBtn = styled.button`

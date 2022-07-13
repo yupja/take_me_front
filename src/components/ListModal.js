@@ -43,7 +43,7 @@ const ListModal = (props) => {
                     </Middle>
                     {saveData?.map((savedItem, inddex) => (
                     
-                    <List key={savedItem.inddex}>
+                    <List key={inddex}>
                       <Left>
                       <CreateAt>{savedItem.createdDate}</CreateAt>
                       <SavedName>{savedItem.savedItemName}</SavedName>
