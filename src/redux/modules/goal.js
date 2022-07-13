@@ -46,8 +46,36 @@ export const allReadGoalRQ = () => { // 모든 사람의 태산 항목
 
 //-------------------- UPDATE ---------------------------
 
+export const updateGoalAPI = (formData, goalItemId) => { // 모든 사람의 태산 항목
+  return async function (dispatch) {
+    try {
+      console.log(goalItemId)
+      await instance.put(`/api/goalItem/${goalItemId}`, formData,{
+        headers :  {
+          "Content-Type": "multipart/form-data",
+        }
+      })
+      dispatch(myReadGoalRQ());
+    } catch (error) {
+
+    }
+  }
+
+}
+
 
 //-------------------- DELETE ---------------------------
+
+export const deleteGoalRQ = (goalItemId) =>{
+  return async function(dispatch){
+    try{
+      await instance.delete(`/api/goalItem/${goalItemId}`)
+      dispatch(myReadGoalRQ())
+    }catch(error){
+      console.log(error)
+    }
+  }
+}
 
 
 
@@ -69,6 +97,9 @@ const goalSlice = createSlice({
     [myReadGoalRQ.fulfilled]: (state, action) =>{
       state.myGoalList = action.payload
     },
+    // [updateGoalAPI.fulfilled]: (state, action) =>{
+    //   state.myGoalList = action.payload
+    // },
 
   }
 });

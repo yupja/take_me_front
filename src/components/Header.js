@@ -62,7 +62,7 @@ function Header() {
               </CloseBtn>
               <Menu>
                 <li onClick={() => {
-                  navigate("/", { state: "데일리 티끌" });
+                  navigate("/save", { state: "데일리 티끌" });
                 }}>데일리 티끌</li>
                 <li onClick={() => {
                   navigate("/community", { state: "티끌 자랑" });

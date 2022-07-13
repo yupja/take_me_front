@@ -7,7 +7,7 @@ import Category from "../components/Category"
 import { addFavoriteRQ } from "../redux/modules/favorite"
 
 
-const FavoriteAdd = ()=>{
+const FavoriteAdd = (props)=>{
     const dispatch = useDispatch();
     const [category , setCategory] = useState();
     const itemName = useRef();
@@ -23,6 +23,8 @@ const FavoriteAdd = ()=>{
         }
         console.log(sendData)
         dispatch(addFavoriteRQ(sendData));
+        props.setSelectInputValue([])
+        
     }
 
 

@@ -40,24 +40,3 @@
     padding-top: 25px;
 }
 
-
-
-
-.sListWrap{
-    display: flex;
-    height: 50px;
-    width: 90%;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px;
-    border-bottom: 1px solid #CCCCCC;
-}
-
-.sListWrap button{
-    background:#26DFA6;
-    color: white;
-    padding: 8px;
-    font-size: 14px;
-    border-radius: 15px;
-    border: none;
-}

@@ -6,41 +6,63 @@ import { useSelector } from "react-redux/es/exports";
 import { useParams } from "react-router-dom";
 
 import HeaderMenue from "../components/HeaderMenu";
+import Like from "../components/Like";
+import CommentList from "../components/CommentList";
+import ModifyModal from "../components/ModifyModal";
 import { createCommentAc } from "../redux/modules/comment"
 import { loadCommentAc } from "../redux/modules/comment"
-import { deleteComment } from "../redux/modules/comment";
-import { updateCommentAc } from "../redux/modules/comment";
 import { loadpostsAc } from "../redux/modules/post";
 import { loadDetailAc } from "../redux/modules/post"
+import { deletePostAc} from "../redux/modules/post"
+import {getUserInfoDB} from "../redux/modules/user";
 
 function Detail(props) {
     const dispatch = useDispatch();
     const params = useParams();
     const comment_ref = React.useRef();
-    const commentEdit = React.useRef();
 
-    const index = params.boardId;
-    console.log(index, "idex")
+    const boardIdex = params.boardId -1 ;
+    console.log(boardIdex, "idex")
+   
 
     React.useEffect(() => {
-        dispatch(loadCommentAc(index))
+        dispatch(loadCommentAc(boardIdex))
         dispatch(loadpostsAc())
-        dispatch(loadDetailAc())
+        // dispatch(loadDetailAc(boardIdex))
+        dispatch(getUserInfoDB())
     }, []);
 
     const commentData = useSelector((state) => state.comment.commentList);
-    console.log(commentData, "코멘트")
     const Postdata = useSelector((state) => state.post.postList);
-    console.log(Postdata, "postdata")
-    
+    const userinfo = useSelector((state) => state.user.infoList)
+  console.log(userinfo.username,"userinfo")
+  console.log(Postdata.data[boardIdex].userId,"postdata")
+  console.log(Postdata.data[boardIdex].boardId,"boardId")
+  console.log(commentData,"comment")
 
-    const createComment = (index) => {
-        console.log(comment_ref.current.value, "확인");
+    const createComment = (boardId) => {
+        console.log(comment_ref.current.value, "create확인");
         const data = {
             comment: comment_ref.current.value,
         }
-        dispatch(createCommentAc(index, data))
+        dispatch(createCommentAc(data, Postdata.data[boardIdex].boardId))
     };
+    // console.log(Postdata.data[boardIdex].boardId - 1,"??")
+
+    const [user_nav, setUserNav] = useState(false)
+
+    const onClickNav = (e) => {
+        setUserNav(user_nav =>user_nav ?false :true)
+    }
+
+
+    const [showModall, setShowModall] = useState(false);
+    const openModall = () => {
+      setShowModall(true)
+    }
+    const closeModall = () => {
+      setShowModall(false);
+    }
 
     const state = "커뮤니티"
 
@@ -48,77 +70,97 @@ function Detail(props) {
         <>
             <HeaderMenue state={state} />
             <Box>
-                <Top>
-                    <Nopadding>
-                        <Commu>
-                            <Left>
-                                <Profile></Profile>
-                                <GoalName>{Postdata.data[index].goalItemName}</GoalName>
-                            </Left>
-                            <span>🤍</span>
-                        </Commu>
-                        <Content>{Postdata.data[index].contents}</Content>
-                    </Nopadding>
-                </Top>
-                {commentData && commentData.map((comment_list, index) => (
-                    
-                        <CommentBox key={index}>
-                            <CoProfile></CoProfile>
-                            <Ddu>
-                                <span>{comment_list.nickname}</span>
-                                <Right>
-                                    <CreateAt>{comment_list.createdAt}</CreateAt>
-                                    <DelBtn onClick={() => {
-                                        dispatch(deleteComment(comment_list.commentId))
-                                    }}>
-                                        <svg width="11" height="13" viewBox="0 0 11 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path fillRule="evenodd" clipRule="evenodd" d="M3.625 0.375C3.00368 0.375 2.5 0.87868 2.5 1.5V2.25H1.75H0.5C0.223858 2.25 0 2.47386 0 2.75C0 3.02614 0.223858 3.25 0.5 3.25H1.25V11.5C1.25 12.1213 1.75368 12.625 2.375 12.625H8.625C9.24632 12.625 9.75 12.1213 9.75 11.5V3.25H10.5C10.7761 3.25 11 3.02614 11 2.75C11 2.47386 10.7761 2.25 10.5 2.25H9.25H8.5V1.5C8.5 0.87868 7.99632 0.375 7.375 0.375H3.625ZM7.5 2.25V1.5C7.5 1.43096 7.44404 1.375 7.375 1.375H3.625C3.55596 1.375 3.5 1.43096 3.5 1.5V2.25H7.5ZM3 3.25H2.25V11.5C2.25 11.569 2.30596 11.625 2.375 11.625H8.625C8.69404 11.625 8.75 11.569 8.75 11.5V3.25H8H3ZM4.25 4.75C4.52614 4.75 4.75 4.97386 4.75 5.25L4.75 9.625C4.75 9.90114 4.52614 10.125 4.25 10.125C3.97386 10.125 3.75 9.90114 3.75 9.625L3.75 5.25C3.75 4.97386 3.97386 4.75 4.25 4.75ZM6.75 4.75C7.02614 4.75 7.25 4.97386 7.25 5.25L7.25 9.625C7.25 9.90114 7.02614 10.125 6.75 10.125C6.47386 10.125 6.25 9.90114 6.25 9.625L6.25 5.25C6.25 4.97386 6.47386 4.75 6.75 4.75Z" fill="#333333" />
-                                        </svg>
-                                    </DelBtn>
-                                </Right>
-                                <Comment>{comment_list.comment}</Comment>
-                            </Ddu>
-                        </CommentBox>
-                    
+                <Img>
+                {userinfo.username === Postdata.data[boardIdex].userId ?
+                         <>
+                        <Toggle onClick={onClickNav}>...</Toggle>
+                        {user_nav && (
+                            <UserInfoNav>
+                                <div>
+                                <div onClick={() => {openModall()}}>수정하기</div>
+                                <div onClick={() => {
+                                    dispatch(
+                                    deletePostAc(Postdata.data[boardIdex].boardId))
+                                }}>삭제하기</div>
+                                </div>
+                            </UserInfoNav>
+                        )}
+                        </>
+                         : null
+                         }
+                         <ContentsBox>
+                    <Commu>
+                        <Top>
+                            <GoalName>{Postdata.data[boardIdex].nickname}</GoalName>
+                            <GoalName>{Postdata.data[boardIdex].createdAt}</GoalName>
+                            <GoalName>{Postdata.data[boardIdex].goalItemName}</GoalName>
+                        </Top>
+                    </Commu>
+                    <Content>{Postdata.data[boardIdex].contents}</Content>
+                    <Bottom>
+                        <Like />&nbsp;<span>조회수&nbsp;{Postdata.data[boardIdex].viewCount}</span>
+                    </Bottom>
+                    </ContentsBox>
+                </Img>
+                {commentData.data&&commentData.data?.map((comment_list, index) => (
+                    <CommentList key={index}
+                    nickname = {comment_list.nickname}
+                    createdAtt = {comment_list.createdAt}
+                    comment = {comment_list.comment}
+                    user = {userinfo.username}
+                   idUser = {Postdata.data[boardIdex].userId}
+                    />
                 ))}
             </Box>
             <Enter>
                 <Input ref={comment_ref}></Input>
                 <PostBtn onClick={createComment}>게시</PostBtn>
             </Enter>
-
+            
+            
+            
+            {/* 게시글 수정모달 */}
+             {showModall ?
+            <ModifyModal showModall={showModall} closeModall={closeModall} 
+                        formodiId = {Postdata.data[boardIdex].boardId}
+                        />
+            : null} 
         </>
+        
     )
 };
 
 const Box = styled.div`
-padding: 3vw;
-/* border: 3px solid red; */
+width: 100%;
+height: 80vw;
+border: 3px solid red;
 `;
 
 
-const Top = styled.div`
-width: cal(100%+3*2);
-margin: 3vw -3vw 3vw -3vw;
-height: 40vw;
+const Img = styled.div`
+width: 100%;
+height: 100%;
 background-color: #F5F5F5;
-`;
-
-const Nopadding = styled.div`
-padding: 3vw;
+border: 1px solid blue;
 `;
 
 const Commu = styled.div`
 width: 100%;
-height: 50%;
-/* border: 1px solid blue; */
+height: 30%;
+border: 3px solid blue;
 display: flex;
-justify-content: space-between;
+justify-content: center;
 align-items: center;
 `;
 
-const Left = styled.div`
+const Toggle = styled.div`
+margin-left: 0;
+`;
+
+const Top = styled.div`
 display: flex;
+flex-direction: column;
+border: 3px solid violet;
 `;
 
 const Profile = styled.div`
@@ -139,8 +181,19 @@ color: black;
 
 const Content = styled.div`
 width: 100%;
-height: 50%;
+height: 30%;
 padding: 3vw;
+border: 2px solid orange;
+`;
+
+const Bottom = styled.div`
+width: 100%;
+height: 30%;
+border: 3px solid green;
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
 `;
 
 const CommentBox = styled.div`
@@ -162,6 +215,16 @@ const CreateAt = styled.span`
 margin-right: 3vw;
 font-size: 0.8rem;
 color: #999999;
+`;
+
+const ContentsBox = styled.div`
+width: 100%;
+border: 5px solid purple;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+margin-top: auto 0;
 `;
 
 const DelBtn = styled.button`
@@ -222,5 +285,18 @@ position: absolute;
 float: left;
 left: 83%;
 `;
+
+const UserInfoNav = styled.div`
+position: absolute;
+top: 5%;
+right: 10%;
+> div {
+    position: relative;
+    z-index: 5;
+    width: 20vw;
+    height: 10vw;
+    background: #fff;
+    box-shadow: rgb(0 0 0 / 10%) 0px 0px 8px;
+}`
 
 export default Detail;
