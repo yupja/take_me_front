@@ -7,7 +7,12 @@ import { Link } from "react-router-dom";
 import { LoginDB } from "../redux/modules/user";
 import { useNavigate } from "react-router-dom";
 
-import HeaderMenue from "../components/HeaderMenu";
+import Header from "../components/Header";
+import LoginGoogle from "../components/LoginGoogle";
+import LoginKakao from "../components/LoginKakao";
+
+import { ReactComponent as Google } from "../public/img/svg/Google.svg";
+import { ReactComponent as Kakao } from "../public/img/svg/Kakao.svg";
 
 function Login() {
   const { state } = useLocation();
@@ -65,17 +70,17 @@ function Login() {
   return (
     <>
       <div className="topWrap">
-        <HeaderMenue state={state} />
+        <Header />
       </div>
       <LoginWrap>
-        <Title>안녕하세요.<br />데이-킵입니다.</Title>
+        <Title>안녕하세요.<br /><span>티끌</span>입니다.</Title>
         <p>서비스 이용을 위해 로그인해주세요.</p>
         <Form>
           <label htmlFor="userId">
             <input
               type="text"
               id="userId"
-              placeholder="아이디를 입력해주세요."
+              placeholder="아이디"
               ref={userId}
             />
           </label>
@@ -83,22 +88,29 @@ function Login() {
             <input
               type="password"
               id="userPw"
-              placeholder="비밀번호를 입력해주세요."
+              placeholder="비밀번호"
               ref={userPw}
             />
           </label>
           <InputBtn onClick={login}>로그인하기</InputBtn>
         </Form>
-        <div>
+        <Licks>
           <Link to="/signup">회원가입</Link>
-          <Link to="/user/findid">아이디 찾기</Link>
-          <Link to="/user/findpw">비밀번호 찾기</Link>
-        </div>
-        <ul>
-          <li>카카오로 시작하기</li>
-          <li>구글로 시작하기</li>
-          <li>네이버로 시작하기</li>
-        </ul>
+          <span>
+            <Link to="/user/findid">아이디·</Link>
+            <Link to="/user/findpw">비밀번호 찾기</Link>
+          </span>
+        </Licks>
+        <Social>
+          <li>
+            <LoginKakao />
+          </li>
+          <li>
+            <LoginGoogle />
+          </li>
+          {/* <li>네이버로 시작하기</li> */}
+        </Social>
+
       </LoginWrap>
       {navToggles ?
         <ModalWrap>
@@ -123,6 +135,36 @@ export default Login;
 const ModalWrap = styled.div`
 width: 100%;
 height: 100vh;
+`
+const Social = styled.ul`
+margin-top: 4.06rem;
+position: relative;
+left: 50%;
+transform: translateX(-50%);
+display: flex;
+justify-content: center;
+
+li{
+  display: inline-block;
+  margin: 0 20px;
+}
+`
+
+const Licks = styled.div`
+position: relative;
+left: 50%;
+transform: translateX(-50%);
+display: inline-block;
+margin-top: 20px;
+span {
+  margin-left: 10px;
+}
+a{
+  color:#999;
+  font-size:0.87rem;
+  font-weight:500;
+  outline: underline;
+}
 `
 const ModalBox = styled.div`
 width: 100%;

@@ -15,6 +15,7 @@ import FindPwChange from "../pages/FindPwChange"; // 비밀번호 변경
 import Favorite from "../pages/Favorite"; // 즐겨찾기
 import History from "../pages/History"; // 히스토리
 import Proflie from "../pages/Proflie"; // 프로필
+import SociallLogin from "../pages/SociallLogin"; // 프로필
 
 function Router() {
   return (
@@ -40,6 +41,8 @@ function Router() {
         <Route path="/favorite" element={<Favorite />} />
         <Route path="/history" element={<History />} />
         <Route path="/proflie" element={<Proflie />} />
+        <Route path="/oauth2/redirect" element={<SociallLogin />} />
+
       </Routes>
     </BrowserRouter>
   );

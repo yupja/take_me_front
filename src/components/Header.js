@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled, { keyframes } from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 // import NavToggle from "./NavToggle";
 const slider = keyframes`
@@ -18,6 +19,14 @@ function Header() {
   const navigate = useNavigate();
   const [navToggles, setNavToggles] = useState(false);
 
+  const [, , removeCookie] = useCookies(['refreshToken']);
+
+  // 로그아웃
+  const logout = (e) => {
+    localStorage.clear();
+    removeCookie('refreshToken', { path: '/' });
+  }
+
   const onNav = (e) => {
     setNavToggles(true)
   }
@@ -27,8 +36,11 @@ function Header() {
 
   return (
     <HeaderWrap>
+      <LeftArea>
+        <h1>티끌</h1>
+      </LeftArea>
       {/* <svg width="10" height="16" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M.5 8 8 .5l1.05 1.05L2.6 8l6.45 6.45L8 15.5.5 8Z" fill="#000" /></svg> */}
-      <Title>로고</Title>
+      <Title>MY</Title>
       <HamArea onClick={onNav}>
         <NavBtn>
           <div>
@@ -64,7 +76,7 @@ function Header() {
               </Menu>
               <Footer>
                 {localStorage.getItem('accessToken') ?
-                  <p onClick={() => localStorage.removeItem('accessToken')}>로그아웃</p>
+                  <p onClick={logout}>로그아웃</p>
                   :
                   <>
                     <p onClick={() => {
@@ -91,13 +103,26 @@ const HeaderWrap = styled.div`
 position: relative;
 width:100%;
 height: 44px;
-background-color: #eee;
+`;
+
+const LeftArea = styled.div`
+position:absolute;
+top: 53%; left: 3%;
+transform: translateY(-50%);
+h1 {
+  font-family: 'HS-Regular';
+  color: #26DFA6;
+  font-size: 1.25rem;
+}
 `;
 
 const Title = styled.h1`
 position:absolute;
-top: 50%; left: 50%;
+top: 53%; left: 50%;
 transform: translate(-50%,-50%);
+font-family: 'HS-Regular';
+color: #333;
+font-size: 1.62rem;
 `;
 
 const HamArea = styled.div`
