@@ -103,7 +103,6 @@ top: 50%;
 transform: translate(-50%, -50%);
 width: 580px;
 min-height: 50vh;
-border: 5px solid red;
 background-color: rgb(0,0,0,0.3);
 box-shadow: rgb(0 0 0 / 9%) 0px 2px 12px 0px;
 display: flex;
