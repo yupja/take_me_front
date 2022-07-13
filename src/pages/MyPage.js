@@ -2,18 +2,23 @@ import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+// import { removeCookie } from "../redux/modules/cookie";
+// import Cookies from "react-cookie";
 
 import Header from "../components/Header";
 import { userSecDB } from "../redux/modules/user";
 import { getInfo } from "../redux/modules/info";
+import { useCookies } from "react-cookie";
 
 function MyPage() {
+
+  const [, , removeCookie] = useCookies(['refreshToken']);
+
   const dispatch = useDispatch();
   const state = useSelector((state) => state.info.infoList);
   const [openModal, setOpenModal] = useState(false);
   const [pwAlertStr, setPwAlertStr] = useState('');
-  console.log(state)
-  // const state = useSelector((state) => state.user);
+
 
   useEffect(() => {
     dispatch(getInfo())
@@ -43,7 +48,11 @@ function MyPage() {
     console.log("디스패치 끝!")
   };
 
-  console.log(state.introDesc)
+  // 로그아웃
+  const logout = (e) => {
+    localStorage.clear();
+    removeCookie('refreshToken', { path: '/' });
+  }
 
   return (
     <>
@@ -101,7 +110,7 @@ function MyPage() {
           </Box>
         </MyMenu>
       </MyPageWrap>
-      <LoginOutBtn>로그아웃</LoginOutBtn>
+      <LoginOutBtn onClick={logout}>로그아웃</LoginOutBtn>
       {openModal ?
         <PopupBack>
           <PopupWrap>
@@ -172,6 +181,7 @@ width: 100%;
 `
 const MyInfo = styled.div`
 width: 100%;
+height: 13rem;
 padding: 10px;
 text-align: center;
 div {
@@ -188,9 +198,9 @@ img{
 }
 p {
   padding-top: 10px;
-  font-size: 0.87rem;
+  font-size: 1rem;
   color: #26DFA6;
-  line-height: 1.12rem;
+  line-height: 1.43rem;
   font-weight: 700;
 }
 `
@@ -222,10 +232,9 @@ const MenuList = styled.ul`
   }
   p{
     margin-top: 5px;
-    font-size : 1.12rem;
-    letter-spacing: -3px;
-    font-weight: 700;
+    font-size : 1rem;
     color: #333333;
+    font-weight: 500;
   }
 `
 const MyMenu = styled.div`
@@ -241,6 +250,7 @@ padding:25px;
   }
   span {
     color:#26DFA6;
+    font-family: 'HS-Regular';
   }
 `
 const Box = styled.div`
@@ -251,7 +261,7 @@ text-align: left;
 h3 {
   font-size : 1.12rem;
   letter-spacing: -3px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   font-weight: 700;
 }
 ul {
@@ -273,9 +283,9 @@ div {
 }
 span {
   padding-left: 5px;
-  font-weight: 700;
-  letter-spacing: -3px;
+  font-weight: 500;
   color: #666666;
+  font-family: 'Noto Sans KR';
 }
 `
 const LoginOutBtn = styled.div`

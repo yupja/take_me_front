@@ -9,6 +9,7 @@ import FavoriteAdd from "../components/FavoriteAdd";
 
 import Header from "../components/Header";
 import DayModal from "../components/DayModal"
+import { ReactComponent as UpArrow } from "../public/img/svg/UpArrow.svg";
 
 import { addFavoriteRQ } from "../redux/modules/favorite"
 
@@ -25,7 +26,7 @@ function Favorite() {
   const closeModal = () => { setModalOpen(false); };
 
 
-  console.log(selectInputValue);
+  // console.log(selectInputValue);
 
   const addFavoriteData = () => {
     const sendData = {
@@ -44,22 +45,49 @@ function Favorite() {
 
   const mylist = useSelector((state) => state.favorite.myFavoriteList.data);
   console.log(mylist)
-  const changePrice = (e) => {
-    const price = Number(priceRef.current.value);
-    console.log(price)
+
+  const [Selected, setSelected] = useState('전체');
+
+  const handeChangeSelect = (e) => {
+    setSelected(e.target.value);
   }
 
-  const changePriceInput = (e) => {
-    const price = Number(priceRef.current.value);
-    console.log(price)
-  }
+
+  const newList = Selected === '전체' ? mylist : mylist?.filter((el) => {
+    if (el.categoryName === Selected) {
+      return true
+    } else {
+      return false
+    }
+  })
+
+
+
+  console.log(Selected)
+
+  // const selectList = [
+  //   '식비', '카페/간식','술/유흥', '생활', '온라인쇼핑', '패션/쇼핑', '뷰티/미용', '교통',
+  //   '주거/통신', '의료/건강', '금융', '문화/여가', '여행/숙박', '교육/학습', '자녀/육아', '반려동물', '경조/선물'
+  // ]
+  const selectList = [
+    '전체', '식료품', '주류'
+  ]
 
 
   return (
     <Wrap>
       <Header />
       <FavoriteWrap>
-        <Category>카테고리 영역</Category>
+        <Category>
+          <select name="category" onChange={handeChangeSelect} value={Selected}>
+            {selectList.map((item) => (
+              <option value={item} key={item}>
+                {item}
+              </option>
+            ))}
+          </select>
+          <UpArrow className="arrow" />
+        </Category>
         <SearchSavedItem
           state={"favoriteState"}
           setSelectInputValue={setSelectInputValue} />
@@ -81,11 +109,12 @@ function Favorite() {
                 </div>
               </li>
             }
-            {mylist && mylist.map((list, idx) => (
+            {newList && newList.map((list, idx) => (
               <FavoriteList key={list.itemId + idx}
                 itemName={list.itemName}
                 price={list.price}
                 favoriteId={list.favoriteItemId}
+                catagory={list.categoryName}
               />
             ))}
           </ul>
@@ -109,8 +138,24 @@ const Wrap = styled.div`
 /* padding: 0 25px; */
 `
 const Category = styled.div`
-background: #F8F8F8;
-height: 90px;
+position: relative;
+/* background: #F8F8F8; */
+padding: 10px 25px;
+select {
+  width: 100%;
+  text-align: center;
+  border-radius: 21px;
+  border: 1px solid #ccc;
+  padding: 10px 0;
+  appearance: none;
+}
+.arrow {
+  position: absolute;
+  top: 50%; right: 10%;
+  transform: translateY(-50%) rotate(180deg);
+  width: 0.56rem;
+  height: 1rem;
+}
 `
 
 const FavoriteWrap = styled.div`
@@ -121,7 +166,7 @@ const Total = styled.div`
   padding: 5px 25px;
   text-align: right;
   border-bottom: 1px solid #CCCCCC;
-  font-size: 0.87rem;
+  font-size: 1.87rem;
 `
 const FavList = styled.div`
 width: 100%;
@@ -134,30 +179,5 @@ li{
   position: relative;
 }
 
-span{
-
-}
-h2 {
-  width: 40%;
-  display: inline-block;
-}
-.price {
-  display: inline-block;
-  width: 8.4rem;
-  position: relative;
-  input {
-    width: 100%;
-  }
-  button {
-    position: absolute;
-    top: 50%; right: 3%;
-    transform: translateY(-50%);
-  }
-}
-.trash{
-  display: inline-block;
-  position: absolute;
-  right: 0;
-}
 `
 

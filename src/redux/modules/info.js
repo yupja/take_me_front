@@ -11,7 +11,6 @@ export const getInfo = () => {
     })
       .then((res) => {
         dispatch(infoList(res.data.data));
-        console.log(res.data.data)
       })
       .catch((error) => {
         console.log(error);
@@ -37,21 +36,22 @@ export const infoUpdate = (data) => {
 };
 
 
-// // 항목 조회
-// export const getFavoriteDB = () => {
-//   return async function (dispatch) {
-//     await instance.get("/api/mypage/profile", {
-//       "Content-Type": "application/json",
-//       withCredentials: true,
-//     })
-//       .then((res) => {
-//         console.log(res)
-//       })
-//       .catch((error) => {
-//         console.log(error);
-//       });
-//   };
-// };
+// 항목 조회
+export const getHistory = () => {
+  return async function (dispatch) {
+    await instance.get("/api/mypage/history", {
+      "Content-Type": "application/json",
+      withCredentials: true,
+    })
+      .then((res) => {
+        console.log(res)
+        dispatch(gethistorys(res.data.data))
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
 
 
 
@@ -63,6 +63,7 @@ const userSlice = createSlice({
   initialState: {
     isLogin: false,
     infoList: [],
+    historyList: [],
 
   },
   reducers: {
@@ -73,10 +74,13 @@ const userSlice = createSlice({
     infoList: (state, action) => {
       state.infoList = action.payload;
     },
+    gethistorys: (state, action) => {
+      state.historyList = action.payload;
+    },
 
   }
 });
 
 // export const userActions = userSlice.actions;
-export const { isLogin, infoList } = userSlice.actions;
+export const { isLogin, infoList, gethistorys } = userSlice.actions;
 export default userSlice.reducer;
