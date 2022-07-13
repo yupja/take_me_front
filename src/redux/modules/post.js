@@ -29,7 +29,7 @@ export const createPostAc = (data) => {
     const json = JSON.stringify(request);
     const blob = new Blob([json], { type : "application/json"});
 
-    formData.append('image',data.image)
+    formData.append('file',data.file)
     formData.append('request', blob)
     await instance.post('/api/post/board',formData,{
       headers : {
@@ -38,11 +38,11 @@ export const createPostAc = (data) => {
     })
       .then((response) => {
         console.log(response);
-        dispatch(uploadPost(formData))
+        // dispatch(uploadPost())
         alert("등록 완료");
       })
       .catch((error) => {
-        window.alert(error.response.data.message);
+        console.log(error);
       });
   };
 };
@@ -50,7 +50,7 @@ export const createPostAc = (data) => {
 
 export const loadpostsAc = () => {
   return function (dispatch) {
-    instance.get('/api/board')
+    instance.get('/api/board', { params: { lastBoardId : 999 , size: 15 } })
       .then(response => {
         //   console.log(response.data, "redux_data");
         dispatch(roadPosts(response.data));
@@ -76,19 +76,53 @@ export const loadDetailAc = (boardIdex, boardId) => {
   };
 };
 
+export const loadMoreContentDB = () => {
+  return async function (dispatch, getState) {
+    const board = getState().post.postList.data;
+    console.log(board,"resS")
+    const lastIndex = board[board.length - 1].boardId
+    console.log(lastIndex,"last")
+    await instance.get('/api/board', { params: { lastBoardId: lastIndex, size: 15 } })
+    .then((response) => {
+      console.log(response,"resssss")
+      const new_data = [...board, ...response.data.data];
+      console.log(new_data,"newdat")
+      dispatch(roadPosts({ data: new_data }));
+    });
+    console.log(board, lastIndex, '무스');
+  };
+};
 
 
 
-export const UpdatePost = (boardId) => {
+
+export const UpdatePost = (data) => {
   return async function (dispatch) {
+    const formData = new FormData();
+
+    const request = {
+      title : data.title,
+      contents : data.contents
+    }
+    const json = JSON.stringify(request);
+    const blob = new Blob([json], { type : "application/json"});
+
+    formData.append('image',data.image)
+    formData.append('request', blob)
+
     await instance
-      .put(`/api/board/${boardId}`, boardId)
+      .put(`/api/board/${data.boardId}`, formData,{
+        headers : {
+          "Content-Type": "multipart/form-data",
+        }
+      })
       .then((re) => {
+        console.log(re,"수정아")
       })
       .catch((err) => {
         console.log(err);
       });
-    console.log(boardId, "수정아!")
+    console.log(data.boardId, "수정아!")
   };
 };
 
