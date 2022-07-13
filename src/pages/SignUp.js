@@ -174,7 +174,7 @@ function SignUp() {
         <HeaderMenue state={state} />
       </div>
       <SignWrap>
-        <Title>데이-킵 회원가입을 위해<br />정보를 입력해 주세요.</Title>
+        <Title><span>티끌</span>회원가입을 위해<br />정보를 입력해 주세요.</Title>
         <Form>
           <label htmlFor="userId">
             <input type="text" id="userId" placeholder="아이디" ref={idRef} onChange={onIdChange} />
@@ -218,6 +218,11 @@ const Title = styled.h1`
 margin-top: 33px;
 font-size: 1.75rem;
 line-height: 2.75rem;
+span{
+  font-family: 'HS-Regular';
+  font-size: 2.31rem;
+  color: #26DFA6;
+}
 `
 const Form = styled.form`
 width: 100%;

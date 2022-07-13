@@ -1,20 +1,21 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from 'styled-components'
 import { useDispatch } from 'react-redux'
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux/es/exports";
 import { useParams } from "react-router-dom";
 import { changePw } from "../redux/modules/user";
+import { useLocation } from 'react-router-dom';
 
 const FindPwChange = () => {
-  //userid함께 리스트로 보내야하는데 현재 테스트 불가능!!!
-  const params = new URLSearchParams(window.location.pathname);
-  console.log(params.get("userId")) // ?뒤에 params가져옴,토큰, 닉네임, 아이디 다 가져옴
+  const { token } = useParams();
+  const [tokens, username] = token.split('&')
+  // console.log('토큰 :', tokens, '아이디 :', username)
 
 
   const dispatch = useDispatch();
 
-  // dispatch(getUserId());
+  // dispatch(getUserId()); tokens
   const state = useSelector((state) => state.user);
 
 
@@ -54,18 +55,21 @@ const FindPwChange = () => {
 
 
   // 버튼 클릭시 결과 컴포넌트 보이게
-  const pwCheckResult = (e) => {
+  const pwCheckResult = async (e) => {
     const pw = pwRef.current.value;
     const checkPw = pwCheckRef.current.value;
-    //토큰은 따로 저장하기
     const findInfo = {
-      username: '', // url에서 가져오기
+      username: username, // url에서 가져오기
       password: pw,
       checkPassword: checkPw,
     }
-    if (userPwAlert === '통과' || userPwAChecklert === '') {
+    if (pw === '' || checkPw === '') {
+      alert("비밀번호를 확인해주세요")
+      return;
+    }
+    if (userPwAlert === '' && userPwAChecklert === '') {
       console.log("다음!")
-      dispatch(changePw(findInfo))
+      await dispatch(changePw(findInfo, tokens))
       setfindPwPop(true) // 디스패치 먼저 실행 후 결과 팝업 생성
     } else {
       alert("비밀번호를 확인해주세요")

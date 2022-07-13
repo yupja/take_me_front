@@ -6,49 +6,63 @@ import { useLocation } from "react-router";
 import Header from "../components/Header";
 import SaveItemList from "../components/SaveItemList";
 import { ReactComponent as UpArrow } from "../public/img/svg/UpArrow.svg";
-import { ReactComponent as Star } from "../public/img/svg/Star.svg";
-import { ReactComponent as StarColor } from "../public/img/svg/StarColor.svg";
+
+import { getHistory } from "../redux/modules/info";
 
 function History() {
+  const dispatch = useDispatch();
   const [onToggle, setOnToggle] = useState(false);
   const [blocks, setBlocks] = useState(false);
+  const state = useSelector((state) => state.info.historyList)
+  console.log(state)
+
+
+  useEffect(() => {
+    dispatch(getHistory());
+  }, []);
 
   const active = (e) => {
     setOnToggle(current => !current);
     setBlocks(current => !current);
   }
 
-  const a = [
-    {
-      id: 1,
-      title: "택시비",
-      year: "2022",
-      day: "07.08",
-      price: "8000",
-    },
-    {
-      id: 2,
-      title: "물",
-      year: "2022",
-      day: "07.08",
-      price: "1000",
-    }
-  ]
+
 
   const b = [
     {
-      id: 1,
-      title: "로봇청소기",
-      year: "2022",
-      month: "08",
+      goalItemId: 16,
+      categoryId: -1,
+      categoryName: "이름 없음",
+      itemId: -1,
+      itemName: "이름 없음",
+      goalItemCount: 0,
+      price: 0,
+      totalPrice: 0,
+      checkReached: true,
+      goalPercent: 100.0,
+      savedItemCount: 3,
+      createdAt: "2022-07-08T10:59:53.16435",
+      reachedAt: "2022-07-08T11:01:47.9457",
+      image: null,
     },
     {
-      id: 2,
-      title: "에어컨",
-      year: "2022",
-      month: "08",
-    },
+      goalItemId: 17,
+      categoryId: 1,
+      categoryName: "식료품",
+      itemId: 1,
+      itemName: "소세지빵",
+      goalItemCount: 2,
+      price: 3000,
+      totalPrice: 60000,
+      checkReached: true,
+      goalPercent: 100.0,
+      savedItemCount: 1,
+      createdAt: "2022-07-08T10:59:53.16435",
+      reachedAt: "2022-07-08T11:01:47.9457",
+      image: "https://final-project-day-keep.s3.ap-northeast-2.amazonaws.com/static/aadf6dac-95ba-41cb-a166-770501042cd820210209_181035.jpg",
+    }
   ]
+
 
 
   return (
@@ -59,13 +73,15 @@ function History() {
         <HistoryList>
           <ul>
             {b && b.map((list, idx) => (
-              <li key={"a" + list.id}>
+              <li key={list.goalItemId + 'b'}>
                 <GoalList>
                   <ToggleBtn onClick={active} trans={onToggle}><UpArrow /></ToggleBtn>
-                  <span>{b[idx].year}년 {b[idx].month}월</span>
-                  <h2>{b[idx].title}</h2>
+                  <span>{list.reachedAt.split('-')[0]}년 {list.reachedAt.split('-')[1]}월</span>
+                  <h2>{list.itemName}</h2>
                 </GoalList>
-                <SaveItemList toggle={blocks} list={a} />
+                <SaveItemList
+                  toggle={blocks}
+                  list={list.goalItemId} />
               </li>
             ))}
           </ul>
@@ -84,21 +100,22 @@ width: 100%;
 
 const Total = styled.div`
   margin: 0 auto;
-  height: 90px;
+  padding: 30px 0 20px; 
   text-align: center;
-  line-height: 90px;
-  font-size: 1.87rem;
+  font-size:2.12rem;
   font-weight: 700;
+  font-family: 'HS-Regular';
   span{
     color: #26DFA6;
+      font-family: 'HS-Regular';
   }
 `
 
 const GoalList = styled.div`
   border-bottom: 1px solid #CCCCCC;
   overflow: hidden;
-  height: 2.5rem;
-  line-height: 2.5rem;
+  height: 3.12rem;
+  line-height: 3.12rem;
   padding: 0 25px;
 
 h2{

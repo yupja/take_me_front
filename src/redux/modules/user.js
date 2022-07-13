@@ -200,17 +200,21 @@ export const findPwDB = (info, setfindPwPop) => {
 };
 
 // 비밀번호 변경 post요청
-export const changePw = (data) => {
+export const changePw = (data, token) => {
   return async function (dispatch) {
-    await instance.post("/api/user/changePassword", (data), {
-      "Content-Type": "application/json",
-      withCredentials: true,
+    console.log(data, token);
+    const headers = {
+      'Authorization': `Bearer ${token}`
+    }
+    await instance.post("/api/user/changePassword", data, {
+      headers: headers
     })
-      .then((response) => {
-        dispatch(findPwResult(response.data.respMsg));
+      .then((res) => {
+        console.log(res)
+        // dispatch(findPwResult(res.data.respMsg));
       })
       .catch((error) => {
-        window.alert(error.response.data.message);
+        console.log(error);
       });
   };
 };
