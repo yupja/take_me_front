@@ -11,23 +11,15 @@ import { getHistory } from "../redux/modules/info";
 
 function History() {
   const dispatch = useDispatch();
-  const [onToggle, setOnToggle] = useState(false);
-  const [blocks, setBlocks] = useState(false);
   const state = useSelector((state) => state.info.historyList)
   console.log(state)
-
 
   useEffect(() => {
     dispatch(getHistory());
   }, []);
 
-  const active = (e) => {
-    setOnToggle(current => !current);
-    setBlocks(current => !current);
-  }
-
-
-
+  // 태산 만들기 오류로 등록 불가 -> 히스토리 목록에 보이는게 없음 -> 테스트코드를 지우지 못함:)
+  // 데이터가 있다면 b -> state
   const b = [
     {
       goalItemId: 16,
@@ -73,16 +65,12 @@ function History() {
         <HistoryList>
           <ul>
             {b && b.map((list, idx) => (
-              <li key={list.goalItemId + 'b'}>
-                <GoalList>
-                  <ToggleBtn onClick={active} trans={onToggle}><UpArrow /></ToggleBtn>
-                  <span>{list.reachedAt.split('-')[0]}년 {list.reachedAt.split('-')[1]}월</span>
-                  <h2>{list.itemName}</h2>
-                </GoalList>
-                <SaveItemList
-                  toggle={blocks}
-                  list={list.goalItemId} />
-              </li>
+              <SaveItemList
+                key={idx}
+                reachedAt={list.reachedAt}
+                itemName={list.itemName}
+                list={list.goalItemId}
+              />
             ))}
           </ul>
         </HistoryList>
@@ -111,40 +99,8 @@ const Total = styled.div`
   }
 `
 
-const GoalList = styled.div`
-  border-bottom: 1px solid #CCCCCC;
-  overflow: hidden;
-  height: 3.12rem;
-  line-height: 3.12rem;
-  padding: 0 25px;
-
-h2{
-  float: right;
-  font-size:1.25rem;
-  font-weight: 700;
-}
-
-span{
-  padding-left: 10px;
-  font-weight: 700;
-  font-size:1.25rem;
-}
-`
 
 const HistoryList = styled.div`
-  
 
 `
-const ToggleBtn = styled.button`
-  border:none;
-  background: none;
-  transform: ${props => (props.trans ? 'rotate(180deg)' : 'rotate(0deg)')};
-  /* transform: rotate(); */
-`
 
-// SaveItemList = styled.div`
-
-// /* display: ${props => (props.dis ? 'block' : 'none')}; */
-
-
-// `

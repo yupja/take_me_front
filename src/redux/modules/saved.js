@@ -43,7 +43,7 @@ export const getSavedList = (itemId) => {
     })
       .then((res) => {
         console.log(res)
-        // dispatch(infoList(res.data.data));
+        dispatch(itemList(res.data.data));
       })
       .catch((error) => {
         console.log(error);
@@ -102,10 +102,14 @@ const savedSlice = createSlice({
     savedItem: { data: [] },
     currentMySavedList: [],
     save: [],
+    itemList: []
   },
   reducers: {
     loadSaved: (state, action) => {
       state.savedItem = action.payload;
+    },
+    itemList: (state, action) => {
+      state.itemList = action.payload;
     }
   },
   extraReducers: {
@@ -117,5 +121,5 @@ const savedSlice = createSlice({
 
 });
 
-const { loadSaved } = savedSlice.actions;
+const { loadSaved, itemList } = savedSlice.actions;
 export default savedSlice.reducer;
