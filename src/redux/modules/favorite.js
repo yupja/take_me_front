@@ -4,19 +4,6 @@ import { instance } from "../../shared/axios";
 
 
 
-//--------------------- CREATE ---------------------------
-
-export const addFavoriteRQ = createAsyncThunk( // 내 즐겨찾기 등록 
-  'add/addFavorite',
-  async (sendData) => {
-    try {
-      await instance.post("/api/mypage/favorite", sendData)
-    } catch (error) {
-      console.log(error);
-    }
-  }
-)
-
 
 //---------------------- READ ----------------------------
 
@@ -31,6 +18,22 @@ export const myFavoriteListRQ = createAsyncThunk(
     }
   }
 )
+
+//--------------------- CREATE ---------------------------
+
+export const addFavoriteRQ = createAsyncThunk( // 내 즐겨찾기 등록 
+  'add/addFavorite',
+  async (sendData, thunkAPI) => {
+    try {
+      await instance.post("/api/mypage/favorite", sendData)
+      thunkAPI.dispatch(myFavoriteListRQ());
+    } catch (error) {
+      console.log(error);
+    }
+  }
+)
+
+
 //-------------------- UPDATE ---------------------------
 export const favoriteUpdate = (price, itemId) => {
   return async function (dispatch) {
@@ -56,6 +59,7 @@ export const favoriteDel = (itemId) => {
       .catch((error) => {
         console.log(error)
       });
+      dispatch(myFavoriteListRQ());
   };
 };
 

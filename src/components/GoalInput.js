@@ -52,8 +52,6 @@ const GoalADD = (props)=>{
       }
     }
 
-    console.log("새로운거")
-
     if(state==="ADD"){
       dispatch(addItem(data));
     }else if(state==="Update"){
@@ -86,8 +84,6 @@ const GoalADD = (props)=>{
     }else if(state==="Update"){
      dispatch(updateGoalAPI(formData, props.goalItemId));
     }
-
-    // );
 
   }
 
