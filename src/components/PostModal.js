@@ -46,35 +46,32 @@ const PostModal = (props) => {
 
         <Background>
             <ModalBox onClick={e => e.stopPropagation()}>
-            
-                <CommentBox>
+              <CommentBox>
+                <ImageArea>
                     <Top>
                     <Head>내 아낌 % 공유</Head>    
                     <Close onClick={props.closeModalll}>X</Close>
                     </Top>
+                    
                     <Middle>
-                        <Profile src={image}></Profile>
+                      <Profile src={image}></Profile>
                         <Right>
-                            <DeImg>기본 이미지</DeImg>
-                            {/* <AddImg 
-                            // <input
-                            //  type="file" 
-                            //          name="image" 
-                            //          multiple="multiple"
-                            //          onChange={imageUpLoad}>
-                                     >이미지 등록
-                                     {/* </input> */}
-                                    {/* </AddImg> */}
-                                    <AddImg className="filebox">
-                                    <label htmlFor="ex_file" style={{magin:" 0 auto"}}>이미지 등록</label>
-                                    <input type="file"
-                                    name="image" 
-                                             multiple="multiple"
-                                             onChange={imageUpLoad}
-                                    id="ex_file" style={{display:"none"}}/> 
-                                    </AddImg>
+                          <DeImg>기본 이미지</DeImg>
+                          <AddImg className="filebox">
+                            <label htmlFor="ex_file" style={{magin:" 0 auto"}}>이미지 등록</label>
+                            <input 
+                              type="file"
+                              name="image" 
+                              multiple="multiple"
+                              onChange={imageUpLoad}
+                              id="ex_file" 
+                              style={{display:"none"}}/> 
+                          </AddImg>
                         </Right>
                     </Middle>
+                </ImageArea>
+
+
                     <Goal ref={title_ref}></Goal>
                     <Input ref={contents_ref}></Input>
                     <Btn onClick={postAc}>공유하기</Btn>
@@ -87,13 +84,51 @@ const PostModal = (props) => {
     );
   };
 
+
+const ImageArea = styled.div`
+display: flex;
+flex-direction: column;
+`;
+
+const CommentBox = styled.div`
+width: 100%;
+height: 50vh;
+margin: auto 0;
+background-color: white;
+display: flex;
+border-radius: 3vw;
+align-items: center;
+flex-direction: column;
+`;
+
+const Top = styled.div`
+width: 100%;
+display: flex;
+`;
+
+const Head = styled.div`
+width: 100%;
+height: 3vh;
+font-size: 1.5rem;
+font-weight: 700;
+display: flex;
+justify-content: center;
+margin-top: 3vw;
+`;
+
+const Right = styled.div`
+width: 50%;
+height: 100%;
+padding: 3%;
+display: flex;
+flex-direction: column;
+align-content: space-between;
+`;
+
+
+
 const Background = styled.div`
-position: fixed;
-top: 0;
-left: 0;
-bottom: 0;
-right: 0;
-/* background-color: rgba(41,41,41,0.85); */
+display: flex;
 `;
 
 const ModalBox = styled.div`
@@ -115,13 +150,10 @@ display: flex;
 `;
 
 const Close = styled.button`
-/* border: 5px solid violet; */
 width: 5vw;
 height: 5vw;
 text-align: center;
 align-items: center;
-/* float: right; */
-position: absolute;
 top: 10;
 right: 0%;
 margin-right: 1vw;
@@ -129,41 +161,13 @@ background-color: white;
 border: none;
 `;
 
-const CommentBox = styled.div`
-width: 100%;
-height: 50vh;
-margin: auto 0;
-background-color: white;
-/* justify-content: center; */
-display: flex;
-flex-direction: column;
-/* border: 3px solid yellow; */
-border-radius: 3vw;
-align-items: center;
-position: relative;
-`;
 
-const Top = styled.div`
-width: 100%;
-display: flex;
-margin:1vw 0 3vw 0;
-`;
 
-const Head = styled.div`
-width: 100%;
-height: 3vh;
-font-size: 1.5rem;
-font-weight: 700;
-display: flex;
-justify-content: center;
-margin-top: 3vw;
-/* border: 2px solid blue; */
-`;
+
 
 const Middle = styled.div`
 width: 100%;
 height: 35%;
-/* border: 1px solid pink; */
 display: flex;
 flex-direction: row;
 justify-content: center;
@@ -177,19 +181,11 @@ border: 1px solid red;
 margin: auto;
 `;
 
-const Right = styled.div`
-width: 50%;
-height: 100%;
-/* border: 1px solid purple; */
-padding: 3%;
-display: flex;
-flex-direction: column;
-align-content: space-between;
-`;
+
 
 const DeImg = styled.button`
 width: 100%;
-height: 15vw;
+height: 20vh;
 border-radius: 90px;
 border: none;
 color: white;
@@ -200,7 +196,7 @@ background-color: #FFB7D9;
 
 const AddImg = styled.div`
 width: 100%;
-height: 15vw;
+height: 20vh;
 border: none;
 border-radius: 90px;
 background-color: #26DFA6;
