@@ -95,7 +95,7 @@ const CommunityTab = () => {
                 <Right>
                   <Top>
                     <GoalName onClick={() => {
-                      Navigate(`/detail/${index.boardId}`)
+                      Navigate(`/detail/${index}`)
                     }}>
                       {postList.goalItemName}
                     </GoalName>
