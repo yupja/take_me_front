@@ -1,13 +1,21 @@
 import { style } from "@mui/system";
 import React,{useRef, useState} from "react";
 import { useDispatch } from "react-redux";
-import {deleteSavedList} from "../redux/modules/saved"
+import {deleteSavedList, modifySaved} from "../redux/modules/saved"
 import styled from "styled-components";
 
 const ModifySave = (props) =>{
     const priceInput = useRef();
     const [modifyView, setModifyView] = useState(false);
     const dispatch = useDispatch();
+
+    const modifySavedItem = ()=>{
+      const data = {
+        price : Number(priceInput.current.value)
+       }
+       console.log(data.price);
+       dispatch(modifySaved(data, props.itemId))
+    }
     
     return (          
     <><ListWrap>
@@ -19,7 +27,10 @@ const ModifySave = (props) =>{
           <input 
             type="Number"
             ref={priceInput}/>
-            <button>등록</button>
+            <button onClick={()=>{
+              modifySavedItem();
+              setModifyView(false);
+            }}>등록</button>
             </InputArea>
 
         </>
@@ -28,18 +39,17 @@ const ModifySave = (props) =>{
             <Category>{props.categoryName}</Category>
             <ItemName>{props.itemName}</ItemName>
             <div>
-       
-            <button onClick={()=>{
-                setModifyView(true)
-                
-                  }}>수정</button>
-                  <button onClick={()=>{
-                    //dispatch(deleteSavedList(props.savedItemId, props.goalItemId))
-                  }}>삭제</button>
-                  </div>       
-                  </>
+              <button onClick={()=>{
+                  setModifyView(true)
+                  
+              }}>수정</button>
+              <button onClick={()=>{
+                      //dispatch(deleteSavedList(props.savedItemId, props.goalItemId))
+              }}>삭제</button>
+            </div>       
+        </>
 
-                }
+       }
             
 
         </ListWrap>

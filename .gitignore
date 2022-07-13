@@ -23,3 +23,5 @@ yarn-debug.log*
 yarn-error.log*
 
 my_mock_api
+
+.env

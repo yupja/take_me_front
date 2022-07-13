@@ -46,6 +46,7 @@ const CurrentSavedItem =(props)=>{
               </SavedDay>
               <ModifySave categoryName={savedItem.categoryName}
                               itemName={savedItem.itemName}
+                              itemId={savedItem.itemId}
                               savedItemId={savedItem.savedItemId}
                               goalItemId={props.goalItemId}/>
               </SListWrap>
