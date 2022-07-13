@@ -16,8 +16,9 @@ import { loadDetailAc } from "../redux/modules/post"
 import { deletePostAc } from "../redux/modules/post"
 import { getUserInfoDB } from "../redux/modules/user";
 import DountChart from "../components/Goal";
+import { useLocation } from "react-router";
 
-function Detail(props) {
+function Detail({postList}) {
     const dispatch = useDispatch();
     const params = useParams();
     const comment_ref = React.useRef();
@@ -37,26 +38,16 @@ function Detail(props) {
     const Postdata = useSelector((state) => state.post.postList);
     const userinfo = useSelector((state) => state.user.infoList)
     const myGoalList = useSelector((state=> state.goal.myGoalList));
-
-    const goal = {
-        goalImage : myGoalList.data?.image,
-        goalItemId : myGoalList.data?.goalItemId,
-        goalPercent : (myGoalList.data?.goalPercent)*0.01,
-        goalitemName: myGoalList.data?.itemName
-      }
-    // console.log(userinfo.username, "userinfo")
-    // console.log(Postdata.data[boardIdex].userId, "postdata")
-    // console.log(Postdata.data[boardIdex].boardId, "boardId")
-    console.log(commentData.data, "comment")
-
+    console.log(commentData,"comment")
+   
     const createComment = (boardId) => {
         console.log(comment_ref.current.value, "create확인");
         const data = {
             comment: comment_ref.current.value,
         }
-        dispatch(createCommentAc(data, Postdata.data[boardIdex].boardId))
+        dispatch(createCommentAc(data, postlistdata.boardId))
+        window.location.reload();
     };
-    // console.log(Postdata.data[boardIdex].boardId - 1,"??")
     console.log(Postdata,"postdata")
 
     const [user_nav, setUserNav] = useState(false)
@@ -73,14 +64,18 @@ function Detail(props) {
     const closeModall = () => {
         setShowModall(false);
     }
+    
+    const  state  = useLocation();
+    console.log(state.state.name,"state")
+    const postlistdata = state.state.name
 
-    const state = "커뮤니티"
+    // const state = "커뮤니티"
 
     return (
         <>
-            <HeaderMenue state={state} />
+            {/* <HeaderMenue state={state} /> */}
             <Box>
-                {userinfo.username === Postdata.data[boardIdex].userId ?
+                {userinfo.username === postlistdata.userId ?
                     <>
                         <Toggle onClick={onClickNav}>...</Toggle>
                         {user_nav && (
@@ -89,7 +84,7 @@ function Detail(props) {
                                     <div onClick={() => { openModall() }}>수정하기</div>
                                     <div style={{color:"#FF5E5E"}} onClick={() => {
                                         dispatch(
-                                            deletePostAc(Postdata.data[boardIdex].boardId))
+                                            deletePostAc(postlistdata.boardId))
                                     }}>삭제하기</div>
                                 </div>
                             </UserInfoNav>
@@ -97,16 +92,20 @@ function Detail(props) {
                     </>
                     : null
                 }
-                <Img src={Postdata.data[boardIdex].image}></Img>
+                <Img src={postlistdata.image}></Img>
                     <ContentsBox>
                         <Commu>
-                            <Nick>{Postdata.data[boardIdex].nickname}</Nick>
-                            <Day>{Postdata.data[boardIdex].createdAt}</Day>
-                            <GoalName>{Postdata.data[boardIdex].goalItemName}</GoalName>
+                            <Nick>{postlistdata.nickname}</Nick>
+                            <Day>{postlistdata.createdAt}</Day>
+                            <GoalName>{postlistdata.goalItemName}</GoalName>
                         </Commu>
-                        <Content>{Postdata.data[boardIdex].contents}</Content>
+                        <Content>{postlistdata.contents}</Content>
                         <Bottom>
-                            <Like />&nbsp;<Count>조회수&nbsp;{Postdata.data[boardIdex].viewCount}</Count>
+                            <Like 
+                            isLike={postlistdata.checkLike}
+                            forLikeId = {postlistdata.boardId}
+                            likeCount = {postlistdata.likeCount}
+                            />&nbsp;<Count>조회수&nbsp;{postlistdata.viewCount}</Count>
                         </Bottom>
                     </ContentsBox>
                 
@@ -117,7 +116,9 @@ function Detail(props) {
                     createdAt={comment_list.createdAt}
                     comment={comment_list.comment}
                     user={userinfo.username}
-                    idUser={Postdata.data[boardIdex].userId}
+                    idUser={postlistdata.userId}
+                    commId={comment_list.commentId}
+                    postAll={postlistdata}
                 />
             ))}
             <Enter>
@@ -128,7 +129,7 @@ function Detail(props) {
             {/* 게시글 수정모달 */}
             {showModall ?
                 <ModifyModal showModall={showModall} closeModall={closeModall}
-                    formodiId={Postdata.data[boardIdex].boardId}
+                    formodiId={postlistdata.boardId}
                 />
                 : null}
         </>
@@ -209,6 +210,7 @@ margin-right: 5vw;
 const Nick = styled.span`
 font-size: 1rem;
 font-weight: 600;
+margin-bottom: 2vw;
 /* color: white; */
 
 `;

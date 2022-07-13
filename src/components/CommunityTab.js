@@ -10,6 +10,7 @@ import { loadsavedAc } from "../redux/modules/saved";
 import {getUserInfoDB} from "../redux/modules/user";
 import Like from "./Like";
 import { loadMoreContentDB } from "../redux/modules/post";
+import { Link } from "react-router-dom";
 
 const CommunityTab = () => {
 
@@ -99,13 +100,16 @@ const CommunityTab = () => {
                 <Right>
                   <Top>
                     <GoalName onClick={() => {
-                      Navigate(`/detail/${index}`)
-                    }}>
-                      {postList.goalItemName}
-                    </GoalName>
+                      // Navigate(`/detail/${postList.boardId}`)
+                    }}> 
+                    {postList.goalItemName}
+                   </GoalName> 
                   </Top>
                   <Middle>
-                    <Nick onClick={() => { Navigate(`/detail/${index}`) }}>
+                    <Nick onClick={() => { Navigate
+                      (`/detail/${postList.boardId}`,
+                      {state: {name:postList}}
+                      ) }}>
                       {postList.nickname}&nbsp;&nbsp;{postList.contents}
                     </Nick>
                   </Middle>
@@ -116,7 +120,7 @@ const CommunityTab = () => {
                       likeCount = {postList.likeCount}
                     />
                     <div style={{ marginLeft: "1rem" }}>💬</div>
-                    <div  onClick={() => { Navigate(`/detail/${index}`)
+                    <div  onClick={() => { Navigate(`/detail/${postList.boardId}`)
                       }}>
                       댓글 00 개 모두 보기</div>
                     <div onClick={()=>{openModall(index)}} style={{ marginLeft: "auto" }}>📃</div>
