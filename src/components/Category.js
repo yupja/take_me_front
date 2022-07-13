@@ -14,20 +14,24 @@ const Category = (props ) => {
               disabled 
               style={{display:"none"}}
               >카테고리가 뭘까요?</option>
-      <option value={1}>패션</option>
-      <option value={2}>패션잡화</option>
-      <option value={3}>화장품/미용</option>
-      <option value={4}>가구/인테리어</option>
-      <option value={5}>출산/유아동</option>
-      <option value={6}>반려동물</option>
-      <option value={7}>생활/주방용품</option>
-      <option value={8}>가전/디지털</option>
-      <option value={9}>스포츠/레저</option>
-      <option value={10}>헬스(건강)/의료용품</option>
-      <option value={11}>자동차/공구</option>
-      <option value={12}>완구/취미</option>
-      <option value={13}>문서/오피스</option>
-      <option value={14}>도서/음반</option>
+      <option value={1}>식비</option>
+      <option value={2}>카페/간식</option>
+      <option value={3}>술/유흥</option>
+      <option value={4}>생활</option>
+      <option value={5}>온라인쇼핑</option>
+      <option value={6}>패션/쇼핑</option>
+      <option value={7}>뷰티/미용</option>
+      <option value={8}>교통</option>
+      <option value={9}>자동차</option>
+      <option value={10}>주거/통신</option>
+      <option value={11}>의료/건강</option>
+      <option value={12}>금융</option>
+      <option value={13}>문화/여가</option>
+      <option value={14}>여행/숙박</option>
+      <option value={15}>교육/학습</option>
+      <option value={16}>자녀/육아</option>
+      <option value={17}>반려동물</option>
+      <option value={18}>경조/선물</option>
     </SelectBox>
   );
 }

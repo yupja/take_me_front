@@ -20,7 +20,6 @@ function SearchFavorite(props) {
 
   const dispatch = useDispatch();
   const list = useSelector((state) => state.item.allItemList);
-  const mylist = useSelector((state) => state.favorite.myFavoriteList);
   const [selecState, setSelectState] = useState(props.state);
 
   const allItemList = [];
@@ -153,21 +152,6 @@ function SearchFavorite(props) {
 
       </WholeBox>
 
-      {/* <ItemWrap>
-        {mylist.length===0? 
-        <FavoriteItem></FavoriteItem>
-        :
-          <> 
-            {mylist.map((item, itemIndex) => {
-                  <FavoriteItem key={item.itemId}>
-                    {item.itemName}
-                    <BiX />
-                  </FavoriteItem>
-            })}
-           </>
-        }
-
-        </ItemWrap> */}
       </>
     )
   }
@@ -217,29 +201,6 @@ list-style-type: none;
 position: absolute;
 `;
 
-const ItemWrap = styled.div`
-display: flex;
-align-items: center;
-width:350px;
-overflow-x:scroll;
-
-white-space: nowrap;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-`;
- 
-
-const FavoriteItem = styled.div`
-margin-top: 5px;
-display :inline-block;
-background: #EFEFEF;
-border-radius: 20px;
-font-size: 15px;
-padding: 5px;
-margin-left: 10px;
-`;
 
 
 const AddFavoriteInput = styled.div`

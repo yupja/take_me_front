@@ -42,7 +42,7 @@ const HeaderMenu = (props) => {
 
                   <MenuBar>
                     <div onClick={() => {
-                      navigate("/", { state: "데일리 티끌" });
+                      navigate("/save", { state: "데일리 티끌" });
                     }}>데일리 티끌</div>
                     <div onClick={() => {
                       navigate("/community", { state: "티끌 자랑" });
