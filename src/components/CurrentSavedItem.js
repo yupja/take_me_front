@@ -1,6 +1,9 @@
 import React, {useEffect, useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { mySavedListRQ, deleteSavedList } from "../redux/modules/saved"
+import { mySavedListRQ } from "../redux/modules/saved"
+import {addFavoriteRQ} from "../redux/modules/favorite"
+
+import ModifySave from "./ModifySave";
 
 import styled from "styled-components";
 import { AiOutlineStar } from 'react-icons/ai'
@@ -17,41 +20,80 @@ const CurrentSavedItem =(props)=>{
     const mySavedList = useSelector((state) => state.saved.currentMySavedList);
     console.log(mySavedList)
 
+   
+    const addFavoriteStar = (savedItemIndex) => {
+      const sendData = {
+        categoryId: mySavedList.data[savedItemIndex]?.categoryId,
+        itemName: mySavedList.data[savedItemIndex]?.itemName,
+        itemId: mySavedList.data[savedItemIndex]?.itemId,
+        price: mySavedList.data[savedItemIndex]?.price
+      }
+      dispatch(addFavoriteRQ(sendData));
+    }
 
     return (
         
-        <SavedList>
+      <SavedList>
         {mySavedList&&mySavedList.data?.map((savedItem, savedItemIndex) => (
             <JustifyContentCenter key={savedItem.savedItemId}>
-              {modifyView? 
-              "수정이 가능해요"
-              :""}
-
-              <div className="sListWrap">
-              <div className="star"><AiOutlineStar /></div>
-                  <p className="date">
-                    {savedItem.modifiedDate.split(/[T,.]/,1)}<br/>
-                  </p>
-                  <p>{savedItem.categoryName}</p>
-                  <p>{savedItem.itemName}</p>
-                  <button onClick={()=>{
-                    setModifyView(true);
-                  }}>수정</button>
-                  <button onClick={()=>{
-                    dispatch(deleteSavedList(savedItem.savedItemId))
-                  }}>삭제</button>
-                </div>
-              </JustifyContentCenter>
+              <SListWrap>
+              <Star onClick={()=>{
+                addFavoriteStar(savedItemIndex);
+                }}><AiOutlineStar />
+              </Star>
+              <SavedDay>
+                {savedItem.modifiedDate.split(/[T,.]/,1)}<br/>
+              </SavedDay>
+              <ModifySave categoryName={savedItem.categoryName}
+                              itemName={savedItem.itemName}
+                              itemId={savedItem.itemId}
+                              savedItemId={savedItem.savedItemId}
+                              goalItemId={props.goalItemId}/>
+              </SListWrap>
+           </JustifyContentCenter>
         ))}
-        </SavedList>
+      </SavedList>
     )
 }
+
+
+const Star =styled.div`
+display: flex;
+width: 5vh;
+`;
+const SavedDay = styled.div`
+display:flex;
+width: 14vh;
+`;
+
+const SListWrap = styled.div`
+display: flex;
+height: 50px;
+width: 95%;
+align-items: center;
+justify-content: space-between;
+padding: 10px;
+border-bottom: 1px solid #CCCCCC;
+
+  button{
+    background:#26DFA6;
+    color: white;
+    padding: 8px;
+    font-size: 14px;
+    border-radius: 15px;
+    border: none;
+  }
+
+`;
+
+
+
 
 const SavedList = styled.div`
 display: flex;
 flex-direction: column;
 width: 100%;
-height: 30vh;
+height: 43vh;
 
 `;
 

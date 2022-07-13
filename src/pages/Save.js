@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { myReadGoalRQ, deleteGoalRQ } from "../redux/modules/goal"
 import {addSavedListRQ} from "../redux/modules/saved"
-import { myFavoriteListRQ } from "../redux/modules/favorite";
+import { myFavoriteListRQ, favoriteDel } from "../redux/modules/favorite";
 
 import DayModal from "../components/DayModal";
 import SearchSavedItem from "../components/SearchSavedItem";
@@ -22,10 +22,6 @@ import { IoArrowRedoOutline } from 'react-icons/io5'
 
 function Save() {
 
-  useEffect(() => {
-    dispatch(myReadGoalRQ());
-    dispatch(myFavoriteListRQ());
-  }, []);
 
   const [modalOpen, setModalOpen] = useState(false);
   const [modalState, setModalState] = useState();
@@ -33,6 +29,8 @@ function Save() {
   const [showPostModal, setShowPostModal] = useState("");
 
   const [selectInputValue , setSelectInputValue] = useState([]); 
+
+  const [isEdit, setEdit] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -42,7 +40,9 @@ function Save() {
   const closePostModal = () => {setShowPostModal(false)};
   
 
+
   const myGoalList = useSelector((state=> state.goal.myGoalList));
+  const [goallist, setGoalList] = useState();
   const goal = {
     goalImage : myGoalList.data?.image,
     goalItemId : myGoalList.data?.goalItemId,
@@ -50,8 +50,13 @@ function Save() {
     goalitemName: myGoalList.data?.itemName
   }
 
+  useEffect(() => {
+    dispatch(myReadGoalRQ());
+    dispatch(myFavoriteListRQ());
+  }, []);
 
   const mylist = useSelector((state) => state.favorite.myFavoriteList);
+  console.log(mylist)
 
 
   const state = "데일리 티끌"
@@ -153,7 +158,8 @@ function Save() {
 
       <SearchArea>
         <SearchSavedItem setSelectInputValue={setSelectInputValue}
-                         state={"saveState"}/>
+                         state={"saveState"}
+                         goalItemId={goal.goalItemId}/>
       </SearchArea>
 
       <FavoriteTag>
@@ -161,13 +167,15 @@ function Save() {
         <FavoriteItem></FavoriteItem>
         :
           <> 
-            {mylist.data?.map((item, itemIndex) => {
-              return(
+            {mylist.data&&mylist.data?.map((item, itemIndex) => {
+              return(<>
                 <FavoriteItem 
                   key={item.favoriteItemId}
                   onClick={()=>{addFavoriteSaved(itemIndex)}}>
                     {item.itemName}
                 </FavoriteItem>
+                <button onClick={()=>{dispatch(favoriteDel(item.favoriteItemId))}}>x</button>
+                </>
             )})}
             </>
         }
@@ -242,7 +250,7 @@ flex-direction: column;
 `;
 
 const FavoriteTag = styled.div`
-height: 5vh;
+height: 7vh;
 display: flex;
 align-items: center;
 width:350px;
