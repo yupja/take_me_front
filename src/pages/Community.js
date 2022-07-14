@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router";
 
 import CommunityTab from "../components/CommunityTab";
-import HeaderMenue from "../components/HeaderMenu";
+import Header from "../components/Header";
 
 import styled from "styled-components";
 
@@ -18,10 +18,10 @@ const Community = () => {
 
   return (
     <div className="wrap">
-      <div className="topWrap" style={{ background: "white" }}>
-        <HeaderMenue state={state} />
-      </div>
-
+      <TopWrap>
+      <Header state={state} />
+      </TopWrap>
+      
       <MenuBar>
         <div>티끌자랑</div>
         <div>쓸까말까</div>
@@ -40,6 +40,16 @@ const Community = () => {
 
   )
 };
+
+
+const TopWrap = styled.div`
+display: flex;
+width: 100%;
+height: 6vh;
+padding: 10px;
+flex-direction: column;
+align-items: center;
+`;
 
 
 const MenuBar = styled.div`
