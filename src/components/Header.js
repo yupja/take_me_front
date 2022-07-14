@@ -6,16 +6,16 @@ import { useCookies } from "react-cookie";
 // import NavToggle from "./NavToggle";
 const slider = keyframes`
   from {
-    transform: translateX(200px);
+    transform: translateX(300px);
   }
   to {
-    transform: translateX(0px);
+    transform: translateX(150px);
   }
 `;
 
 
 
-function Header() {
+function Header(props) {
   const navigate = useNavigate();
   const [navToggles, setNavToggles] = useState(false);
 
@@ -37,10 +37,12 @@ function Header() {
   return (
     <HeaderWrap>
       <LeftArea>
-        <h1>티끌</h1>
+        <h1 onClick={()=>{
+          navigate(-1);
+        }}>티끌</h1>
       </LeftArea>
       {/* <svg width="10" height="16" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M.5 8 8 .5l1.05 1.05L2.6 8l6.45 6.45L8 15.5.5 8Z" fill="#000" /></svg> */}
-      <Title>MY</Title>
+      <Title>{props.state}</Title>
       <HamArea onClick={onNav}>
         <NavBtn>
           <div>
@@ -210,7 +212,7 @@ flex-direction: column;
 position: absolute;
 background-color: #ffffff;
 box-shadow: 0 2px 7px rgba(0, 0, 0, 0.3);
-width: 50%;
+width: 80%;
 height: 100%;
 
 animation-duration: 0.3s;
