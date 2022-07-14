@@ -27,14 +27,6 @@ function SearchFavorite(props) {
     allItemList.push(item.itemName);
   })
 
-  //-------------- 모달
-  const [modalOpen, setModalOpen] = useState(false);
-  const [modalState, setModalState] = useState();
-  const [modalName, setModalName] = useState("");
-  const openModal = () => { setModalOpen(true); };
-  const closeModal = () => { setModalOpen(false); };
-
-
   //-------------- 드롭박스 제어 
   const [inputValue, setInputValue] = useState('');  // Input 값 제어
   const [isHaveInputValue, setIsHaveInputValue] = useState(false); // Input값이 있니 없니?
@@ -112,7 +104,7 @@ function SearchFavorite(props) {
 
         {isHaveInputValue && (
           <DropDownBox>
-            <div style={{display:"block"}}>
+
             {dropDownList.length === 0 && (
               <DropDownItem>
                 <AddFavoriteInput>
@@ -121,12 +113,10 @@ function SearchFavorite(props) {
                 </AddFavoriteInput>
                 <AddButton onClick={() => {
                   props.setNewAddGoal(true)
-                  closeModal={closeModal} 
                   setInputValue('')
                 }}>+등록하기</AddButton>
               </DropDownItem>
             )}
-            </div>
 
             {dropDownList.map((dropDownItem, dropDownIndex) => {
               return (
@@ -146,11 +136,6 @@ function SearchFavorite(props) {
         )}
 
 
-        {selecState=="saveState"? 
-         <DayModal open={modalOpen} close={closeModal} header={modalName}>
-         {modalState}
-        </DayModal>
-        :""}
 
       </WholeBox>
 
@@ -160,7 +145,7 @@ function SearchFavorite(props) {
 
 
 const WholeBox = styled.div`
-  padding: 10px;
+
   width: 100%;
 `;
 

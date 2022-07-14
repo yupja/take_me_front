@@ -14,9 +14,10 @@ const CurrentSavedItem =(props)=>{
     useEffect(() => {
         dispatch(mySavedListRQ(props.goalItemId));
       }, [props.goalItemId]);
-      
+    
 
     const mySavedList = useSelector((state) => state.saved.currentMySavedList);
+    console.log("내아낌", mySavedList)
 
    
     const addFavoriteStar = (savedItemIndex) => {

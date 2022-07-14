@@ -9,9 +9,16 @@ import { newItemGoalAddRQ, addGoalRQ, updateGoalAPI } from "../redux/modules/goa
 
 import styled from "styled-components";
 import user from "../redux/modules/user";
+import { display } from "@mui/system"
 
 const GoalInput = (props)=>{
   const dispatch = useDispatch()
+
+
+  //-------------- 모달
+
+
+
 
   const [category , setCategory] = useState();
   const [image, setImage] = useState();
@@ -130,7 +137,7 @@ const GoalInput = (props)=>{
 
         {newAddGoal? 
         <>
-        <SelectedBoxDiv style={{width:"95%"}}>
+        <SelectedBoxDiv style={{width:"95%",display:"block"}}>
           <Category  setCategory={setCategory}/>
         </SelectedBoxDiv>
         <div> 
@@ -204,7 +211,7 @@ border: 1px solid gray;
 
 
 const SelectedBoxDiv = styled.div`
-display: flex;
+display: block;
 width: 100%;
 justify-content: center;
 `
@@ -215,7 +222,7 @@ flex-direction: column;
 align-items: center;
 
 div{
-    display: flex;
+    display:  flex;;
     padding: 0.5rem;
     align-items: center;
     }

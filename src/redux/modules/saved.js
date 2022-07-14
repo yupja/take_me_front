@@ -51,6 +51,7 @@ export const mySavedListRQ = createAsyncThunk(
   }
 )
 
+
 // 아끼기/조회 (은진)
 export const getSavedList = (itemId) => {
   return async function (dispatch) {
