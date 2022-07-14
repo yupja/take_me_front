@@ -4,6 +4,8 @@ import { myReadGoalRQ } from "../modules/goal";
 
 
 //--------------------- CREATE ---------------------------
+
+//기존에 있던거 
 export const addSavedListRQ = createAsyncThunk(
   'saved/add',
   async (sendData, thunkAPI) => {
@@ -16,6 +18,21 @@ export const addSavedListRQ = createAsyncThunk(
     }
   }
 )
+
+//아이템 생성 후 등록해야하는 거 
+export const newItemSavedListRQ = createAsyncThunk(
+  'saved/add',
+  async (sendData, thunkAPI) => {
+    try {
+      await instance.post('/api/newSavedItem', sendData)
+      thunkAPI.dispatch(mySavedListRQ(sendData.goalItemId))
+
+    } catch (error) {
+
+    }
+  }
+)
+
 
 
 //---------------------- READ ----------------------------
@@ -100,7 +117,9 @@ const savedSlice = createSlice({
   name: "saved",
   initialState: {
     savedItem: { data: [] },
-    currentMySavedList: [],
+    currentMySavedList: {
+      data: []
+    },
     save: [],
   },
   reducers: {
