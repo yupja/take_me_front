@@ -98,31 +98,37 @@ const CommunityTab = () => {
                   </ProfileBox>
                 </Left>
                 <Right>
+                  <div onClick={() => { Navigate
+                      (`/detail/${postList.boardId}`,
+                      {state: {name:postList}}
+                      ) }}>
                   <Top>
-                    <GoalName onClick={() => {
-                      // Navigate(`/detail/${postList.boardId}`)
-                    }}> 
+                    <GoalName> 
                     {postList.goalItemName}
                    </GoalName> 
                   </Top>
                   <Middle>
-                    <Nick onClick={() => { Navigate
-                      (`/detail/${postList.boardId}`,
-                      {state: {name:postList}}
-                      ) }}>
+                    <Nick>
                       {postList.nickname}&nbsp;&nbsp;{postList.contents}
                     </Nick>
                   </Middle>
+                  </div>
                   <Foot>
                     <Like
                       isLike={postList.checkLike}
                       forLikeId = {postList.boardId}
                       likeCount = {postList.likeCount}
                     />
-                    <div style={{ marginLeft: "1rem" }}>💬</div>
-                    <div  onClick={() => { Navigate(`/detail/${postList.boardId}`)
+                    <div onClick={() => { Navigate
+                      (`/detail/${postList.boardId}`,
+                      {state: {name:postList}}
+                      ) }}>
+                    <span style={{margin: "0 0.5rem 0 1rem"}}>💬</span>
+                    <span  onClick={() => { Navigate(`/detail/${postList.boardId}`)
                       }}>
-                      댓글 00 개 모두 보기</div>
+                      댓글 {postList.commentCount} 개 모두 보기
+                      </span>
+                      </div>
                     <div onClick={()=>{openModall(index)}} style={{ marginLeft: "auto" }}>📃</div>
                   </Foot>
                 </Right>
@@ -157,6 +163,7 @@ const CommunityTab = () => {
 )
 };
 
+
 const CreatAt = styled.div`
 width: 28vw;
 height: 10vw;
@@ -181,8 +188,8 @@ const ContentBox = styled.div`
 width: 100%;
 height: 20vh;
 padding: 1rem;
-/* border: 3px solid blue; */
-border: none;
+border: 3px solid blue;
+/* border: none; */
 display: flex;
 flex-direction: row;
 `;
@@ -214,7 +221,8 @@ border: none;
 const Nick = styled.div`
 /* border: 1px solid red; */
 height: 20vw;
-margin-top: 1vw;
+margin-top: 2vw;
+font-size: 0.9rem;
 display: flex;
 text-overflow: ellipsis;  
 	overflow : hidden;
@@ -240,9 +248,11 @@ top: 5%
 `;
 
 const ItemImgBox = styled.div`
-/* border: 1px solid red; */
+border: 1px solid red;
 width: 31vw;
 height: 31vw;
+align-items: center;
+margin: auto;
 `;
 
 const Foot = styled.div`
@@ -291,7 +301,8 @@ box-shadow: 5px 5px 5px rgb(110, 110, 110, 0.4);
 
 const Right = styled.div`
 width: 65%;
-/* border: 2px solid violet; */
+height: 31vw;
+border: 2px solid violet;
 `;
 
 const Middle = styled.div`

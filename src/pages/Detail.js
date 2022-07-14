@@ -38,7 +38,7 @@ function Detail({postList}) {
     const Postdata = useSelector((state) => state.post.postList);
     const userinfo = useSelector((state) => state.user.infoList)
     const myGoalList = useSelector((state=> state.goal.myGoalList));
-    console.log(commentData,"comment")
+    console.log(commentData.data,"comment")
    
     const createComment = (boardId) => {
         console.log(comment_ref.current.value, "create확인");
@@ -48,7 +48,7 @@ function Detail({postList}) {
         dispatch(createCommentAc(data, postlistdata.boardId))
         window.location.reload();
     };
-    console.log(Postdata,"postdata")
+    // console.log(Postdata,"postdata")
 
     const [user_nav, setUserNav] = useState(false)
 
@@ -66,7 +66,7 @@ function Detail({postList}) {
     }
     
     const  state  = useLocation();
-    console.log(state.state.name,"state")
+    // console.log(state.state.name,"state")
     const postlistdata = state.state.name
 
     // const state = "커뮤니티"
@@ -117,10 +117,11 @@ function Detail({postList}) {
                     comment={comment_list.comment}
                     user={userinfo.username}
                     idUser={postlistdata.userId}
-                    commId={comment_list.commentId}
+                    commId={comment_list}
                     postAll={postlistdata}
                 />
             ))}
+            <Blank></Blank>
             <Enter>
                 <Input ref={comment_ref}></Input>
                 <PostBtn onClick={createComment}>게시</PostBtn>
@@ -363,5 +364,11 @@ right: 6%;
     background: #fff;
     box-shadow: rgb(0 0 0 / 10%) 0px 0px 8px;
 }`
+
+const Blank = styled.div`
+width: 100%;
+height: 12vw;
+/* border: 1px solid black; */
+`;
 
 export default Detail;
