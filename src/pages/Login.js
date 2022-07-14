@@ -15,6 +15,7 @@ import { ReactComponent as Google } from "../public/img/svg/Google.svg";
 import { ReactComponent as Kakao } from "../public/img/svg/Kakao.svg";
 
 function Login() {
+  const navigate = useNavigate();
   const { state } = useLocation();
   const dispatch = useDispatch();
   const userState = useSelector((state) => state.user)
@@ -26,10 +27,6 @@ function Login() {
 
   const openModal = () => { setModalOpen(true); };
   const closeModal = () => { setModalOpen(false); };
-
-  console.log(userState);
-  console.log(localStorage.getItem("accessToken"));
-  const navigate = useNavigate();
 
 
   // 로그인 정보 가져오기
@@ -48,7 +45,7 @@ function Login() {
   }
 
   // 로그인 버튼 클릭시
-  const login = (e) => {
+  const login = async (e) => {
     e.preventDefault();
 
     const loginInfo = {
@@ -58,12 +55,12 @@ function Login() {
 
     // 빈 항목 체크
     if (userId.current.value === "" || userPw.current.value === "") {
-      setModalStr('아이디 또는 비밀번호를 확인해 주세요')
+      setModalStr('아이디 또는 비밀번호를\n 확인해 주세요')
       setNavToggles(true)
       return;
     }
     dispatch(LoginDB(loginInfo, setModalStr, setNavToggles));
-    navigate("/save");
+    await navigate('/')
 
   }
 
@@ -115,7 +112,7 @@ function Login() {
       {navToggles ?
         <ModalWrap>
           <ModalBox>
-            <div className="icon">아이콘</div>
+            <div className="icon"></div>
             <CloseBtn onClick={closeNav}>
               <span></span>
               <span></span>
@@ -132,90 +129,31 @@ function Login() {
 
 export default Login;
 
-const ModalWrap = styled.div`
-width: 100%;
-height: 100vh;
-`
-const Social = styled.ul`
-margin-top: 4.06rem;
-position: relative;
-left: 50%;
-transform: translateX(-50%);
-display: flex;
-justify-content: center;
 
-li{
-  display: inline-block;
-  margin: 0 20px;
-}
-`
 
-const Licks = styled.div`
-position: relative;
-left: 50%;
-transform: translateX(-50%);
-display: inline-block;
-margin-top: 20px;
-span {
-  margin-left: 10px;
-}
-a{
-  color:#999;
-  font-size:0.87rem;
-  font-weight:500;
-  outline: underline;
-}
-`
-const ModalBox = styled.div`
-width: 100%;
-padding: 0 25px;
-background: #fff;
-border-radius: 5px;
-
-.icon {
-  width: 2.5rem;
-  height: 2.5rem;
-  background: #d9d9d9;
-  margin:  10px auto 0;
-}
-`
-
-const CloseBtn = styled.div`
-width:1rem; //180px
-height: 1rem;
-margin-top: 10px;
-position:absolute;
-top: 0; right: 3%;
-
-span {
-  display:block;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width:100%;
-  height:2px;
-  background-color: #999999;
-}
-span:first-child{
-  transform: rotate(45deg) translateX(0%);
-  }
-span:last-child{
-  transform: rotate(135deg) translateX(0%);
-  }
-`;
 
 const LoginWrap = styled.div`
 width: 100%;
 padding: 0 25px;
 p{
-  margin-bottom: 45px;
+  margin: 10px 0 45px;
+  color: #999;
+  letter-spacing: -0.5px;
 }
 `
 
 const Title = styled.h1`
 margin-top: 33px;
 font-size: 1.75rem;
-line-height: 2.75rem;
+line-height: 2.43rem;
+font-weight: 500;
+span{
+  font-family: 'HS-Regular';
+  color:#26DFA6;
+  font-size: 2.31rem;
+  letter-spacing: -0.5px;
+  padding-right: 5px;
+}
 `
 
 const Form = styled.form`
@@ -243,9 +181,27 @@ input {
   border-radius: 2px;
 }
 input::placeholder {
-  color: #C2C2C2;
+  color: #ddd;
 }
-`;
+`
+
+const Licks = styled.div`
+position: relative;
+left: 50%;
+transform: translateX(-50%);
+display: inline-block;
+margin-top: 20px;
+
+span {
+  margin-left: 10px;
+}
+a{
+  color:#999;
+  font-size:0.87rem;
+  font-weight:500;
+  text-decoration: underline;
+}
+`
 
 const InputBtn = styled.button`
   display: block;
@@ -258,4 +214,86 @@ const InputBtn = styled.button`
   font-size: 18px;
   cursor: pointer;
   border-radius: 32px;
+`;
+
+
+const Social = styled.ul`
+margin-top: 4.06rem;
+position: relative;
+left: 50%;
+transform: translateX(-50%);
+display: flex;
+justify-content: center;
+
+li{
+  display: inline-block;
+  margin: 0 20px;
+  text-align: center;
+}
+`
+
+// 모달
+const ModalWrap = styled.div`
+width: 100%;
+height: 100vh;
+padding: 0 25px;
+position: fixed;
+top: 0; left: 0;
+background: rgba(0,0,0,0.7);
+`
+const ModalBox = styled.div`
+position: absolute;
+top: 50%; left: 50%;
+transform: translate(-50%,-50%);
+width: 90%;
+height: 12.12rem;
+background: #fff;
+border-radius: 5px;
+text-align: center;
+
+.icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: #d9d9d9;
+  margin:  10px auto 0;
+}
+ h3 {
+  font-size: 1.5rem;
+  padding: 20px 0;
+  white-space: pre-wrap;
+ }
+ button {
+  font-size:0.93rem;
+  color: #fff;
+  width: 100%;
+  background: #26DFA6;
+  padding: 15px 0;
+  position: absolute;
+  bottom: 0; left: 0;
+ }
+`
+
+const CloseBtn = styled.div`
+width:1rem; //180px
+height: 1rem;
+margin-top: 10px;
+position:absolute;
+top: 0; right: 3%;
+
+span {
+  display:block;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width:100%;
+  height:2px;
+  background-color: #999999;
+}
+span:first-child{
+  transform: rotate(45deg) translateX(0%);
+  }
+span:last-child{
+  transform: rotate(135deg) translateX(0%);
+  }
 `;

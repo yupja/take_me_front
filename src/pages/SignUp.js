@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 import { useLocation } from "react-router";
 
-import HeaderMenue from "../components/HeaderMenu";
+import Header from "../components/Header";
 import { emailCheckDB, idCheckDB, nickCheckDB, addUserDB } from "../redux/modules/user";
 
 function SignUp() {
@@ -45,7 +45,7 @@ function SignUp() {
     if (emailCheckStr.test(email)) {
       setUserEmailAlert("")
     } else {
-      setUserEmailAlert("🚨이메일 형식으로 적어주세요")
+      setUserEmailAlert("🚨 이메일 형식으로 작성해주세요.")
     }
   }
 
@@ -55,7 +55,7 @@ function SignUp() {
     if (idCheckStr.test(id)) {
       setUserIdAlert("")
     } else {
-      setUserIdAlert("🚨3~10글자,영문,숫자로 작성해주세요")
+      setUserIdAlert("🚨 3~10글자,영문,숫자로 작성해주세요.")
     }
   }
 
@@ -66,7 +66,7 @@ function SignUp() {
     if (nickCheckStr.test(nick)) {
       setUserNickAlert("")
     } else {
-      setUserNickAlert("🚨2~12글자, 특수문자를 제외하고 작성해주세요")
+      setUserNickAlert("🚨 2~12글자, 특수문자를 제외하고 작성해주세요.")
       // 한글, 영문, 특수문자 (- _ .) 포함한 2 ~ 12글자 닉네임
     }
   }
@@ -77,12 +77,12 @@ function SignUp() {
     console.log(pw);
     if (pwCheckStr.test(pw)) {
       if (pw.search(/\s/) != -1) {
-        setUserPwAlert("공백 없이 입력해주세요")
+        setUserPwAlert("공백 없이 입력해주세요.")
       } else {
         setUserPwAlert("")
       }
     } else {
-      setUserPwAlert("🚨비밀번호는 영대문자, 소문자, 숫자, 특수문자를 포함해 총 8글자 이상이어야 합니다")
+      setUserPwAlert("🚨 비밀번호는 영대문자, 소문자, 숫자, 특수문자를 포함해 총 8글자 이상이어야 합니다.")
     }
   }
   // 비밀번호 확인
@@ -92,7 +92,7 @@ function SignUp() {
     if (pwCheck === pw) {
       setUserPwCheckAlert("")
     } else {
-      setUserPwCheckAlert("🚨두 비밀번호가 일치하지 않습니다")
+      setUserPwCheckAlert("🚨두 비밀번호가 일치하지 않습니다.")
     }
   }
 
@@ -171,7 +171,7 @@ function SignUp() {
   return (
     <>
       <div className="topWrap">
-        <HeaderMenue state={state} />
+        <Header />
       </div>
       <SignWrap>
         <Title><span>티끌</span>회원가입을 위해<br />정보를 입력해 주세요.</Title>
@@ -199,6 +199,16 @@ function SignUp() {
             <p>{userNickAlert}</p>
             <button className="checkBtn" onClick={nickCheck}>중복체크</button>
           </label>
+          <InfoCheck>
+            <label>
+              <input type="checkbox" name="info" value="서비스 약관" />이용약관 동의
+              <button>내용보기</button>
+            </label>
+            <label>
+              <input type="checkbox" name="info" value="개인정보" />개인정보 수집 및 활용 동의
+              <button>내용보기</button>
+            </label>
+          </InfoCheck>
           <InputBtn type="button" onClick={signup}>가입 하기</InputBtn>
         </Form>
       </SignWrap>
@@ -217,16 +227,18 @@ padding: 0 25px;
 const Title = styled.h1`
 margin-top: 33px;
 font-size: 1.75rem;
-line-height: 2.75rem;
+line-height: 2.31rem;
+font-weight:500;
 span{
   font-family: 'HS-Regular';
   font-size: 2.31rem;
   color: #26DFA6;
+  padding-right: 5px;
 }
 `
 const Form = styled.form`
 width: 100%;
-margin: 0 auto;
+margin: 20px auto 0;
 
 label{
   position: relative;
@@ -234,8 +246,9 @@ label{
   text-align: left;
 }
 p{
-  margin:0;
-  font-weight: 700;
+  margin-top:5px;
+  font-size: 0.87rem;
+  color: #FF7272;
 }
 input {
   outline: none;
@@ -243,17 +256,19 @@ input {
   background:#fff;
   border: none;
   padding: 16px 10px;
-  font-size: 16px;
+  font-size: 1.25rem;
   margin-top: 10px;
   border-bottom: 1px solid #EAEEEF;
   box-sizing: border-box;
   border-radius: 2px;
 }
+
+
 input#user_id {
   width: 70%;
 }
 input::placeholder {
-  color: #C2C2C2;
+  color: #ccc;
 }
 button.checkBtn {
   position: absolute;
@@ -268,6 +283,17 @@ button.checkBtn {
 }
 `;
 
+const InfoCheck = styled.div`
+margin: 20px 10px;
+ input {
+  width: auto;
+ }
+ label {
+  font-size: 0.87rem;
+  color: #666;
+ }
+  
+`;
 const InputBtn = styled.button`
   display: block;
   width: 100%;
