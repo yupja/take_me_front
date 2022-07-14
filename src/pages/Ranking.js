@@ -3,12 +3,12 @@ import { useLocation } from "react-router";
 
 import HeaderMenue from "../components/HeaderMenu";
 
-function Ranking() {
-  const { state } = useLocation();
+function Ranking(props) {
+  const title="랭킹"
   return (
     <div className="wrap">
       <div className="topWrap">
-        <HeaderMenue state={state} />
+        <HeaderMenue title={title} />
       </div>
     </div>
   )
