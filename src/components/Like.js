@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { instance } from "../shared/axios";
 import {likeChange} from "../redux/modules/post";
+import {ReactComponent as Binheart} from "../public/img/svg/Binheart.svg";
 
 const Like = (props,{ likeCount,boardId }) => {
   const [isloaded, setIsloaded] = useState(false);
@@ -37,9 +38,9 @@ const Like = (props,{ likeCount,boardId }) => {
               dispatch(likeChange(boardId));
               }}>   
             {like ? 
-              <span>💚</span>
+              <span><Binheart className="heart" /></span>
             :  
-              <span>🤍</span>
+              <span><Binheart /></span>
             }
           </div>
         </LikeCount>
@@ -52,6 +53,11 @@ const LikeCount = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  
+.heart{
+  path { fill: none}
+}
+
 `;
 
 export default Like;
