@@ -10,15 +10,14 @@ import { AiOutlineStar } from 'react-icons/ai'
 
 const CurrentSavedItem =(props)=>{
     const dispatch = useDispatch();
-    const [modifyView, setModifyView] = useState(false);
 
     useEffect(() => {
         dispatch(mySavedListRQ(props.goalItemId));
       }, [props.goalItemId]);
-      
+    
 
     const mySavedList = useSelector((state) => state.saved.currentMySavedList);
-    console.log(mySavedList)
+    console.log("내아낌", mySavedList)
 
    
     const addFavoriteStar = (savedItemIndex) => {
@@ -32,8 +31,16 @@ const CurrentSavedItem =(props)=>{
     }
 
     return (
-        
-      <SavedList>
+      <>
+      {mySavedList&&mySavedList.data?.length === 0? 
+        <NonSavedList>
+          <p>👆</p>
+          <p>오늘은</p>
+          <p>무엇을 아끼셨나요?</p>
+          <p style={{color:"#30E0AA"}}>등록해 보세요!</p>
+        </NonSavedList>
+        :
+        <SavedList>
         {mySavedList&&mySavedList.data?.map((savedItem, savedItemIndex) => (
             <JustifyContentCenter key={savedItem.savedItemId}>
               <SListWrap>
@@ -53,9 +60,23 @@ const CurrentSavedItem =(props)=>{
            </JustifyContentCenter>
         ))}
       </SavedList>
+        }
+      
+      </>
     )
 }
 
+const NonSavedList = styled.div`
+margin-top: 10%;
+display: flex;
+flex-direction: column;
+align-items: center;
+font-size: 2rem;
+gap: 15px;
+p{
+  font-weight: bold;
+}
+`;
 
 const Star =styled.div`
 display: flex;
