@@ -47,18 +47,20 @@ const PostModal = (props) => {
         <Background>
             <ModalBox onClick={e => e.stopPropagation()}>
               <CommentBox>
-                <ImageArea>
+                
                     <Top>
                     <Head>내 아낌 % 공유</Head>    
                     <Close onClick={props.closeModalll}>X</Close>
                     </Top>
                     
-                    <Middle>
-                      <Profile src={image}></Profile>
-                        <Right>
-                          <DeImg>기본 이미지</DeImg>
+                    <ImageArea>
+                    <Profile src={image}></Profile>
+                      <Right>
+                      <DeImg><p>기본 이미지</p></DeImg>
+                        
                           <AddImg className="filebox">
-                            <label htmlFor="ex_file" style={{magin:" 0 auto"}}>이미지 등록</label>
+                            <label htmlFor="ex_file" style={{magin:" 0 auto"}}>
+                              이미지 등록</label>
                             <input 
                               type="file"
                               name="image" 
@@ -68,7 +70,7 @@ const PostModal = (props) => {
                               style={{display:"none"}}/> 
                           </AddImg>
                         </Right>
-                    </Middle>
+                        
                 </ImageArea>
 
 
@@ -85,58 +87,17 @@ const PostModal = (props) => {
   };
 
 
-const ImageArea = styled.div`
-display: flex;
-flex-direction: column;
-`;
-
-const CommentBox = styled.div`
-width: 100%;
-height: 50vh;
-margin: auto 0;
-background-color: white;
-display: flex;
-border-radius: 3vw;
-align-items: center;
-flex-direction: column;
-`;
-
-const Top = styled.div`
-width: 100%;
-display: flex;
-`;
-
-const Head = styled.div`
-width: 100%;
-height: 3vh;
-font-size: 1.5rem;
-font-weight: 700;
-display: flex;
-justify-content: center;
-margin-top: 3vw;
-`;
-
-const Right = styled.div`
-width: 50%;
-height: 100%;
-padding: 3%;
-display: flex;
-flex-direction: column;
-align-content: space-between;
-`;
-
-
 
 const Background = styled.div`
 display: flex;
 `;
+
 
 const ModalBox = styled.div`
 position: fixed;
 left: 50%;
 top: 50%;
 transform: translate(-50%, -50%);
-width: 580px;
 min-height: 50vh;
 background-color: rgb(0,0,0,0.3);
 box-shadow: rgb(0 0 0 / 9%) 0px 2px 12px 0px;
@@ -147,6 +108,42 @@ display: flex;
     height: 100vh;
     padding: 20px;
 }
+`;
+
+
+const CommentBox = styled.div`
+display: flex;
+flex-direction: column;
+width: 100%;
+margin: auto 0;
+background-color: white;
+border-radius: 3vw;
+align-items: center;
+`;
+
+const ImageArea = styled.div`
+display: flex;
+width: 100%;
+height: 100%;
+flex-direction: row;
+align-items: center;
+
+`;
+
+
+
+const Top = styled.div`
+width: 100%;
+display: flex;
+`;
+
+const Head = styled.div`
+width: 100%;
+font-size: 1.5rem;
+font-weight: 700;
+display: flex;
+justify-content: center;
+margin-top: 3vw;
 `;
 
 const Close = styled.button`
@@ -161,48 +158,66 @@ background-color: white;
 border: none;
 `;
 
-
+const Right = styled.div`
+width: 50%;
+gap:20px;
+display: flex;
+flex-direction: column;
+`;
 
 
 
 const Middle = styled.div`
 width: 100%;
-height: 35%;
+height:100%;
 display: flex;
-flex-direction: row;
 justify-content: center;
 `;
 
 const Profile = styled.img`
-width: 33vw;
-height: 33vw;
+display: flex;
+width: 40vw;
+height: 40vw;
 border-radius: 30vw;
-border: 1px solid red;
-margin: auto;
+
 `;
 
 
 
-const DeImg = styled.button`
+const DeImg = styled.div`
 width: 100%;
-height: 20vh;
-border-radius: 90px;
+padding: 5%;
+border-radius: 10%;
 border: none;
 color: white;
 font-weight: 700;
 margin: auto;
 background-color: #FFB7D9;
+
+p{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 `;
 
 const AddImg = styled.div`
+margin-top: 5px;
 width: 100%;
-height: 20vh;
+height: 5vh;
 border: none;
 border-radius: 90px;
 background-color: #26DFA6;
 color: white;
 font-weight: 700;
 margin: auto;
+p{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 `;
 
 const Goal = styled.input`
@@ -236,35 +251,8 @@ border: none;
 border-radius: 0 0 2vw 2vw;
 color: white;
 font-weight: 700;
-position: absolute;
 bottom: 0;
 `;
-//   /* 팝업이 열릴때 스르륵 열리는 효과 */
-//   animation: modal-bg-show 0.3s;
-// }
-// @keyframes modal-show {
-//   from {
-//     opacity: 0;
-//     margin-top: -50px;
-//   }
-//   to {
-//     opacity: 1;
-//     margin-top: 0;
-//   }
-// }
-// @keyframes modal-bg-show {
-//   from {
-//     opacity: 0;
-//   }
-//   to {
-//     opacity: 1;
-//   }
-//   }
-// `
 
-//   /* 팝업이 열릴때 스르륵 열리는 효과 */
-//   animation: modal-show 0.3s;
-//   overflow: hidden;
-// `;
 
   export default PostModal;
