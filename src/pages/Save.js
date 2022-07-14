@@ -23,6 +23,10 @@ import { IoArrowRedoOutline } from 'react-icons/io5'
 
 function Save() {
 
+  useEffect(() => {
+    dispatch(myReadGoalRQ());
+    dispatch(myFavoriteListRQ());
+  }, []);
 
   const [modalOpen, setModalOpen] = useState(false);
   const [modalState, setModalState] = useState();
@@ -42,7 +46,7 @@ function Save() {
 
   const myGoalList = useSelector((state=> state.goal.myGoalList));
 
-  console.log(myGoalList);
+  console.log("태산", myGoalList );
   
   const goal = {
     goalImage : myGoalList.data?.image,
@@ -51,13 +55,10 @@ function Save() {
     goalitemName: myGoalList.data?.itemName
   }
 
-  useEffect(() => {
-    dispatch(myReadGoalRQ());
-    dispatch(myFavoriteListRQ());
-  }, []);
+
 
   const mylist = useSelector((state) => state.favorite.myFavoriteList);
-  console.log(mylist)
+  console.log("즐겨찾기", mylist)
 
 
   const title = "데일리 티끌"
@@ -105,7 +106,8 @@ function Save() {
             <>  <Circle onClick={() => {
               openModal();
               setModalName("내 태산 만들기!")
-              setModalState(<GoalInput state={"ADD"}/>)
+              setModalState(<GoalInput state={"ADD"}
+                              closeModal={closeModal}/>)
             }}>
               <p className="circleInP">+ 태산 만들기!</p>
             </Circle>
