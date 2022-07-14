@@ -64,16 +64,16 @@ function Header(props) {
               </CloseBtn>
               <Menu>
                 <li onClick={() => {
-                  navigate("/save", { state: "데일리 티끌" });
+                  navigate("/save");
                 }}>데일리 티끌</li>
                 <li onClick={() => {
-                  navigate("/community", { state: "티끌 자랑" });
+                  navigate("/community");
                 }}>티끌 자랑</li>
                 <li onClick={() => {
-                  navigate("/ranking", { state: "랭킹" });
+                  navigate("/ranking");
                 }}>랭킹</li>
                 <li onClick={() => {
-                  navigate("/mypage", { state: "마이페이지" });
+                  navigate("/mypage");
                 }}>My</li>
               </Menu>
               <Footer>

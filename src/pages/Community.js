@@ -9,8 +9,8 @@ import styled from "styled-components";
 
 
 const Community = () => {
-  const { state } = useLocation();
-  console.log(state);
+  const title = "커뮤니티"
+
 
   const navigate = useNavigate();
   const [page, setPage] = useState(<CommunityTab />);
@@ -19,7 +19,7 @@ const Community = () => {
   return (
     <div className="wrap">
       <TopWrap>
-      <Header state={state} />
+      <Header title={title} />
       </TopWrap>
       
       <MenuBar>

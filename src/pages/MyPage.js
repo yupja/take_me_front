@@ -11,6 +11,7 @@ import { getInfo } from "../redux/modules/info";
 import { useCookies } from "react-cookie";
 
 function MyPage() {
+  const title="My"
 
   const [, , removeCookie] = useCookies(['refreshToken']);
 
@@ -56,7 +57,7 @@ function MyPage() {
 
   return (
     <>
-      <Header />
+      <Header title={title}/>
       <MyPageWrap>
         <MyInfo>
           <div><img src={state.profileImg} alt="" /></div>

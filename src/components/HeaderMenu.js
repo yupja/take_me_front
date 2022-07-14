@@ -37,7 +37,7 @@ const HeaderMenu = (props) => {
     <>
       <SaveHeader>
         <Logo>로고</Logo>
-        <h1>{props.state}</h1>
+        <h1>{props.title}</h1>
         <HamArea>
           <GiHamburgerMenu onClick={() => { openModal(); }} />
           {modalOpen ?
@@ -51,16 +51,16 @@ const HeaderMenu = (props) => {
 
                   <MenuBar>
                     <div onClick={() => {
-                      navigate("/save", { state: "데일리 티끌" });
+                      navigate("/save");
                     }}>데일리 티끌</div>
                     <div onClick={() => {
-                      navigate("/community", { state: "티끌 자랑" });
+                      navigate("/community");
                     }}>티끌 자랑</div>
                     <div onClick={() => {
-                      navigate("/ranking", { state: "랭킹" });
+                      navigate("/ranking");
                     }}>랭킹</div>
                     <div onClick={() => {
-                      navigate("/mypage", { state: "마이페이지" });
+                      navigate("/mypage");
                     }}>My</div>
                   </MenuBar>
 
