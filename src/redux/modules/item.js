@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { instance } from "../../shared/axios";
-import { addGoalAPI, updateGoalAPI } from "../modules/goal"
+import { addGoalRQ, updateGoalAPI } from "../modules/goal"
 import { addSavedListRQ } from "../modules/saved"
 
 //--------------------- CREATE ---------------------------
@@ -33,7 +33,7 @@ export const addItem = createAsyncThunk(
       formData.append('goalItem',blob);
 
       if(itemData.state==="ADD"){
-        thunkAPI.dispatch(addGoalAPI(formData))
+        thunkAPI.dispatch(addGoalRQ(formData))
       }else{
         //thunkAPI.dispatch(updateGoalAPI({formData, itemData.goalId}))
       }

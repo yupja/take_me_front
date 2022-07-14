@@ -6,7 +6,7 @@ import { myFavoriteListRQ, favoriteDel } from "../redux/modules/favorite";
 
 import DayModal from "../components/DayModal";
 import SearchSavedItem from "../components/SearchSavedItem";
-import HeaderMenu from "../components/HeaderMenu";
+import Header from "../components/Header";
 import DountChart from "../components/Goal";
 import GoalInput from "../components/GoalInput"
 import CurrentSavedItem from "../components/CurrentSavedItem";
@@ -16,6 +16,7 @@ import PostModal from "../components/PostModal";
 import styled from "styled-components";
 import "../public/css/saveMain.css"
 import { FaRegEdit } from 'react-icons/fa'
+import {ReactComponent as CheckedStart} from "../public/img/svg/CheckedStart.svg"
 
 import { IoArrowRedoOutline } from 'react-icons/io5'
 
@@ -30,8 +31,6 @@ function Save() {
 
   const [selectInputValue , setSelectInputValue] = useState([]); 
 
-  const [isEdit, setEdit] = useState(false);
-
   const dispatch = useDispatch();
 
   const openModal = () => { setModalOpen(true); };
@@ -42,7 +41,9 @@ function Save() {
 
 
   const myGoalList = useSelector((state=> state.goal.myGoalList));
-  const [goallist, setGoalList] = useState();
+
+  console.log(myGoalList);
+  
   const goal = {
     goalImage : myGoalList.data?.image,
     goalItemId : myGoalList.data?.goalItemId,
@@ -59,27 +60,17 @@ function Save() {
   console.log(mylist)
 
 
-  const state = "데일리 티끌"
+  const title = "데일리 티끌"
   const priceInput = useRef();
 
+  //api/savedItem, 기존에 있던 아이템으로 티끌 등록
   const addSaveData = () =>{
-    let sendData={}
-
-    if(myGoalList.length===0 || goal.goalitemName=== "이름 없음"){
-        sendData ={
-        itemId : selectInputValue.itemId,
-        price :priceInput.current.value,
-        goalItemId:-1
-      }
-      
-    }else{
-      sendData ={
+    const sendData ={
         itemId : selectInputValue.itemId,
         price :priceInput.current.value,
         goalItemId: goal.goalItemId
       }
-
-    }
+      
     dispatch(addSavedListRQ(sendData));
     setSelectInputValue([])
   }
@@ -88,7 +79,7 @@ function Save() {
   const addFavoriteSaved = (itemIndex)=>{
     let sendData={}
 
-    if(myGoalList.length===0 || goal.goalitemName=== "이름 없음"){
+    if(goal.goalitemName=== "이름 없음"){
       sendData ={
         itemId : mylist.data[itemIndex].itemId,
         price :mylist.data[itemIndex].price,
@@ -108,9 +99,9 @@ function Save() {
   return (
     <div className="wrap">
       <TopWrap>
-        <HeaderMenu state={state} />
+        <Header title={title} />
         <GoalMain>
-          {myGoalList.data==null || goal.goalitemName=== "이름 없음" ?
+          {goal.goalitemName=== "이름 없음" ?
             <>  <Circle onClick={() => {
               openModal();
               setModalName("내 태산 만들기!")
@@ -163,8 +154,8 @@ function Save() {
       </SearchArea>
 
       <FavoriteTag>
-        {mylist.length===0? 
-        <FavoriteItem></FavoriteItem>
+        {mylist.data&&mylist.data.length===0? 
+        <NonFavoriteItem><CheckedStart/>즐겨찾기를 등록하고 편하게 사용해보세요!</NonFavoriteItem>
         :
           <> 
             {mylist.data&&mylist.data?.map((item, itemIndex) => {
@@ -256,13 +247,19 @@ display: flex;
 align-items: center;
 width:350px;
 overflow-x:scroll;
-
+justify-content: center;
 white-space: nowrap;
+border-bottom: 1px solid #EFEFEF;
 
   &::-webkit-scrollbar {
     display: none;
   }
 `;
+
+const NonFavoriteItem = styled.div`
+display: flex;
+`;
+
 
 const FavoriteItem = styled.div`
 margin-top: 5px;

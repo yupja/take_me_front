@@ -2,14 +2,14 @@ import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
-import { useLocation } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 import HeaderMenue from "../components/HeaderMenu";
 import { emailCheckDB, idCheckDB, nickCheckDB, addUserDB } from "../redux/modules/user";
 
 function SignUp() {
-  const { state } = useLocation();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
 
   // 회원가입 정보 가져오기
@@ -164,6 +164,7 @@ function SignUp() {
     }
 
     dispatch(addUserDB(userInfo));
+    navigate("/")
   }
 
 
@@ -171,7 +172,7 @@ function SignUp() {
   return (
     <>
       <div className="topWrap">
-        <HeaderMenue state={state} />
+        <HeaderMenue/>
       </div>
       <SignWrap>
         <Title><span>티끌</span>회원가입을 위해<br />정보를 입력해 주세요.</Title>

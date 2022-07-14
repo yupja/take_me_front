@@ -1,8 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import DayModal from "../components/DayModal";
-import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import { LoginDB } from "../redux/modules/user";
 import { useNavigate } from "react-router-dom";
@@ -15,7 +13,6 @@ import { ReactComponent as Google } from "../public/img/svg/Google.svg";
 import { ReactComponent as Kakao } from "../public/img/svg/Kakao.svg";
 
 function Login() {
-  const { state } = useLocation();
   const dispatch = useDispatch();
   const userState = useSelector((state) => state.user)
 

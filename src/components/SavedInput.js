@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from "react"
 import { useDispatch } from "react-redux";
-import {addSavedListRQ} from "../redux/modules/saved"
+import {newItemSavedListRQ} from "../redux/modules/saved"
 import Category from "./Category"
 
 import { BsPlus } from 'react-icons/bs'
@@ -31,7 +31,7 @@ const SavedInput = (props)=>{
       price : Number(price),
       goalItemId : Number(props.goalItemId)
     }
-    dispatch(addSavedListRQ(sendData))
+    dispatch(newItemSavedListRQ(sendData))
     props.closeModal();
 
   }
