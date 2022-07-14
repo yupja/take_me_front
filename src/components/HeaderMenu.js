@@ -37,7 +37,7 @@ const HeaderMenu = (props) => {
     <>
       <SaveHeader>
         <Logo>로고</Logo>
-        <p>{props.state}</p>
+        <h1>{props.state}</h1>
         <HamArea>
           <GiHamburgerMenu onClick={() => { openModal(); }} />
           {modalOpen ?
@@ -98,13 +98,15 @@ width: 100%;
 height: 100%;
 flex: 0.1;
 align-items: center;
+justify-content: space-between;
 
-  p{
-    flex: 1.6;
-    display: flex;
-    justify-content: center;
-    font-size: 24px;
-  }
+h1 {
+  font-family: 'HS-Regular';
+  color: #26DFA6;
+  font-size: 1.25rem;
+}
+
+
 `;
 
 const Logo = styled.div`
@@ -125,7 +127,6 @@ top: 0;
 left: 0;
 width: 100%;
 height: 100vh;
-background-color: rgba(0, 0, 0, 0.3);
 z-index: 1000;
 
 `;
