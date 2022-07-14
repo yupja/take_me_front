@@ -6,10 +6,10 @@ import { useCookies } from "react-cookie";
 // import NavToggle from "./NavToggle";
 const slider = keyframes`
   from {
-    transform: translateX(300px);
+    transform: translateX(100px);
   }
   to {
-    transform: translateX(150px);
+    transform: translateX(10px);
   }
 `;
 
@@ -110,7 +110,6 @@ height: 44px;
 const LeftArea = styled.div`
 position:absolute;
 top: 53%; left: 3%;
-transform: translateY(-50%);
 h1 {
   font-family: 'HS-Regular';
   color: #26DFA6;
@@ -129,12 +128,12 @@ font-size: 1.62rem;
 
 const HamArea = styled.div`
 position:absolute;
-top: 50%; right: 3%;
+top: 60%; right: 3%;
 transform: translateY(-50%);
 `;
 
 const NavWrap = styled.div`
-width:46vw; //180px
+width:60vw; //180px
 height: 100vh;
 background-color: #fff;
 position: absolute;
@@ -172,6 +171,7 @@ span:last-child{
 const Menu = styled.ul`
 margin-left:1.8rem; //30px
 padding-top : 60px;
+z-index: 100;
 li {
   font-size: 1rem;
   padding:0.94rem 0;
@@ -212,8 +212,7 @@ flex-direction: column;
 position: absolute;
 background-color: #ffffff;
 box-shadow: 0 2px 7px rgba(0, 0, 0, 0.3);
-width: 80%;
-height: 100%;
+width: 100%;
 
 animation-duration: 0.3s;
   animation-timing-function: ease-out;

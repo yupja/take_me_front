@@ -6,7 +6,7 @@ import { myFavoriteListRQ, favoriteDel } from "../redux/modules/favorite";
 
 import DayModal from "../components/DayModal";
 import SearchSavedItem from "../components/SearchSavedItem";
-import Header from "../components/Header";
+import HeaderMenu from "../components/HeaderMenu";
 import DountChart from "../components/Goal";
 import GoalInput from "../components/GoalInput"
 import CurrentSavedItem from "../components/CurrentSavedItem";
@@ -108,7 +108,7 @@ function Save() {
   return (
     <div className="wrap">
       <TopWrap>
-        <Header state={state} />
+        <HeaderMenu state={state} />
         <GoalMain>
           {myGoalList.data==null || goal.goalitemName=== "이름 없음" ?
             <>  <Circle onClick={() => {
