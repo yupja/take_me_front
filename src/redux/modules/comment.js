@@ -7,6 +7,7 @@ import { instance } from "../../shared/axios";
     return async function (dispatch) {
         await instance.post(`/api/board/${boardId}/comment`,data)
         .then(response => {
+          window.location.reload();
           console.log("댓글등록")
         })
         .catch(error => {
