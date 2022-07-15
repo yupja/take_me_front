@@ -14,7 +14,7 @@ const ModifySave = (props) =>{
         price : Number(priceInput.current.value)
        }
        console.log(data.price);
-       dispatch(modifySaved(data, props.savedItemId))
+       dispatch(modifySaved(data, props.savedItemId, props.goalItemId))
     }
     
     return (          
@@ -77,7 +77,16 @@ justify-content: space-between;
 
 const InputArea = styled.div`
 display: flex;
-width: 5vh;
+width: 95%;
+input{
+  background: #D9D9D9;
+  border: none;
+  width: 70%;
+  border-radius: 30px;
+  margin-right: 5px;
+  text-align: center;
+
+}
 `;
 
 const ListWrap = styled.div`
