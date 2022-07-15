@@ -37,7 +37,7 @@ function Header(props) {
   return (
     <HeaderWrap>
       <LeftArea>
-        <h1 onClick={()=>{
+        <h1 onClick={() => {
           navigate(-1);
         }}>티끌</h1>
       </LeftArea>
@@ -105,6 +105,7 @@ const HeaderWrap = styled.div`
 position: relative;
 width:100%;
 height: 44px;
+z-index: 999;
 `;
 
 const LeftArea = styled.div`
