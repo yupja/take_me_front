@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from "react-redux"
 import { myFavoriteListRQ } from "../redux/modules/favorite"
-import {allItemListRQ} from "../redux/modules/item"
+import { allItemListRQ } from "../redux/modules/item"
 
 
 import styled from 'styled-components'
@@ -57,11 +57,11 @@ function SearchFavorite(props) {
     setIsHaveInputValue(false);
   };
 
-  const savedItem =(clickedItem) =>{
+  const savedItem = (clickedItem) => {
     const choosenItemIndex = allItemList?.indexOf(clickedItem)
     console.log(choosenItemIndex)
     props.setSelectInputValue(list.data[choosenItemIndex])
-   
+
   };
 
 
@@ -89,64 +89,64 @@ function SearchFavorite(props) {
     <>
       <WholeBox>
         <InputBox isHaveInputValue={isHaveInputValue}>
-            <input
-              type='text'
-              value={inputValue}
-              onChange={changeInputValue}
-              onKeyUp={handleDropDownKey}
-              placeholder="태산을 찾아보세요!"
-            />
+          <input
+            type='text'
+            value={inputValue}
+            onChange={changeInputValue}
+            onKeyUp={handleDropDownKey}
+            placeholder="태산을 찾아보세요!"
+          />
 
 
-            <DeleteButton onClick={() => setInputValue('')}>&times;</DeleteButton>
-          </InputBox>
+          <DeleteButton onClick={() => setInputValue('')}>&times;</DeleteButton>
+          {isHaveInputValue && (
+            <DropDownBox>
 
-
-        {isHaveInputValue && (
-          <DropDownBox>
-
-            {dropDownList.length === 0 && (
-              <DropDownItem>
-                <AddFavoriteInput>
-                  앗! 찾으시는게 아직 등록이 안되어있네요!<br />
-                  새로 등록하시겠어요?
-                </AddFavoriteInput>
-                <AddButton onClick={() => {
-                  props.setNewAddGoal(true)
-                  setInputValue('')
-                }}>+등록하기</AddButton>
-              </DropDownItem>
-            )}
-
-            {dropDownList.map((dropDownItem, dropDownIndex) => {
-              return (
-                <DropDownItem
-                  key={dropDownIndex}
-                  onClick={() => clickDropDownItem(dropDownItem)}
-                  onMouseOver={() => setDropDownItemIndex(dropDownIndex)}
-                  className={
-                    dropDownItemIndex === dropDownIndex ? 'selected' : ''
-                  }
-                >
-                  {dropDownItem}
+              {dropDownList.length === 0 && (
+                <DropDownItem>
+                  <AddFavoriteInput>
+                    앗! 아직 등록이 안되어있네요!<br />
+                    새로 등록하시겠어요?
+                  </AddFavoriteInput>
+                  <AddButton onClick={() => {
+                    props.setNewAddGoal(true)
+                    setInputValue('')
+                  }}>+등록하기</AddButton>
                 </DropDownItem>
-              )
-            })}
-          </DropDownBox>
-        )}
+              )}
 
-
-
+              {dropDownList.map((dropDownItem, dropDownIndex) => {
+                return (
+                  <DropDownItem
+                    key={dropDownIndex}
+                    onClick={() => clickDropDownItem(dropDownItem)}
+                    onMouseOver={() => setDropDownItemIndex(dropDownIndex)}
+                    className={
+                      dropDownItemIndex === dropDownIndex ? 'selected' : ''
+                    }
+                  >
+                    {dropDownItem}
+                  </DropDownItem>
+                )
+              })}
+            </DropDownBox>
+          )}
+        </InputBox>
       </WholeBox>
 
-      </>
-    )
-  }
+    </>
+  )
+}
 
 
 const WholeBox = styled.div`
 
   width: 100%;
+  // 등록하기 DropDownItem 이 나와야하는 경우  className='new' 추가!
+  .new {
+    padding:0;
+    box-shadow: 0px 4px 15px 0px rgb(0 0 0 / 25%);
+  }
 `;
 
 const InputBox = styled.div`
@@ -167,6 +167,10 @@ position: relative;
     border: none;
     outline: none;
     font-size: 12px;
+    text-align: center;
+  }
+  input::placeholder{
+    color: #ccc;
   }
 `;
 
@@ -177,9 +181,9 @@ const DeleteButton = styled.div`
 
 
 const DropDownBox = styled.ul`
-display: block;
+/* display: block;
 margin-left:4%;
-width:75%;
+width:100%;
 padding: 8px 0;
 background: white;
 border: 1px solid rgba(0, 0, 0, 0.3);
@@ -187,13 +191,29 @@ border-top: none;
 border-radius: 0 0 16px 16px;
 list-style-type: none;
 position: absolute;
+top: 100%; left: 0; */
+
+display: block;
+width: 89%;
+padding-top: 15px;
+background: white;
+border-top: none;
+border-radius: 0 0 4px 4px;
+list-style-type: none;
+position: absolute;
+top: 103%; left: 50%;
+box-shadow: 0px 4px 4px 0px rgb(0 0 0 / 25%);
+transform: translateX(-50%);
 `;
 
 
 
-const AddFavoriteInput = styled.div`
+const AddFavoriteInput = styled.p`
 text-align: center;
-padding: 10px;
+line-height: 20px;
+margin:0 !important;
+font-weight: 400;
+font-size: 1rem;
 `;
 
 const AddButton = styled.button`
@@ -202,7 +222,11 @@ color: white;
 border: none;
 border-radius: 20px;
 padding: 10px;
+margin-top: 10px;
 width: 80%;
+font-weight: 700;
+font-size: 18px;
+box-shadow: 0px 4px 11px 0px rgb(0 0 0 / 25%);
 `;
 
 
@@ -211,6 +235,7 @@ const DropDownItem = styled.li`
   flex-direction: column;
    padding: 0 12px;
   align-items: center;
+  padding: 16px 0;
   &.selected {
     background-color: lightgray;
   }
