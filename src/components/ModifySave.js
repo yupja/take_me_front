@@ -43,8 +43,7 @@ const ModifySave = (props) =>{
                   setModifyView(true)
                   
               }}>수정</button>
-              <button onClick={()=>{
-                      //dispatch(deleteSavedList(props.savedItemId, props.goalItemId))
+              <button onClick={()=>{dispatch(deleteSavedList(props.savedItemId, props.goalItemId))
               }}>삭제</button>
             </div>       
         </>

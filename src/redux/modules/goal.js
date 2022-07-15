@@ -5,18 +5,37 @@ import {mySavedListRQ} from "../modules/saved";
 
 //--------------------- CREATE ---------------------------
 
-export const addGoalAPI = createAsyncThunk( // 골아이템 등록 
-  'add/mygoal',
-  async(formData) =>{
+export const addGoalRQ =(formData) =>{// 있던거 골아이템 등록 
+  return async function (dispatch){
     try{
-      await instance.post('/api/goalItem', formData,{
+      await instance.post('/api/goalItem', formData,
+      {
         headers :  {
           "Content-Type": "multipart/form-data",
-    }});
+      }});
     }catch(error){
+      
     }
+    dispatch(myReadGoalRQ());
   }
-)
+
+} 
+
+
+export const newItemGoalAddRQ = (formData) =>{// 없던거 골아이템 등록 
+  return async function (dispatch){
+    try{
+      await instance.post('/api/newGoalItem', formData,
+      {
+        headers :  {
+          "Content-Type": "multipart/form-data",
+      }});
+    }catch(error){
+      
+    }
+    dispatch(myReadGoalRQ());
+  }
+} 
 
 //---------------------- READ ----------------------------
 export const myReadGoalRQ = createAsyncThunk(
@@ -30,19 +49,6 @@ export const myReadGoalRQ = createAsyncThunk(
     }
   }
 )
-
-
-export const allReadGoalRQ = () => { // 모든 사람의 태산 항목
-  return async function (dispatch) {
-    try {
-      const { data } = await instance.get('/goalItem')
-      dispatch(readeAllGoal(data))
-    } catch (error) {
-
-    }
-  }
-
-}
 
 //-------------------- UPDATE ---------------------------
 

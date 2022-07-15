@@ -4,13 +4,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    
 }
 
 /* top menu */
-
-
-
-
 
 .circleInP{
     font-size: 20px;
@@ -22,12 +19,6 @@
     font-size: 13px;
 }
 
-.isGoalSubmenuBox div{
-    display: flex;
-    padding: 5px;
-    align-items: center;
-    flex-direction: column;
-}
 
 .isGoalSubmenuBox p{
     padding: 5px;
