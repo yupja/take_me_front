@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { myReadGoalRQ, deleteGoalRQ } from "../redux/modules/goal"
 import {addSavedListRQ} from "../redux/modules/saved"
-import { myFavoriteListRQ, favoriteDel, addFavoriteRQ } from "../redux/modules/favorite";
+import { myFavoriteListRQ, favoriteDel,addFavoriteRQ } from "../redux/modules/favorite";
 
 import DayModal from "../components/DayModal";
 import SearchSavedItem from "../components/SearchSavedItem";
@@ -16,11 +16,14 @@ import PostModal from "../components/PostModal";
 import styled from "styled-components";
 import "../public/css/saveMain.css"
 import { FaRegEdit } from 'react-icons/fa'
+import {ReactComponent as CheckedStart} from "../public/img/svg/CheckedStart.svg"
+
 
 
 import { IoArrowRedoOutline } from 'react-icons/io5'
 import { AiOutlineStar } from 'react-icons/ai'
-import {ReactComponent as CheckedStart} from "../public/img/svg/CheckedStart.svg"
+
+
 
 
 function Save() {
@@ -33,6 +36,7 @@ function Save() {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalState, setModalState] = useState();
   const [modalName, setModalName] = useState("");
+  const [showPostModal, setShowPostModal] = useState("");
 
   const [selectInputValue , setSelectInputValue] = useState([]); 
 
@@ -52,8 +56,11 @@ function Save() {
     }
   }
 
+
   const myGoalList = useSelector((state=> state.goal.myGoalList));
- 
+
+  console.log("태산", myGoalList );
+  
   const goal = {
     goalImage : myGoalList.data?.image,
     goalItemId : myGoalList.data?.goalItemId,
@@ -64,6 +71,8 @@ function Save() {
 
 
   const mylist = useSelector((state) => state.favorite.myFavoriteList);
+  console.log("즐겨찾기", mylist)
+
 
   const title = "데일리 티끌"
   const priceInput = useRef();
@@ -75,28 +84,38 @@ function Save() {
         price :priceInput.current.value,
         goalItemId: goal.goalItemId
       }
+      dispatch(addSavedListRQ(sendData));
       
-    dispatch(addSavedListRQ(sendData));
-    
-    if(star){
-      sendData ={
-        itemId : selectInputValue.itemId,
-        categoryId:selectInputValue.categoryId,
-        price :priceInput.current.value,
-        goalItemId: goal.goalItemId
+      if(star){
+        sendData ={
+          itemId : selectInputValue.itemId,
+          categoryId:selectInputValue.categoryId,
+          price :priceInput.current.value,
+          goalItemId: goal.goalItemId
+        }
+        dispatch(addFavoriteRQ(sendData))
       }
-      dispatch(addFavoriteRQ(sendData))
-    }
+
     setSelectInputValue([])
   }
 
 
   const addFavoriteSaved = (itemIndex)=>{
-    let sendData={
+    let sendData={}
+
+    if(goal.goalitemName=== "이름 없음"){
+      sendData ={
+        itemId : mylist.data[itemIndex].itemId,
+        price :mylist.data[itemIndex].price,
+        goalItemId: -1
+      }
+    }else{
+      sendData ={
         itemId : mylist.data[itemIndex].itemId,
         price :mylist.data[itemIndex].price,
         goalItemId: goal.goalItemId
       }
+    }
     dispatch(addSavedListRQ(sendData));
   }
 
@@ -110,7 +129,7 @@ function Save() {
             <>  <Circle onClick={() => {
               openModal();
               setModalName("내 태산 만들기!")
-              setModalState(<GoalInput divFunction={"ADD"}
+              setModalState(<GoalInput state={"ADD"}
                               closeModal={closeModal}/>)
             }}>
               <p className="circleInP">+ 태산 만들기!</p>
@@ -127,11 +146,10 @@ function Save() {
                     <FaRegEdit size="15" />
                     <p onClick={() => {
                         openModal();
-                        setModalName("태산 수정하기!");
+                        setModalName("태산 수정하기!")
                         setModalState(<GoalInput 
-                                        divFunction={"Update"}
-                                        goalItemId={goal.goalItemId}
-                                        closeModal={closeModal}/>)
+                                        state={"Update"}
+                                        goalItemId={goal.goalItemId}/>)
                       }}>목표 변경</p>
                   </div>
                   <button onClick={()=>{
@@ -202,7 +220,8 @@ function Save() {
       </>
       :""}
 
-     
+
+
         <CurrentSavedItem goalItemId={goal.goalItemId}/>
         
         <DayModal open={modalOpen}
@@ -213,14 +232,12 @@ function Save() {
       </div>
   );
 }
-
+export default Save;
 
 const StarArea =styled.div`
 display: flex;
 width: 5vh;
 `;
-
-
 
 const TopWrap = styled.div`
 display: flex;
@@ -324,4 +341,4 @@ button{
 
 `;
 
-export default Save;
+

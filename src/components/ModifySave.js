@@ -14,7 +14,7 @@ const ModifySave = (props) =>{
         price : Number(priceInput.current.value)
        }
        console.log(data.price);
-       dispatch(modifySaved(data, props.savedItemId, props.goalItemId))
+       dispatch(modifySaved(data, props.itemId))
     }
     
     return (          
@@ -38,14 +38,14 @@ const ModifySave = (props) =>{
         <>
             <Category>{props.categoryName}</Category>
             <ItemName>{props.itemName}</ItemName>
-            <div>
+            <ButtonArea>
               <button onClick={()=>{
                   setModifyView(true)
                   
               }}>수정</button>
               <button onClick={()=>{dispatch(deleteSavedList(props.savedItemId, props.goalItemId))
               }}>삭제</button>
-            </div>       
+            </ButtonArea>       
         </>
 
        }
@@ -55,7 +55,6 @@ const ModifySave = (props) =>{
       </>  
     )
 }
-
 
 const Category = styled.div`
 display: flex;
