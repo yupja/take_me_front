@@ -6,6 +6,7 @@ import { useSelector } from "react-redux/es/exports";
 import { useParams } from "react-router-dom";
 import { changePw } from "../redux/modules/user";
 import { useLocation } from 'react-router-dom';
+import Header from "../components/Header";
 
 const FindPwChange = () => {
   const { token } = useParams();
@@ -78,28 +79,75 @@ const FindPwChange = () => {
 
   return (
     <>
-      <h2>새로운 비밀번호를<br />입력해주세요</h2>
-      <form>
-        <label htmlFor="userPw">
-          <input type="password" id="userPw" placeholder="비밀번호를 입력해주세요" ref={pwRef} onChange={pwCheck} />
-        </label>
-        <p>{userPwAlert}</p>
-        <label htmlFor="checkPassword">
-          <input type="password" id="checkPassword" placeholder="비밀번호를 다시 입력해주세요" ref={pwCheckRef} onChange={pwChecks} />
-        </label>
-        <p>{userPwAChecklert}</p>
-      </form>
-      <button onClick={pwCheckResult}>로그인하기</button>
-      {state.result ?
-        <div>
-          팝업내용 {state.respMsg}성공
-        </div>
-        : <div>
-          팝업내용 {state.respMsg}실패
-        </div>
+      <Header />
+      <FindWrap>
+        <h2>새로운 비밀번호를<br />입력해주세요</h2>
+        <form>
+          <label htmlFor="userPw">
+            <input type="password" id="userPw" placeholder="비밀번호" ref={pwRef} onChange={pwCheck} />
+          </label>
+          <p>{userPwAlert}</p>
+          <label htmlFor="checkPassword">
+            <input type="password" id="checkPassword" placeholder="비밀번호 변경" ref={pwCheckRef} onChange={pwChecks} />
+          </label>
+          <p>{userPwAChecklert}</p>
+        </form>
+        <button onClick={pwCheckResult}>로그인하기</button>
+      </FindWrap>
+      {findPwPop ? (
+        <>팝업창</>
+        // {state.result ?
+        //   <div>
+        //     팝업내용 {state.respMsg}성공
+        //   </div>
+        //   : <div>
+        //     팝업내용 {state.respMsg}실패
+        //   </div>
+        // }
+      ) : null
       }
     </>
   )
 }
 
 export default FindPwChange;
+
+
+const FindWrap = styled.div`
+padding: 0 25px;
+margin-top: 10rem;
+position: relative;
+
+h2 {
+  font-size:1.75rem;
+  line-height: 2.31rem;
+  margin-bottom: 20px;
+}
+input {
+  border: none;
+  border-bottom: 1px solid #ddd;
+  font-size:1.25rem;
+  padding: 20px 10px;
+  width: 100%;
+  margin-bottom: 5px;
+}
+input::placeholder{
+  color: #ccc;
+}
+p{
+  margin-top: 5px;
+  color: #FF7272;
+}
+button{
+  position: fixed;
+  bottom: 6.25rem;
+  left: 50%;
+  transform: translateX(-50%);
+  padding:15px 0;
+  width: 90%;
+  color: #fff;
+  background: #26DFA6;
+  border-radius: 32px;
+  text-align: center;
+}
+`

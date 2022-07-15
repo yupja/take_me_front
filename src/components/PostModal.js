@@ -1,16 +1,19 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { useDispatch } from "react-redux/es/exports";
+import { useDispatch, useSelector } from "react-redux/es/exports";
 import { createPostAc } from "../redux/modules/post";
 
 
 const PostModal = (props) => {
 
     const dispatch = useDispatch();
-    const [image, setImage] = useState("null");
+    const [image, setImage] = useState(props.goalImage);
     const [imageFile, setImageFile] = useState("null");
 
-    const title_ref = React.useRef();
+    const myGoalList = useSelector((state=> state.goal.myGoalList));
+    
+    const title = myGoalList.data.itemName;
+    
     const contents_ref = React.useRef();
 
     const imageUpLoad = async (e)=>{
@@ -31,7 +34,7 @@ const PostModal = (props) => {
 
     const postAc = () => {
         const data = {
-            title : title_ref.current.value,
+            title : title,
             contents:contents_ref.current.value,
             file: imageFile
         }
@@ -75,7 +78,7 @@ const PostModal = (props) => {
                 </ImageArea>
 
 
-                    <Goal ref={title_ref}></Goal>
+                    <TitleBar>{title}</TitleBar>
                     <Input ref={contents_ref}></Input>
                     <Btn onClick={postAc}>공유하기</Btn>
 
@@ -93,6 +96,9 @@ const Background = styled.div`
 display: flex;
 `;
 
+const TitleBar = styled.p`
+font-size: 2rem;
+`;
 
 const ModalBox = styled.div`
 position: fixed;
@@ -187,8 +193,11 @@ border-radius: 30vw;
 
 const DeImg = styled.div`
 width: 100%;
+display: flex;
+align-items: center;
+justify-content: center;
 padding: 5%;
-border-radius: 10%;
+border-radius: 20px;
 border: none;
 color: white;
 font-weight: 700;
@@ -204,6 +213,10 @@ p{
 `;
 
 const AddImg = styled.div`
+display: flex;
+align-items: center;
+justify-content: center;
+
 margin-top: 5px;
 width: 100%;
 height: 5vh;
@@ -213,6 +226,7 @@ background-color: #26DFA6;
 color: white;
 font-weight: 700;
 margin: auto;
+
 p{
   display: flex;
   justify-content: center;

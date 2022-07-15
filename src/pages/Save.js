@@ -138,7 +138,10 @@ function Save() {
                       openPostModal();
                       }}>내 현황 공유</p>
                     {showPostModal ?
-                      <PostModal showModalll={showPostModal} closeModalll={closePostModal}/>
+                      <PostModal 
+                        showModalll={showPostModal} 
+                        closeModalll={closePostModal}
+                        goalImage = {goal.goalImage}/>
                       : null}
                   </div>
                 </div>
