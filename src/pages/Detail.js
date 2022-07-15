@@ -33,7 +33,7 @@ function Detail({postList}) {
     React.useEffect(() => {
         dispatch(loadCommentAc(boardIdex))
         dispatch(loadpostsAc())
-        dispatch(loadDetailAc(boardIdex))
+        dispatch(loadDetailAc())
         dispatch(getUserInfoDB())
     }, []);
 
@@ -71,7 +71,9 @@ function Detail({postList}) {
     const  state  = useLocation();
     // console.log(state.state.name,"state")
     const postlistdata = state.state.name
-    console.log(postlistdata.createdAt.substr(0, 10).split('-','3').join("."),"자르자!")
+    // console.log(postlistdata.boardId,"dsdsdsdsd")
+
+    const boardId = postlistdata.boardId
 
     // const state = "커뮤니티"
 
@@ -342,14 +344,13 @@ padding: 4vw;
 `;
 
 const PostBtn = styled.button`
-width: 10vw;
+width: 15vw;
 height: 10vw;
-border: none;
+/* border: 1px solid red; */
 background-color: transparent;
 color: white;
 position: absolute;
-float: left;
-left: 83%;
+left: 79%;
 `;
 
 const UserInfoNav = styled.div`

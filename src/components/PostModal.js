@@ -37,6 +37,7 @@ const PostModal = (props) => {
         }
         console.log(data,"공유하기")
         dispatch(createPostAc(data))
+        // window.location.reload();
     }
 
   
