@@ -66,12 +66,12 @@ const refreshToken = () => {
         secure: true,
         sameSite: 'none',
       })
+      window.location.replace = "/";
     })
     .catch(function (error) { // refreshToken도 만료시 재로그인
       console.log("refresh토큰도 만료! 다시 로그인해주세요!")
       removeCookie('refreshToken');
       localStorage.clear();
-      // window.location.replace = "/";
       alert("세션 만료 다시 로그인 해주세요.");
     });
 };

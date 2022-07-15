@@ -52,7 +52,7 @@ export const myReadGoalRQ = createAsyncThunk(
 
 //-------------------- UPDATE ---------------------------
 
-export const updateGoalAPI = (formData, goalItemId) => { // 모든 사람의 태산 항목
+export const updateGoalAPI = (formData, goalItemId) => { // 업데이트
   return async function (dispatch) {
     try {
       console.log(goalItemId)
