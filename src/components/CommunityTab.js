@@ -10,7 +10,8 @@ import { loadsavedAc } from "../redux/modules/saved";
 import {getUserInfoDB} from "../redux/modules/user";
 import Like from "./Like";
 import { loadMoreContentDB } from "../redux/modules/post";
-import { Link } from "react-router-dom";
+import {ReactComponent as Comment} from "../public/img/svg/Comment.svg";
+import {ReactComponent as Receipt} from "../public/img/svg/Receipt.svg";
 
 const CommunityTab = () => {
 
@@ -98,33 +99,34 @@ const CommunityTab = () => {
                   </ProfileBox>
                 </Left>
                 <Right>
-                  <Top>
-                    <GoalName onClick={() => {
-                      // Navigate(`/detail/${postList.boardId}`)
-                    }}> 
-                    {postList.goalItemName}
-                   </GoalName> 
-                  </Top>
-                  <Middle>
-                    <Nick onClick={() => { Navigate
+                  <div onClick={() => { Navigate
                       (`/detail/${postList.boardId}`,
                       {state: {name:postList}}
                       ) }}>
+                  <NewTop>
+                    {postList.goalItemName}
+                  </NewTop>
+                    <NewNick>
                       {postList.nickname}&nbsp;&nbsp;{postList.contents}
-                    </Nick>
-                  </Middle>
-                  <Foot>
+                    </NewNick>
+                  </div>
+                  <NewFoot>
                     <Like
                       isLike={postList.checkLike}
                       forLikeId = {postList.boardId}
                       likeCount = {postList.likeCount}
                     />
-                    <div style={{ marginLeft: "1rem" }}>💬</div>
-                    <div  onClick={() => { Navigate(`/detail/${postList.boardId}`)
+                    <div onClick={() => { Navigate
+                      (`/detail/${postList.boardId}`,
+                      {state: {name:postList}}
+                      ) }}>
+                    <span onClick={() => { Navigate(`/detail/${postList.boardId}`)
                       }}>
-                      댓글 00 개 모두 보기</div>
-                    <div onClick={()=>{openModall(index)}} style={{ marginLeft: "auto" }}>📃</div>
-                  </Foot>
+                      <Comment /> 댓글 {postList.commentCount} 개 모두 보기
+                      </span>
+                      </div>
+                    <div onClick={()=>{openModall(index)}}><Receipt /></div>
+                  </NewFoot>
                 </Right>
               </ContentBox>
             </>
@@ -157,6 +159,9 @@ const CommunityTab = () => {
 )
 };
 
+
+
+
 const CreatAt = styled.div`
 width: 28vw;
 height: 10vw;
@@ -179,10 +184,9 @@ flex-direction: column;
 
 const ContentBox = styled.div`
 width: 100%;
-height: 20vh;
+height: 100%;
 padding: 1rem;
 /* border: 3px solid blue; */
-border: none;
 display: flex;
 flex-direction: row;
 `;
@@ -190,7 +194,6 @@ flex-direction: row;
 const Left = styled.div`
 width: 35%;
 /* border: 2px solid red; */
-border: none;
 position: relative;
 `;
 
@@ -213,14 +216,16 @@ border: none;
 
 const Nick = styled.div`
 /* border: 1px solid red; */
+width: 100%;
 height: 20vw;
-margin-top: 1vw;
+/* margin-top: 2vw; */
+font-size: 0.9rem;
 display: flex;
-text-overflow: ellipsis;  
+/* text-overflow: ellipsis;  
 	overflow : hidden;
 	display: -webkit-box;
         -webkit-line-clamp: 5;
-        -webkit-box-orient: vertical;
+        -webkit-box-orient: vertical; */
 
 `;
 
@@ -236,30 +241,26 @@ height: 100%;
 /* margin: 0 auto; */
 border-radius: 50rem;
 /* position: absolute; */
-top: 5%
+/* top: 5% */
 `;
 
 const ItemImgBox = styled.div`
 /* border: 1px solid red; */
 width: 31vw;
 height: 31vw;
+align-items: center;
+margin: auto;
 `;
 
 const Foot = styled.div`
 width: 100%;
-height: 3vh;
-/* border: 1px solid violet; */
+height: 100vw;
+/* border: 2px solid violet; */
 display: flex;
 margin: auto;
-align-items: flex-end;
+/* align-items: flex-end; */
 font-size: 0.5rem;
 padding: 1rem;
-`;
-
-const Modalbtn = styled.button`
-border: none;
-background-color: transparent;
-font-size: 0.5rem;
 `;
 
 const BtnBox = styled.div`
@@ -283,58 +284,43 @@ border: none;
 font-size: 1.3rem;
 color: white;
 font-weight: 500;
-/* background-color: rgb(38, 223, 116, 0.2); */
 background-color: #26DFA6;
-/* box-shadow: rgb(0 0 0 / 9%) 0px 2px 12px 0px; */
 box-shadow: 5px 5px 5px rgb(110, 110, 110, 0.4);
+opacity: 95%;
 `;
 
 const Right = styled.div`
 width: 65%;
-/* border: 2px solid violet; */
-`;
-
-const Middle = styled.div`
-width: 100%;
-height: 10vh;
-/* border: 1px solid black; */
-font-size: 0.7rem;
-line-height: 0.9rem;
-letter-spacing: 0.04rem;
-padding: 0 1rem;
-
-`;
-
-const Top = styled.div`
-width: 100%;
-/* border: 1px solid blue; */
+height: 31vw;
 display: flex;
-justify-content: flex-start;
-padding: 0 1rem;
+flex-direction: column;
+padding: 0 5vw;
+/* border: 5px solid violet; */
 `;
 
-const GoalName = styled.div`
-width: 85%;
-font-weight: bold;
-/* border: 1px solid violet; */
-
+const NewTop = styled.div`
+/* border: 3px solid red; */
+width: 100%;
+height: 6vw;
+font-size: 1.2rem;
+font-weight: 700;
 `;
-const EditBtn = styled.div`
-width: 15%;
+
+const NewNick = styled.div`
+/* border: 3px solid purple; */
+width: 100%;
+height: 18vw;
+font-size: 1rem;
+`;
+
+const NewFoot = styled.div`
+/* border: 3px solid gold; */
 display: flex;
-/* border: 1px solid orange; */
-justify-content: right;
-`;
-
-const ModiBtn = styled.button`
-width: 20%;
-height: 50%;
-text-align: center;
-`;
-
-const DelBtn = styled.button`
-width: 20%;
-height: 50%;
+width: 100%;
+height: 7vw;
+align-items: center;
+justify-content: space-between;
+font-size: 0.8rem;
 `;
 
 const BlankBox = styled.div`
