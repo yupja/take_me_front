@@ -60,6 +60,7 @@ export const favoriteDel = (itemId) => {
         console.log(error)
       });
       dispatch(myFavoriteListRQ());
+      dispatch()
   };
 };
 

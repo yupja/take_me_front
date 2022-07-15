@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { mySavedListRQ } from "../redux/modules/saved"
-import {addFavoriteRQ, favoriteDel} from "../redux/modules/favorite"
 
 import ModifySave from "./ModifySave";
+import Star from "./Star"
 
 import styled from "styled-components";
 import { AiOutlineStar } from 'react-icons/ai'
@@ -13,41 +13,14 @@ import {ReactComponent as CheckedStart} from "../public/img/svg/CheckedStart.svg
 const CurrentSavedItem =(props)=>{
     const dispatch = useDispatch();
 
+    const mySavedList = useSelector((state) => state.saved.currentMySavedList);
+    console.log("내아낌", mySavedList)
+
 
     useEffect(() => {
         dispatch(mySavedListRQ(props.goalItemId));
       }, [props.goalItemId]);
 
-
-    const mySavedList = useSelector((state) => state.saved.currentMySavedList);
-    console.log("내아낌", mySavedList)
-    
-    const [ star, setStar] = useState();
-    const [ startImage, setStarImage] = useState();
-
-    const changeHeart = (savedItemIndex) =>{
-      if(star){
-        setStarImage(<AiOutlineStar/>)
-        setStar(false)
-      }else if(!star){
-        setStarImage(<CheckedStart/>)
-        addFavoriteStar(savedItemIndex)
-      }
-    }
-  
-
-
-
-   
-    const addFavoriteStar = (savedItemIndex) => {
-      const sendData = {
-        categoryId: mySavedList.data[savedItemIndex]?.categoryId,
-        itemName: mySavedList.data[savedItemIndex]?.itemName,
-        itemId: mySavedList.data[savedItemIndex]?.itemId,
-        price: mySavedList.data[savedItemIndex]?.price
-      }
-      dispatch(addFavoriteRQ(sendData));
-    }
 
     return (
       <>
@@ -63,18 +36,16 @@ const CurrentSavedItem =(props)=>{
         {mySavedList&&mySavedList.data?.map((savedItem, savedItemIndex) => (
             <JustifyContentCenter key={savedItem.savedItemId}>
               <SListWrap>
-                
-              <Star onClick={()=>{
-                changeHeart(savedItemIndex);
-                }}>
-                {savedItem.favorite? 
-                  <CheckedStart/>
-                  :  
-                  <AiOutlineStar />
-                }
-                  
-                  
-              </Star>
+                <Star 
+                  favorite={savedItem.favorite}
+                  favoriteId={savedItem.favoriteId}
+                  categoryId={savedItem.categoryId}
+                  itemName={savedItem.savedItem}
+                  itemId ={savedItem.itemId}
+                  price={savedItem.price}
+                  goalItemId={props.goalItemId}
+                />                
+          
               <SavedDay>
                 {savedItem.modifiedDate.split(/[T,.]/,1)}<br/>
               </SavedDay>
@@ -105,10 +76,7 @@ p{
 }
 `;
 
-const Star =styled.div`
-display: flex;
-width: 5vh;
-`;
+
 const SavedDay = styled.div`
 display:flex;
 width: 14vh;

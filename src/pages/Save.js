@@ -78,20 +78,10 @@ function Save() {
 
 
   const addFavoriteSaved = (itemIndex)=>{
-    let sendData={}
-
-    if(goal.goalitemName=== "이름 없음"){
-      sendData ={
-        itemId : mylist.data[itemIndex].itemId,
-        price :mylist.data[itemIndex].price,
-        goalItemId: -1
-      }
-    }else{
-      sendData ={
+    let sendData ={
         itemId : mylist.data[itemIndex].itemId,
         price :mylist.data[itemIndex].price,
         goalItemId: goal.goalItemId
-      }
     }
     dispatch(addSavedListRQ(sendData));
   }
@@ -267,6 +257,7 @@ display: flex;
 
 
 const FavoriteItem = styled.div`
+padding:3px;
 margin-top: 5px;
 display :inline-block;
 background: #EFEFEF;
@@ -283,6 +274,7 @@ const AddSavedStyle = styled.div`
     align-items: center;
     justify-content: center;
     height: 2%;
+    margin: 10px;
 `;
 
 export default Save;

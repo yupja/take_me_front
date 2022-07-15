@@ -85,5 +85,12 @@ display: flex;
 width: 40vh;
 align-items: center;
 
+overflow-y:scroll;
+
+white-space: nowrap;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
 `;
 export default ModifySave
