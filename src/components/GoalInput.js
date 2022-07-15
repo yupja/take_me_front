@@ -70,13 +70,13 @@ const GoalInput = (props)=>{
     const blob = new Blob([json], { type: "application/json" });
     formData.append('goalItem',blob);
 
-    if(props.divFunction=="ADD"){
+    // if(props.divFunction=="ADD"){
       dispatch(newItemGoalAddRQ(formData));
-    }
-    else if(props.divFunction=="Update"){
-      console.log("여기");
-      //dispatch(addItem(data));
-    }
+    // }
+    // else if(props.divFunction=="Update"){
+    //   console.log("여기");
+    //   //dispatch(addItem(data));
+    // }
     
   }
 

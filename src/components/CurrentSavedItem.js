@@ -17,6 +17,7 @@ const CurrentSavedItem =(props)=>{
     useEffect(() => {
         dispatch(mySavedListRQ(props.goalItemId));
       }, [props.goalItemId]);
+      console.log(props.goalItemId)
 
 
     const mySavedList = useSelector((state) => state.saved.currentMySavedList);
@@ -52,7 +53,8 @@ const CurrentSavedItem =(props)=>{
                               itemName={savedItem.itemName}
                               itemId={savedItem.itemId}
                               savedItemId={savedItem.savedItemId}
-                              goalItemId={props.goalItemId}/>
+                              goalItemId={props.goalItemId}
+                              price = {mySavedList.price}/>
               </SListWrap>
            </JustifyContentCenter>
         ))}
@@ -109,7 +111,11 @@ display: flex;
 flex-direction: column;
 width: 100%;
 height: 43vh;
+overflow: scroll;
 
+&::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const JustifyContentCenter = styled.div`
