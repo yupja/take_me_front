@@ -26,53 +26,14 @@ function History() {
     setBlocks(current => !current);
   }
 
-
-
-  const b = [
-    {
-      goalItemId: 16,
-      categoryId: -1,
-      categoryName: "이름 없음",
-      itemId: -1,
-      itemName: "이름 없음",
-      goalItemCount: 0,
-      price: 0,
-      totalPrice: 0,
-      checkReached: true,
-      goalPercent: 100.0,
-      savedItemCount: 3,
-      createdAt: "2022-07-08T10:59:53.16435",
-      reachedAt: "2022-07-08T11:01:47.9457",
-      image: null,
-    },
-    {
-      goalItemId: 17,
-      categoryId: 1,
-      categoryName: "식료품",
-      itemId: 1,
-      itemName: "소세지빵",
-      goalItemCount: 2,
-      price: 3000,
-      totalPrice: 60000,
-      checkReached: true,
-      goalPercent: 100.0,
-      savedItemCount: 1,
-      createdAt: "2022-07-08T10:59:53.16435",
-      reachedAt: "2022-07-08T11:01:47.9457",
-      image: "https://final-project-day-keep.s3.ap-northeast-2.amazonaws.com/static/aadf6dac-95ba-41cb-a166-770501042cd820210209_181035.jpg",
-    }
-  ]
-
-
-
   return (
     <>
       <Header />
       <HistoryWrap>
-        <Total>총 <span>{b.length}</span>개 태산</Total>
+        <Total>총 <span>{state.length}</span>개 태산</Total>
         <HistoryList>
           <ul>
-            {b && b.map((list, idx) => (
+            {state && state.map((list, idx) => (
               <li key={list.goalItemId + 'b'}>
                 <GoalList>
                   <ToggleBtn onClick={active} trans={onToggle}><UpArrow /></ToggleBtn>

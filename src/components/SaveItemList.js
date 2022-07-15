@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 import styled from "styled-components";
 
 import { ReactComponent as Star } from "../public/img/svg/Star.svg";
@@ -8,53 +8,26 @@ import { getSavedList } from "../redux/modules/saved";
 
 function SaveItemList(props) {
   const dispatch = useDispatch();
-  console.log(props)
   const goalItemId = props.list;
   // console.log(listInfo[0].goalItemId)
+  console.log(props.list)
 
   useEffect(() => {
-    dispatch(getSavedList(goalItemId));
+    dispatch(getSavedList(props.list));
   }, []);
 
-  const list = [
-    {
-      categoryId: 4,
-      categoryName: "식품",
-      itemId: 10,
-      itemName: "떡볶이",
-      price: 7000,
-      year: "2022",
-      day: "09.06"
-    },
-    {
-      categoryId: 5,
-      categoryName: "교통비",
-      itemId: 11,
-      itemName: "택시비",
-      price: 5000,
-      year: "2022",
-      day: "09.06"
-    },
-    {
-      categoryId: 6,
-      categoryName: "미용",
-      itemId: 12,
-      itemName: "아이브로우",
-      price: 12000,
-      year: "2022",
-      day: "09.06"
-    },
-  ]
+  const list = useSelector((state) => state.saved.currentMySavedList);
+  console.log(list)
 
   return (
     <>
       <ItemList toggle={props.toggle}>
         <ul>
-          {list.length === 0 ?
+          {list.data&&list.data.length === 0 ?
             null :
             <>
               {list && list.map((list, idx) => (
-                <li key={list.itemId + list.categoryId + 'b'}>
+                <li key={list.savedItemId}>
                   <div className="leftBox">
                     <Star />
                     <p>{list.year}<br />{list.day}</p>

@@ -6,10 +6,6 @@ import {allItemListRQ} from "../redux/modules/item"
 
 import styled from 'styled-components'
 
-import DayModal from "./DayModal"
-import SavedInput from "./SavedInput"
-
-
 
 function SearchFavorite(props) {
 
@@ -149,10 +145,11 @@ const WholeBox = styled.div`
 `;
 
 const InputBox = styled.div`
-display: block;
+display: flex;
 margin-left:5px;
-width:100%;
+width:90%;
 flex-direction: row;
+justify-content: center;
 padding: 10px;
 border: 1px solid rgba(0, 0, 0, 0.3);
 border-radius: 30px;

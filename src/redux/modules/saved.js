@@ -52,22 +52,33 @@ export const mySavedListRQ = createAsyncThunk(
 )
 
 
-// 아끼기/조회 (은진)
-export const getSavedList = (itemId) => {
-  return async function (dispatch) {
-    await instance.get(`/api/savedItem/${itemId}`, {
-      "Content-Type": "multipart/form-data",
-      withCredentials: true,
-    })
-      .then((res) => {
-        console.log(res)
-        // dispatch(infoList(res.data.data));
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-};
+// // 아끼기/조회 (은진)
+// export const getSavedList = (goalItemId) => {
+//   return async function (dispatch) {
+//     try{
+//       const { data } = await instance.get(`/api/savedItem/${goalItemId}`)
+//       console.log(data)
+//       dispatch(loadSaved(data))
+//     }catch(error){
+
+//     }
+//   };
+// };
+
+export const getSavedList = createAsyncThunk(
+  'saved/readMyHistoryList',
+  async (inputData, thunkAPI) => {
+    try {
+      const { data } = await instance.get(`/api/savedItem/${inputData}`)
+      console.log(data)
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+)
+
+
 
 
 
@@ -85,11 +96,10 @@ export const loadsavedAc = (boardId) => {
 
 //-------------------- UPDATE ---------------------------
 
-export const modifySaved = (data, itemId) => {
+export const modifySaved = (data, savedItemId) => {
   return async function (dispatch) {
     try {
-      await instance.put(`/api/savedItem/${itemId}`, data)
-
+      await instance.put(`/api/savedItem/${savedItemId}`, data)
     } catch (error) {
       console.log(error)
     }
