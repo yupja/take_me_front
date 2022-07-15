@@ -205,7 +205,7 @@ position: absolute;
 top: 103%; left: 50%;
 box-shadow: 0px 4px 4px 0px rgb(0 0 0 / 25%);
 transform: translateX(-50%);
-z-index: 999;
+/* z-index: 999; */
 `;
 
 
