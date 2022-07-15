@@ -13,12 +13,7 @@ import { display } from "@mui/system"
 
 const GoalInput = (props)=>{
   const dispatch = useDispatch()
-
-
-  //-------------- 모달
-
-
-
+  console.log(props.divFunction)
 
   const [category , setCategory] = useState();
   const [image, setImage] = useState();
@@ -47,20 +42,20 @@ const GoalInput = (props)=>{
   }
 
 
-  const sendNewData = (state) =>{
+  const sendNewData = () =>{
     let data = {} 
     const formData = new FormData();
 
     formData.append("image", imageFile);
     
+    
 
-    if(state==="Update"){
+    if(props.divFunction=="Update"){
       data ={
         itemName: itemName.current.value,
         price: Number(price.current.value),
         goalItemCount: Number(goalItemCount.current.value),
         categoryId: Number(category),
-        state: state,
         goalId:props.goalId
       }
     }else {
@@ -75,28 +70,20 @@ const GoalInput = (props)=>{
     const blob = new Blob([json], { type: "application/json" });
     formData.append('goalItem',blob);
 
-    console.log("없던거 ADD")
-    if(imageFile==="null"){
-      alert("이미지를 첨부");
-    }else{
+    if(props.divFunction=="ADD"){
       dispatch(newItemGoalAddRQ(formData));
     }
+    else if(props.divFunction=="Update"){
+      console.log("여기");
+      //dispatch(addItem(data));
+    }
     
-
-    props.closeModal();
-
-    // if(state==="ADD"){
-    //   //console.log("없던거 에드"), 확인함/ 구현완
-    //   //
-    // }
-    //else if(state==="Update"){
-    //   dispatch(addItem(data));
-    // }
   }
 
 
-  const sendData = (state) =>{
+  const sendData = () =>{
     const formData = new FormData();
+    console.log("있던거", props.divFunction);
 
     formData.append("image",imageFile)
 
@@ -111,24 +98,9 @@ const GoalInput = (props)=>{
     const blob = new Blob([json], { type: "application/json" });
     formData.append('goalItem',blob);
 
-    console.log("있던거 ADD")
-    if(imageFile==="null"){
-      alert("이미지를 첨부");
-    }else{
-    dispatch(addGoalRQ(formData));
-  }
-    props.closeModal();
+    dispatch(updateGoalAPI(formData, props.goalItemId));
     
-  
-  //   if(state==="ADD"){
-  //     console.log("있던거 에드")
-
-  //   }
-  //   else if(state==="Update"){
-  //   //  dispatch(updateGoalAPI(formData, props.goalItemId));
-  //   // }
-  // }
-}
+  }
 
 
  return (
@@ -180,14 +152,17 @@ const GoalInput = (props)=>{
 
       </ModalBody>
       {newAddGoal? 
-        <Footer onClick={()=>{sendNewData(props.state)}}>
+        <Footer onClick={()=>{
+          sendNewData();
+          props.closeModal();}}>
           태산 등록하기
         </Footer>
       :
         <Footer 
           onClick={()=>{
-            sendData(props.state);
-            }}>
+            sendData();
+            props.closeModal();
+          }}>
           태산 등록하기
         </Footer>}
 

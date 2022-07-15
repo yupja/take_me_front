@@ -9,49 +9,16 @@ import { ReactComponent as UpArrow } from "../public/img/svg/UpArrow.svg";
 
 function SaveItemList(props) {
   const dispatch = useDispatch();
-  console.log(props)
   const propsList = props;
   const goalItemId = props.list;
   const state = useSelector((state) => state.saved.itemList)
-  console.log(state);
 
   useEffect(() => {
-    dispatch(getSavedList(goalItemId));
+  
     // 태산 오류 발생. 태산과 유저정보가 일치하지 않습니다 (400번에러)  조회api 
   }, []);
 
 
-  // 위 오류로 -> 토글 속 리스트가 보이는게 없음 -> 테스트코드를 지우지 못함:)
-  // 데이터가 있다면 list -> state
-  const list = [
-    {
-      categoryId: 4,
-      categoryName: "식품",
-      itemId: 10,
-      itemName: "떡볶이",
-      price: 7000,
-      year: "2022",
-      day: "09.06"
-    },
-    {
-      categoryId: 5,
-      categoryName: "교통비",
-      itemId: 11,
-      itemName: "택시비",
-      price: 5000,
-      year: "2022",
-      day: "09.06"
-    },
-    {
-      categoryId: 6,
-      categoryName: "미용",
-      itemId: 12,
-      itemName: "아이브로우",
-      price: 12000,
-      year: "2022",
-      day: "09.06"
-    },
-  ]
   const active = (e) => {
     setOnToggle(current => !current);
     setBlocks(current => !current);
@@ -63,17 +30,21 @@ function SaveItemList(props) {
     <>
       <li>
         <GoalList>
-          <ToggleBtn onClick={active} trans={onToggle}><UpArrow /></ToggleBtn>
+          <ToggleBtn onClick={()=>{
+            active();
+            dispatch(getSavedList(goalItemId));
+          }} 
+            trans={onToggle}><UpArrow /></ToggleBtn>
           <span>{propsList.reachedAt.split('-')[0]}년 {propsList.reachedAt.split('-')[1]}월</span>
           <h2>{propsList.itemName}</h2>
         </GoalList>
       </li>
       <ItemList toggle={blocks}>
         <ul>
-          {list.data&&list.data.length === 0 ?
+          {state.data&&state.data.length === 0 ?
             null :
             <>
-              {list && list.map((list, idx) => (
+              {state && state.map((list, idx) => (
                 <li key={list.savedItemId}>
                   <div className="leftBox">
                     <Star />

@@ -38,8 +38,6 @@ export const createPostAc = (data) => {
     })
       .then((response) => {
         console.log(response);
-        // dispatch(uploadPost())
-        alert("등록 완료");
       })
       .catch((error) => {
         console.log(error);

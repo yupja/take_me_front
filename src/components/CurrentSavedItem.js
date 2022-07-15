@@ -20,25 +20,7 @@ const CurrentSavedItem =(props)=>{
 
 
     const mySavedList = useSelector((state) => state.saved.currentMySavedList);
-    console.log("내아낌", mySavedList)
     
-    const [ star, setStar] = useState();
-    const [ startImage, setStarImage] = useState();
-
-    const changeHeart = (savedItemIndex) =>{
-      if(star){
-        setStarImage(<AiOutlineStar/>)
-        setStar(false)
-      }else if(!star){
-        setStarImage(<CheckedStart/>)
-        addFavoriteStar(savedItemIndex)
-      }
-    }
-  
-
-
-
-   
     const addFavoriteStar = (savedItemIndex) => {
       const sendData = {
         categoryId: mySavedList.data[savedItemIndex]?.categoryId,
@@ -63,22 +45,10 @@ const CurrentSavedItem =(props)=>{
         {mySavedList&&mySavedList.data?.map((savedItem, savedItemIndex) => (
             <JustifyContentCenter key={savedItem.savedItemId}>
               <SListWrap>
-                
-              <Star onClick={()=>{
-                changeHeart(savedItemIndex);
-                }}>
-                {savedItem.favorite? 
-                  <CheckedStart/>
-                  :  
-                  <AiOutlineStar />
-                }
-                  
-                  
-              </Star>
-              <SavedDay>
-                {savedItem.modifiedDate.split(/[T,.]/,1)}<br/>
-              </SavedDay>
-              <ModifySave categoryName={savedItem.categoryName}
+                <SavedDay>
+                  {savedItem.modifiedDate.split(/[T,.]/,1)}<br/>
+                </SavedDay>
+                <ModifySave categoryName={savedItem.categoryName}
                               itemName={savedItem.itemName}
                               itemId={savedItem.itemId}
                               savedItemId={savedItem.savedItemId}
@@ -105,10 +75,7 @@ p{
 }
 `;
 
-const Star =styled.div`
-display: flex;
-width: 5vh;
-`;
+
 const SavedDay = styled.div`
 display:flex;
 width: 14vh;

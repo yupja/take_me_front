@@ -16,10 +16,7 @@ const SavedInput = (props)=>{
   const [category , setCategory] = useState("")
   const [price, setPrice] = useState(0)
 
-  console.log(props.goalItemId)
-    
-
- function onlynumber(e) { // 천원단위 끊는거 구현하기 
+  function onlynumber(e) { // 천원단위 끊는거 구현하기 
   let str = e.target.value
   setPrice(str);
   }

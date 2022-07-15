@@ -2,18 +2,20 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux/es/exports";
 import { createPostAc } from "../redux/modules/post";
+import DountChart from "../components/Goal";
 
 
 const PostModal = (props) => {
 
     const dispatch = useDispatch();
-    const [image, setImage] = useState(props.goalImage);
+    const [image, setImage] = useState(props.image);
     const [imageFile, setImageFile] = useState("null");
 
     const myGoalList = useSelector((state=> state.goal.myGoalList));
     
     const title = myGoalList.data.itemName;
-    
+    const goalPercent = (myGoalList.data.goalPercent)*0.01
+
     const contents_ref = React.useRef();
 
     const imageUpLoad = async (e)=>{
@@ -44,229 +46,102 @@ const PostModal = (props) => {
 
   
     return (
-      <>
-      {props.showModalll ?
-
-        <Background>
-            <ModalBox onClick={e => e.stopPropagation()}>
-              <CommentBox>
+    <>
+        <ModalBody>
+          <GoalInfo>
+            <DountChart color="#26DFA6" image={image} percent={goalPercent} size="150" />
+              <TextArea>
+                <p>{title}</p>
+                <BasicImg>기본 이미지</BasicImg>
                 
-                    <Top>
-                    <Head>내 아낌 % 공유</Head>    
-                    <Close onClick={props.closeModalll}>X</Close>
-                    </Top>
-                    
-                    <ImageArea>
-                    <Profile src={image}></Profile>
-                      <Right>
-                      <DeImg><p>기본 이미지</p></DeImg>
-                        
-                          <AddImg className="filebox">
-                            <label htmlFor="ex_file" style={{magin:" 0 auto"}}>
-                              이미지 등록</label>
-                            <input 
-                              type="file"
-                              name="image" 
-                              multiple="multiple"
-                              onChange={imageUpLoad}
-                              id="ex_file" 
-                              style={{display:"none"}}/> 
-                          </AddImg>
-                        </Right>
-                        
-                </ImageArea>
+                <NewImg className="filebox">
+                  <label htmlFor="ex_file" style={{magin:" 0 auto"}}> 이미지 등록</label>
+                  <input 
+                    type="file"
+                    name="image" 
+                    multiple="multiple"
+                    onChange={imageUpLoad}
+                    id="ex_file" 
+                    style={{display:"none"}}/> 
+                </NewImg>
+              </TextArea>
+          </GoalInfo>
+ 
+          
+          <ContentsBox ref={contents_ref}></ContentsBox>
+          </ModalBody>
+          <Footer onClick={()=>{
+            postAc();
+            props.closeModal();
+          }}>공유하기</Footer>
+
+    </>
+     );
+  }
 
 
-                    <TitleBar>{title}</TitleBar>
-                    <Input ref={contents_ref}></Input>
-                    <Btn onClick={postAc}>공유하기</Btn>
+  const GoalInfo = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+  height: 100%;
+  
+  `;
+  
+  const BasicImg = styled.div`
+  background: #6485EC;
+  color: white;
+  padding: 0.5rem;
+  border-radius: 20px;
+  `;
 
-                </CommentBox>
-            </ModalBox>
-        </Background> : null}
-</>
-
-    );
-  };
-
-
-
-const Background = styled.div`
-display: flex;
-`;
-
-const TitleBar = styled.p`
-font-size: 2rem;
-`;
-
-const ModalBox = styled.div`
-position: fixed;
-left: 50%;
-top: 50%;
-transform: translate(-50%, -50%);
-min-height: 50vh;
-background-color: rgb(0,0,0,0.3);
-box-shadow: rgb(0 0 0 / 9%) 0px 2px 12px 0px;
-display: flex;
-
-  @media screen and (max-width:600px){
-    width: 100vw;
-    height: 100vh;
-    padding: 20px;
-}
-`;
+  const NewImg = styled.div`
+  background: #26DFA6;
+  color: white;
+  padding: 0.5rem;
+  border-radius: 20px;
+  `;
 
 
-const CommentBox = styled.div`
-display: flex;
-flex-direction: column;
-width: 100%;
-margin: auto 0;
-background-color: white;
-border-radius: 3vw;
-align-items: center;
-`;
+  const TextArea = styled.div`
+  height: 100%;
+  width: 45%;
+  display: flex;
 
-const ImageArea = styled.div`
-display: flex;
-width: 100%;
-height: 100%;
-flex-direction: row;
-align-items: center;
+  text-align: center;
+  
+  flex-direction: column;
+  gap: 15px;
+  p{
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  `;
 
-`;
+  const ContentsBox = styled.input`
+  width: 95%;
+  height: 5rem;
+  margin-bottom: 0.5;
+  ;
+  `;
+  
+  const ModalBody = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 
-
-
-const Top = styled.div`
-width: 100%;
-display: flex;
-`;
-
-const Head = styled.div`
-width: 100%;
-font-size: 1.5rem;
-font-weight: 700;
-display: flex;
-justify-content: center;
-margin-top: 3vw;
-`;
-
-const Close = styled.button`
-width: 5vw;
-height: 5vw;
-text-align: center;
-align-items: center;
-top: 10;
-right: 0%;
-margin-right: 1vw;
-background-color: white;
-border: none;
-`;
-
-const Right = styled.div`
-width: 50%;
-gap:20px;
-display: flex;
-flex-direction: column;
-`;
-
-
-
-const Middle = styled.div`
-width: 100%;
-height:100%;
-display: flex;
-justify-content: center;
-`;
-
-const Profile = styled.img`
-display: flex;
-width: 40vw;
-height: 40vw;
-border-radius: 30vw;
-
-`;
-
-
-
-const DeImg = styled.div`
-width: 100%;
-display: flex;
-align-items: center;
-justify-content: center;
-padding: 5%;
-border-radius: 20px;
-border: none;
-color: white;
-font-weight: 700;
-margin: auto;
-background-color: #FFB7D9;
-
-p{
+  `;
+  
+  
+  const Footer = styled.button`
+  padding: 1rem;
+  width: 100%;
+  background: #26DFA6;
+  text-align: right;
+  color: white;
+  font-weight: bold;
   display: flex;
   justify-content: center;
-  align-items: center;
-}
-
-`;
-
-const AddImg = styled.div`
-display: flex;
-align-items: center;
-justify-content: center;
-
-margin-top: 5px;
-width: 100%;
-height: 5vh;
-border: none;
-border-radius: 90px;
-background-color: #26DFA6;
-color: white;
-font-weight: 700;
-margin: auto;
-
-p{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-`;
-
-const Goal = styled.input`
-width: 100%;
-height: 13vw;
-border: 1px solid orange;
-text-align: center;
-margin: 1vw 0;
-font-size: 1rem;
-`;
-
-const Input = styled.textarea`
-width: 100%;
-height: 25%;
-font-size: 1.5rem;
-border: 1px solid #9c9c9c;
-border-radius: 1vw;
-margin: 1vw 0 2vw 0;
-resize: none;
-:focus{
-    outline: none;
-}
-`;
-
-const Btn = styled.button`
-width: 100%;
-height: 5vh;
-background-color: #26DFA6;
-margin-bottom: auto 0;
-border: none;
-border-radius: 0 0 2vw 2vw;
-color: white;
-font-weight: 700;
-bottom: 0;
-`;
-
+  `;
 
   export default PostModal;
