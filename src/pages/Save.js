@@ -149,7 +149,8 @@ function Save() {
                         setModalName("태산 수정하기!")
                         setModalState(<GoalInput 
                                         state={"Update"}
-                                        goalItemId={goal.goalItemId}/>)
+                                        goalItemId={goal.goalItemId}
+                                        closeModal={closeModal}/>)
                       }}>목표 변경</p>
                   </div>
                   <button onClick={()=>{
