@@ -108,7 +108,7 @@ export const UpdatePost = (data) => {
     const json = JSON.stringify(request);
     const blob = new Blob([json], { type : "application/json"});
 
-    formData.append('image',data.image)
+    formData.append('file',data.file)
     formData.append('request', blob)
 
     await instance
