@@ -83,7 +83,10 @@ function Login() {
               ref={userPw}
             />
           </label>
-          <InputBtn onClick={login}>로그인하기</InputBtn>
+          <InputBtn onClick={()=>{
+            login()
+            navigate("/save");
+            }}>로그인하기</InputBtn>
         </Form>
         <Licks>
           <Link to="/signup">회원가입</Link>
