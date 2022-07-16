@@ -117,7 +117,7 @@ const GoalInput = (props)=>{
     }else{
     dispatch(addGoalRQ(formData));
   }
-    props.closeModal();
+
     
   
   //   if(state==="ADD"){
@@ -125,9 +125,10 @@ const GoalInput = (props)=>{
 
   //   }
   //   else if(state==="Update"){
-  //   //  dispatch(updateGoalAPI(formData, props.goalItemId));
+    dispatch(updateGoalAPI(formData, props.goalItemId));
   //   // }
   // }
+
 }
 
 
@@ -187,6 +188,7 @@ const GoalInput = (props)=>{
         <Footer 
           onClick={()=>{
             sendData(props.state);
+            props.closeModal();
             }}>
           태산 등록하기
         </Footer>}
