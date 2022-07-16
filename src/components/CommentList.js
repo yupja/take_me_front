@@ -13,103 +13,113 @@ import { deleteComment } from "../redux/modules/comment";
 import { updateCommentAc } from "../redux/modules/comment";
 import { loadpostsAc } from "../redux/modules/post";
 import { loadDetailAc } from "../redux/modules/post"
-import {getUserInfoDB} from "../redux/modules/user";
-import {ReactComponent as Edit2} from "../public/img/svg/Edit2.svg";
-import {ReactComponent as Trash} from "../public/img/svg/Trash.svg";
+import { getUserInfoDB } from "../redux/modules/user";
+import { ReactComponent as Edit2 } from "../public/img/svg/Edit2.svg";
+import { ReactComponent as Trash } from "../public/img/svg/Trash.svg";
 
 
 function CommentList(props) {
-    const dispatch = useDispatch();
-    const params = useParams();
-    const comment_ref = React.useRef();
-    const commentEdit = React.useRef();
+  const dispatch = useDispatch();
+  const params = useParams();
+  const comment_ref = React.useRef();
+  const commentEdit = React.useRef();
 
-    const boardIdex = params.boardId;
-    console.log(boardIdex,"으으으으")
-    // console.log(props.postAll,"all?")
-    console.log(props.commId.commentId,"comm??")
+  const boardIdex = params.boardId;
+  console.log(boardIdex, "으으으으")
+  // console.log(props.postAll,"all?")
+  console.log(props.commId.commentId, "comm??")
 
-    React.useEffect(() => {
-        dispatch(loadCommentAc(boardIdex))
-        dispatch(loadpostsAc())
-        dispatch(loadDetailAc())
-        dispatch(getUserInfoDB())
-    }, []);
+  React.useEffect(() => {
+    dispatch(loadCommentAc(boardIdex))
+    dispatch(loadpostsAc())
+    dispatch(loadDetailAc())
+    dispatch(getUserInfoDB())
+  }, []);
 
-    const commentData = useSelector((state) => state.comment.commentList);
-    const Postdata = useSelector((state) => state.post.postList);
+  const commentData = useSelector((state) => state.comment.commentList);
+  const Postdata = useSelector((state) => state.post.postList);
 
-    console.log(commentData.data,"디테일코멘트")
-    console.log(props.commId.commentId,"prooooops")
-    
-    const [isEdit, setIsEdit] = useState(false);
+  console.log(commentData.data, "디테일코멘트")
+  console.log(props.commId.commentId, "prooooops")
 
-    const openEdit = () => {
-        setIsEdit(true)
-    }
+  const [isEdit, setIsEdit] = useState(false);
 
-    const editComment = () => {
-        // console.log(comment_ref.current.value,"ref")
-        const data = {
-            comment: comment_ref.current.value,
-            boardId : props.postAll.boardId,
-            commentId :props.commId
-        };
-        dispatch(updateCommentAc(data));
-        setIsEdit(false)
-        window.location.reload();
-    }
+  const openEdit = () => {
+    setIsEdit(true)
+  }
 
-    // console.log(props.user,props.username,"user?")
+  const editComment = () => {
+    // console.log(comment_ref.current.value,"ref")
+    const data = {
+      comment: comment_ref.current.value,
+      boardId: props.postAll.boardId,
+      commentId: props.commId
+    };
+    dispatch(updateCommentAc(data));
+    setIsEdit(false)
+    window.location.reload();
+  }
 
-    const state = "커뮤니티"
-    return (
-       
-      <CommentBox>
-        <ProBox>
-              <CoProfile></CoProfile>
-              </ProBox>
-              <Ddu>
-                  <Right>
-                    <InTop>
-                    <InR>
-                    <CommNick>{props.username}</CommNick>
-                      <CreateAt>{props.createdAt.substr(0, 10).split('-','3').join(".")}</CreateAt>
-                      </InR>
-                      <InL>
-                      {props.user === props.username ?
-                         <>
-                    {isEdit ? null :
+  // console.log(props.user,props.username,"user?")
+
+  const state = "커뮤니티"
+  return (
+
+    <CommentBox>
+      <ProBox>
+        <CoProfile></CoProfile>
+      </ProBox>
+      <Ddu>
+        <Right>
+          <InTop>
+            <InR>
+              <CommNick>{props.username}</CommNick>
+              <CreateAt>{props.createdAt.substr(0, 10).split('-', '3').join(".")}</CreateAt>
+            </InR>
+            <InL>
+              {props.user === props.username ?
+                <>
+                  {isEdit ?
+                    <>
+                      <EditBtn>
+                        <ModiBtn onClick={() => editComment(props.commId)}>슈정</ModiBtn>
+                        <CancBtn onClick={() => { setIsEdit(false) }}>취소</CancBtn>
+                      </EditBtn>
+                      <textarea ref={comment_ref} style={{ width: "100%" }} />
+                    </>
+                    :
                     <>
                       <button onClick={openEdit}><Edit2 /></button>
                       <DelBtn onClick={() => {
                         // console.log(props.commId.commentId,"onClick")
-                          dispatch(deleteComment(props.postAll.boardId, props.commId.commentId))
+                        dispatch(deleteComment(props.postAll.boardId, props.commId.commentId))
                       }}>
-                       <Trash />   
+                        <Trash />
                       </DelBtn>
-                      
-                      </>
-}
-                      </>
-                         : null
-}
-                      </InL>
-                      </InTop>
-                      {isEdit ? 
-                      <>
-                      <EditBtn>
-                      <ModiBtn onClick={()=> editComment(props.commId)}>슈정</ModiBtn>
-                      <CancBtn onClick={()=>{setIsEdit(false)}}>취소</CancBtn>  
-                      </EditBtn>
-                      <textarea ref={comment_ref} style={{width:"100%"}}/>
-                      </>: <Comment>{props.comment}</Comment>}
-                      
-                  </Right>
-                  
-              </Ddu>
-          </CommentBox>
-    )
+
+                    </>
+                  }
+                </>
+                : null
+              }
+            </InL>
+          </InTop>
+          <Comment>{props.comment}</Comment>
+          {/* <Comment>{props.comment}</Comment> */}
+          {/* {isEdit ?
+            <>
+              <EditBtn>
+                <ModiBtn onClick={() => editComment(props.commId)}>슈정</ModiBtn>
+                <CancBtn onClick={() => { setIsEdit(false) }}>취소</CancBtn>
+              </EditBtn>
+              <textarea ref={comment_ref} style={{ width: "100%" }} />
+            </> : <Comment>{props.comment}</Comment>} */}
+
+        </Right>
+
+      </Ddu>
+    </CommentBox>
+  )
 };
 
 const CommentBox = styled.div`
@@ -164,6 +174,13 @@ const InR = styled.div`
 
 const InL = styled.div`
 /* border: 3px solid pink; */
+width: 90px;
+
+textarea {
+  position: absolute;
+  left: 0;
+  width: 100%;
+}
 `;
 
 const CommNick = styled.span`
@@ -181,6 +198,7 @@ margin-top: 1.5vw;
 const Ddu = styled.div`
 width: 100%;
 margin-left: 2vw;
+position: relative;
 /* border: 5px solid violet; */
 `;
 

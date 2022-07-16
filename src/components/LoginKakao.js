@@ -5,7 +5,7 @@ const KAKAO_CLIENT_ID = process.env.REACT_APP_KAKAO_ID;
 
 function LoginKakao(props) {
 
-  const REDIRECT_URI = "http://webprogramming-mj6119.shop/login/oauth2/code/kakao";
+  const REDIRECT_URI = "https://api.webprogramming-mj6119.shop/login/oauth2/code/kakao";
 
   const KAKAO_AUTH_URL = `http://webprogramming-mj6119.shop/oauth2/authorization/kakao?client_id=${KAKAO_CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 
