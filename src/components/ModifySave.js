@@ -14,7 +14,7 @@ const ModifySave = (props) =>{
         price : Number(priceInput.current.value)
        }
        console.log(data.price);
-       dispatch(modifySaved(data, props.savedItemId))
+       dispatch(modifySaved(data, props.itemId))
     }
     
     return (          
@@ -38,14 +38,14 @@ const ModifySave = (props) =>{
         <>
             <Category>{props.categoryName}</Category>
             <ItemName>{props.itemName}</ItemName>
-            <div>
+            <ButtonArea>
               <button onClick={()=>{
                   setModifyView(true)
                   
               }}>수정</button>
               <button onClick={()=>{dispatch(deleteSavedList(props.savedItemId, props.goalItemId))
               }}>삭제</button>
-            </div>       
+            </ButtonArea>       
         </>
 
        }
@@ -55,7 +55,6 @@ const ModifySave = (props) =>{
       </>  
     )
 }
-
 
 const Category = styled.div`
 display: flex;
@@ -77,13 +76,29 @@ justify-content: space-between;
 
 const InputArea = styled.div`
 display: flex;
-width: 5vh;
+width: 95%;
+input{
+  background: #D9D9D9;
+  border: none;
+  width: 70%;
+  border-radius: 30px;
+  margin-right: 5px;
+  text-align: center;
+
+}
 `;
 
 const ListWrap = styled.div`
 display: flex;
 width: 40vh;
 align-items: center;
+
+overflow-y:scroll;
+
+white-space: nowrap;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
 `;
 export default ModifySave

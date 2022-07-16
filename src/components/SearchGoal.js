@@ -140,6 +140,7 @@ function SearchFavorite(props) {
 
 
 const WholeBox = styled.div`
+
   width: 100%;
   // 등록하기 DropDownItem 이 나와야하는 경우  className='new' 추가!
   .new {
@@ -149,7 +150,7 @@ const WholeBox = styled.div`
 `;
 
 const InputBox = styled.div`
-display: block;
+display: flex;
 margin-left:5px;
 width:100%;
 flex-direction: row;

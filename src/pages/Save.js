@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { myReadGoalRQ, deleteGoalRQ } from "../redux/modules/goal"
 import {addSavedListRQ} from "../redux/modules/saved"
-import { myFavoriteListRQ, favoriteDel } from "../redux/modules/favorite";
+import { myFavoriteListRQ, favoriteDel,addFavoriteRQ } from "../redux/modules/favorite";
 
 import DayModal from "../components/DayModal";
 import SearchSavedItem from "../components/SearchSavedItem";
@@ -18,7 +18,12 @@ import "../public/css/saveMain.css"
 import { FaRegEdit } from 'react-icons/fa'
 import {ReactComponent as CheckedStart} from "../public/img/svg/CheckedStart.svg"
 
+
+
 import { IoArrowRedoOutline } from 'react-icons/io5'
+import { AiOutlineStar } from 'react-icons/ai'
+
+
 
 
 function Save() {
@@ -39,9 +44,17 @@ function Save() {
 
   const openModal = () => { setModalOpen(true); };
   const closeModal = () => { setModalOpen(false); };
-  const openPostModal = () => {setShowPostModal(true)};
-  const closePostModal = () => {setShowPostModal(false)};
+
   
+  const [ star, setStar] = useState(false);
+
+  const changeStar = () =>{
+    if(star){
+      setStar(false);
+    }else{
+      setStar(true);
+    }
+  }
 
 
   const myGoalList = useSelector((state=> state.goal.myGoalList));
@@ -66,13 +79,23 @@ function Save() {
 
   //api/savedItem, 기존에 있던 아이템으로 티끌 등록
   const addSaveData = () =>{
-    const sendData ={
+    let sendData ={
         itemId : selectInputValue.itemId,
         price :priceInput.current.value,
         goalItemId: goal.goalItemId
       }
+      dispatch(addSavedListRQ(sendData));
       
-    dispatch(addSavedListRQ(sendData));
+      if(star){
+        sendData ={
+          itemId : selectInputValue.itemId,
+          categoryId:selectInputValue.categoryId,
+          price :priceInput.current.value,
+          goalItemId: goal.goalItemId
+        }
+        dispatch(addFavoriteRQ(sendData))
+      }
+
     setSelectInputValue([])
   }
 
@@ -126,7 +149,8 @@ function Save() {
                         setModalName("태산 수정하기!")
                         setModalState(<GoalInput 
                                         state={"Update"}
-                                        goalItemId={goal.goalItemId}/>)
+                                        goalItemId={goal.goalItemId}
+                                        closeModal={closeModal}/>)
                       }}>목표 변경</p>
                   </div>
                   <button onClick={()=>{
@@ -135,14 +159,13 @@ function Save() {
                   <div>
                     <IoArrowRedoOutline size="15" />
                     <p onClick={() => {
-                      openPostModal();
+                      openModal();
+                      setModalName("내 태산 % 공유");
+                      setModalState(<PostModal 
+                        image={goal.goalImage} 
+                        percent={goal.goalPercent}
+                        closeModal={closeModal}/>)
                       }}>내 현황 공유</p>
-                    {showPostModal ?
-                      <PostModal 
-                        showModalll={showPostModal} 
-                        closeModalll={closePostModal}
-                        goalImage = {goal.goalImage}/>
-                      : null}
                   </div>
                 </div>
               </div>
@@ -180,7 +203,13 @@ function Save() {
       {selectInputValue.length!==0? 
         <>      
         <AddSavedStyle>
-          <div>⭐</div>
+          <StarArea onClick={()=>{ changeStar();}}>
+              {star? 
+                <CheckedStart/>
+                :  
+                <AiOutlineStar/>
+              }
+            </StarArea>
           <p>{selectInputValue.itemName}</p>
             <div>
               <input 
@@ -192,7 +221,8 @@ function Save() {
       </>
       :""}
 
-     
+
+
         <CurrentSavedItem goalItemId={goal.goalItemId}/>
         
         <DayModal open={modalOpen}
@@ -203,6 +233,12 @@ function Save() {
       </div>
   );
 }
+export default Save;
+
+const StarArea =styled.div`
+display: flex;
+width: 5vh;
+`;
 
 const TopWrap = styled.div`
 display: flex;
@@ -210,7 +246,7 @@ width: 100%;
 height: 45vh;
 padding: 10px;
 flex-direction: column;
-background: #EFEFEF;
+background: #EFEFEF; 
 align-items: center;
 font-family: 'HS-Regular'
 `;
@@ -247,10 +283,10 @@ flex-direction: column;
 `;
 
 const FavoriteTag = styled.div`
-height: 7vh;
+height: 8vh;
 display: flex;
 align-items: center;
-width:350px;
+width:95%;
 overflow-x:scroll;
 justify-content: center;
 white-space: nowrap;
@@ -279,10 +315,31 @@ margin-left: 10px;
 
 
 const AddSavedStyle = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 2%;
+display: flex;
+align-items: center;
+justify-content: space-between;;
+height: 2%;
+width: 95%;
+border-bottom: 1px solid #D9D9D9;
+padding: 1rem;
+
+input{
+  margin-left: 10px;
+  width: 60%;
+  background: #D9D9D9;
+  text-align: center;
+  border: none;
+  border-radius: 20px;
+}
+
+button{
+  margin-left:10px;
+  background: #26DFA6;
+  padding: 5px;
+  border-radius: 20px;
+  color: white;
+}
+
 `;
 
-export default Save;
+

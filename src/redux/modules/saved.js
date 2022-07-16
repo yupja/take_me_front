@@ -85,10 +85,11 @@ export const loadsavedAc = (boardId) => {
 
 //-------------------- UPDATE ---------------------------
 
-export const modifySaved = (data, savedItemId) => {
+export const modifySaved = (data, itemId) => {
   return async function (dispatch) {
     try {
-      await instance.put(`/api/savedItem/${savedItemId}`, data)
+      await instance.put(`/api/savedItem/${itemId}`, data)
+
     } catch (error) {
       console.log(error)
     }

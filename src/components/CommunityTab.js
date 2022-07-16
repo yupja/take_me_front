@@ -2,11 +2,12 @@ import React,{ useState,useEffect,useRef}from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import ListModal from "../components/ListModal";
+import DayModal from "../components/DayModal";
 import PostModal from "../components/PostModal";
 import { useSelector } from "react-redux/es/exports";
-import { loadpostsAc,deletePostAc } from "../redux/modules/post";
-import { useNavigate, useParams } from "react-router-dom"
-import { loadsavedAc } from "../redux/modules/saved";
+import { loadpostsAc } from "../redux/modules/post";
+import { useNavigate } from "react-router-dom"
+
 import {getUserInfoDB} from "../redux/modules/user";
 import Like from "./Like";
 import { loadMoreContentDB } from "../redux/modules/post";
@@ -39,13 +40,11 @@ const CommunityTab = () => {
   const closeModall = () => {
     setShowModall(false);
   }
-  const [showModalll, setShowModalll] = useState(false);
-  const openModalll = () => {
-    setShowModalll(true)
-  }
-  const closeModalll = () => {
-    setShowModalll(false);
-  }
+
+  const [modalOpen, setModalOpen] = useState(false);
+  const openModal = () => { setModalOpen(true); };
+  const closeModal = () => { setModalOpen(false); };
+
   const [isEdit, setIsEdit] = useState(false);
   const openEdit = () => {
     setIsEdit(true)
@@ -139,7 +138,7 @@ const CommunityTab = () => {
 
 
          <BtnBox>
-        <FootBtn onClick={openModalll}>내 태산 % 공유</FootBtn>
+        <FootBtn onClick={openModal}>내 태산 % 공유</FootBtn>
 
         {/* 세이브리스트모달 */}
         {showModall ?
@@ -148,11 +147,13 @@ const CommunityTab = () => {
                         />
             : null}
         {/* 게시글등록모달     */}
-        {showModalll ?
-          <PostModal showModalll={showModalll} closeModalll={closeModalll}
-        //   savedList = {postList.boardId}
-          />
-        : null}
+
+        <DayModal 
+          open={modalOpen}
+          close={closeModal}
+          header={"내 태산 % 공유"}>
+          {<PostModal close={closeModal}/>}
+        </DayModal>
 
         </BtnBox>
     </Box>

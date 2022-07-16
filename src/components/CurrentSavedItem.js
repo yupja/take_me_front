@@ -1,42 +1,23 @@
 import React, {useEffect, useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { mySavedListRQ } from "../redux/modules/saved"
-import {addFavoriteRQ, favoriteDel} from "../redux/modules/favorite"
+import {addFavoriteRQ} from "../redux/modules/favorite"
 
 import ModifySave from "./ModifySave";
 
 import styled from "styled-components";
 import { AiOutlineStar } from 'react-icons/ai'
-import {ReactComponent as CheckedStart} from "../public/img/svg/CheckedStart.svg"
-
 
 const CurrentSavedItem =(props)=>{
     const dispatch = useDispatch();
 
-
     useEffect(() => {
         dispatch(mySavedListRQ(props.goalItemId));
       }, [props.goalItemId]);
-
+    
 
     const mySavedList = useSelector((state) => state.saved.currentMySavedList);
     console.log("내아낌", mySavedList)
-    
-    const [ star, setStar] = useState();
-    const [ startImage, setStarImage] = useState();
-
-    const changeHeart = (savedItemIndex) =>{
-      if(star){
-        setStarImage(<AiOutlineStar/>)
-        setStar(false)
-      }else if(!star){
-        setStarImage(<CheckedStart/>)
-        addFavoriteStar(savedItemIndex)
-      }
-    }
-  
-
-
 
    
     const addFavoriteStar = (savedItemIndex) => {
@@ -63,18 +44,6 @@ const CurrentSavedItem =(props)=>{
         {mySavedList&&mySavedList.data?.map((savedItem, savedItemIndex) => (
             <JustifyContentCenter key={savedItem.savedItemId}>
               <SListWrap>
-                
-              <Star onClick={()=>{
-                changeHeart(savedItemIndex);
-                }}>
-                {savedItem.favorite? 
-                  <CheckedStart/>
-                  :  
-                  <AiOutlineStar />
-                }
-                  
-                  
-              </Star>
               <SavedDay>
                 {savedItem.modifiedDate.split(/[T,.]/,1)}<br/>
               </SavedDay>
