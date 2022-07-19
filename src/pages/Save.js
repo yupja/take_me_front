@@ -168,7 +168,7 @@ function Save() {
                       }}>내 현황 공유</p>
                   </div>
                 </div>
-              </div>
+              </div>  
               <p className="goalTitle">{goal.goalitemName} {Math.floor(goal.goalPercent*100)}%</p>
             </>
           }
