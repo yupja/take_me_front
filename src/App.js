@@ -1,12 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
 import reset from "./public/css/reset.css";
 import Router from "./shared/Router";
 import { createGlobalStyle } from "styled-components";
-
+import { getUserInfoDB}  from "../src/redux/modules/user"
+import { useDispatch, useSelector } from "react-redux";
 function App() {
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getUserInfoDB());
+  }, []);
+
+
+  const userInfo = useSelector((state=> state.user.infoList));
+  console.log(userInfo)
+
+
   return (
 
-    
+
     <div className="App">
       <GlobalStyle />
       <Router />

@@ -54,6 +54,7 @@ function Login() {
       return;
     }
     await dispatch(LoginDB(loginInfo, setModalStr, setNavToggles));
+
     navigate('/')
 
   }
