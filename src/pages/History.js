@@ -1,13 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { useLocation } from "react-router";
 
 import Header from "../components/Header";
 import SaveItemList from "../components/SaveItemList";
-import { ReactComponent as UpArrow } from "../public/img/svg/UpArrow.svg";
 
-import { getHistory } from "../redux/modules/info";
+import { getHistory } from "../store/modules/info";
 
 function History() {
   const dispatch = useDispatch();

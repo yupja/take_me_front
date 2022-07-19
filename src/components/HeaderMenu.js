@@ -95,7 +95,8 @@ const HeaderMenu = (props) => {
 const SaveHeader = styled.div`
 display: flex;
 width: 100%;
-height: 100%;
+height: 5vh;
+padding: 1rem;
 flex: 0.1;
 align-items: center;
 justify-content: space-between;
@@ -103,7 +104,7 @@ justify-content: space-between;
 h1 {
   font-family: 'HS-Regular';
   color: #26DFA6;
-  font-size: 1.25rem;
+  font-size: 1.62rem;
 }
 
 

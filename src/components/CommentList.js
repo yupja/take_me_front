@@ -1,19 +1,14 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux/es/exports";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-
-import HeaderMenue from "../components/HeaderMenu";
-import Like from "../components/Like";
-import { createCommentAc } from "../redux/modules/comment"
-import { loadCommentAc } from "../redux/modules/comment"
-import { deleteComment } from "../redux/modules/comment";
-import { updateCommentAc } from "../redux/modules/comment";
-import { loadpostsAc } from "../redux/modules/post";
-import { loadDetailAc } from "../redux/modules/post"
-import {getUserInfoDB} from "../redux/modules/user";
+import { loadCommentAc } from "../store/modules/comment"
+import { deleteComment } from "../store/modules/comment";
+import { updateCommentAc } from "../store/modules/comment";
+import { loadpostsAc } from "../store/modules/post";
+import { loadDetailAc } from "../store/modules/post"
+import {getUserInfoDB} from "../store/modules/user";
 
 
 function CommentList(props) {

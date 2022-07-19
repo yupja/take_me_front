@@ -7,10 +7,11 @@ import user from "./modules/user"
 import saved from "./modules/saved";
 import item from "./modules/item"
 import info from "./modules/info";
+import statistics from "./modules/statistics";
 
 
 const store = configureStore({
-  reducer: { goal, favorite, post, comment, user, saved, info, item },
+  reducer: { goal, favorite, post, comment, user, saved, info, item, statistics },
 });
 
 export default store;

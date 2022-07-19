@@ -4,11 +4,11 @@ import styled from "styled-components";
 
 import Header from "../components/Header";
 import { useDispatch, useSelector } from "react-redux";
-import { getInfo, infoUpdate } from "../redux/modules/info";
-import { ReactComponent as Edit } from "../public/img/svg/Edit.svg";
+import { getInfo, infoUpdate } from "../store/modules/info";
+import { ReactComponent as Edit } from "../assets/icons/Edit.svg";
 import { useCookies } from "react-cookie";
 
-import { emailCheckDB } from "../redux/modules/user";
+import { emailCheckDB } from "../store/modules/user";
 
 function Proflie() {
   const dispatch = useDispatch();

@@ -1,16 +1,16 @@
-import React,{ useState,useEffect,useRef}from "react";
-import { useDispatch } from "react-redux";
+import React,{ useState,useEffect}from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import ListModal from "../components/ListModal";
 import DayModal from "../components/DayModal";
 import PostModal from "../components/PostModal";
-import { useSelector } from "react-redux/es/exports";
-import { loadpostsAc } from "../redux/modules/post";
+
+import { loadpostsAc } from "../store/modules/post";
 import { useNavigate } from "react-router-dom"
 
-import {getUserInfoDB} from "../redux/modules/user";
+import {getUserInfoDB} from "../store/modules/user";
 import Like from "./Like";
-import { loadMoreContentDB } from "../redux/modules/post";
+import { loadMoreContentDB } from "../store/modules/post";
 
 const CommunityTab = () => {
 

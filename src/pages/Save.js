@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { myReadGoalRQ, deleteGoalRQ } from "../redux/modules/goal"
-import {addSavedListRQ} from "../redux/modules/saved"
-import { myFavoriteListRQ, favoriteDel,addFavoriteRQ } from "../redux/modules/favorite";
+import { myReadGoalRQ, deleteGoalRQ } from "../store/modules/goal"
+import {addSavedListRQ} from "../store/modules/saved"
+import { myFavoriteListRQ, favoriteDel,addFavoriteRQ } from "../store/modules/favorite";
 
 import DayModal from "../components/DayModal";
 import SearchSavedItem from "../components/SearchSavedItem";
@@ -14,9 +14,9 @@ import PostModal from "../components/PostModal";
 
 
 import styled from "styled-components";
-import "../public/css/saveMain.css"
+import "../styles/saveMain.css"
 import { FaRegEdit } from 'react-icons/fa'
-import {ReactComponent as CheckedStart} from "../public/img/svg/CheckedStart.svg"
+import {ReactComponent as CheckedStart} from "../assets/icons/CheckedStart.svg"
 
 
 
@@ -36,7 +36,6 @@ function Save() {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalState, setModalState] = useState();
   const [modalName, setModalName] = useState("");
-  const [showPostModal, setShowPostModal] = useState("");
 
   const [selectInputValue , setSelectInputValue] = useState([]); 
 
@@ -58,20 +57,17 @@ function Save() {
 
 
   const myGoalList = useSelector((state=> state.goal.myGoalList));
-
-  console.log("태산", myGoalList );
-  
   const goal = {
-    goalImage : myGoalList.data?.image,
-    goalItemId : myGoalList.data?.goalItemId,
-    goalPercent : (myGoalList.data?.goalPercent)*0.01,
-    goalitemName: myGoalList.data?.itemName
+    goalImage : myGoalList?.image,
+    goalItemId : myGoalList?.goalItemId,
+    goalPercent : (myGoalList?.goalPercent)*0.01,
+    goalitemName: myGoalList?.itemName
   }
 
 
 
   const mylist = useSelector((state) => state.favorite.myFavoriteList);
-  console.log("즐겨찾기", mylist)
+
 
 
   const title = "데일리 티끌"
@@ -101,21 +97,12 @@ function Save() {
 
 
   const addFavoriteSaved = (itemIndex)=>{
-    let sendData={}
-
-    if(goal.goalitemName=== "이름 없음"){
-      sendData ={
-        itemId : mylist.data[itemIndex].itemId,
-        price :mylist.data[itemIndex].price,
-        goalItemId: -1
-      }
-    }else{
-      sendData ={
+    let sendData={
         itemId : mylist.data[itemIndex].itemId,
         price :mylist.data[itemIndex].price,
         goalItemId: goal.goalItemId
       }
-    }
+    
     dispatch(addSavedListRQ(sendData));
   }
 //

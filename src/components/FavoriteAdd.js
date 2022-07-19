@@ -1,10 +1,10 @@
 import React, { useState, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import styled from "styled-components";
 
 import Category from "../components/Category"
-import { addFavoriteRQ } from "../redux/modules/favorite"
+import { addFavoriteRQ } from "../store/modules/favorite"
 
 
 const FavoriteAdd = (props)=>{

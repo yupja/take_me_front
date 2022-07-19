@@ -43,7 +43,7 @@ export const myReadGoalRQ = createAsyncThunk(
   async(thunkAPI)=> {
     try {
       const {data} = await instance.get('/api/goalItem')
-      return data;
+      return data.data;
     } catch (error) {
       console.log(error);
     }

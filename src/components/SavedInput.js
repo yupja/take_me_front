@@ -1,6 +1,6 @@
-import React, { useRef, useState, useEffect } from "react"
+import React, { useRef, useState } from "react"
 import { useDispatch } from "react-redux";
-import {newItemSavedListRQ} from "../redux/modules/saved"
+import {newItemSavedListRQ} from "../store/modules/saved"
 import Category from "./Category"
 
 import { BsPlus } from 'react-icons/bs'

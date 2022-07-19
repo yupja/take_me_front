@@ -4,14 +4,14 @@ import styled from "styled-components";
 
 import SearchSavedItem from "../components/SearchSavedItem";
 import FavoriteList from "../components/FavoriteList"
-import { myFavoriteListRQ } from "../redux/modules/favorite";
+import { myFavoriteListRQ } from "../store/modules/favorite";
 import FavoriteAdd from "../components/FavoriteAdd";
 
 import Header from "../components/Header";
 import DayModal from "../components/DayModal"
-import { ReactComponent as UpArrow } from "../public/img/svg/UpArrow.svg";
+import { ReactComponent as UpArrow } from "../assets/icons/UpArrow.svg";
 
-import { addFavoriteRQ } from "../redux/modules/favorite"
+import { addFavoriteRQ } from "../store/modules/favorite"
 
 function Favorite() {
   const [selectInputValue, setSelectInputValue] = useState([]);

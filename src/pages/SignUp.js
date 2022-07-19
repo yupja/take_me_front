@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
 import Header from "../components/Header";
-import { emailCheckDB, idCheckDB, nickCheckDB, addUserDB } from "../redux/modules/user";
+import { emailCheckDB, idCheckDB, nickCheckDB, addUserDB } from "../store/modules/user";
 
 function SignUp() {
   const dispatch = useDispatch();

@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
-import { instance } from "../shared/axios";
-import {likeChange} from "../redux/modules/post";
+import {likeChange} from "../store/modules/post";
 
 const Like = (props,{ likeCount,boardId }) => {
   const [isloaded, setIsloaded] = useState(false);

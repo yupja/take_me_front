@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux/es/exports";
-import { createPostAc } from "../redux/modules/post";
+import { createPostAc } from "../store/modules/post";
 
 
 const ModifyModal = (props) => {

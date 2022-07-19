@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from "styled-components";
-import { ReactComponent as Kakao } from "../public/img/svg/Kakao.svg";
+import { ReactComponent as Kakao } from "../assets/icons/Kakao.svg";
 const KAKAO_CLIENT_ID = process.env.REACT_APP_KAKAO_ID;
 
 function LoginKakao(props) {
