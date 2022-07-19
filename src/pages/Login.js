@@ -40,8 +40,10 @@ function Login() {
 
   // 로그인 버튼 클릭시
   const login = async (e) => {
-    e.preventDefault();
+    //e.preventDefault();
 
+    console.log("로그인");
+    
     const loginInfo = {
       username: userId.current.value,
       password: userPw.current.value,
@@ -55,7 +57,7 @@ function Login() {
     }
     await dispatch(LoginDB(loginInfo, setModalStr, setNavToggles));
 
-    navigate('/')
+    //navigate('/')
 
   }
 
