@@ -1,17 +1,27 @@
+import React, { useEffect, useState, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { useLocation } from "react-router";
+import RankingNumber from "../components/RankingNumber";
 
-import HeaderMenue from "../components/HeaderMenu";
 
-function Ranking(props) {
-  const title="랭킹"
+
+import Header from "../components/Header";
+
+function Ranking() {
+  const title = "랭킹"
   return (
-    <div className="wrap">
-      <div className="topWrap">
-        <HeaderMenue title={title} />
-      </div>
-    </div>
+    <>
+      <Header title={title} />
+      <RankWrap>
+        <RankingNumber />
+      </RankWrap>
+    </>
   )
 };
 
 export default Ranking;
+
+const RankWrap = styled.div`
+width: 100%;
+/* padding: 0 25px; */
+`
