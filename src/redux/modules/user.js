@@ -21,9 +21,11 @@ export const LoginDB = (loginInfo, setModalStr, setNavToggles) => {
           setNavToggles(true);
           return;
         } else {
-          console.log(response)
+          console.log(response, "로그인리스폰스값")
           const accessToken = response.data.accessToken;
           const refreshToken = response.data.refreshToken;
+
+          console.log(accessToken, "로그인 토큰값");
 
           localStorage.setItem("accessToken", accessToken);
           setCookie('refreshToken', refreshToken, {
