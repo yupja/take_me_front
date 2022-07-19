@@ -1,5 +1,5 @@
 import React from "react";
-import "../public/css/dayModal.css"
+import "../styles/dayModal.css"
 
 const Modal = (props) =>{
   const { open, close, header } = props;

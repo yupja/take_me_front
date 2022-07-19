@@ -1,106 +1,119 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux/es/exports";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-
-import HeaderMenue from "../components/HeaderMenu";
-import Like from "../components/Like";
-import { createCommentAc } from "../redux/modules/comment"
-import { loadCommentAc } from "../redux/modules/comment"
-import { deleteComment } from "../redux/modules/comment";
-import { updateCommentAc } from "../redux/modules/comment";
-import { loadpostsAc } from "../redux/modules/post";
-import { loadDetailAc } from "../redux/modules/post"
-import {getUserInfoDB} from "../redux/modules/user";
-
+import { loadCommentAc } from "../store/modules/comment"
+import { deleteComment } from "../store/modules/comment";
+import { updateCommentAc } from "../store/modules/comment";
+import { loadpostsAc } from "../store/modules/post";
+import { loadDetailAc } from "../store/modules/post"
+import {getUserInfoDB} from "../store/modules/user";
+import { ReactComponent as Edit2 } from "../assets/icons/Edit2.svg";
+import { ReactComponent as Trash } from "../assets/icons/Trash.svg";
 
 function CommentList(props) {
-    const dispatch = useDispatch();
-    const params = useParams();
-    const comment_ref = React.useRef();
-    const commentEdit = React.useRef();
+  const dispatch = useDispatch();
+  const params = useParams();
+  const comment_ref = React.useRef();
+  const commentEdit = React.useRef();
 
-    const boardIdex = params.boardId;
-    console.log(boardIdex,"으으으으")
-    console.log(props.postAll,"all?")
-    console.log(props.commId,"comm??")
+  const boardIdex = params.boardId;
+  console.log(boardIdex, "으으으으")
+  // console.log(props.postAll,"all?")
+  console.log(props.commId.commentId, "comm??")
 
-    React.useEffect(() => {
-        dispatch(loadCommentAc(boardIdex))
-        dispatch(loadpostsAc())
-        dispatch(loadDetailAc())
-        dispatch(getUserInfoDB())
-    }, []);
+  React.useEffect(() => {
+    dispatch(loadCommentAc(boardIdex))
+    dispatch(loadpostsAc())
+    dispatch(loadDetailAc())
+    dispatch(getUserInfoDB())
+  }, []);
 
-    const commentData = useSelector((state) => state.comment.commentList);
-    const Postdata = useSelector((state) => state.post.postList);
-    
-    const [isEdit, setIsEdit] = useState(false);
+  const commentData = useSelector((state) => state.comment.commentList);
+  const Postdata = useSelector((state) => state.post.postList);
 
-    const openEdit = () => {
-        setIsEdit(true)
-    }
+  console.log(commentData.data, "디테일코멘트")
+  console.log(props.commId.commentId, "prooooops")
 
-    const editComment = () => {
-        console.log(comment_ref.current.value,"ref")
-        const data = {
-            comment: comment_ref.current.value,
-            boardId : props.postAll.boardId,
-            commentId :props.commId
-        };
-        dispatch(updateCommentAc(data));
-        setIsEdit(false)
-        window.location.reload();
-    }
+  const [isEdit, setIsEdit] = useState(false);
 
+  const openEdit = () => {
+    setIsEdit(true)
+  }
 
-    const state = "커뮤니티"
-    return (
-       
-      <CommentBox>
-        <ProBox>
-              <CoProfile></CoProfile>
-              </ProBox>
-              <Ddu>
-                  <Right>
-                    <InTop>
-                    <InR>
-                    <CommNick>{props.username}</CommNick>
-                      <CreateAt>{props.createdAt}</CreateAt>
-                      </InR>
-                      <InL>
-                      {props.user === props.idUser ?
-                         <>
-                      <button onClick={openEdit}>수정</button>
+  const editComment = () => {
+    // console.log(comment_ref.current.value,"ref")
+    const data = {
+      comment: comment_ref.current.value,
+      boardId: props.postAll.boardId,
+      commentId: props.commId
+    };
+    dispatch(updateCommentAc(data));
+    setIsEdit(false)
+    window.location.reload();
+  }
+
+  // console.log(props.user,props.username,"user?")
+
+  const state = "커뮤니티"
+  return (
+
+    <CommentBox>
+      <ProBox>
+        <CoProfile></CoProfile>
+      </ProBox>
+      <Ddu>
+        <Right>
+          <InTop>
+            <InR>
+              <CommNick>{props.username}</CommNick>
+              <CreateAt>{props.createdAt.substr(0, 10).split('-', '3').join(".")}</CreateAt>
+            </InR>
+            <InL>
+              {props.user === props.username ?
+                <>
+                  {isEdit ?
+                    <>
+                      <EditBtn>
+                        <ModiBtn onClick={() => editComment(props.commId)}>슈정</ModiBtn>
+                        <CancBtn onClick={() => { setIsEdit(false) }}>취소</CancBtn>
+                      </EditBtn>
+                      <textarea ref={comment_ref} style={{ width: "100%" }} />
+                    </>
+                    :
+                    <>
+                      <button onClick={openEdit}><Edit2 /></button>
                       <DelBtn onClick={() => {
-                          dispatch(deleteComment(props.commId))
+                        // console.log(props.commId.commentId,"onClick")
+                        dispatch(deleteComment(props.postAll.boardId, props.commId.commentId))
                       }}>
-                          <svg width="11" height="13" viewBox="0 0 11 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                              <path fillRule="evenodd" clipRule="evenodd" d="M3.625 0.375C3.00368 0.375 2.5 0.87868 2.5 1.5V2.25H1.75H0.5C0.223858 2.25 0 2.47386 0 2.75C0 3.02614 0.223858 3.25 0.5 3.25H1.25V11.5C1.25 12.1213 1.75368 12.625 2.375 12.625H8.625C9.24632 12.625 9.75 12.1213 9.75 11.5V3.25H10.5C10.7761 3.25 11 3.02614 11 2.75C11 2.47386 10.7761 2.25 10.5 2.25H9.25H8.5V1.5C8.5 0.87868 7.99632 0.375 7.375 0.375H3.625ZM7.5 2.25V1.5C7.5 1.43096 7.44404 1.375 7.375 1.375H3.625C3.55596 1.375 3.5 1.43096 3.5 1.5V2.25H7.5ZM3 3.25H2.25V11.5C2.25 11.569 2.30596 11.625 2.375 11.625H8.625C8.69404 11.625 8.75 11.569 8.75 11.5V3.25H8H3ZM4.25 4.75C4.52614 4.75 4.75 4.97386 4.75 5.25L4.75 9.625C4.75 9.90114 4.52614 10.125 4.25 10.125C3.97386 10.125 3.75 9.90114 3.75 9.625L3.75 5.25C3.75 4.97386 3.97386 4.75 4.25 4.75ZM6.75 4.75C7.02614 4.75 7.25 4.97386 7.25 5.25L7.25 9.625C7.25 9.90114 7.02614 10.125 6.75 10.125C6.47386 10.125 6.25 9.90114 6.25 9.625L6.25 5.25C6.25 4.97386 6.47386 4.75 6.75 4.75Z" fill="#333333" />
-                          </svg>
+                        <Trash />
                       </DelBtn>
-                      
-                      </>
-                         : null
-                         }
-                      </InL>
-                      </InTop>
-                      {isEdit ? 
-                      <>
-                      <textarea ref={comment_ref} style={{width:"100%"}}/>
-                      <button onClick={()=> editComment(props.commId)}>수정하기</button>
-                      <button onClick={()=>{setIsEdit(false)}}>취소</button>
-                      </>
-                      :<Comment>{props.comment}</Comment>
-                      }
-                      
-                  </Right>
-                  
-              </Ddu>
-          </CommentBox>
-    )
+
+                    </>
+                  }
+                </>
+                : null
+              }
+            </InL>
+          </InTop>
+          <Comment>{props.comment}</Comment>
+          {/* <Comment>{props.comment}</Comment> */}
+          {/* {isEdit ?
+            <>
+              <EditBtn>
+                <ModiBtn onClick={() => editComment(props.commId)}>슈정</ModiBtn>
+                <CancBtn onClick={() => { setIsEdit(false) }}>취소</CancBtn>
+              </EditBtn>
+              <textarea ref={comment_ref} style={{ width: "100%" }} />
+            </> : <Comment>{props.comment}</Comment>} */}
+
+        </Right>
+
+      </Ddu>
+    </CommentBox>
+  )
 };
 
 const CommentBox = styled.div`
@@ -154,7 +167,14 @@ const InR = styled.div`
 `;
 
 const InL = styled.div`
-/* border: 1px solid pink; */
+/* border: 3px solid pink; */
+width: 90px;
+
+textarea {
+  position: absolute;
+  left: 0;
+  width: 100%;
+}
 `;
 
 const CommNick = styled.span`
@@ -172,6 +192,7 @@ margin-top: 1.5vw;
 const Ddu = styled.div`
 width: 100%;
 margin-left: 2vw;
+position: relative;
 /* border: 5px solid violet; */
 `;
 
@@ -189,5 +210,12 @@ padding: 4vw;
 }
 `;
 
+const ModiBtn = styled.button`
+border: 1px solid orange;
+`;
+
+const CancBtn = styled.button`
+border: 1px solid gold;
+`;
 
 export default CommentList;

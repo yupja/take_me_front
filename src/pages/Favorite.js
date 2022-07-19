@@ -4,14 +4,14 @@ import styled from "styled-components";
 
 import SearchSavedItem from "../components/SearchSavedItem";
 import FavoriteList from "../components/FavoriteList"
-import { myFavoriteListRQ } from "../redux/modules/favorite";
+import { myFavoriteListRQ } from "../store/modules/favorite";
 import FavoriteAdd from "../components/FavoriteAdd";
 
 import Header from "../components/Header";
 import DayModal from "../components/DayModal"
-import { ReactComponent as UpArrow } from "../public/img/svg/UpArrow.svg";
+import { ReactComponent as UpArrow } from "../assets/icons/UpArrow.svg";
 
-import { addFavoriteRQ } from "../redux/modules/favorite"
+import { addFavoriteRQ } from "../store/modules/favorite"
 
 function Favorite() {
   const [selectInputValue, setSelectInputValue] = useState([]);
@@ -63,6 +63,20 @@ function Favorite() {
   })
 
 
+  //-------------- 드롭박스 제어 
+  const [inputValue, setInputValue] = useState('');  // Input 값 제어
+  const [isHaveInputValue, setIsHaveInputValue] = useState(false); // Input값이 있니 없니?
+  const [dropDownItemIndex, setDropDownItemIndex] = useState(-1); // 선택한 아이템의 인덱스
+  // const [dropDownList, setDropDownList] = useState(list); // 검색List 
+
+
+  const clickDropDownItem = clickedItem => {
+    // setInputValue(clickedItem);
+    // savedItem(clickedItem);
+    // setIsHaveInputValue(false);
+  };
+
+
 
   console.log(Selected)
 
@@ -85,7 +99,11 @@ function Favorite() {
               <option value={item} key={item}>
                 {item}
               </option>
+              // <li key={item}
+              //   onClick={() => clickDropDownItem(item)}></li>
             ))}
+            {/* <ul>
+            </ul> */}
           </select>
           <UpArrow className="arrow" />
         </Category>
@@ -123,7 +141,7 @@ function Favorite() {
           <DayModal open={modalOpen}
             close={closeModal}
             header={"즐겨찾기등록"}>
-            <FavoriteAdd setSelectInputValue={setSelectInputValue}/>
+            <FavoriteAdd setSelectInputValue={setSelectInputValue} />
           </DayModal>
         </FavList>
       </FavoriteWrap>

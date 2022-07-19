@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux/es/exports";
-import { createPostAc } from "../redux/modules/post";
+import { createPostAc, UpdatePost } from "../store/modules/post";
 
 
 const ModifyModal = (props) => {
@@ -39,7 +39,7 @@ const ModifyModal = (props) => {
             boardId : props.formodiId
         }
         console.log(data,"공유하기")
-        dispatch(createPostAc(data))
+        dispatch(UpdatePost(data))
     }
 
   

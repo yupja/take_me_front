@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import styled from 'styled-components'
 import { useDispatch } from 'react-redux'
-import { findPwDB } from "../redux/modules/user";
+import { findPwDB } from "../store/modules/user";
 import { useSelector } from "react-redux/es/exports";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";

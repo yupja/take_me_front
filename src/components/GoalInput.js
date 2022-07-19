@@ -4,12 +4,11 @@ import { useDispatch } from "react-redux"
 import Category from "./Category"
 import SearchGoal from "./SearchGoal"
 
-import { newItemGoalAddRQ, addGoalRQ, updateGoalAPI } from "../redux/modules/goal"
+import { newItemGoalAddRQ, addGoalRQ, updateGoalAPI } from "../store/modules/goal"
 
 
 import styled from "styled-components";
-import user from "../redux/modules/user";
-import { display } from "@mui/system"
+
 
 const GoalInput = (props)=>{
   const dispatch = useDispatch()

@@ -1,11 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from 'styled-components'
 import { useDispatch } from 'react-redux'
-import { Link } from "react-router-dom";
 import { useSelector } from "react-redux/es/exports";
 import { useParams } from "react-router-dom";
-import { changePw } from "../redux/modules/user";
-import { useLocation } from 'react-router-dom';
+import { changePw } from "../store/modules/user";
 import Header from "../components/Header";
 
 const FindPwChange = () => {

@@ -2,12 +2,10 @@ import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-// import { removeCookie } from "../redux/modules/cookie";
-// import Cookies from "react-cookie";
 
 import Header from "../components/Header";
-import { userSecDB } from "../redux/modules/user";
-import { getInfo } from "../redux/modules/info";
+import { userSecDB } from "../store/modules/user";
+import { getInfo } from "../store/modules/info";
 import { useCookies } from "react-cookie";
 
 function MyPage() {

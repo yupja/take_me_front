@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getCookie, setCookie, removeCookie } from "../redux/modules/cookie";
+import { getCookie, setCookie, removeCookie } from "../store/modules/cookie";
 
 export const instance = axios.create({
   baseURL: "https://api.webprogramming-mj6119.shop"
