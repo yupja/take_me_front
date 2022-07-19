@@ -2,9 +2,9 @@ import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
-import { ReactComponent as Trash } from "../public/img/svg/Trash.svg";
-import { ReactComponent as Edit } from "../public/img/svg/Edit2.svg";
-import { favoriteUpdate, favoriteDel } from "../redux/modules/favorite";
+import { ReactComponent as Trash } from "../assets/icons/Trash.svg";
+import { ReactComponent as Edit } from "../assets/icons/Edit2.svg";
+import { favoriteUpdate, favoriteDel } from "../store/modules/favorite";
 
 
 function FavoriteList(props) {

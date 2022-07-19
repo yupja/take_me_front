@@ -16,7 +16,6 @@ import Favorite from "../pages/Favorite"; // 즐겨찾기
 import History from "../pages/History"; // 히스토리
 import Proflie from "../pages/Proflie"; // 프로필
 import SociallLogin from "../pages/SociallLogin"; // 프로필
-import MySavedChart from "../components/MySavedChart"; // 통계 내가 제일 아낀 항목
 
 function Router() {
   return (
@@ -42,8 +41,8 @@ function Router() {
         <Route path="/favorite" element={<Favorite />} />
         <Route path="/history" element={<History />} />
         <Route path="/proflie" element={<Proflie />} />
+        <Route path="/ranking" element={<Ranking />} />
         <Route path="/oauth2/redirect" element={<SociallLogin />} />
-        <Route path="/mysavedchart" element={<MySavedChart />} />
 
       </Routes>
     </BrowserRouter>

@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { useDispatch } from 'react-redux'
 import FindidResult from "../components/FindIdResult";
 import { useSelector } from "react-redux/es/exports";
-import { findIdDB } from "../redux/modules/user";
+import { findIdDB } from "../store/modules/user";
 import Header from "../components/Header";
 
 

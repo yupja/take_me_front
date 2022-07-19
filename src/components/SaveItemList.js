@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch,useSelector } from "react-redux";
 import styled from "styled-components";
 
-import { ReactComponent as Star } from "../public/img/svg/Star.svg";
-import { ReactComponent as StarColor } from "../public/img/svg/StarColor.svg";
-import { getSavedList } from "../redux/modules/saved";
-import { ReactComponent as UpArrow } from "../public/img/svg/UpArrow.svg";
+import { ReactComponent as Star } from "../assets/icons/Star.svg";
+import { getSavedList } from "../store/modules/saved";
+import { ReactComponent as UpArrow } from "../assets/icons/UpArrow.svg";
 
 function SaveItemList(props) {
   const dispatch = useDispatch();

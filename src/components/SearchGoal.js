@@ -1,14 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from "react-redux"
-import { myFavoriteListRQ } from "../redux/modules/favorite"
-import { allItemListRQ } from "../redux/modules/item"
+import { myFavoriteListRQ } from "../store/modules/favorite"
+import { allItemListRQ } from "../store/modules/item"
 
 
 import styled from 'styled-components'
-
-import DayModal from "./DayModal"
-import SavedInput from "./SavedInput"
-
 
 
 function SearchFavorite(props) {
@@ -20,8 +16,7 @@ function SearchFavorite(props) {
 
   const dispatch = useDispatch();
   const list = useSelector((state) => state.item.allItemList);
-  const [selecState, setSelectState] = useState(props.state);
-
+  
   const allItemList = [];
   const makeList = list.data?.map((item) => {
     allItemList.push(item.itemName);

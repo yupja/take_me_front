@@ -1,13 +1,15 @@
 import React from 'react';
 import styled from "styled-components";
-import { ReactComponent as Kakao } from "../public/img/svg/Kakao.svg";
+import { ReactComponent as Kakao } from "../assets/icons/Kakao.svg";
 const KAKAO_CLIENT_ID = process.env.REACT_APP_KAKAO_ID;
 
 function LoginKakao(props) {
 
   const REDIRECT_URI = "https://api.webprogramming-mj6119.shop/login/oauth2/code/kakao";
 
-  const KAKAO_AUTH_URL = `https://www.tikkeeul.com/oauth2/authorization/kakao?client_id=${KAKAO_CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+  const KAKAO_AUTH_URL = `http://webprogramming-mj6119.shop/oauth2/authorization/kakao?client_id=${KAKAO_CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+
+  //const KAKAO_AUTH_URL = `https://www.tikkeeul.com/oauth2/authorization/kakao?client_id=${KAKAO_CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 
   return (
     <SocialWrap>

@@ -1,60 +1,64 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux/es/exports";
-import { useParams } from "react-router-dom";
-import HeaderMenue from "../components/HeaderMenu";
-import { createCommentAc } from "../redux/modules/comment"
-import { loadCommentAc } from "../redux/modules/comment"
-import { deleteComment } from "../redux/modules/comment";
-import { updateCommentAc } from "../redux/modules/comment";
-import { loadpostsAc } from "../redux/modules/post";
-import { loadDetailAc } from "../redux/modules/post"
-import { getUserInfoDB } from "../redux/modules/user";
-import { ReactComponent as Edit2 } from "../public/img/svg/Edit2.svg";
-import { ReactComponent as Trash } from "../public/img/svg/Trash.svg";
-import { ReactComponent as Check } from "../public/img/svg/Check.svg";
-import { ReactComponent as Close } from "../public/img/svg/Close.svg";
 
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { loadCommentAc } from "../store/modules/comment"
+import { deleteComment } from "../store/modules/comment";
+import { updateCommentAc } from "../store/modules/comment";
+import { loadpostsAc } from "../store/modules/post";
+import { loadDetailAc } from "../store/modules/post"
+import {getUserInfoDB} from "../store/modules/user";
+import { ReactComponent as Edit2 } from "../assets/icons/Edit2.svg";
+import { ReactComponent as Trash } from "../assets/icons/Trash.svg";
 
 function CommentList(props) {
   const dispatch = useDispatch();
   const params = useParams();
   const comment_ref = React.useRef();
   const commentEdit = React.useRef();
+
   const boardIdex = params.boardId;
-//   console.log(boardIdex, "으으으으")
+  console.log(boardIdex, "으으으으")
   // console.log(props.postAll,"all?")
-//   console.log(props.commId.commentId, "comm??")
+  console.log(props.commId.commentId, "comm??")
+
   React.useEffect(() => {
     dispatch(loadCommentAc(boardIdex))
     dispatch(loadpostsAc())
     dispatch(loadDetailAc())
     dispatch(getUserInfoDB())
   }, []);
+
   const commentData = useSelector((state) => state.comment.commentList);
   const Postdata = useSelector((state) => state.post.postList);
+
   console.log(commentData.data, "디테일코멘트")
   console.log(props.commId.commentId, "prooooops")
+
   const [isEdit, setIsEdit] = useState(false);
+
   const openEdit = () => {
     setIsEdit(true)
   }
+
   const editComment = () => {
     // console.log(comment_ref.current.value,"ref")
     const data = {
       comment: comment_ref.current.value,
       boardId: props.postAll.boardId,
-      commentId: props.commId.commentId
+      commentId: props.commId
     };
     dispatch(updateCommentAc(data));
-    window.location.reload();
     setIsEdit(false)
-    // window.location.reload();
+    window.location.reload();
   }
+
   // console.log(props.user,props.username,"user?")
+
   const state = "커뮤니티"
   return (
+
     <CommentBox>
       <ProBox>
         <CoProfile></CoProfile>
@@ -72,8 +76,8 @@ function CommentList(props) {
                   {isEdit ?
                     <>
                       <EditBtn>
-                        <ModiBtn onClick={() => editComment(props.commId)}><Check /></ModiBtn>
-                        <CancBtn onClick={() => { setIsEdit(false) }}><Close /></CancBtn>
+                        <ModiBtn onClick={() => editComment(props.commId)}>슈정</ModiBtn>
+                        <CancBtn onClick={() => { setIsEdit(false) }}>취소</CancBtn>
                       </EditBtn>
                       <textarea ref={comment_ref} style={{ width: "100%" }} />
                     </>
@@ -103,7 +107,9 @@ function CommentList(props) {
               </EditBtn>
               <textarea ref={comment_ref} style={{ width: "100%" }} />
             </> : <Comment>{props.comment}</Comment>} */}
+
         </Right>
+
       </Ddu>
     </CommentBox>
   )
@@ -156,10 +162,6 @@ textarea {
   position: absolute;
   left: 0;
   width: 100%;
-  height: 50%;
-  resize: none;
-  font-size: 0.9rem;
-  margin-top: 1vw;
 }
 `;
 const CommNick = styled.span`

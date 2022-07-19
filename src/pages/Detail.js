@@ -1,25 +1,23 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux/es/exports";
 import { useParams } from "react-router-dom";
 
-import HeaderMenue from "../components/HeaderMenu";
 import Like from "../components/Like";
 import CommentList from "../components/CommentList";
 import ModifyModal from "../components/ModifyModal";
-import { createCommentAc } from "../redux/modules/comment"
-import { loadCommentAc } from "../redux/modules/comment"
-import { loadpostsAc } from "../redux/modules/post";
-import { loadDetailAc } from "../redux/modules/post"
-import { deletePostAc } from "../redux/modules/post"
-import { getUserInfoDB } from "../redux/modules/user";
-import DountChart from "../components/Goal";
+import { createCommentAc } from "../store/modules/comment"
+import { loadCommentAc } from "../store/modules/comment"
+import { loadpostsAc } from "../store/modules/post";
+import { loadDetailAc } from "../store/modules/post"
+import { deletePostAc } from "../store/modules/post"
+import { getUserInfoDB } from "../store/modules/user";
 import { useLocation } from "react-router";
 
-import {ReactComponent as Dot} from "../public/img/svg/Dot.svg";
-import {ReactComponent as Edit} from "../public/img/svg/Edit.svg";
+import {ReactComponent as Dot} from "../assets/icons/Dot.svg";
+import {ReactComponent as Edit} from "../assets/icons/Edit.svg";
 
 function Detail() {
     const dispatch = useDispatch();

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { setCookie } from '../redux/modules/cookie';
+import { setCookie } from '../store/modules/cookie';
 
 
 function SociallLogin() {

@@ -2,9 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux/es/exports";
 import { useParams } from "react-router-dom";
-import { loadsavedAc } from "../redux/modules/saved";
-import { loadCommentAc } from "../redux/modules/comment";
-import {ReactComponent as Receipt} from "../public/img/svg/Receipt.svg";
+import { loadsavedAc } from "../store/modules/saved";
+import {ReactComponent as Receipt} from "../assets/icons/Receipt.svg";
 
 const ListModal = (props) => {
 

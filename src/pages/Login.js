@@ -1,8 +1,8 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { LoginDB } from "../redux/modules/user";
+import { LoginDB } from "../store/modules/user";
 import { useNavigate } from "react-router-dom";
 
 import Header from "../components/Header";
