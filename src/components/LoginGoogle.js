@@ -6,7 +6,8 @@ const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_ID;
 function LoginGoogle(props) {
 
   const GOOGLE_REDIRECT_URI = "https://api.webprogramming-mj6119.shop/login/oauth2/code/google";
-  const GOOGLE_AUTH_URL = `https://www.tikkeeul.com/oauth2/authorization/google?client_id=${GOOGLE_CLIENT_ID}&redirect_uri=${GOOGLE_REDIRECT_URI}&response_type=code&scope=email%20profile`;
+
+  const GOOGLE_AUTH_URL = `http://webprogramming-mj6119.shop/oauth2/authorization/google?client_id=${GOOGLE_CLIENT_ID}&redirect_uri=${GOOGLE_REDIRECT_URI}&response_type=code&scope=email%20profile`;
 
   return (
     <SocialWrap>

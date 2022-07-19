@@ -16,13 +16,16 @@ import { deletePostAc } from "../store/modules/post"
 import { getUserInfoDB } from "../store/modules/user";
 import { useLocation } from "react-router";
 
+import {ReactComponent as Dot} from "../assets/icons/Dot.svg";
+import {ReactComponent as Edit} from "../assets/icons/Edit.svg";
+
 function Detail({postList}) {
     const dispatch = useDispatch();
     const params = useParams();
     const comment_ref = React.useRef();
 
     const boardIdex = params.boardId;
-    console.log(boardIdex, "idex")
+    // console.log(boardIdex, "idex")
 
 
     React.useEffect(() => {
@@ -36,17 +39,17 @@ function Detail({postList}) {
     const Postdata = useSelector((state) => state.post.postList);
     const userinfo = useSelector((state) => state.user.infoList)
     const myGoalList = useSelector((state=> state.goal.myGoalList));
-    console.log(commentData,"comment")
+    // console.log(commentData.data,"comment")
    
     const createComment = (boardId) => {
-        console.log(comment_ref.current.value, "create확인");
+        // console.log(comment_ref.current.value, "create확인");
         const data = {
             comment: comment_ref.current.value,
         }
         dispatch(createCommentAc(data, postlistdata.boardId))
         window.location.reload();
     };
-    console.log(Postdata,"postdata")
+    // console.log(Postdata,"postdata")
 
     const [user_nav, setUserNav] = useState(false)
 
@@ -64,8 +67,9 @@ function Detail({postList}) {
     }
     
     const  state  = useLocation();
-    console.log(state.state.name,"state")
+    // console.log(state.state.name,"state")
     const postlistdata = state.state.name
+    console.log(postlistdata.createdAt.substr(0, 10).split('-','3').join("."),"자르자!")
 
     // const state = "커뮤니티"
 
@@ -75,7 +79,7 @@ function Detail({postList}) {
             <Box>
                 {userinfo.username === postlistdata.userId ?
                     <>
-                        <Toggle onClick={onClickNav}>...</Toggle>
+                        <Toggle onClick={onClickNav}><Dot /></Toggle>
                         {user_nav && (
                             <UserInfoNav>
                                 <div>
@@ -94,7 +98,7 @@ function Detail({postList}) {
                     <ContentsBox>
                         <Commu>
                             <Nick>{postlistdata.nickname}</Nick>
-                            <Day>{postlistdata.createdAt}</Day>
+                            <Day>{postlistdata.createdAt.substr(0, 10).split('-','3').join(".")}</Day>
                             <GoalName>{postlistdata.goalItemName}</GoalName>
                         </Commu>
                         <Content>{postlistdata.contents}</Content>
@@ -115,10 +119,11 @@ function Detail({postList}) {
                     comment={comment_list.comment}
                     user={userinfo.username}
                     idUser={postlistdata.userId}
-                    commId={comment_list.commentId}
+                    commId={comment_list}
                     postAll={postlistdata}
                 />
             ))}
+            <Blank></Blank>
             <Enter>
                 <Input ref={comment_ref}></Input>
                 <PostBtn onClick={createComment}>게시</PostBtn>
@@ -361,5 +366,11 @@ right: 6%;
     background: #fff;
     box-shadow: rgb(0 0 0 / 10%) 0px 0px 8px;
 }`
+
+const Blank = styled.div`
+width: 100%;
+height: 12vw;
+/* border: 1px solid black; */
+`;
 
 export default Detail;

@@ -41,6 +41,7 @@ function Router() {
         <Route path="/favorite" element={<Favorite />} />
         <Route path="/history" element={<History />} />
         <Route path="/proflie" element={<Proflie />} />
+        <Route path="/ranking" element={<Ranking />} />
         <Route path="/oauth2/redirect" element={<SociallLogin />} />
 
       </Routes>

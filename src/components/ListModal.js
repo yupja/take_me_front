@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux/es/exports";
 import { useParams } from "react-router-dom";
 import { loadsavedAc } from "../store/modules/saved";
-
+import {ReactComponent as Receipt} from "../assets/icons/Receipt.svg";
 
 const ListModal = (props) => {
 
@@ -31,9 +31,7 @@ const ListModal = (props) => {
                 <CommentBox>
                     <Top>
                       <Icon>
-                        <svg width="28" height="35" viewBox="0 0 28 35" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path fillRule="evenodd" clipRule="evenodd" d="M25 0H2.5C1.11986 0.00137807 0.00137807 1.11986 0 2.5V33.75C0 34.4404 0.559644 35 1.25 35H2.5C2.89349 35.0002 3.26406 34.8149 3.5 34.5L6.25 30.8337L9 34.5C9.24574 34.7994 9.61268 34.9729 10 34.9729C10.3873 34.9729 10.7543 34.7994 11 34.5L13.75 30.8337L16.5 34.5C16.7457 34.7994 17.1127 34.9729 17.5 34.9729C17.8873 34.9729 18.2543 34.7994 18.5 34.5L21.25 30.8337L24 34.5C24.2361 34.8148 24.6066 35 25 35H26.25C26.9404 35 27.5 34.4404 27.5 33.75V2.5C27.4986 1.11986 26.3801 0.00137807 25 0ZM25 31.6663L22.25 28C22.0043 27.7006 21.6373 27.5271 21.25 27.5271C20.8627 27.5271 20.4957 27.7006 20.25 28L17.5 31.6663L14.75 28C14.5043 27.7006 14.1373 27.5271 13.75 27.5271C13.3627 27.5271 12.9957 27.7006 12.75 28L10 31.6663L7.25 28C7.00426 27.7006 6.63732 27.5271 6.25 27.5271C5.86268 27.5271 5.49574 27.7006 5.25 28L2.5 31.6663V2.5H25V31.6663ZM22.5 17.5H20V20H22.5V17.5ZM5 17.5H15V20H5V17.5ZM22.5 12.5H20V15H22.5V12.5ZM5 12.5H15V15H5V12.5ZM22.5 7.5H5V10H22.5V7.5Z" fill="#26DFA6"/>
-                        </svg>
+                        <Receipt className="bigger"/>
                       </Icon>   
                     <Close onClick={props.closeModall}>X</Close>
                     </Top>
@@ -127,14 +125,15 @@ display: flex;
 margin:1vw 0 3vw 0;
 `;
 
-const Icon = styled.span`
+const Icon = styled.div`
 width: 100%;
 height: 3vh;
-font-size: 1.5rem;
+font-size: 100rem;
 font-weight: 700;
-display: flex;
+/* display: flex; */
 justify-content: center;
 margin-top: 3vw;
+
 `;
 
 const Middle = styled.div`
