@@ -1,4 +1,4 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore,getDefaultMiddleware } from "@reduxjs/toolkit";
 import goal from "./modules/goal";
 import favorite from "./modules/favorite";
 import post from "./modules/post"
@@ -11,6 +11,9 @@ import info from "./modules/info";
 
 const store = configureStore({
   reducer: { goal, favorite, post, comment, user, saved, info, item },
+  middleware: getDefaultMiddleware({
+    serializableCheck: false,
+  }),
 });
 
 export default store;

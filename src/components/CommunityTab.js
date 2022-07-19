@@ -28,7 +28,7 @@ const CommunityTab = () => {
   const userinfo = useSelector((state) => state.user.infoList)
   // console.log(userinfo,"userinfo")
   const Postdata = useSelector((state) => state.post.postList.data);
-  // console.log(Postdata, "postdata")
+  console.log(Postdata, "postdata")
 
   const Savedata = useSelector((state) => state.saved.savedItem);
 

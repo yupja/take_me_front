@@ -67,11 +67,11 @@ export const loadDetailAc = (boardId) => {
   return function (dispatch) {
     instance.get(`/api/board/detail/${boardId}`)
       .then(response => {
-        // console.log(response, "redux_data");
+        console.log(response, "redux_data");
         dispatch(loadDetail(response));
       })
       .catch(error => {
-        // console.log("get error", error)
+        console.log("get error", error)
       })
 
   };
@@ -136,7 +136,7 @@ export const deletePostAc = (boardId) => {
     await instance
       .delete(`/api/board/${boardId}`)
       .then((response) => {
-        dispatch(deletePostAc(boardId));
+        // dispatch(deletePostAc(boardId));
       })
       .catch((err) => {
         // console.log(err);
@@ -172,7 +172,7 @@ const postSlice = createSlice({
       state.post.userLike = action.payload.userLike;
     },
     loadDetail: (state, action) => {
-      state.postList = action.payload;
+      state.postList = action.payload
     },
     changeTradeState: (state, action) => {
       state.postList = state.postList.map((post) => {

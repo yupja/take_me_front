@@ -83,6 +83,22 @@ export const loadsavedAc = (boardId) => {
   }
 }
 
+
+export const loadMyRankDAc = () => {
+  return async function (dispatch) {
+    try {
+      // const day = new Date().substr(0, 10).split('-','3').join("")
+      // console.log(day)
+      const day = 20220304
+      const { data } = await instance.get(`/api/statistics/mysave/day/${day}/count`)
+      console.log(data)
+      // dispatch(loadMyRankD(data))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
 //-------------------- UPDATE ---------------------------
 
 export const modifySaved = (data, itemId) => {
@@ -122,7 +138,8 @@ const savedSlice = createSlice({
       data: []
     },
     save: [],
-    itemList: []
+    itemList: [],
+    rank:[]
   },
   reducers: {
     loadSaved: (state, action) => {
@@ -130,7 +147,10 @@ const savedSlice = createSlice({
     },
     itemList: (state, action) => {
       state.itemList = action.payload;
-    }
+    },
+  loadMyRankD: (state, action) => {
+    state.rank = action.payload;
+  },  
   },
   extraReducers: {
     [mySavedListRQ.fulfilled]: (state, action) => {
@@ -141,5 +161,5 @@ const savedSlice = createSlice({
 
 });
 
-const { loadSaved, itemList } = savedSlice.actions;
+const { loadSaved, itemList, loadMyRankD } = savedSlice.actions;
 export default savedSlice.reducer;

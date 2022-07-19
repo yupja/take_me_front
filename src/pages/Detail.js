@@ -21,7 +21,7 @@ import { useLocation } from "react-router";
 import {ReactComponent as Dot} from "../public/img/svg/Dot.svg";
 import {ReactComponent as Edit} from "../public/img/svg/Edit.svg";
 
-function Detail({postList}) {
+function Detail() {
     const dispatch = useDispatch();
     const params = useParams();
     const comment_ref = React.useRef();
@@ -33,7 +33,7 @@ function Detail({postList}) {
     React.useEffect(() => {
         dispatch(loadCommentAc(boardIdex))
         dispatch(loadpostsAc())
-        dispatch(loadDetailAc())
+        dispatch(loadDetailAc(boardIdex))
         dispatch(getUserInfoDB())
     }, []);
 
