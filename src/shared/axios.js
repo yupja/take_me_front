@@ -1,5 +1,6 @@
 import axios from "axios";
 import { getCookie, setCookie, removeCookie } from "../store/modules/cookie";
+import { useCookies } from "react-cookie";
 
 export const instance = axios.create({
   baseURL: "https://api.webprogramming-mj6119.shop"
@@ -28,11 +29,12 @@ instance.interceptors.response.use(
     return response;
   },
   function (error) {
-    // console.log(error)
+    console.log(error)
     const errMsg = error.response.data.code
     // const originalRequest = error.config;
     if (errMsg === 444) {
       refreshToken();
+      return;
     }
     return Promise.reject(error);
   }
@@ -53,9 +55,12 @@ const refreshToken = () => {
     withCredentials: true,
   })
     .then((response) => { //새로운 토큰2개 재발급 완료시
+      console.log(response);
       console.log("재발급 완료")
+      const [, , removeCookie] = useCookies(['refreshToken']);
+
       localStorage.clear();
-      removeCookie('refreshToken');
+      removeCookie('refreshToken', { path: '/' });
 
       const accessToken = response.data.accessToken;
       const refreshToken = response.data.refreshToken;
@@ -65,13 +70,15 @@ const refreshToken = () => {
         path: "/",
         secure: true,
         sameSite: 'none',
-      })
+      });
+      window.location.replace = "/";
     })
-    .catch(function (error) { // refreshToken도 만료시 재로그인
+    .catch((error) => { // refreshToken도 만료시 재로그인
       console.log("refresh토큰도 만료! 다시 로그인해주세요!")
-      removeCookie('refreshToken');
+      const [, , removeCookie] = useCookies(['refreshToken']);
+      removeCookie('refreshToken', { path: '/' });
       localStorage.clear();
-      // window.location.replace = "/";
+      window.location.replace = "/";
       alert("세션 만료 다시 로그인 해주세요.");
     });
 };
