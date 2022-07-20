@@ -18,7 +18,7 @@ function SearchFavorite(props) {
   const list = useSelector((state) => state.item.allItemList);
   
   const allItemList = [];
-  const makeList = list.data?.map((item) => {
+  const makeList = list?.map((item) => {
     allItemList.push(item.itemName);
   })
 
@@ -55,7 +55,7 @@ function SearchFavorite(props) {
   const savedItem = (clickedItem) => {
     const choosenItemIndex = allItemList?.indexOf(clickedItem)
     console.log(choosenItemIndex)
-    props.setSelectInputValue(list.data[choosenItemIndex])
+    props.setSelectInputValue(list[choosenItemIndex])
 
   };
 

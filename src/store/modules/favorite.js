@@ -12,7 +12,7 @@ export const myFavoriteListRQ = createAsyncThunk(
    async function(dispatch){
     try{
       const { data } = await instance.get('/api/mypage/favorite')
-      return data;
+      return data.data;
     }catch(error){
       console.log(error)
     }
