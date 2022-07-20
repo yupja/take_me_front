@@ -1,47 +1,41 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { setCookie } from "./cookie";
 import instance from "../../shared/axios";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 
 //login
 export const LoginDB = (loginInfo, setModalStr, setNavToggles) => {
   return async function (dispatch) {
-    console.log(loginInfo);
-    await instance.post("/api/user/login", loginInfo, {
-      "Content-Type": "application/json",
-      withCredentials: true,
-    })
-      // .then(onLoginSuccess)
-      .then((response) => {
-        console.log(response);
+    try{
+      const response = await instance.post("/api/user/login", loginInfo, {
+        "Content-Type": "application/json",
+        withCredentials: true,
+        })
         if (response.data.code === 1002) {
           setModalStr('로그인 실패! 아이디 또는 비밀번호를 확인해 주세요');
           setNavToggles(true);
           return;
-        } else {
-          console.log(response, "로그인리스폰스값")
-          const accessToken = response.data.accessToken;
-          const refreshToken = response.data.refreshToken;
+          } else {
+            console.log(response, "로그인리스폰스값")
+            const accessToken = response.data.accessToken;
+            const refreshToken = response.data.refreshToken;
 
-          console.log(accessToken, "로그인 토큰값");
+            console.log(accessToken, "로그인 토큰값");
 
-          localStorage.setItem("accessToken", accessToken);
-          setCookie('refreshToken', refreshToken, {
-            path: "/",
-            secure: true,
-            sameSite: 'none',
-          })
-          // window.location.href = "/"
+            localStorage.setItem("accessToken", accessToken);
+            setCookie('refreshToken', refreshToken, {
+              path: "/",
+              secure: true,
+              sameSite: 'none',
+            })
+            
           dispatch(isLogin(true))
         }
-      })
-      .catch((error) => {
+    }catch(error){
         console.log("로그인 실패") //로그인실패 이걸로뜸
-      });
-  };
-};
+      };
+}};
+
 
 
 // 로그인한 사용자 정보 조회 (모든 페이지? 필요한 페이지만 요청?)
@@ -65,6 +59,8 @@ export const getUserInfoDB = () => {
         console.log(userInfo)
 
         dispatch(infoList(userInfo))
+        window.location.replace("/");
+
 
       })
       .catch((error) => {
@@ -72,6 +68,7 @@ export const getUserInfoDB = () => {
       });
   };
 };
+
 
 // 회원가입 (유저 등록)
 export const addUserDB = (userInfo) => {
