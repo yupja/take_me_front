@@ -59,8 +59,6 @@ export const getUserInfoDB = () => {
         console.log(userInfo)
 
         dispatch(infoList(userInfo))
-        window.location.replace("/");
-
 
       })
       .catch((error) => {
