@@ -28,7 +28,7 @@ const CommunityTab = () => {
   
   const  [savedListIndex, setSavedListIndex] = useState();
   const userinfo = useSelector((state) => state.user.infoList)
-  console.log(userinfo,"userinfo")
+  // console.log(userinfo,"userinfo")
   const Postdata = useSelector((state) => state.post.postList.data);
   console.log(Postdata, "postdata")
 
@@ -80,7 +80,7 @@ const CommunityTab = () => {
           observer && observer.disconnect();
       };
   }, [target]);
-  console.log(Postdata,"확인")
+  // console.log(Postdata,"확인")
 
 
   return (

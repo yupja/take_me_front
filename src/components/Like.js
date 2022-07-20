@@ -18,9 +18,11 @@ const Like = (props,{ likeCount,boardId }) => {
 
   const changeHeart = () =>{
     if(like){
+      setLike_count(likeCount-1)
       setLikeImage("🤍")
       setLike(false)
     }else if(!like){
+      setLike_count(likeCount+1)
       setLikeImage("💚")
       setLike(true)
     }

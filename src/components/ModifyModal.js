@@ -35,7 +35,7 @@ const ModifyModal = (props) => {
         const data = {
             title : title_ref.current.value,
             contents:contents_ref.current.value,
-            image: imageFile,
+            file: imageFile,
             boardId : props.formodiId
         }
         console.log(data,"공유하기")

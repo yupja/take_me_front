@@ -12,6 +12,7 @@ const PostModal = (props) => {
     const [imageFile, setImageFile] = useState("null");
 
     const myGoalList = useSelector((state=> state.goal.myGoalList));
+    console.log(myGoalList,"goallist")
     
     const title = myGoalList.data.itemName;
     const goalPercent = (myGoalList.data.goalPercent)*0.01
@@ -42,6 +43,7 @@ const PostModal = (props) => {
         }
         console.log(data,"공유하기")
         dispatch(createPostAc(data))
+        // window.location.reload();
     }
 
   

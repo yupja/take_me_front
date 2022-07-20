@@ -50,6 +50,7 @@ export const deleteComment = (boardId, commentId) => {
       await instance
         .delete(`/api/board/${boardId}/comment/${commentId}`)
         .then((response) => {
+          window.location.reload()
         })
         .catch((err) => {
           console.log(err);
