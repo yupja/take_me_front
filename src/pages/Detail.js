@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import styled from "styled-components";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux/es/exports";
 import { useParams } from "react-router-dom";
 
+import HeaderMenue from "../components/HeaderMenu";
 import Like from "../components/Like";
 import CommentList from "../components/CommentList";
 import ModifyModal from "../components/ModifyModal";
@@ -14,6 +18,7 @@ import { loadpostsAc } from "../store/modules/post";
 import { loadDetailAc } from "../store/modules/post"
 import { deletePostAc } from "../store/modules/post"
 import { getUserInfoDB } from "../store/modules/user";
+import DountChart from "../components/Goal";
 import { useLocation } from "react-router";
 
 import {ReactComponent as Dot} from "../assets/icons/Dot.svg";
@@ -70,15 +75,73 @@ function Detail() {
     // console.log(state.state.name,"state")
     const postlistdata = state.state.name
     // console.log(postlistdata.boardId,"dsdsdsdsd")
-
     const boardId = postlistdata.boardId
-
     // const state = "커뮤니티"
+
+    const settings = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1
+      };
+
+    const [limit, setLimit] = useState(10); 
+    const toggleEllipsis = (str, limit) => {
+    return {
+    	string: str.slice(0, limit),
+      	isShowMore: str.length > limit
+    }
+    };
+
+    const onClickMore = (str) => () => {
+    setLimit(str.length);
+  };
+
+
 
     return (
         <>
             {/* <HeaderMenue state={state} /> */}
             <Box>
+            <BImg src={postlistdata.image}></BImg>
+            <StyledSlider {...settings}>
+                <div style={{backgroundColor:"transparent"}}></div>
+                    <ContentsBox>
+                        <DountBox>
+                        <DountChart color="#26DFA6" size="300" position="relative" />
+                        <Text>
+                        <Commu>
+                            <GoalName>60%</GoalName>
+                            <GoalName>{postlistdata.goalItemName}</GoalName>
+                        </Commu>
+                        <Bottom>
+                            <Like 
+                            isLike={postlistdata.checkLike}
+                            forLikeId = {postlistdata.boardId}
+                            likeCount = {postlistdata.likeCount}
+                            />&nbsp;<Count>조회수&nbsp;{postlistdata.viewCount}</Count>
+                        </Bottom>
+                         <Day>{postlistdata.createdAt.substr(0, 10).split('-','3').join(".")}</Day>
+                         </Text>
+                         </DountBox>
+                    </ContentsBox>
+            </StyledSlider>  
+            </Box>
+            <Con>
+                <Left>
+                    <WriterImg src={postlistdata.profileImg}></WriterImg>
+                </Left>
+                <Right>
+                    <Content>
+                    <Nick>{postlistdata.nickname}</Nick>&nbsp;&nbsp;
+                    {postlistdata.contents}
+                    {toggleEllipsis(postlistdata.contents, limit).string}
+                    {toggleEllipsis(postlistdata.contents, limit)
+                    .isShowMore && <button onClick={onClickMore(postlistdata.contents)}>
+                        ...더보기</button>}
+                    </Content>
+                </Right>
                 {userinfo.username === postlistdata.userId ?
                     <>
                         <Toggle onClick={onClickNav}><Dot /></Toggle>
@@ -96,24 +159,7 @@ function Detail() {
                     </>
                     : null
                 }
-                <Img src={postlistdata.image}></Img>
-                    <ContentsBox>
-                        <Commu>
-                            <Nick>{postlistdata.nickname}</Nick>
-                            <Day>{postlistdata.createdAt.substr(0, 10).split('-','3').join(".")}</Day>
-                            <GoalName>{postlistdata.goalItemName}</GoalName>
-                        </Commu>
-                        <Content>{postlistdata.contents}</Content>
-                        <Bottom>
-                            <Like 
-                            isLike={postlistdata.checkLike}
-                            forLikeId = {postlistdata.boardId}
-                            likeCount = {postlistdata.likeCount}
-                            />&nbsp;<Count>조회수&nbsp;{postlistdata.viewCount}</Count>
-                        </Bottom>
-                    </ContentsBox>
-                
-            </Box>
+            </Con>
             {commentData.data && commentData.data?.map((comment_list, index) => (
                 <CommentList key={index}
                     username={comment_list.username}
@@ -141,16 +187,32 @@ function Detail() {
     )
 };
 
+const StyledSlider = styled(Slider)`
+    .slick-list {
+        width: 100%;
+        height: 80vw;
+        /* display: flex; */
+    }
+    .slick-dots {
+        bottom: 10px;
+    }
+    .slick-dots li.slick-active button:before {
+        color: #26DFA6;
+    }
+    .slick-dots li button:before {
+        color: #999;
+        opacity: 1;
+    }
+`;
 const Box = styled.div`
 width: 100%;
 height: 80vw;
 /* border: 3px solid red; */
-/* display: flex;
+/* display: flex; */
 align-items: center;
-flex-direction: column; */
+flex-direction: column;
 /* padding: 0 5vw; */
 position: relative;
-
 `;
 
 const InBox = styled.div`
@@ -160,17 +222,29 @@ display: flex;
 `;
 
 
+const BImg = styled.img`
+width: 100%;
+height: 80vw;
+background-color: #F5F5F5;
+display: flex;
+position: absolute;
+z-index: 0;
+justify-content: center;
+align-items: center;
+object-fit: cover;
+`;
+
 const Img = styled.img`
 width: 100%;
-height: 100%;
+height: 80vw;
 background-color: #F5F5F5;
 /* border: 5px solid blue; */
 display: flex;
-position: absolute;
-z-index: 1;
+/* position: absolute; */
+/* z-index: 2; */
 justify-content: center;
 align-items: center;
-filter: brightness(50%);
+/* filter: brightness(50%); */
 object-fit: cover;
 `;
 
@@ -183,9 +257,6 @@ flex-direction: column;
 justify-content: center;
 align-items: center;
 color: white;
-/* position: absolute; */
-/* z-index: 2; */
-/* top: 11vw; */
 `;
 
 const Toggle = styled.div`
@@ -221,21 +292,21 @@ margin-bottom: 2vw;
 `;
 
 const Day = styled.span`
-font-size: 0.8rem;
+font-size: 1rem;
 font-weight: 200;
-/* color: white; */
+color: #999;
 `
 
 const GoalName = styled.span`
-font-size: 1.2rem;
+font-size: 2.5rem;
 font-weight: 700;
 text-align: center;
 margin: auto 0;
 `;
 
 const Content = styled.div`
-width: 70%;
-height: 30%;
+width: 100%;
+min-height: 20%;
 font-size: 0.8rem;
 padding: 3vw;
 /* border: 2px solid orange; */
@@ -245,19 +316,49 @@ z-index: 2; */
 `;
 
 const Bottom = styled.div`
-width: 50%;
+width: 100%;
 /* border: 3px solid green; */
 display: flex;
 flex-direction: row;
 justify-content: center;
 align-items: center;
 color: white;
+margin-top: 10vw;
+
 `;
 
 const Count = styled.span`
-font-size: 0.8rem;
+font-size: 1.1rem;
 font-weight: 200;
-/* color: white; */
+margin-bottom: 2vw;
+color: #999999;
+`;
+
+const Con = styled.div`
+width: 100%;
+background-color: #333333;
+/* border: 5px solid blue; */
+display: flex;
+padding: 5vw 0 5vw 5vw;
+`;
+
+const Left = styled.div`
+width: 15vw;
+height: 15vw;
+/* border: 1px solid pink; */
+`;
+
+const WriterImg =styled.img`
+width: 100%;
+height: 100%;
+border-radius: 50vw;
+/* border: 1px solid gold; */
+`
+
+const Right = styled.div`
+width: 70%;
+min-height: 15vw;
+/* border: 1px solid greenyellow; */
 `;
 
 const CommentBox = styled.div`
@@ -283,14 +384,33 @@ color: #999999;
 
 const ContentsBox = styled.div`
 width: 100%;
-height: 100%;
+height: 80vw;
 /* border: 5px solid purple; */
 display: flex;
 flex-direction: column;
 justify-content: center;
 align-items: center;
-position: absolute;
+text-align: center;
+/* position: absolute; */
 z-index: 2;
+background-color: rgb(0,0,0,0.5);
+justify-content: center;
+align-items: center;
+`;
+
+const DountBox = styled.div`
+width: 300px;
+height: 300px;
+/* background-color: gray; */
+position: relative;
+top: 50%; left: 50%;
+transform: translate(-50%, -50%);
+`;
+
+const Text = styled.div`
+position: absolute;
+top: 50%; left: 50%;
+transform: translate(-50%, -50%);
 `;
 
 const DelBtn = styled.button`
@@ -298,9 +418,9 @@ background-color: transparent;
 border: none;
 `;
 
-const Right = styled.div`
-float: right;
-`;
+// const Right = styled.div`
+// float: right;
+// `;
 
 const Comment = styled.div`
 width: 100%;
