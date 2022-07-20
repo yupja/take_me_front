@@ -11,7 +11,7 @@ import SavedInput from "./SavedInput"
 
 
 
-function SearchFavorite(props) {
+function SearchSavedItem(props) {
 
   useEffect(() => {
     dispatch(myFavoriteListRQ());
@@ -23,7 +23,7 @@ function SearchFavorite(props) {
   const [selecState, setSelectState] = useState(props.state);
 
   const allItemList = [];
-  const makeList = list.data?.map((item) => {
+  const makeList = list?.map((item) => {
     allItemList.push(item.itemName);
   })
 
@@ -253,4 +253,4 @@ const DropDownItem = styled.li`
 
 
 
-export default SearchFavorite;
+export default SearchSavedItem;

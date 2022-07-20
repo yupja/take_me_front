@@ -39,10 +39,7 @@ function Login() {
   }
 
   // 로그인 버튼 클릭시
-  const login = async (e) => {
-    //e.preventDefault();
-
-    console.log("로그인");
+  const login = () => {
     
     const loginInfo = {
       username: userId.current.value,
@@ -55,9 +52,8 @@ function Login() {
       setNavToggles(true)
       return;
     }
-    await dispatch(LoginDB(loginInfo, setModalStr, setNavToggles));
+    dispatch(LoginDB(loginInfo, setModalStr, setNavToggles));
 
-    //navigate('/')
 
   }
 
@@ -86,8 +82,8 @@ function Login() {
               ref={userPw}
             />
           </label>
-          <InputBtn onClick={()=>{
-            login()
+          <InputBtn onClick={ async()=>{
+            login();
             navigate("/save");
             }}>로그인하기</InputBtn>
         </Form>

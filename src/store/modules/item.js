@@ -77,7 +77,7 @@ export const allItemListRQ = createAsyncThunk(
     try{
       const { data } = await instance.get('/api/item')
       
-      return data;
+      return data.data;
     }catch(error){
 
     }

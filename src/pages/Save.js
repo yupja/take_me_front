@@ -28,10 +28,12 @@ import { AiOutlineStar } from 'react-icons/ai'
 
 function Save() {
 
+  const isLogin = useSelector((state=> state.user.isLogin));
+  
   useEffect(() => {
     dispatch(myReadGoalRQ());
     dispatch(myFavoriteListRQ());
-  }, []);
+  }, [isLogin]);
 
   const [modalOpen, setModalOpen] = useState(false);
   const [modalState, setModalState] = useState();
@@ -98,8 +100,8 @@ function Save() {
 
   const addFavoriteSaved = (itemIndex)=>{
     let sendData={
-        itemId : mylist.data[itemIndex].itemId,
-        price :mylist.data[itemIndex].price,
+        itemId : mylist[itemIndex].itemId,
+        price :mylist[itemIndex].price,
         goalItemId: goal.goalItemId
       }
     
@@ -169,11 +171,11 @@ function Save() {
       </SearchArea>
 
       <FavoriteTag>
-        {mylist.data&&mylist.data.length===0? 
+        {mylist&&mylist.length===0? 
         <NonFavoriteItem><CheckedStart/>즐겨찾기를 등록하고 편하게 사용해보세요!</NonFavoriteItem>
         :
           <> 
-            {mylist.data&&mylist.data?.map((item, itemIndex) => {
+            {mylist&&mylist?.map((item, itemIndex) => {
               return(<>
                 <FavoriteItem 
                   key={item.favoriteItemId}
