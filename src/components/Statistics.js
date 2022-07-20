@@ -1,38 +1,41 @@
 import React, { useState } from "react";
-import {allUserDayCountListRQ, myMonthPriceListRQ, allUserMonthPriceListRQ, 
-        myDayPriceListRQ, allUserGoalListRQ} from "../store/modules/statistics"
+import {myMonthPriceListRQ, allUserMonthPriceListRQ, allMonthCountListRQ,
+        myDayPriceListRQ, allUserGoalListRQ, allUserDayPriceListRQ,
+        myDayCountListRQ, getDayCount, myMonthCountListRQ} from "../store/modules/statistics"
 import { useDispatch, useSelector } from "react-redux"
 import styled from "styled-components";
 import {ReactComponent as ChangeRank} from "../assets/icons/ChangeRank.svg"
 
 
-const MyStatistics = ()=>{
+function MyStatistics() {
   const dispatch = useDispatch();
-
+  
+  //---------------- 인풋날짜 설정----------------------------- 
   const day = new Date();
-  const inputDay=String(day.getFullYear()+""+0+(day.getMonth()+1)+""+day.getDate())
+  const inputDay=String(day.getFullYear()+""+0+(day.getMonth()+1)+""+(day.getDate()-1))
   const inputMonth=String(day.getFullYear()+""+0+(day.getMonth()+1))
+  
+  //다른사람 태산랭크
+  const allUserGoal = useSelector((state) => state.statistics.allUserGoalList);//태산목록
+  const myList=useSelector((state) => state.statistics.myDayPrice);
+  const allUserList = useSelector((state) => state.statistics.allUserList);
+  //나/일별/횟수별
+  //남/일별/횟수별 
+  const allUserDayCount = useSelector((state)=> state.statistics.getDayCountList);
 
-  const allUserlist = useSelector((state) => state.statistics.allUserStatisticsList);
-  const allUserGoal = useSelector((state) => state.statistics.allUserGoalList);
-  const myList = useSelector((state) => state.statistics.myStatisticsList);
-
-  const [dayMonth, setDayMonth] = useState(true);
-  const [dayMonthList, setDayMonthList] = useState()
-  const [priceCount, setPriceCount] = useState(true);
-  const [priceCountList, setPriceCountList] = useState()
+   //---------------- 통계 상태 스테이트 ------------------------- 
+   const [dayMonth, setDayMonth] = useState(true); //월별이냐 일별이냐
+   const [priceCount, setPriceCount] = useState(true); //가격별이냐 횟수별이냐
 
 
+  //---------------- 데이터 불러오기 ------------------------- 
+  // 초기값만 useEffect 나머지는 디스패치로 가자, 데이터를 한꺼번에 다 부르면 리소스 낭비니까 
+  React.useEffect(() => {
+    selectList()
+    dispatch(allUserGoalListRQ()) // 모든유저 골아이템
+  }, [dayMonth,priceCount])
 
   
-  React.useEffect(() => {
-    dispatch(allUserGoalListRQ()) // 모든유저 골아이템
-    //dispatch(allUserDayCountListRQ(inputDay))
-    dispatch(allUserMonthPriceListRQ(inputMonth))
-    //dispatch(myDayPriceListRQ(inputDay))
-    dispatch(myMonthPriceListRQ(inputMonth))
-  }, [])
-
   const changeDayMonth = ()=>{
     if(dayMonth){
       setDayMonth(false)
@@ -42,51 +45,77 @@ const MyStatistics = ()=>{
   }
 
   const changePriceCount = ()=>{
-    if(priceCount){
-      setPriceCount(false)
+    if(priceCount){ 
+      setPriceCount(false);
     }else{
       setPriceCount(true)
     }
   }
 
+  const selectList=()=> {
+   
+    if(dayMonth&&priceCount){
+      dispatch(myDayPriceListRQ(inputDay))// 나/금액별/일별
+      dispatch(allUserDayPriceListRQ(inputDay)) //남/금액별/일별
+     }else if(!(dayMonth)&&priceCount){
+      dispatch(myMonthPriceListRQ(inputMonth));
+      dispatch(allUserMonthPriceListRQ(inputMonth));
+    }else if(dayMonth&&!priceCount){
+     dispatch(myDayCountListRQ(inputDay));
+     dispatch(getDayCount(inputDay));
+    }else if(!(dayMonth)&&!priceCount){
+      dispatch(myMonthCountListRQ(inputMonth));
+      dispatch(allMonthCountListRQ(inputMonth))
+    }
+  }
+
+
+
   return (
     <>
     <Wrap>
-      <div>
         <Title>
           <Mint>내</Mint>
           가 제일 많이 아낀 <Mint>티끌</Mint>
         </Title>
         <Mint style={{fontSize:"1.5rem"}}>Best 5!</Mint>
 
-        <CircleArea>
 
-        {allUserlist&&allUserlist.map((list, idx) =>(
-          <div key={list.rankPrice}>
-          <Circle>{list.rankPrice}st {list.itemName}</Circle>
-          </div>
-        ))}
+
+
+        <CircleArea>
+          <RankingNum>
+           {allUserList&&allUserList.map((list, idx) =>(
+            <li key={idx}>
+            <p>{list.rankPrice}st <span>{list.itemName}</span></p>
+            </li>
+          ))}
+          </RankingNum>
         </CircleArea>
 
-        
-      </div>
+      
 
       <AllUserArea>
         <Title>
             <Mint>남</Mint>
             이 제일 많이 아낀 <Mint>티끌</Mint>
           </Title>
-          <Mint style={{fontSize:"1.5rem"}}>Best 10!</Mint>
+        <Mint style={{fontSize:"1.5rem"}}>Best 10!</Mint>
           
 
-          <CircleArea>
-
-          {allUserlist&&allUserlist.map((list, idx) =>(
-            <div key={list.rankPrice}>
-            <Circle>{list.rankPrice}st {list.itemName}</Circle>
-            </div>
+        <CircleArea>
+          <RankingNum>
+           {allUserList&&allUserList.map((list, idx) =>(
+            <li key={idx}>
+            <p>{list.rankPrice}st <span>{list.itemName}</span></p>
+            </li>
           ))}
-          </CircleArea>
+          </RankingNum>
+        </CircleArea>
+
+
+
+
       </AllUserArea>
 
       <div style={{marginTop:"1rem"}}>
@@ -97,7 +126,7 @@ const MyStatistics = ()=>{
 
         <BottomCircleArea>
            {allUserGoal && allUserGoal.map((list, idx) => (
-            <div key={list.rankCount}>
+            <div key={idx}>
               <Circle>{list.rankCount}st {list.itemName}</Circle>
             </div>
           ))}
@@ -107,7 +136,11 @@ const MyStatistics = ()=>{
     </Wrap>
     <ButtonArea>
       {dayMonth? 
-        <button onClick={()=>{changeDayMonth()}}>
+        <button 
+          onClick={()=>{
+            changeDayMonth()
+            
+           }}>
           일 별보기 <ChangeRank/></button>
         :
         <button 
@@ -132,6 +165,48 @@ const MyStatistics = ()=>{
 
 }
 
+
+const RankingNum = styled.ul`
+display: -webkit-box;
+justify-items: center;
+align-items: center;
+overflow: auto;
+white-space: nowrap;
+overflow: scroll;
+padding: 25px 0;
+
+li{
+  width: 5rem;
+  height: 5rem;
+  background: #c9c9c9;
+  border-radius: 50%;
+  margin-right: 10px;
+  text-align: center;
+}
+li:first-child{
+  width: 8.12rem;
+  height: 8.12rem;
+}
+p {
+  position: relative;
+  top: -8px;
+  font-size: 1.5rem;
+  color:#000;
+  /* display: none; */
+}
+span{
+  display: none;
+}
+li:first-child span{
+  color:#6a8eff;
+  display: inline;
+}
+&::-webkit-scrollbar {
+    display: none;
+  }
+`;
+
+
 const Mint = styled.p`
 color:#26DFA6;
 font-weight: bold;
@@ -146,7 +221,6 @@ width: 100%;
 height: 100%;
 padding: 1rem;
 
-
 &::-webkit-scrollbar {
     display: none;
   }
@@ -156,7 +230,7 @@ padding: 1rem;
 const AllUserArea = styled.div`
 display: flex;
 flex-direction: column;
-height: 20vh;
+height: 30vh;
 `;
 
 const CircleArea = styled.div`
@@ -164,8 +238,6 @@ display: flex;
 flex-direction: row;
 padding: 1rem;
 align-items: center;
-width: 100%;
-height:100%;
 overflow: scroll;
 
 &::-webkit-scrollbar {
@@ -211,7 +283,7 @@ button{
   background: #26DFA6;
   background-color:rgba(38, 223, 166, 0.9);
   padding: 1rem;
-  width: 35%;
+  width: 40%;
   color: white;
   border-radius: 40px;
 }

@@ -13,7 +13,7 @@ function Ranking() {
     <>
       <HeaderMenue title={title} />
       <RankWrap>
-        <RankingNumber />
+        <Statistics/>
       </RankWrap>
     </>
   )

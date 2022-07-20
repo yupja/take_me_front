@@ -71,14 +71,15 @@ const refreshToken = () => {
         secure: true,
         sameSite: 'none',
       });
-      window.location.replace = "/";
+      window.location.replace("/")
     })
     .catch((error) => { // refreshToken도 만료시 재로그인
-      console.log("refresh토큰도 만료! 다시 로그인해주세요!")
+      window.alert("로그아웃이 되었습니다. 다시 로그인해주세요!")
       const [, , removeCookie] = useCookies(['refreshToken']);
       removeCookie('refreshToken', { path: '/' });
       localStorage.clear();
-      window.location.replace = "/";
+      window.location.replace("/")
+      
       alert("세션 만료 다시 로그인 해주세요.");
     });
 };
