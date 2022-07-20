@@ -90,7 +90,6 @@ function CommentList(props) {
                       }}>
                         <Trash />
                       </DelBtn>
-
                     </>
                   }
                 </>
@@ -115,7 +114,6 @@ function CommentList(props) {
     </CommentBox>
   )
 };
-
 const CommentBox = styled.div`
 width: 100%;
 height: 25vw;
@@ -124,78 +122,63 @@ display: flex;
 margin-top: 4vw;
 padding: 0 5vw;
 `;
-
 const ProBox = styled.div`
 width: 8vw;
 height: 7vw;
 `;
-
 const CoProfile = styled.div`
 width: 100%;
 height: 100%;
 border-radius: 8vw;
 background-color: gray;
 `;
-
 const CreateAt = styled.span`
 margin-right: 3vw;
 font-size: 0.8rem;
 color: #999999;
 `;
-
 const EditBtn = styled.div`
-border: 1px solid blue;
+/* border: 1px solid blue; */
 `;
-
 const DelBtn = styled.button`
 background-color: transparent;
 border: none;
 `;
-
 const Right = styled.div`
 /* float: right; */
 `;
-
 const InTop = styled.div`
 /* border: 2px solid red; */
 display: flex;
 justify-content: space-between;
 `;
-
 const InR = styled.div`
 /* border: 1px solid black; */
 `;
-
 const InL = styled.div`
 /* border: 3px solid pink; */
 width: 90px;
-
 textarea {
   position: absolute;
   left: 0;
   width: 100%;
 }
 `;
-
 const CommNick = styled.span`
 font-size: 0.8rem;
-
 `;
-
 const Comment = styled.div`
 width: 100%;
 height: 15vw;
 margin-top: 1.5vw;
 /* border: 1px solid orange; */
 `;
-
 const Ddu = styled.div`
 width: 100%;
 margin-left: 2vw;
 position: relative;
 /* border: 5px solid violet; */
 `;
-
 const Input = styled.input`
 width: 90%;
 height: 90%;
@@ -209,13 +192,10 @@ padding: 4vw;
     outline: none;
 }
 `;
-
 const ModiBtn = styled.button`
-border: 1px solid orange;
+/* border: 1px solid orange; */
 `;
-
 const CancBtn = styled.button`
-border: 1px solid gold;
+/* border: 1px solid gold; */
 `;
-
 export default CommentList;

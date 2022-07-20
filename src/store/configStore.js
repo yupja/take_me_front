@@ -1,4 +1,4 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore,getDefaultMiddleware } from "@reduxjs/toolkit";
 import goal from "./modules/goal";
 import favorite from "./modules/favorite";
 import post from "./modules/post"
