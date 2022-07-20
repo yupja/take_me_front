@@ -8,9 +8,9 @@ export const likeChange = createAsyncThunk(  // 라이크 변경
   'read/myLike',
   async(boardId) => {
     try{
-       await instance.post(`/api/board/${boardId}`)
-      
-    }catch(error){
+       const {data} = await instance.post(`/api/board/${boardId}`)
+       console.log(data);
+      }catch(error){
       console.log(error)
     }
   }
@@ -186,12 +186,12 @@ const postSlice = createSlice({
       state.postList = action.payload;
     }
   },
-  // extraReducers:{
-  //   [likeLoad.fulfilled]: (state, action) =>{
-  //     state.likeList = action.payload
-  //   }
-  // }
+  extraReducers:{
+    [likeChange.fulfilled]: (state, action) =>{
+      state.likeList = action.payload
+    },
+  }
 });
 
-const { uploadPost, roadPosts, changeTradeState, loadDetail } = postSlice.actions;
+const { roadPosts, loadDetail } = postSlice.actions;
 export default postSlice.reducer;
