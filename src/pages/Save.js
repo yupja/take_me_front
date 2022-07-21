@@ -132,10 +132,10 @@ const settings = {
                 <GoalInput state={"ADD"}
                 closeModal={closeModal} />)
             }}>
-              <div style={{display:"flex", flexDirection:"column", }}>
-                <p className="goalTitle">티끌모아 태산!</p>
-                <p className="circleInP">+ 태산 만들기!</p>
-              </div>
+              <NonGoalInnerCicle>
+                <p style={{fontSize:"1.5rem", fontWeight:"bold"}}>티끌모아 태산!</p>
+                <p>+ 태산 만들기!</p>
+              </NonGoalInnerCicle>
             </Circle>
 
             </InitGoalArea>
@@ -345,6 +345,16 @@ color : white;
 display: flex;
 align-items: center;
 justify-content: center;
+`;
+
+const NonGoalInnerCicle = styled.div`
+display: flex;
+flex-direction: column;
+align-items: center;
+gap: 1rem;
+p{
+  font-style: "Cafe24Ohsquareair";
+}
 `;
 
 

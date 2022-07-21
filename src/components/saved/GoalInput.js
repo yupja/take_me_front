@@ -148,18 +148,22 @@ const GoalInput = (props)=>{
         </div></>
        :
        <SelectedBoxDiv>
-        <SearchGoal state={"goalState"}
-                    setNewAddGoal={setNewAddGoal}
-                    setSelectInputValue={setSelectInputValue}/>
+        <p>이름</p>
+        <SearchGoalArea>
+          <SearchGoal 
+            state={"goalState"}
+            setNewAddGoal={setNewAddGoal}
+            setSelectInputValue={setSelectInputValue}/>
+          </SearchGoalArea>
         </SelectedBoxDiv>
         }
 
-        <div> 
-          <p>Price</p>
+        <InputPriceBoxDiv>
+          <p >Price</p>
           <input 
             type='text' 
             ref={price} />
-        </div> 
+        </InputPriceBoxDiv> 
         
         <div>
           <p>수량</p> 
@@ -212,10 +216,35 @@ border: 1px solid gray;
 
 
 const SelectedBoxDiv = styled.div`
-display: block;
+display: flex;
 width: 100%;
 justify-content: center;
 `
+
+const InputPriceBoxDiv = styled.div`
+width: 100%;
+display:flex;
+justify-content: center;
+
+input{
+width: 72%;
+padding: 0.3rem;
+border-radius: 30px;
+border: 1px solid #CCCCCC;
+
+margin-left: 0.8rem;
+
+}
+
+
+`;
+
+const SearchGoalArea = styled.div`
+width: 80%;
+`;
+
+
+
 
 const ModalBody = styled.div`
 display: flex;
@@ -224,11 +253,11 @@ align-items: center;
 
 div{
     display:  flex;;
-    padding: 0.5rem;
+    padding: 0.3rem;
     align-items: center;
     }
 p{
-    margin-right: 0.5rem;
+    margin-right: 0.2rem;
 }
 
 `;
