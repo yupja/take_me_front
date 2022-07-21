@@ -1,13 +1,13 @@
 import React from "react";
 import styled from "styled-components";
-import HeaderMenue from "../components/public/HeaderMenu";
+import Header from "../components/public/Header";
 import Statistics from "../components/Statistics"
 
 function Ranking() {
   const title = "랭킹"
   return (
     <>
-      <HeaderMenue title={title} />
+      <Header title={title} />
       <RankWrap>
         <Statistics/>
       </RankWrap>

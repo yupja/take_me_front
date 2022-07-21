@@ -214,11 +214,6 @@ flex-direction: column;
 position: relative;
 `;
 
-const InBox = styled.div`
-width: 100%;
-/* border: 3px solid black; */
-display: flex;
-`;
 
 
 const BImg = styled.img`
@@ -233,19 +228,7 @@ align-items: center;
 object-fit: cover;
 `;
 
-const Img = styled.img`
-width: 100%;
-height: 80vw;
-background-color: #F5F5F5;
-/* border: 5px solid blue; */
-display: flex;
-/* position: absolute; */
-/* z-index: 2; */
-justify-content: center;
-align-items: center;
-/* filter: brightness(50%); */
-object-fit: cover;
-`;
+
 
 const Commu = styled.div`
 width: 100%;
