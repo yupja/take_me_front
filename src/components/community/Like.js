@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
-import {likeChange} from "../../store/modules/post";
+import {likeChange} from "../../store/modules/community";
 import {ReactComponent as Binheart} from "../../assets/icons/Binheart.svg";
 
 const Like = (props,{ likeCount,boardId }) => {
@@ -11,7 +11,7 @@ const Like = (props,{ likeCount,boardId }) => {
   const [ likeImage, setLikeImage] = useState();
 
 
-  const Postdata = useSelector((state) => state.post.postList.data);
+  const Postdata = useSelector((state) => state.community.postList.data);
   // console.log(Postdata[0].boardId,"likecount")
   boardId = (props.forLikeId)
   const dispatch = useDispatch();

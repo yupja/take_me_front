@@ -5,12 +5,10 @@ import ListModal from "./ListModal";
 import DayModal from "../public/DayModal";
 import PostModal from "./PostModal";
 
-import { loadpostsAc } from "../../store/modules/post";
-import { useNavigate } from "react-router-dom"
-
+import { useNavigate } from "react-router-dom";
 import {getUserInfoDB} from "../../store/modules/user";
 import Like from "./Like";
-import { loadMoreContentDB } from "../../store/modules/post";
+import { loadMoreContentDB, loadpostsAc } from "../../store/modules/community";
 import { ReactComponent as Receipt } from "../../assets/icons/Receipt.svg";
 import { ReactComponent as Comment } from "../../assets/icons/Comment.svg";
 
@@ -29,7 +27,7 @@ const CommunityTab = () => {
   const  [savedListIndex, setSavedListIndex] = useState();
   const userinfo = useSelector((state) => state.user.infoList)
   // console.log(userinfo,"userinfo")
-  const Postdata = useSelector((state) => state.post.postList.data);
+  const Postdata = useSelector((state) => state.community.postList.data);
   console.log(Postdata, "postdata")
 
   const Savedata = useSelector((state) => state.saved.savedItem);

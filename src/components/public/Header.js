@@ -85,7 +85,7 @@ function Header(props) {
                       navigate("/signup");
                     }}>회원가입</p>
                     <p onClick={() => {
-                      navigate("/login");
+                      navigate("/");
                     }}>로그인</p>
                   </>
                 }
