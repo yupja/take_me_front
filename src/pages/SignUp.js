@@ -32,10 +32,10 @@ function SignUp() {
   const [userEmailAlert, setUserEmailAlert] = useState('');
   const [userNickAlert, setUserNickAlert] = useState('');
 
-  // 중복체크 전 유효성 확인
-  const [emailStrCheck, setemailStrCheck] = useState(false);
-  const [idStrCheck, setidStrCheck] = useState(false);
-  const [nickStrCheck, setnickStrCheck] = useState(false);
+  // // 중복체크 전 유효성 확인
+  // const [emailStrCheck, setemailStrCheck] = useState(false);
+  // const [idStrCheck, setidStrCheck] = useState(false);
+  // const [nickStrCheck, setnickStrCheck] = useState(false);
 
 
   //************** 형식 체크 **************//
