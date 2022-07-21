@@ -1,9 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import SockJS from 'sockjs-client';
-import StompJS from "stompjs";
-
 import axios from "axios";
 import styled from "styled-components";
 import DayModal from "../public/DayModal"
@@ -68,12 +65,6 @@ function Chatting() {
 
 
 
-  // const sendDataList ={
-  //     type:"ENTER",
-  //     roomId:"26cfd44b-267d-4bdd-ae99-8c35522a1fa0",
-  //     sender:"이보람",
-  //     message:"하이"
-  // }
 
 
   const createRoom = async () => {
@@ -82,7 +73,7 @@ function Chatting() {
     // formData.append("name" , "방을만들게따");
     try {
       //조회 const data = await axios.get('http://43.200.4.1/chat/rooms',
-      const data = await axios.post('http://43.200.4.1/chat/room',{name:"바아앙"})
+      const data = await axios.post('http://43.200.4.1/chat/room',{name:"바아앙1"})
 
       //console.log(data)
     } catch (error) {
@@ -92,13 +83,6 @@ function Chatting() {
   }
 
 
-  const sendMessege = async () => {
-    // const sock = new SockJS('http://43.200.4.1:3000/');
-    // let client = StompJS.over(sock);
-    // client.connect({},  ()=>{
-    //     client.subscribe('chat/room',JSON.stringify(sendDataList) )
-    // })
-  }
   return (
     <>
       <Wrap>
