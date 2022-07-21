@@ -4,7 +4,7 @@ import { myReadGoalRQ, deleteGoalRQ } from "../store/modules/goal"
 import {addSavedListRQ} from "../store/modules/saved"
 import { myFavoriteListRQ, favoriteDel,addFavoriteRQ } from "../store/modules/favorite";
 
-import DayModal from "../components/public/DayModal";
+import Modal from "../components/public/BasicModalForm";
 import SearchSavedItem from "../components/public/SearchSavedItem";
 import Header from "../components/public/Header";
 import DountChart from "../components/public/Goal";
@@ -235,11 +235,11 @@ const settings = {
 
       <CurrentSavedItem goalItemId={goal.goalItemId} />
 
-      <DayModal open={modalOpen}
+      <Modal open={modalOpen}
         close={closeModal}
         header={modalName}>
         {modalState}
-      </DayModal>
+      </Modal>
     </Wrap>
   );
 }

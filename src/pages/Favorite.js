@@ -8,7 +8,7 @@ import { myFavoriteListRQ } from "../store/modules/favorite";
 import FavoriteAdd from "../components/mypage/FavoriteAdd";
 
 import Header from "../components/public/Header";
-import DayModal from "../components/public/DayModal"
+import Modal from "../components/public/BasicModalForm"
 import { ReactComponent as UpArrow } from "../assets/icons/UpArrow.svg";
 
 import { addFavoriteRQ } from "../store/modules/favorite"
@@ -138,11 +138,11 @@ function Favorite() {
             ))}
           </ul>
 
-          <DayModal open={modalOpen}
+          <Modal open={modalOpen}
             close={closeModal}
             header={"즐겨찾기등록"}>
             <FavoriteAdd setSelectInputValue={setSelectInputValue} />
-          </DayModal>
+          </Modal>
         </FavList>
       </FavoriteWrap>
     </Wrap>
