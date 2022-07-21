@@ -127,7 +127,14 @@ function Save() {
             </>
             :
             <>
-              <DountChart color="#26DFA6" image={goal.goalImage} percent={goal.goalPercent} size="200" />
+            <div>
+              <DountChart color="#26DFA6" percent={goal.goalPercent} size="200">
+                <CircleInner>으아아아아아아</CircleInner>
+              </DountChart>
+            </div>
+            
+            
+            
               <div className="circle" style={{ background: "rgba(0, 0, 0, 0.5)" }}>
                 <div className="isGoalSubmenuBox">
                
@@ -260,6 +267,13 @@ color : white;
 display: flex;
 align-items: center;
 justify-content: center;
+`;
+
+
+const CircleInner = styled.div`
+position: absolute;
+top: 50%; left: 50%;
+transform: translate(-50%, -50%);
 `;
 
 

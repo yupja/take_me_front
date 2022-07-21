@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router";
 
 import CommunityTab from "../components/CommunityTab";
+import Chatting from "../components/Chatting"
 import Header from "../components/Header";
 
 import styled from "styled-components";
@@ -23,8 +24,12 @@ const Community = () => {
       </TopWrap>
       
       <MenuBar>
-        <div>티끌자랑</div>
-        <div>쓸까말까</div>
+        <div onClick={()=>{
+          setPage(<CommunityTab />)
+        }}>티끌자랑</div>
+        <div onClick={()=>{
+          setPage(<Chatting/>)
+        }}>쓸까말까</div>
       </MenuBar>
 
       <div style={{ width: "100%" }}>
