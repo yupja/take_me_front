@@ -3,7 +3,7 @@ import SockJS from 'sockjs-client';
 import StompJS from "stompjs";
 import axios from "axios";
 import styled from "styled-components";
-import DayModal from "../components/DayModal"
+import DayModal from "../public/DayModal"
 
 
 

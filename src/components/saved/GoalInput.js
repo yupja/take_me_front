@@ -1,10 +1,10 @@
 import React, {useRef, useState} from "react"
 import { useDispatch } from "react-redux"
 
-import Category from "./Category"
-import SearchGoal from "./SearchGoal"
+import Category from "../public/Category"
+import SearchGoal from "../public/SearchGoal"
 
-import { newItemGoalAddRQ, addGoalRQ, updateGoalAPI } from "../store/modules/goal"
+import { newItemGoalAddRQ, addGoalRQ, updateGoalAPI } from "../../store/modules/goal"
 
 
 import styled from "styled-components";

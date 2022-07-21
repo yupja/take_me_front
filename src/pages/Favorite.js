@@ -2,13 +2,13 @@ import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
-import SearchSavedItem from "../components/SearchSavedItem";
-import FavoriteList from "../components/FavoriteList"
+import SearchSavedItem from "../components/public/SearchSavedItem";
+import FavoriteList from "../components/mypage/FavoriteList"
 import { myFavoriteListRQ } from "../store/modules/favorite";
-import FavoriteAdd from "../components/FavoriteAdd";
+import FavoriteAdd from "../components/mypage/FavoriteAdd";
 
-import Header from "../components/Header";
-import DayModal from "../components/DayModal"
+import Header from "../components/public/Header";
+import DayModal from "../components/public/DayModal"
 import { ReactComponent as UpArrow } from "../assets/icons/UpArrow.svg";
 
 import { addFavoriteRQ } from "../store/modules/favorite"

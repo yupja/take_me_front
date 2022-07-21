@@ -8,21 +8,20 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux/es/exports";
 import { useParams } from "react-router-dom";
 
-import HeaderMenue from "../components/HeaderMenu";
-import Like from "../components/Like";
-import CommentList from "../components/CommentList";
-import ModifyModal from "../components/ModifyModal";
+import Like from "../components/community/Like";
+import CommentList from "../components/community/CommentList";
+import ModifyModal from "../components/community/ModifyModal";
 import { createCommentAc } from "../store/modules/comment"
 import { loadCommentAc } from "../store/modules/comment"
 import { loadpostsAc } from "../store/modules/post";
 import { loadDetailAc } from "../store/modules/post"
 import { deletePostAc } from "../store/modules/post"
 import { getUserInfoDB } from "../store/modules/user";
-import DountChart from "../components/Goal";
+import DountChart from "../components/public/Goal";
 import { useLocation } from "react-router";
 
 import {ReactComponent as Dot} from "../assets/icons/Dot.svg";
-import {ReactComponent as Edit} from "../assets/icons/Edit.svg";
+
 
 function Detail() {
     const dispatch = useDispatch();

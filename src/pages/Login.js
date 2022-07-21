@@ -5,9 +5,9 @@ import { Link } from "react-router-dom";
 import { LoginDB } from "../store/modules/user";
 import { useNavigate } from "react-router-dom";
 
-import Header from "../components/Header";
-import LoginGoogle from "../components/LoginGoogle";
-import LoginKakao from "../components/LoginKakao";
+import Header from "../components/public/Header";
+import LoginGoogle from "../components/login/LoginGoogle";
+import LoginKakao from "../components/login/LoginKakao";
 
 function Login() {
   const navigate = useNavigate();

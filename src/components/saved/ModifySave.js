@@ -1,6 +1,6 @@
 import React,{useRef, useState} from "react";
 import { useDispatch } from "react-redux";
-import {deleteSavedList, modifySaved} from "../store/modules/saved"
+import {deleteSavedList, modifySaved} from "../../store/modules/saved"
 import styled from "styled-components";
 
 const ModifySave = (props) =>{

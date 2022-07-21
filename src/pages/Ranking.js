@@ -1,11 +1,7 @@
-import React, { useEffect, useState, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
 import styled from "styled-components";
-import RankingNumber from "../components/RankingNumber";
-
-import HeaderMenue from "../components/HeaderMenu";
+import HeaderMenue from "../components/public/HeaderMenu";
 import Statistics from "../components/Statistics"
-import Header from "../components/Header";
 
 function Ranking() {
   const title = "랭킹"

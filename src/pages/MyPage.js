@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import Header from "../components/Header";
+import Header from "../components/public/Header";
 import { userSecDB } from "../store/modules/user";
 import { getInfo } from "../store/modules/info";
 import { useCookies } from "react-cookie";

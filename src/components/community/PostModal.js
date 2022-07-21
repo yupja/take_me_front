@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux/es/exports";
-import { createPostAc } from "../store/modules/post";
-import DountChart from "../components/Goal";
+import { createPostAc } from "../../store/modules/post";
+import DountChart from "../public/Goal";
 
 
 const PostModal = (props) => {

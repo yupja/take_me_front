@@ -3,8 +3,8 @@ import { useDispatch } from "react-redux";
 
 import styled from "styled-components";
 
-import Category from "../components/Category"
-import { addFavoriteRQ } from "../store/modules/favorite"
+import Category from "../public/Category"
+import { addFavoriteRQ } from "../../store/modules/favorite"
 
 
 const FavoriteAdd = (props)=>{

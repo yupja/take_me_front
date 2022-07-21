@@ -4,13 +4,13 @@ import { myReadGoalRQ, deleteGoalRQ } from "../store/modules/goal"
 import {addSavedListRQ} from "../store/modules/saved"
 import { myFavoriteListRQ, favoriteDel,addFavoriteRQ } from "../store/modules/favorite";
 
-import DayModal from "../components/DayModal";
-import SearchSavedItem from "../components/SearchSavedItem";
-import HeaderMenu from "../components/HeaderMenu";
-import DountChart from "../components/Goal";
-import GoalInput from "../components/GoalInput"
-import CurrentSavedItem from "../components/CurrentSavedItem";
-import PostModal from "../components/PostModal";
+import DayModal from "../components/public/DayModal";
+import SearchSavedItem from "../components/public/SearchSavedItem";
+import HeaderMenu from "../components/public/HeaderMenu";
+import DountChart from "../components/public/Goal";
+import GoalInput from "../components/saved/GoalInput"
+import CurrentSavedItem from "../components/saved/CurrentSavedItem";
+import PostModal from "../components/community/PostModal";
 
 
 import styled from "styled-components";

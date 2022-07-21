@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 import { findPwDB } from "../store/modules/user";
 import { useSelector } from "react-redux/es/exports";
 import { useNavigate } from "react-router-dom";
-import Header from "../components/Header";
+import Header from "../components/public/Header";
 
 
 const FindPw = () => {

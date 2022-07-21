@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { mySavedListRQ } from "../store/modules/saved"
-import {addFavoriteRQ} from "../store/modules/favorite"
+import { mySavedListRQ } from "../../store/modules/saved"
+import {addFavoriteRQ} from "../../store/modules/favorite"
 
 import ModifySave from "./ModifySave";
 

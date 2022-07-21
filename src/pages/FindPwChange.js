@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 import { useSelector } from "react-redux/es/exports";
 import { useParams } from "react-router-dom";
 import { changePw } from "../store/modules/user";
-import Header from "../components/Header";
+import Header from "../components/public/Header";
 
 const FindPwChange = () => {
   const { token } = useParams();

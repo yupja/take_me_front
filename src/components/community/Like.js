@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
-import {likeChange} from "../store/modules/post";
-import {ReactComponent as Binheart} from "../assets/icons/Binheart.svg";
+import {likeChange} from "../../store/modules/post";
+import {ReactComponent as Binheart} from "../../assets/icons/Binheart.svg";
 
 const Like = (props,{ likeCount,boardId }) => {
   const [isloaded, setIsloaded] = useState(false);

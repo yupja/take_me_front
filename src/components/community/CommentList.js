@@ -3,14 +3,14 @@ import styled from "styled-components";
 
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { loadCommentAc } from "../store/modules/comment"
-import { deleteComment } from "../store/modules/comment";
-import { updateCommentAc } from "../store/modules/comment";
-import { loadpostsAc } from "../store/modules/post";
-import { loadDetailAc } from "../store/modules/post"
-import {getUserInfoDB} from "../store/modules/user";
-import { ReactComponent as Edit2 } from "../assets/icons/Edit2.svg";
-import { ReactComponent as Trash } from "../assets/icons/Trash.svg";
+import { loadCommentAc } from "../../store/modules/comment"
+import { deleteComment } from "../../store/modules/comment";
+import { updateCommentAc } from "../../store/modules/comment";
+import { loadpostsAc } from "../../store/modules/post";
+import { loadDetailAc } from "../../store/modules/post"
+import {getUserInfoDB} from "../../store/modules/user";
+import { ReactComponent as Edit2 } from "../../assets/icons/Edit2.svg";
+import { ReactComponent as Trash } from "../../assets/icons/Trash.svg";
 
 function CommentList(props) {
   const dispatch = useDispatch();
@@ -19,9 +19,6 @@ function CommentList(props) {
   const commentEdit = React.useRef();
 
   const boardIdex = params.boardId;
-  console.log(boardIdex, "으으으으")
-  // console.log(props.postAll,"all?")
-  console.log(props.commId.commentId, "comm??")
 
   React.useEffect(() => {
     dispatch(loadCommentAc(boardIdex))
