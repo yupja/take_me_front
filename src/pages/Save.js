@@ -124,7 +124,7 @@ const settings = {
 
         {goal.goalitemName === "이름 없음" ?
           <> 
-          <div>
+          <InitGoalArea>
             <Circle onClick={() => {
               openModal();
               setModalName("내 태산 만들기!")
@@ -132,10 +132,13 @@ const settings = {
                 <GoalInput state={"ADD"}
                 closeModal={closeModal} />)
             }}>
-            <p className="circleInP">+ 태산 만들기!</p>
-          </Circle>
-            <p className="goalTitle">티끌모아 태산!</p>
-            </div>
+              <div style={{display:"flex", flexDirection:"column", }}>
+                <p className="goalTitle">티끌모아 태산!</p>
+                <p className="circleInP">+ 태산 만들기!</p>
+              </div>
+            </Circle>
+
+            </InitGoalArea>
           </>
           :
           <>
@@ -281,6 +284,16 @@ const TopWrap = styled.div`
 width: 100%;
 height: 45vh;
 position: relative;
+`;
+
+const InitGoalArea = styled.div`
+display: flex;
+height: 100%;
+align-items: center;
+flex-direction: column;
+justify-content: center;
+background: #333333;
+
 `;
 
 
