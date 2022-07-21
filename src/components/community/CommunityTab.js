@@ -2,7 +2,7 @@ import React,{ useState,useEffect}from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import ListModal from "./ListModal";
-import DayModal from "../public/DayModal";
+import Modal from "../public/BasicModalForm";
 import PostModal from "./PostModal";
 
 import { useNavigate } from "react-router-dom";
@@ -148,12 +148,12 @@ const CommunityTab = () => {
             : null}
         {/* 게시글등록모달     */}
 
-        <DayModal 
+        <Modal 
           open={modalOpen}
           close={closeModal}
           header={"내 태산 % 공유"}>
           {<PostModal close={closeModal}/>}
-        </DayModal>
+        </Modal>
 
         </BtnBox>
     </Box>

@@ -1,14 +1,13 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
-import axios from "axios";
 import styled from "styled-components";
-import DayModal from "../public/DayModal"
+import Modal from "../public/BasicModalForm"
 import CreateRoom from "../community/CreateRoom"
 
-import {loadChattingListRS} from "../../store/modules/community"
+import {loadChattingListRS } from "../../store/modules/community"
 
-axios.defaults.withCredentials = true;
 
 
 //  소켓js , stompjs 인스톨 
@@ -16,40 +15,15 @@ axios.defaults.withCredentials = true;
 //   메세지 전송 전 subscriber 와  publicher 지정
 
 
-const RoomData = [{
-  contents: "집 앞 뛰면 3분거리 비닐우산 산다 만다?",
-  time: "10:00",
-  roomNumber: 12345,
-},
-{
-  contents: "나 지금 소떡소떡이 너무 먹고싶어요 ",
-  time: "08:00",
-  roomNumber: 12345,
-},
-{
-  contents: "오늘 올영 세일인데... 정샘물쿠션 할인함요..",
-  time: "05:00",
-  roomNumber: 12345,
-},
-{
-  contents: "님들 오늘 너무 힘들어서 택시타고 싶어..",
-  time: "10:00",
-  roomNumber: 12345,
-}
-
-
-
-
-
-]
-
-
 function Chatting() {
 
   const RoomId = "";
   const name = React.useRef();
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
+  
+  const RoomData = useSelector(((state=> state.community.chattingList)));
+  console.log(RoomData)
 
   const [modalOpen, setModalOpen] = React.useState(false);
   const [modalState, setModalState] = React.useState();
@@ -57,30 +31,9 @@ function Chatting() {
   const openModal = () => { setModalOpen(true); };
   const closeModal = () => { setModalOpen(false); };
 
-  // React.useEffect(() => {
-  //   dispatch(loadChattingListRS())
-  // }, [])
-
-
-
-
-
-
-
-  const createRoom = async () => {
-    // const formData= new FormData();
-
-    // formData.append("name" , "방을만들게따");
-    try {
-      //조회 const data = await axios.get('http://43.200.4.1/chat/rooms',
-      const data = await axios.post('http://43.200.4.1/chat/room',{name:"바아앙1"})
-
-      //console.log(data)
-    } catch (error) {
-      console.log(error)
-    }
-
-  }
+  React.useEffect(() => {
+    dispatch(loadChattingListRS())
+  }, [])
 
 
   return (
@@ -90,10 +43,12 @@ function Chatting() {
         {RoomData && RoomData.map((item, itemIndex) => {
           return (
             <>
-              <ChattingList>
+              <ChattingList onClick={()=>{
+                navigate("/chatting", {state:item.roomId})
+              }}>
                 <img src="" />
-                {item.contents}
-                {item.time}
+                {item.name}
+                {item.userCount}
               </ChattingList>
             </>
           )
@@ -105,18 +60,17 @@ function Chatting() {
       <RoomCreate>
 
         <button type="button" onClick={() => {
-          // openModal();
-          // setModalName("쓸까?말까? 만들기")
-          createRoom()
-          // setModalState(
-          // <CreateRoom close={closeModal}/>)
+          openModal();
+          setModalName("쓸까?말까? 만들기")
+          setModalState(
+          <CreateRoom close={closeModal}/>)
         }}>쓸까?말까? 만들기</button>
       </RoomCreate>
-      <DayModal open={modalOpen}
+      <Modal open={modalOpen}
         close={closeModal}
         header={modalName}>
         {modalState}
-      </DayModal>
+      </Modal>
     </>
 
   )

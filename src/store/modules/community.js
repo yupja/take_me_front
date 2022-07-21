@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 import { instance } from "../../shared/axios";
 
 
@@ -11,7 +12,9 @@ export const loadChattingListRS = createAsyncThunk(
   'community/chatting',
   async (thunkAPI) => {
     try {
-      const { data } = await instance.get('/chat/rooms')
+      const { data } = await axios.get('http://3.35.52.157/chat/rooms/',
+       { headers: { 'Authorization':  `Bearer ${localStorage.getItem("accessToken")}` }}
+      )
       return data;
     } catch (error) {
       console.log(error);
@@ -20,7 +23,7 @@ export const loadChattingListRS = createAsyncThunk(
 export const createChattingRoomRQ = (roomName)=>{
   return async function(dispatch){
     try{
-      await instance.post(`/chat/room`,roomName) //폼데이터로 넘기기
+      await axios.post('http://3.35.52.157/chat/rooms/',roomName) //폼데이터로 넘기기
       // 채팅방 생성 함수 끝난 후 네비게이트로 채팅 디테일 컴포넌트로 이동 
    }catch(error){
     console.log(error);
