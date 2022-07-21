@@ -120,78 +120,67 @@ const settings = {
   return (
     <Wrap>
       <TopWrap>
-       <HeaderArea><Header title={title} /></HeaderArea> 
+        <HeaderArea><Header title={title} /></HeaderArea>
+
         {goal.goalitemName === "이름 없음" ?
-          <>  <Circle onClick={() => {
-            openModal();
-            setModalName("내 태산 만들기!")
-            setModalState(<GoalInput state={"ADD"}
-              closeModal={closeModal} />)
-          }}>
+          <> 
+          <div>
+            <Circle onClick={() => {
+              openModal();
+              setModalName("내 태산 만들기!")
+              setModalState(
+                <GoalInput state={"ADD"}
+                closeModal={closeModal} />)
+            }}>
             <p className="circleInP">+ 태산 만들기!</p>
           </Circle>
             <p className="goalTitle">티끌모아 태산!</p>
+            </div>
           </>
           :
           <>
             <GoalImage src={goal.goalImage} />
             <StyledSlider {...settings}>
-              <div style={{backgroundColor:"transparent"}}></div>
+              <div style={{ backgroundColor: "transparent" }}></div>
               <GoalMain>
-                {goal.goalitemName === "이름 없음" ?
-
-                  <div>  
-                    <Circle onClick={() => {
-                    openModal();
-                    setModalName("내 태산 만들기!")
-                    setModalState(
-                      <GoalInput 
-                        state={"ADD"}
-                        closeModal={closeModal} />)
-                      }}>
-                    <p className="circleInP">+ 태산 만들기!</p>
-                  </Circle>
-                    <p className="goalTitle">티끌모아 태산!</p>
+                <MiddleMenue>
+                  <div>
+                    <DountChart color="#26DFA6" percent={goal.goalPercent} size="200" />
                   </div>
-                  :
-                  <MiddleMenue>
-                    <div>
-                      <DountChart color="#26DFA6" percent={goal.goalPercent} size="200"/>
-                    </div>
 
-                      <div className="isGoalSubmenuBox">
-                         <div>
-                          <FaRegEdit size="15" />
-                          <p onClick={() => {
-                            openModal();
-                            setModalName("태산 수정하기!")
-                            setModalState(<GoalInput
-                              state={"Update"}
-                              goalItemId={goal.goalItemId}
-                              closeModal={closeModal} />)
-                          }}>목표 변경</p>
-                        </div>
-                        <button onClick={() => {
-                          dispatch(deleteGoalRQ(goal.goalItemId))
-                        }}>삭제하기</button>
-                        <div>
-                          <IoArrowRedoOutline size="15" />
-                          <p onClick={() => {
-                            openModal();
-                            setModalName("내 태산 % 공유");
-                            setModalState(<PostModal
-                              image={goal.goalImage}
-                              percent={goal.goalPercent}
-                              closeModal={closeModal} />)
-                          }}>내 현황 공유</p>
-                        </div>
-                      </div>
-                    <p className="goalTitle">{goal.goalitemName} {Math.floor(goal.goalPercent * 100)}%</p>
-                  </MiddleMenue>
-                }
+                  <div className="isGoalSubmenuBox">
+                    <div>
+                      <FaRegEdit size="15" />
+                      <p onClick={() => {
+                        openModal();
+                        setModalName("태산 수정하기!")
+                        setModalState(<GoalInput
+                          state={"Update"}
+                          goalItemId={goal.goalItemId}
+                          closeModal={closeModal} />)
+                      }}>목표 변경</p>
+                    </div>
+                    <button onClick={() => {
+                      dispatch(deleteGoalRQ(goal.goalItemId))
+                    }}>삭제하기</button>
+                    <div>
+                      <IoArrowRedoOutline size="15" />
+                      <p onClick={() => {
+                        openModal();
+                        setModalName("내 태산 % 공유");
+                        setModalState(<PostModal
+                          image={goal.goalImage}
+                          percent={goal.goalPercent}
+                          closeModal={closeModal} />)
+                      }}>내 현황 공유</p>
+                    </div>
+                  </div>
+                  <p className="goalTitle">{goal.goalitemName} {Math.floor(goal.goalPercent * 100)}%</p>
+                </MiddleMenue>
+
               </GoalMain>
-              </StyledSlider>
-              </>}
+            </StyledSlider>
+          </>}
       </TopWrap>
 
 

@@ -23,8 +23,8 @@ function CommentList(props) {
     dispatch(getUserInfoDB())
   }, []);
 
-  const commentData = useSelector((state) => state.comment.commentList);
-  const Postdata = useSelector((state) => state.post.postList);
+  const commentData = useSelector((state) => state.community.commentList);
+  const Postdata = useSelector((state) => state.community.postList);
 
   console.log(commentData.data, "디테일코멘트")
   console.log(props.commId.commentId, "prooooops")

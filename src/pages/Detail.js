@@ -16,6 +16,7 @@ import { loadpostsAc, loadDetailAc, deletePostAc } from "../store/modules/commun
 import { getUserInfoDB } from "../store/modules/user";
 import DountChart from "../components/public/Goal";
 import { useLocation } from "react-router";
+import Header from "../components/public/Header"
 
 import {ReactComponent as Dot} from "../assets/icons/Dot.svg";
 
@@ -36,10 +37,11 @@ function Detail() {
         dispatch(getUserInfoDB())
     }, []);
 
-    const commentData = useSelector((state) => state.comment.commentList);
-    const Postdata = useSelector((state) => state.post.postList);
+    const commentData = useSelector((state) => state.community.commentList);
+    const Postdata = useSelector((state) => state.community.postList);
     const userinfo = useSelector((state) => state.user.infoList)
     const myGoalList = useSelector((state=> state.goal.myGoalList));
+    
     // console.log(commentData.data,"comment")
    
     const createComment = (boardId) => {
@@ -98,7 +100,7 @@ function Detail() {
 
     return (
         <>
-            {/* <HeaderMenue state={state} /> */}
+        <Header title={"커뮤니티"} />
             <Box>
             <BImg src={postlistdata.image}></BImg>
             <StyledSlider {...settings}>
