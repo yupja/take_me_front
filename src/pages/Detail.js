@@ -11,11 +11,8 @@ import { useParams } from "react-router-dom";
 import Like from "../components/community/Like";
 import CommentList from "../components/community/CommentList";
 import ModifyModal from "../components/community/ModifyModal";
-import { createCommentAc } from "../store/modules/comment"
-import { loadCommentAc } from "../store/modules/comment"
-import { loadpostsAc } from "../store/modules/post";
-import { loadDetailAc } from "../store/modules/post"
-import { deletePostAc } from "../store/modules/post"
+import { createCommentAc, loadCommentAc } from "../store/modules/community"
+import { loadpostsAc, loadDetailAc, deletePostAc } from "../store/modules/community";
 import { getUserInfoDB } from "../store/modules/user";
 import DountChart from "../components/public/Goal";
 import { useLocation } from "react-router";
