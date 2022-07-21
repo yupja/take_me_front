@@ -6,7 +6,7 @@ import { myFavoriteListRQ, favoriteDel,addFavoriteRQ } from "../store/modules/fa
 
 import DayModal from "../components/public/DayModal";
 import SearchSavedItem from "../components/public/SearchSavedItem";
-import HeaderMenu from "../components/public/HeaderMenu";
+import Header from "../components/public/Header";
 import DountChart from "../components/public/Goal";
 import GoalInput from "../components/saved/GoalInput"
 import CurrentSavedItem from "../components/saved/CurrentSavedItem";
@@ -14,6 +14,7 @@ import PostModal from "../components/community/PostModal";
 
 
 import styled from "styled-components";
+import Slider from "react-slick";
 import "../styles/saveMain.css"
 import { FaRegEdit } from 'react-icons/fa'
 import {ReactComponent as CheckedStart} from "../assets/icons/CheckedStart.svg"
@@ -109,147 +110,222 @@ function Save() {
   }
 //
 
+const settings = {
+  dots: true,
+  infinite: true,
+  speed: 500,
+  slidesToShow: 1,
+  slidesToScroll: 1
+};
   return (
-    <div className="wrap">
+    <Wrap>
       <TopWrap>
-        <HeaderMenu title={title} />
-        <GoalMain>
-          {goal.goalitemName=== "이름 없음" ?
-            <>  <Circle onClick={() => {
-              openModal();
-              setModalName("내 태산 만들기!")
-              setModalState(<GoalInput state={"ADD"}
-                              closeModal={closeModal}/>)
-            }}>
-              <p className="circleInP">+ 태산 만들기!</p>
-            </Circle>
-              <p className="goalTitle">티끌모아 태산!</p>
-            </>
-            :
-            <>
-            <div>
-              <DountChart color="#26DFA6" percent={goal.goalPercent} size="200">
-                <CircleInner>으아아아아아아</CircleInner>
-              </DountChart>
-            </div>
-            
-            
-            
-              <div className="circle" style={{ background: "rgba(0, 0, 0, 0.5)" }}>
-                <div className="isGoalSubmenuBox">
-               
-                  <div>
-                    <FaRegEdit size="15" />
-                    <p onClick={() => {
-                        openModal();
-                        setModalName("태산 수정하기!")
-                        setModalState(<GoalInput 
-                                        state={"Update"}
-                                        goalItemId={goal.goalItemId}
-                                        closeModal={closeModal}/>)
-                      }}>목표 변경</p>
+       <HeaderArea><Header title={title} /></HeaderArea> 
+        {goal.goalitemName === "이름 없음" ?
+          <>  <Circle onClick={() => {
+            openModal();
+            setModalName("내 태산 만들기!")
+            setModalState(<GoalInput state={"ADD"}
+              closeModal={closeModal} />)
+          }}>
+            <p className="circleInP">+ 태산 만들기!</p>
+          </Circle>
+            <p className="goalTitle">티끌모아 태산!</p>
+          </>
+          :
+          <>
+            <GoalImage src={goal.goalImage} />
+            <StyledSlider {...settings}>
+              <div style={{backgroundColor:"transparent"}}></div>
+              <GoalMain>
+                {goal.goalitemName === "이름 없음" ?
+
+                  <div>  
+                    <Circle onClick={() => {
+                    openModal();
+                    setModalName("내 태산 만들기!")
+                    setModalState(
+                      <GoalInput 
+                        state={"ADD"}
+                        closeModal={closeModal} />)
+                      }}>
+                    <p className="circleInP">+ 태산 만들기!</p>
+                  </Circle>
+                    <p className="goalTitle">티끌모아 태산!</p>
                   </div>
-                  <button onClick={()=>{
-                    dispatch(deleteGoalRQ(goal.goalItemId))
-                  }}>삭제하기</button>
-                  <div>
-                    <IoArrowRedoOutline size="15" />
-                    <p onClick={() => {
-                      openModal();
-                      setModalName("내 태산 % 공유");
-                      setModalState(<PostModal 
-                        image={goal.goalImage} 
-                        percent={goal.goalPercent}
-                        closeModal={closeModal}/>)
-                      }}>내 현황 공유</p>
-                  </div>
-                </div>
-              </div>  
-              <p className="goalTitle">{goal.goalitemName} {Math.floor(goal.goalPercent*100)}%</p>
-            </>
-          }
-        </GoalMain>
+                  :
+                  <MiddleMenue>
+                    <div>
+                      <DountChart color="#26DFA6" percent={goal.goalPercent} size="200"/>
+                    </div>
+
+                      <div className="isGoalSubmenuBox">
+                         <div>
+                          <FaRegEdit size="15" />
+                          <p onClick={() => {
+                            openModal();
+                            setModalName("태산 수정하기!")
+                            setModalState(<GoalInput
+                              state={"Update"}
+                              goalItemId={goal.goalItemId}
+                              closeModal={closeModal} />)
+                          }}>목표 변경</p>
+                        </div>
+                        <button onClick={() => {
+                          dispatch(deleteGoalRQ(goal.goalItemId))
+                        }}>삭제하기</button>
+                        <div>
+                          <IoArrowRedoOutline size="15" />
+                          <p onClick={() => {
+                            openModal();
+                            setModalName("내 태산 % 공유");
+                            setModalState(<PostModal
+                              image={goal.goalImage}
+                              percent={goal.goalPercent}
+                              closeModal={closeModal} />)
+                          }}>내 현황 공유</p>
+                        </div>
+                      </div>
+                    <p className="goalTitle">{goal.goalitemName} {Math.floor(goal.goalPercent * 100)}%</p>
+                  </MiddleMenue>
+                }
+              </GoalMain>
+              </StyledSlider>
+              </>}
       </TopWrap>
 
-      <SearchArea>
+
+        <SearchArea>
         <SearchSavedItem setSelectInputValue={setSelectInputValue}
-                         state={"saveState"}
-                         goalItemId={goal.goalItemId}/>
+          state={"saveState"}
+          goalItemId={goal.goalItemId} />
       </SearchArea>
 
       <FavoriteTag>
-        {mylist&&mylist.length===0? 
-        <NonFavoriteItem><CheckedStart/>즐겨찾기를 등록하고 편하게 사용해보세요!</NonFavoriteItem>
-        :
-          <> 
-            {mylist&&mylist?.map((item, itemIndex) => {
-              return(<>
-                <FavoriteItem 
+        {mylist && mylist.length === 0 ?
+          <NonFavoriteItem><CheckedStart />즐겨찾기를 등록하고 편하게 사용해보세요!</NonFavoriteItem>
+          :
+          <>
+            {mylist && mylist?.map((item, itemIndex) => {
+              return (<>
+                <FavoriteItem
                   key={item.favoriteItemId}
-                  onClick={()=>{addFavoriteSaved(itemIndex)}}>
-                    {item.itemName}
+                  onClick={() => { addFavoriteSaved(itemIndex) }}>
+                  {item.itemName}
                 </FavoriteItem>
-                <button onClick={()=>{dispatch(favoriteDel(item.favoriteItemId))}}>x</button>
-                </>
-            )})}
-            </>
+                <button onClick={() => { dispatch(favoriteDel(item.favoriteItemId)) }}>x</button>
+              </>
+              )
+            })}
+          </>
         }
       </FavoriteTag>
 
-      {selectInputValue.length!==0? 
-        <>      
-        <AddSavedStyle>
-          <StarArea onClick={()=>{ changeStar();}}>
-              {star? 
-                <CheckedStart/>
-                :  
-                <AiOutlineStar/>
+      {selectInputValue.length !== 0 ?
+        <>
+          <AddSavedStyle>
+            <StarArea onClick={() => { changeStar(); }}>
+              {star ?
+                <CheckedStart />
+                :
+                <AiOutlineStar />
               }
             </StarArea>
-          <p>{selectInputValue.itemName}</p>
+            <p>{selectInputValue.itemName}</p>
             <div>
-              <input 
+              <input
                 type="Number"
-                ref={priceInput}/>
+                ref={priceInput} />
               <button onClick={addSaveData}>등록</button>
             </div>
-        </AddSavedStyle>
-      </>
-      :""}
+          </AddSavedStyle>
+        </>
+        : ""}
 
 
 
-        <CurrentSavedItem goalItemId={goal.goalItemId}/>
-        
-        <DayModal open={modalOpen}
+      <CurrentSavedItem goalItemId={goal.goalItemId} />
+
+      <DayModal open={modalOpen}
         close={closeModal}
         header={modalName}>
         {modalState}
-        </DayModal>
-      </div>
+      </DayModal>
+    </Wrap>
   );
 }
 export default Save;
+
+const Wrap = styled.div`
+width:100%;
+height: 100%;
+`;
+
+const HeaderArea = styled.div`
+width: 100%;
+position: absolute;
+z-index: 1;
+`;
+
+
+
+const StyledSlider = styled(Slider)`
+    .slick-list {
+        width: 100%;
+        height: 100%;
+    }
+    .slick-dots {
+        bottom: 10px;
+    }
+    .slick-dots li.slick-active button:before {
+        color: #26DFA6;
+    }
+    .slick-dots li button:before {
+        color: #999;
+        opacity: 1;
+    }
+`;
+
+
+
+const TopWrap = styled.div`
+width: 100%;
+height: 45vh;
+position: relative;
+`;
+
+
+const GoalImage = styled.img`
+
+width: 100%;
+height:100%;
+background-color: #F5F5F5;
+display: flex;
+
+position: absolute;
+object-fit: cover;
+
+`;
+
+const MiddleMenue = styled.div`
+display: flex;
+height: 100%;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+`;
+
 
 const StarArea =styled.div`
 display: flex;
 width: 5vh;
 `;
 
-const TopWrap = styled.div`
-display: flex;
-width: 100%;
-height: 45vh;
-padding: 10px;
-flex-direction: column;
-background: #EFEFEF; 
-align-items: center;
-font-family: 'HS-Regular'
-`;
 
 const GoalMain = styled.div`
-
 display: flex;
+z-index: 2;
+background-color: rgb(0,0,0,0.5);
 justify-content: center;
 flex-direction: column;
 align-items: center;
@@ -307,7 +383,6 @@ display: flex;
 
 const FavoriteItem = styled.div`
 margin-top: 5px;
-display :inline-block;
 background: #EFEFEF;
 border-radius: 20px;
 font-size: 15px;

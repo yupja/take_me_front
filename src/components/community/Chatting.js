@@ -1,11 +1,13 @@
-import React, {useRef} from "react";
+import React from "react";
 import SockJS from 'sockjs-client';
 import StompJS from "stompjs";
+
 import axios from "axios";
 import styled from "styled-components";
 import DayModal from "../public/DayModal"
+import CreateRoom from "../community/CreateRoom"
 
-
+axios.defaults.withCredentials = true;
 
 
 //  소켓js , stompjs 인스톨 
@@ -44,8 +46,14 @@ const RoomData = [{
 function Chatting(){
 
     const RoomId ="";
-    const name = useRef();
-    const RoomName = new FormData()
+    const name = React.useRef();
+
+    
+    const [modalOpen, setModalOpen] = React.useState(false);
+    const [modalState, setModalState] = React.useState();
+    const [modalName, setModalName] = React.useState("");
+    const openModal = () => { setModalOpen(true); };
+    const closeModal = () => { setModalOpen(false); };
 
 
 
@@ -59,15 +67,23 @@ function Chatting(){
     // }
 
 
-    const createRoom = async () => {
-        RoomName.append("name" , name.current.value);
-        // try {
-        //     const data = await axios.post('http://43.200.4.1:3000/chat/room',RoomName)
-        //     console.log(data)
-        // } catch (error) {
-        //     console.log(error)
-        // }
+    const createRoom = async()=> {
+    // const formData= new FormData();
+
+    // formData.append("name" , "방을만들게따");
+    try {
+        const data = await axios.get('http://43.200.4.1:3000/chat/rooms',
+        {
+            withCredentials: true
+        })
+        //console.log(data)
+    } catch (error) {
+        console.log(error)
     }
+
+}
+
+
     
     console.log(RoomData)
     const sendMessege = async () =>{
@@ -98,20 +114,27 @@ function Chatting(){
 
             <RoomCreate>
 
-                <button onClick={() => {
-                    createRoom();
+                <button  type="button" onClick={() => {
+                    // openModal();
+                    // setModalName("쓸까?말까? 만들기")
+                    createRoom()
+                    // setModalState(
+                    // <CreateRoom close={closeModal}/>)
                 }}>쓸까?말까? 만들기</button>
             </RoomCreate>
-            {/* <DayModal open={modalOpen}
+            <DayModal open={modalOpen}
                 close={closeModal}
                 header={modalName}>
                 {modalState}
-            </DayModal> */}
+            </DayModal>
         </>
 
     )
 }
 export default Chatting;
+
+
+
 
 
 const Wrap = styled.div`
