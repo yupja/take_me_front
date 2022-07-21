@@ -9,8 +9,6 @@ import { favoriteUpdate, favoriteDel } from "../../store/modules/favorite";
 
 function FavoriteList(props) {
 
-
-  console.log(props)
   const priceRef = useRef();
   const dispatch = useDispatch();
 

@@ -1,26 +1,27 @@
 import React, { useEffect } from "react";
 import SockJS from 'sockjs-client';
 import StompJS from "stompjs";
-
+import { useLocation } from "react-router";
 import styled from "styled-components";
 
 
-const ChattingWindow = (props) =>{
-    const sockJS = new SockJS('http://43.200.4.1');
-    let client = StompJS.over(sockJS);
+const ChattingWindow = () =>{
+  const {state} = useLocation();
+  const RoomId = state;
+  console.log(RoomId)
+
+  const sockJS = new SockJS('http://3.35.52.157/chatting');
+  let client = StompJS.over(sockJS);
 
     const logInToken = {
         token : localStorage.getItem("accessToken")
     }
 
-
-    console.log(logInToken)
-
     const messageRef = React.useRef();
-    const RoomId = "2f9caf2e-ed19-4e4a-8eff-ab3fb229a370";
+    
 
     React.useEffect(() => {
-        client.connect({logInToken} ,
+        client.connect( {"token" : localStorage.getItem("accessToken")},
             ()=>{client.subscribe(`/chat/room/enter/${RoomId}}`, (data)=>{
             })
         })

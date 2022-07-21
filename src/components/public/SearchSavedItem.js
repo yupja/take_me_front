@@ -6,7 +6,7 @@ import { allItemListRQ } from "../../store/modules/item"
 
 import styled from 'styled-components'
 
-import DayModal from "./DayModal"
+import Modal from "./BasicModalForm"
 import SavedInput from "../saved/SavedInput"
 
 
@@ -143,9 +143,9 @@ function SearchSavedItem(props) {
 
 
           {selecState == "saveState" ?
-            <DayModal open={modalOpen} close={closeModal} header={modalName}>
+            <Modal open={modalOpen} close={closeModal} header={modalName}>
               {modalState}
-            </DayModal>
+            </Modal>
             : ""}
         </InputBox>
 
