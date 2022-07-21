@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
-import Header from "../components/Header";
-import SaveItemList from "../components/SaveItemList";
+import Header from "../components/public/Header";
+import SaveItemList from "../components/saved/SaveItemList";
 
 import { getHistory } from "../store/modules/info";
 

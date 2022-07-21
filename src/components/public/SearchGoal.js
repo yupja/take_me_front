@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from "react-redux"
-import { myFavoriteListRQ } from "../store/modules/favorite"
-import { allItemListRQ } from "../store/modules/item"
+import { myFavoriteListRQ } from "../../store/modules/favorite"
+import { allItemListRQ } from "../../store/modules/item"
 
 
 import styled from 'styled-components'

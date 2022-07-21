@@ -74,7 +74,8 @@ const refreshToken = () => {
       window.location.replace("/")
     })
     .catch((error) => { // refreshToken도 만료시 재로그인
-      window.alert("로그아웃이 되었습니다. 다시 로그인해주세요!")
+      //window.alert("로그아웃이 되었습니다. 다시 로그인해주세요!")
+      
       const [, , removeCookie] = useCookies(['refreshToken']);
       removeCookie('refreshToken', { path: '/' });
       localStorage.clear();

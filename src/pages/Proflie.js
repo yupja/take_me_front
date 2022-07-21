@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
 
-import Header from "../components/Header";
+import Header from "../components/public/Header";
 import { useDispatch, useSelector } from "react-redux";
 import { getInfo, infoUpdate } from "../store/modules/info";
 import { ReactComponent as Edit } from "../assets/icons/Edit.svg";

@@ -1,10 +1,10 @@
-import React, { useEffect, useState, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, {useState, useRef } from "react";
+import { useDispatch} from "react-redux";
 import styled from "styled-components";
 
 import { useNavigate } from "react-router-dom";
 
-import Header from "../components/Header";
+import Header from "../components/public/Header";
 import { emailCheckDB, idCheckDB, nickCheckDB, addUserDB } from "../store/modules/user";
 
 function SignUp() {

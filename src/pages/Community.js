@@ -2,9 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router";
 
-import CommunityTab from "../components/CommunityTab";
-import Chatting from "../components/Chatting"
-import Header from "../components/Header";
+import CommunityTab from "../components/community/CommunityTab";
+import Chatting from "../components/community/Chatting"
+import Header from "../components/public/Header";
 
 import styled from "styled-components";
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from "styled-components";
-import { ReactComponent as Google } from "../assets/icons/Google.svg";
+import { ReactComponent as Google } from "../../assets/icons/Google.svg";
 const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_ID;
 
 function LoginGoogle(props) {

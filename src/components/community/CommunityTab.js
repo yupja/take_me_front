@@ -1,18 +1,18 @@
 import React,{ useState,useEffect}from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import ListModal from "../components/ListModal";
-import DayModal from "../components/DayModal";
-import PostModal from "../components/PostModal";
+import ListModal from "./ListModal";
+import DayModal from "../public/DayModal";
+import PostModal from "./PostModal";
 
-import { loadpostsAc } from "../store/modules/post";
+import { loadpostsAc } from "../../store/modules/post";
 import { useNavigate } from "react-router-dom"
 
-import {getUserInfoDB} from "../store/modules/user";
+import {getUserInfoDB} from "../../store/modules/user";
 import Like from "./Like";
-import { loadMoreContentDB } from "../store/modules/post";
-import { ReactComponent as Receipt } from "../assets/icons/Receipt.svg";
-import { ReactComponent as Comment } from "../assets/icons/Comment.svg";
+import { loadMoreContentDB } from "../../store/modules/post";
+import { ReactComponent as Receipt } from "../../assets/icons/Receipt.svg";
+import { ReactComponent as Comment } from "../../assets/icons/Comment.svg";
 
 
 

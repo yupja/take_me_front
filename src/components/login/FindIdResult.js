@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import styled from 'styled-components'
 import { Link } from "react-router-dom";
 
-import { ReactComponent as Key } from "../assets/icons/Key.svg";
+import { ReactComponent as Key } from "../../assets/icons/Key.svg";
 
 
 const FindidResult = (props) => {

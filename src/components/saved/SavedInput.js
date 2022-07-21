@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react"
 import { useDispatch } from "react-redux";
-import {newItemSavedListRQ} from "../store/modules/saved"
-import Category from "./Category"
+import {newItemSavedListRQ} from "../../store/modules/saved"
+import Category from "../public/Category"
 
 import { BsPlus } from 'react-icons/bs'
 import { BiMinus } from 'react-icons/bi'
