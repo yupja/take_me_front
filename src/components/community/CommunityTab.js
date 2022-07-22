@@ -8,6 +8,7 @@ import PostModal from "./PostModal";
 import { useNavigate } from "react-router-dom";
 import { getUserInfoDB } from "../../store/modules/user";
 import Like from "./Like";
+import DountChart from "../public/Goal"
 import { loadMoreContentDB, loadpostsAc } from "../../store/modules/community";
 import { ReactComponent as Receipt } from "../../assets/icons/Receipt.svg";
 import { ReactComponent as Comment } from "../../assets/icons/Comment.svg";
@@ -93,6 +94,7 @@ const CommunityTab = () => {
                   <ItemImgBox>
                     <ItemImage src={postList.image}></ItemImage>
                   </ItemImgBox>
+                  <DountChart color="#26DFA6" size="150" position="relative" />
                   <ProfileBox>
                     <Profile src={postList.profileImg}></Profile>
                   </ProfileBox>
@@ -112,11 +114,14 @@ const CommunityTab = () => {
                     </NewNick>
                   </div>
                   <NewFoot>
-                    <Like
-                      isLike={postList.checkLike}
-                      forLikeId={postList.boardId}
-                      likeCount={postList.likeCount}
-                    />
+                    <LikeBox>
+                      <Like
+                        isLike={postList.checkLike}
+                        forLikeId={postList.boardId}
+                        likeCount={postList.likeCount}
+                      />&nbsp;&nbsp;
+                      {postList.likeCount}
+                    </LikeBox>
                     <div onClick={() => {
                       Navigate
                         (`/detail/${postList.boardId}`,
@@ -126,7 +131,7 @@ const CommunityTab = () => {
                       <span onClick={() => {
                         Navigate(`/detail/${postList.boardId}`)
                       }}>
-                        <Comment /> 댓글 {postList.commentCount} 개 모두 보기
+                        <Comment />&nbsp;&nbsp;{postList.commentCount} 개
                       </span>
                     </div>
                     <div onClick={() => { openModall(index) }}><Receipt /></div>
@@ -166,7 +171,9 @@ const CommunityTab = () => {
 };
 
 
-
+const LikeBox = styled.div`
+display: flex;
+`;
 
 const CreatAt = styled.div`
 width: 28vw;
@@ -246,7 +253,7 @@ height: 100%;
 /* border: 1px solid red; */
 /* margin: 0 auto; */
 border-radius: 50rem;
-/* position: absolute; */
+position: absolute;
 /* top: 5% */
 `;
 
@@ -256,6 +263,8 @@ width: 31vw;
 height: 31vw;
 align-items: center;
 margin: auto;
+position: relative;
+
 `;
 
 const Foot = styled.div`
@@ -301,7 +310,8 @@ height: 31vw;
 display: flex;
 flex-direction: column;
 padding: 0 5vw;
-/* border: 5px solid violet; */
+/* border: 1px solid violet; */
+position: relative;
 `;
 
 const NewTop = styled.div`
@@ -315,18 +325,32 @@ font-weight: 700;
 const NewNick = styled.div`
 /* border: 3px solid purple; */
 width: 100%;
-height: 18vw;
+height: 14vw;
 font-size: 1rem;
+
+      /* width:100%; */
+      overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+      /* white-space:nowrap; */
+      line-height: 1.1rem;
+  
 `;
 
+
+
 const NewFoot = styled.div`
-/* border: 3px solid gold; */
+/* border: 1px solid gold; */
 display: flex;
-width: 100%;
+width: 85%;
 height: 7vw;
 align-items: center;
 justify-content: space-between;
+position: absolute;
 font-size: 0.8rem;
+bottom: 0;
+
 `;
 
 const BlankBox = styled.div`

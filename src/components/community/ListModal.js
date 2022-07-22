@@ -43,7 +43,7 @@ const ListModal = (props) => {
                     
                     <List key={inddex}>
                       <Left>
-                      <CreateAt>{savedItem.createdDate}</CreateAt>
+                      <CreateAt>{savedItem.createdDate.substr(0, 10).split('-','3').join(".")}</CreateAt>
                       <SavedName>{savedItem.savedItemName}</SavedName>
                       </Left>
                       <Right>

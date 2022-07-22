@@ -10,7 +10,8 @@ function RoomDetail() {
   const { roomId } = useParams();
   const dispatch = useDispatch();
   const chatRef = useRef();
-  const getMessages = useSelector((state) => state.chat.messages)
+  const getMessages = useSelector((state) => state.chat);
+  console.log(getMessages);
 
 
 
@@ -40,9 +41,6 @@ function RoomDetail() {
 
 
 
-
-  console.log(headers);
-
   const myChat = (e) => {
     // setChat(chatRef.current.value)
     const msg = chatRef.current.value;
@@ -59,13 +57,13 @@ function RoomDetail() {
     <ChatWrap>
       <ChatBox>
         <Chatting>
-          {getMessages.map((el, i) => (
+          {/* {getMessages.map((el, i) => (
             <div key={i}>
               <div className="img"><img src="https://mblogthumb-phinf.pstatic.net/MjAyMTAxMjJfNzMg/MDAxNjExMzIzMzU1NDgw.nhAuTdE8OjYs0wZAb8qpMAsUaUIZXeRKJ0zDLs5oaKIg.iONiFE4qhr5wuB2FwDe4yfO3oC9gBbOjDaCyGXxiLMkg.JPEG.sohyeon612/%EB%8B%A4%EC%9A%B4%EB%A1%9C%EB%93%9C%ED%8C%8C%EC%9D%BC%EF%BC%8D2.jpg?type=w800" alt="프로필" /></div>
               <span>닉네임</span>
               <p>{el.message}</p>
             </div>
-          ))}
+          ))} */}
         </Chatting>
       </ChatBox>
       <Enter>
