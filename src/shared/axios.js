@@ -3,7 +3,7 @@ import { getCookie, setCookie, removeCookie } from "../store/modules/cookie";
 import { useCookies } from "react-cookie";
 
 export const instance = axios.create({
-  baseURL: "https://api.webprogramming-mj6119.shop"
+  baseURL: "http://3.35.52.157"
   // baseURL: "http://13.209.13.168"
 });
 
@@ -75,12 +75,12 @@ const refreshToken = () => {
     })
     .catch((error) => { // refreshToken도 만료시 재로그인
       //window.alert("로그아웃이 되었습니다. 다시 로그인해주세요!")
-      
+
       const [, , removeCookie] = useCookies(['refreshToken']);
       removeCookie('refreshToken', { path: '/' });
       localStorage.clear();
       window.location.replace("/")
-      
+
       alert("세션 만료 다시 로그인 해주세요.");
     });
 };

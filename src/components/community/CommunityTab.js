@@ -1,4 +1,4 @@
-import React,{ useState,useEffect}from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import ListModal from "./ListModal";
@@ -6,7 +6,7 @@ import Modal from "../public/BasicModalForm";
 import PostModal from "./PostModal";
 
 import { useNavigate } from "react-router-dom";
-import {getUserInfoDB} from "../../store/modules/user";
+import { getUserInfoDB } from "../../store/modules/user";
 import Like from "./Like";
 import { loadMoreContentDB, loadpostsAc } from "../../store/modules/community";
 import { ReactComponent as Receipt } from "../../assets/icons/Receipt.svg";
@@ -23,8 +23,8 @@ const CommunityTab = () => {
 
   const dispatch = useDispatch();
   const Navigate = useNavigate();
-  
-  const  [savedListIndex, setSavedListIndex] = useState();
+
+  const [savedListIndex, setSavedListIndex] = useState();
   const userinfo = useSelector((state) => state.user.infoList)
   // console.log(userinfo,"userinfo")
   const Postdata = useSelector((state) => state.community.postList.data);
@@ -34,7 +34,7 @@ const CommunityTab = () => {
 
   const [showModall, setShowModall] = useState(false);
   const openModall = (index) => {
-    setSavedListIndex(index);   
+    setSavedListIndex(index);
     setShowModall(true)
   }
   const closeModall = () => {
@@ -57,26 +57,26 @@ const CommunityTab = () => {
   const clickLike = () => {
     setILike(true)
   }
-  
+
   const [target, setTarget] = useState(null);
   const onIntersect = async ([entry], observer) => {
-      if (entry.isIntersecting) {
-          observer.unobserve(entry.target);
-          await dispatch(loadMoreContentDB());
-      }
+    if (entry.isIntersecting) {
+      observer.unobserve(entry.target);
+      await dispatch(loadMoreContentDB());
+    }
   };
 
   useEffect(() => {
-      let observer;
-      if (target) {
-          observer = new IntersectionObserver(onIntersect, {
-              threshold: 1,
-          });
-          observer.observe(target);
-      }
-      return () => {
-          observer && observer.disconnect();
-      };
+    let observer;
+    if (target) {
+      observer = new IntersectionObserver(onIntersect, {
+        threshold: 1,
+      });
+      observer.observe(target);
+    }
+    return () => {
+      observer && observer.disconnect();
+    };
   }, [target]);
   // console.log(Postdata,"확인")
 
@@ -85,26 +85,28 @@ const CommunityTab = () => {
     <Box>
       {Postdata.map((postList, index) => {
         return (
-          <div key={postList.boardId} ref={index === Postdata.length - 1 ? setTarget : null}> 
+          <div key={postList.boardId} ref={index === Postdata.length - 1 ? setTarget : null}>
             <>
               <ContentBox>
                 <Left>
                   {/* <Day>{postList.createAt}</Day> */}
                   <ItemImgBox>
-                  <ItemImage src={postList.image}></ItemImage>
+                    <ItemImage src={postList.image}></ItemImage>
                   </ItemImgBox>
                   <ProfileBox>
-                  <Profile src={postList.profileImg}></Profile>
+                    <Profile src={postList.profileImg}></Profile>
                   </ProfileBox>
                 </Left>
                 <Right>
-                  <div onClick={() => { Navigate
+                  <div onClick={() => {
+                    Navigate
                       (`/detail/${postList.boardId}`,
-                      {state: {name:postList}}
-                      ) }}>
-                  <NewTop>
-                    {postList.goalItemName}
-                  </NewTop>
+                        { state: { name: postList } }
+                      )
+                  }}>
+                    <NewTop>
+                      {postList.goalItemName}
+                    </NewTop>
                     <NewNick>
                       {postList.nickname}&nbsp;&nbsp;{postList.contents}
                     </NewNick>
@@ -112,19 +114,22 @@ const CommunityTab = () => {
                   <NewFoot>
                     <Like
                       isLike={postList.checkLike}
-                      forLikeId = {postList.boardId}
-                      likeCount = {postList.likeCount}
+                      forLikeId={postList.boardId}
+                      likeCount={postList.likeCount}
                     />
-                    <div onClick={() => { Navigate
-                      (`/detail/${postList.boardId}`,
-                      {state: {name:postList}}
-                      ) }}>
-                    <span onClick={() => { Navigate(`/detail/${postList.boardId}`)
+                    <div onClick={() => {
+                      Navigate
+                        (`/detail/${postList.boardId}`,
+                          { state: { name: postList } }
+                        )
+                    }}>
+                      <span onClick={() => {
+                        Navigate(`/detail/${postList.boardId}`)
                       }}>
-                      <Comment /> 댓글 {postList.commentCount} 개 모두 보기
+                        <Comment /> 댓글 {postList.commentCount} 개 모두 보기
                       </span>
-                      </div>
-                    <div onClick={()=>{openModall(index)}}><Receipt /></div>
+                    </div>
+                    <div onClick={() => { openModall(index) }}><Receipt /></div>
                   </NewFoot>
                 </Right>
               </ContentBox>
@@ -137,27 +142,27 @@ const CommunityTab = () => {
 
 
 
-         <BtnBox>
+      <BtnBox>
         <FootBtn onClick={openModal}>내 태산 % 공유</FootBtn>
 
         {/* 세이브리스트모달 */}
         {showModall ?
-            <ListModal showModall={showModall} closeModall={closeModall} 
-                        forsaveId = {Postdata[savedListIndex].boardId}
-                        />
-            : null}
+          <ListModal showModall={showModall} closeModall={closeModall}
+            forsaveId={Postdata[savedListIndex].boardId}
+          />
+          : null}
         {/* 게시글등록모달     */}
 
-        <Modal 
+        <Modal
           open={modalOpen}
           close={closeModal}
           header={"내 태산 % 공유"}>
-          {<PostModal close={closeModal}/>}
+          {<PostModal close={closeModal} />}
         </Modal>
 
-        </BtnBox>
+      </BtnBox>
     </Box>
-)
+  )
 };
 
 
@@ -274,19 +279,19 @@ align-items: center;
 bottom: 5%;
 position: fixed;
 /* left: 39% */
-
 `;
 
 const FootBtn = styled.button`
-width: 90%;
-height: 8vh;
-border-radius: 2rem;
+width: 100%;
+margin: 0 10px;
+padding: 20px 0;
+border-radius:59px;
 border: none;
-font-size: 1.3rem;
+font-size: 1.25rem;
 color: white;
 font-weight: 500;
 background-color: #26DFA6;
-box-shadow: 5px 5px 5px rgb(110, 110, 110, 0.4);
+box-shadow: 0 4px 11px 0px rgba(0,0,0,0.25);
 opacity: 95%;
 `;
 

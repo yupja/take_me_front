@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { myReadGoalRQ, deleteGoalRQ } from "../store/modules/goal"
-import {addSavedListRQ} from "../store/modules/saved"
-import { myFavoriteListRQ, favoriteDel,addFavoriteRQ } from "../store/modules/favorite";
+import { addSavedListRQ } from "../store/modules/saved"
+import { myFavoriteListRQ, favoriteDel, addFavoriteRQ } from "../store/modules/favorite";
 
 import Modal from "../components/public/BasicModalForm";
 import SearchSavedItem from "../components/public/SearchSavedItem";
@@ -17,53 +17,58 @@ import styled from "styled-components";
 import Slider from "react-slick";
 import "../styles/saveMain.css"
 import { FaRegEdit } from 'react-icons/fa'
-import {ReactComponent as CheckedStart} from "../assets/icons/CheckedStart.svg"
+import { ReactComponent as CheckedStart } from "../assets/icons/CheckedStart.svg"
 
 
 
 import { IoArrowRedoOutline } from 'react-icons/io5'
 import { AiOutlineStar } from 'react-icons/ai'
+import { useNavigate } from "react-router-dom";
 
 
 
 
 function Save() {
+  const navigate = useNavigate();
+  const loggedInfo = localStorage.getItem('accessToken');
+  if (loggedInfo === null) {
+    navigate('/');
+  }
 
-  const isLogin = useSelector((state=> state.user.isLogin));
-  
   useEffect(() => {
     dispatch(myReadGoalRQ());
     dispatch(myFavoriteListRQ());
-  }, [isLogin]);
+  }, []);
 
   const [modalOpen, setModalOpen] = useState(false);
   const [modalState, setModalState] = useState();
   const [modalName, setModalName] = useState("");
 
-  const [selectInputValue , setSelectInputValue] = useState([]); 
+  const [selectInputValue, setSelectInputValue] = useState([]);
 
   const dispatch = useDispatch();
 
   const openModal = () => { setModalOpen(true); };
   const closeModal = () => { setModalOpen(false); };
 
-  
-  const [ star, setStar] = useState(false);
 
-  const changeStar = () =>{
-    if(star){
+  const [star, setStar] = useState(false);
+
+  const changeStar = () => {
+    if (star) {
       setStar(false);
-    }else{
+    } else {
       setStar(true);
     }
   }
 
 
-  const myGoalList = useSelector((state=> state.goal.myGoalList));
+  const myGoalList = useSelector((state => state.goal.myGoalList));
+  console.log(myGoalList);
   const goal = {
-    goalImage : myGoalList?.image,
-    goalItemId : myGoalList?.goalItemId,
-    goalPercent : (myGoalList?.goalPercent)*0.01,
+    goalImage: myGoalList?.image,
+    goalItemId: myGoalList?.goalItemId,
+    goalPercent: (myGoalList?.goalPercent) * 0.01,
     goalitemName: myGoalList?.itemName
   }
 
@@ -77,66 +82,66 @@ function Save() {
   const priceInput = useRef();
 
   //api/savedItem, 기존에 있던 아이템으로 티끌 등록
-  const addSaveData = () =>{
-    let sendData ={
-        itemId : selectInputValue.itemId,
-        price :priceInput.current.value,
+  const addSaveData = () => {
+    let sendData = {
+      itemId: selectInputValue.itemId,
+      price: priceInput.current.value,
+      goalItemId: goal.goalItemId
+    }
+    dispatch(addSavedListRQ(sendData));
+
+    if (star) {
+      sendData = {
+        itemId: selectInputValue.itemId,
+        categoryId: selectInputValue.categoryId,
+        price: priceInput.current.value,
         goalItemId: goal.goalItemId
       }
-      dispatch(addSavedListRQ(sendData));
-      
-      if(star){
-        sendData ={
-          itemId : selectInputValue.itemId,
-          categoryId:selectInputValue.categoryId,
-          price :priceInput.current.value,
-          goalItemId: goal.goalItemId
-        }
-        dispatch(addFavoriteRQ(sendData))
-      }
+      dispatch(addFavoriteRQ(sendData))
+    }
 
     setSelectInputValue([])
   }
 
 
-  const addFavoriteSaved = (itemIndex)=>{
-    let sendData={
-        itemId : mylist[itemIndex].itemId,
-        price :mylist[itemIndex].price,
-        goalItemId: goal.goalItemId
-      }
-    
+  const addFavoriteSaved = (itemIndex) => {
+    let sendData = {
+      itemId: mylist[itemIndex].itemId,
+      price: mylist[itemIndex].price,
+      goalItemId: goal.goalItemId
+    }
+
     dispatch(addSavedListRQ(sendData));
   }
-//
+  //
 
-const settings = {
-  dots: true,
-  infinite: true,
-  speed: 500,
-  slidesToShow: 1,
-  slidesToScroll: 1
-};
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1
+  };
   return (
     <Wrap>
       <TopWrap>
         <HeaderArea><Header title={title} /></HeaderArea>
 
         {goal.goalitemName === "이름 없음" ?
-          <> 
-          <InitGoalArea>
-            <Circle onClick={() => {
-              openModal();
-              setModalName("내 태산 만들기!")
-              setModalState(
-                <GoalInput state={"ADD"}
-                closeModal={closeModal} />)
-            }}>
-              <NonGoalInnerCicle>
-                <p style={{fontSize:"1.5rem", fontWeight:"bold"}}>티끌모아 태산!</p>
-                <p>+ 태산 만들기!</p>
-              </NonGoalInnerCicle>
-            </Circle>
+          <>
+            <InitGoalArea>
+              <Circle onClick={() => {
+                openModal();
+                setModalName("내 태산 만들기!")
+                setModalState(
+                  <GoalInput state={"ADD"}
+                    closeModal={closeModal} />)
+              }}>
+                <NonGoalInnerCicle>
+                  <p style={{ fontSize: "1.5rem", fontWeight: "bold" }}>티끌모아 태산!</p>
+                  <p>+ 태산 만들기!</p>
+                </NonGoalInnerCicle>
+              </Circle>
 
             </InitGoalArea>
           </>
@@ -187,7 +192,7 @@ const settings = {
       </TopWrap>
 
 
-        <SearchArea>
+      <SearchArea>
         <SearchSavedItem setSelectInputValue={setSelectInputValue}
           state={"saveState"}
           goalItemId={goal.goalItemId} />
@@ -318,7 +323,7 @@ justify-content: center;
 `;
 
 
-const StarArea =styled.div`
+const StarArea = styled.div`
 display: flex;
 width: 5vh;
 `;

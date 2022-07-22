@@ -13,23 +13,63 @@ export const loadChattingListRS = createAsyncThunk(
   async (thunkAPI) => {
     try {
       const { data } = await axios.get('http://3.35.52.157/chat/rooms/',
-       { headers: { 'Authorization':  `Bearer ${localStorage.getItem("accessToken")}` }}
+        { headers: { 'Authorization': `Bearer ${localStorage.getItem("accessToken")}` } }
       )
       return data;
     } catch (error) {
       console.log(error);
-}})
+    }
+  })
 
-export const createChattingRoomRQ = (roomName)=>{
-  return async function(dispatch){
-    try{
-      await axios.post('http://3.35.52.157/chat/rooms/',roomName) //폼데이터로 넘기기
+export const createChattingRoomRQ = (roomName) => {
+  return async function (dispatch) {
+    try {
+      await axios.post('http://3.35.52.157/chat/rooms/', roomName) //폼데이터로 넘기기
       // 채팅방 생성 함수 끝난 후 네비게이트로 채팅 디테일 컴포넌트로 이동 
-   }catch(error){
-    console.log(error);
-   }
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
+
+
+
+// [커뮤니티 채팅 API / 은진] -------------------------------------------------
+
+// 방생성
+export const createChatRoom = (data) => {
+  return async function (dispatch) {
+    console.log(data);
+
+    await instance.post(`/api/chat/room`, data)
+      .then((res) => {
+        const roodId = res.data.roomId
+        window.location.href = `/chat/roomdetail/${roodId}`;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+
+// 이전 메세지
+export const getChatting = (data) => {
+  return async function (dispatch) {
+    await instance.get(`/api/chat/room/enter/${data}`)
+      .then((res) => {
+        console.log(res);
+        // window.location.href = `/chat/roomdetail/${data}`;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+
+
+
+
+
 
 
 
@@ -38,11 +78,11 @@ export const createChattingRoomRQ = (roomName)=>{
 
 export const likeChange = createAsyncThunk(  // 라이크 변경
   'read/myLike',
-  async(boardId) => {
-    try{
-       const {data} = await instance.post(`/api/board/${boardId}`)
-       console.log(data);
-      }catch(error){
+  async (boardId) => {
+    try {
+      const { data } = await instance.post(`/api/board/${boardId}`)
+      console.log(data);
+    } catch (error) {
       console.log(error)
     }
   }
@@ -55,16 +95,16 @@ export const createPostAc = (data) => {
     const formData = new FormData();
 
     const request = {
-      title : data.title,
-      contents : data.contents
+      title: data.title,
+      contents: data.contents
     }
     const json = JSON.stringify(request);
-    const blob = new Blob([json], { type : "application/json"});
+    const blob = new Blob([json], { type: "application/json" });
 
-    formData.append('file',data.file)
+    formData.append('file', data.file)
     formData.append('request', blob)
-    await instance.post('/api/post/board',formData,{
-      headers : {
+    await instance.post('/api/post/board', formData, {
+      headers: {
         "Content-Type": "multipart/form-data",
       }
     })
@@ -82,7 +122,7 @@ export const createPostAc = (data) => {
 
 export const loadpostsAc = () => {
   return function (dispatch) {
-    instance.get('/api/board', { params: { lastBoardId : 999 , size: 15 } })
+    instance.get('/api/board', { params: { lastBoardId: 999, size: 15 } })
       .then(response => {
         //   console.log(response.data, "redux_data");
         dispatch(roadPosts(response.data));
@@ -116,12 +156,12 @@ export const loadMoreContentDB = () => {
     const lastIndex = board[board.length - 1].boardId
     // console.log(lastIndex,"last")
     await instance.get('/api/board', { params: { lastBoardId: lastIndex, size: 15 } })
-    .then((response) => {
-      // console.log(response,"resssss")
-      const new_data = [...board, ...response.data.data];
-      // console.log(new_data,"newdat")
-      dispatch(roadPosts({ data: new_data }));
-    });
+      .then((response) => {
+        // console.log(response,"resssss")
+        const new_data = [...board, ...response.data.data];
+        // console.log(new_data,"newdat")
+        dispatch(roadPosts({ data: new_data }));
+      });
     // console.log(board, lastIndex, '무스');
   };
 };
@@ -134,18 +174,18 @@ export const UpdatePost = (data) => {
     const formData = new FormData();
 
     const request = {
-      title : data.title,
-      contents : data.contents
+      title: data.title,
+      contents: data.contents
     }
     const json = JSON.stringify(request);
-    const blob = new Blob([json], { type : "application/json"});
+    const blob = new Blob([json], { type: "application/json" });
 
-    formData.append('file',data.file)
+    formData.append('file', data.file)
     formData.append('request', blob)
 
     await instance
-      .put(`/api/board/${data.boardId}`, formData,{
-        headers : {
+      .put(`/api/board/${data.boardId}`, formData, {
+        headers: {
           "Content-Type": "multipart/form-data",
         }
       })
@@ -246,10 +286,12 @@ const communitySlice = createSlice({
   initialState: {
     // 채팅
     chattingList: [],
+    getDayCountList: [],
+    messages: [],
     // 게시판
     postList: { data: [] },
     post: [],
-    likeList : [],
+    likeList: [],
     commentList: [],
   },
   reducers: {
@@ -289,18 +331,25 @@ const communitySlice = createSlice({
     },
     createComment: (state, action) => {
       state.commentList.push(action.payload);
-    }
+    },
+    getDayCountList: (state, action) => {
+      console.log(action.payload);
+      state.getDayCountList = action.payload;
+    },
+    subMessage(state, action) {
+      state.messages.push(action.payload);
+    },
   },
   extraReducers: {
     [loadChattingListRS.fulfilled]: (state, action) => {
       state.chattingList = action.payload
     },
-    [likeChange.fulfilled]: (state, action) =>{
+    [likeChange.fulfilled]: (state, action) => {
       state.likeList = action.payload
     },
   }
 
 });
 
-export const { loadComment, createComment,roadPosts,loadDetail } = communitySlice.actions;
+export const { loadComment, createComment, roadPosts, loadDetail, subMessage, getDayCountList } = communitySlice.actions;
 export default communitySlice.reducer;

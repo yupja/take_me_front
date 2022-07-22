@@ -17,6 +17,7 @@ import History from "../pages/History"; // 히스토리
 import Proflie from "../pages/Proflie"; // 프로필
 import SociallLogin from "../pages/SociallLogin"; // 소셜 로그인
 import Chatting from "../components/community/ChattingWindow"//채팅
+import RoomDetail from "../components/community/RoomDetail"//채팅
 
 
 function Router() {
@@ -46,6 +47,7 @@ function Router() {
         <Route path="/ranking" element={<Ranking />} />
         <Route path="/oauth2/redirect" element={<SociallLogin />} />
         <Route path="/chatting" element={<Chatting />} />
+        <Route path="/chat/roomdetail/:roomId" element={<RoomDetail />} />
 
       </Routes>
     </BrowserRouter>
