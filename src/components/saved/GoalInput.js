@@ -133,7 +133,7 @@ const GoalInput = (props)=>{
 
  return (
     <>
-      <ModalBody>
+      {/* <ModalBody>
 
         {newAddGoal? 
         <>
@@ -148,18 +148,22 @@ const GoalInput = (props)=>{
         </div></>
        :
        <SelectedBoxDiv>
-        <SearchGoal state={"goalState"}
-                    setNewAddGoal={setNewAddGoal}
-                    setSelectInputValue={setSelectInputValue}/>
+        <p>이름</p>
+        <SearchGoalArea>
+          <SearchGoal 
+            state={"goalState"}
+            setNewAddGoal={setNewAddGoal}
+            setSelectInputValue={setSelectInputValue}/>
+          </SearchGoalArea>
         </SelectedBoxDiv>
         }
 
-        <div> 
-          <p>Price</p>
+        <InputPriceBoxDiv>
+          <p >Price</p>
           <input 
             type='text' 
             ref={price} />
-        </div> 
+        </InputPriceBoxDiv> 
         
         <div>
           <p>수량</p> 
@@ -190,9 +194,24 @@ const GoalInput = (props)=>{
             props.closeModal();
             }}>
           태산 등록하기
-        </Footer>}
+        </Footer>} */}
 
-    </>
+
+     <ItemList>
+       <ul>
+
+         <li>
+           <div className="leftBox">
+
+             <p><br /></p>
+             <h2></h2>
+           </div>
+           <p className="price"></p>
+         </li>
+
+       </ul>
+     </ItemList>
+  </>
   )
 
 }
@@ -212,10 +231,35 @@ border: 1px solid gray;
 
 
 const SelectedBoxDiv = styled.div`
-display: block;
+display: flex;
 width: 100%;
 justify-content: center;
 `
+
+const InputPriceBoxDiv = styled.div`
+width: 100%;
+display:flex;
+justify-content: center;
+
+input{
+width: 72%;
+padding: 0.3rem;
+border-radius: 30px;
+border: 1px solid #CCCCCC;
+
+margin-left: 0.8rem;
+
+}
+
+
+`;
+
+const SearchGoalArea = styled.div`
+width: 80%;
+`;
+
+
+
 
 const ModalBody = styled.div`
 display: flex;
@@ -224,11 +268,11 @@ align-items: center;
 
 div{
     display:  flex;;
-    padding: 0.5rem;
+    padding: 0.3rem;
     align-items: center;
     }
 p{
-    margin-right: 0.5rem;
+    margin-right: 0.2rem;
 }
 
 `;
@@ -245,4 +289,67 @@ display: flex;
 justify-content: center;
 `;
 
+
+
+
+const GoalList = styled.div`
+  border-bottom: 1px solid #CCCCCC;
+  overflow: hidden;
+  height: 3.12rem;
+  line-height: 3.12rem;
+  padding: 0 25px;
+
+h2{
+  float: right;
+  font-size:1.25rem;
+  font-weight: 700;
+}
+
+span{
+  padding-left: 10px;
+  font-weight: 700;
+  font-size:1.25rem;
+}
+`
+
+const ItemList = styled.div`
+width: 100%;
+
+h2 {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #333;
+}
+ul{
+  padding: 0 10px;
+}
+li{
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #CCCCCC;
+  align-items: center;
+  padding: 10px 15px;
+}
+.leftBox{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 5px;
+}
+.leftBox p{
+  font-size: 0.62rem;
+  color: #333;
+  text-align: left;
+  padding: 0 10px;
+}
+
+.price{
+  font-size: 1rem;
+  font-weight: 700;
+  color: #999;
+}
+`;
+
+
 export default GoalInput;
+

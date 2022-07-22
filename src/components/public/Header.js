@@ -123,7 +123,7 @@ position:absolute;
 top: 53%; left: 50%;
 transform: translate(-50%,-50%);
 font-family: 'HS-Regular';
-color: #333;
+color: white;
 font-size: 1.62rem;
 `;
 
@@ -193,7 +193,7 @@ div {
     width:100%;
     height:1px;
     margin-bottom: 3px;
-    background-color: black;
+    background-color: white;
     transition:all .5s;
   }
   span:last-child{
