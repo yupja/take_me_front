@@ -133,7 +133,7 @@ const GoalInput = (props)=>{
 
  return (
     <>
-      <ModalBody>
+      {/* <ModalBody>
 
         {newAddGoal? 
         <>
@@ -194,9 +194,24 @@ const GoalInput = (props)=>{
             props.closeModal();
             }}>
           태산 등록하기
-        </Footer>}
+        </Footer>} */}
 
-    </>
+
+     <ItemList>
+       <ul>
+
+         <li>
+           <div className="leftBox">
+
+             <p><br /></p>
+             <h2></h2>
+           </div>
+           <p className="price"></p>
+         </li>
+
+       </ul>
+     </ItemList>
+  </>
   )
 
 }
@@ -274,4 +289,67 @@ display: flex;
 justify-content: center;
 `;
 
+
+
+
+const GoalList = styled.div`
+  border-bottom: 1px solid #CCCCCC;
+  overflow: hidden;
+  height: 3.12rem;
+  line-height: 3.12rem;
+  padding: 0 25px;
+
+h2{
+  float: right;
+  font-size:1.25rem;
+  font-weight: 700;
+}
+
+span{
+  padding-left: 10px;
+  font-weight: 700;
+  font-size:1.25rem;
+}
+`
+
+const ItemList = styled.div`
+width: 100%;
+
+h2 {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #333;
+}
+ul{
+  padding: 0 10px;
+}
+li{
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #CCCCCC;
+  align-items: center;
+  padding: 10px 15px;
+}
+.leftBox{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 5px;
+}
+.leftBox p{
+  font-size: 0.62rem;
+  color: #333;
+  text-align: left;
+  padding: 0 10px;
+}
+
+.price{
+  font-size: 1rem;
+  font-weight: 700;
+  color: #999;
+}
+`;
+
+
 export default GoalInput;
+
