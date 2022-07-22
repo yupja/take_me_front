@@ -76,6 +76,7 @@ function Detail() {
     const boardId = postlistdata.boardId
     // const state = "커뮤니티"
 
+    //슬릭
     const settings = {
         dots: true,
         infinite: true,
@@ -84,7 +85,7 @@ function Detail() {
         slidesToScroll: 1
       };
 
-    const [limit, setLimit] = useState(10); 
+    const [limit, setLimit] = useState(51); 
     const toggleEllipsis = (str, limit) => {
     return {
     	string: str.slice(0, limit),
@@ -95,6 +96,11 @@ function Detail() {
     const onClickMore = (str) => () => {
     setLimit(str.length);
   };
+
+
+  const onClickClose = (str) => {
+    setLimit(51)
+  }
 
 
 
@@ -133,11 +139,11 @@ function Detail() {
                 <Right>
                     <Content>
                     <Nick>{postlistdata.nickname}</Nick>&nbsp;&nbsp;
-                    {postlistdata.contents}
+                    {/* {postlistdata.contents} */}
                     {toggleEllipsis(postlistdata.contents, limit).string}
                     {toggleEllipsis(postlistdata.contents, limit)
-                    .isShowMore && <button onClick={onClickMore(postlistdata.contents)}>
-                        ...더보기</button>}
+                    .isShowMore && <MoreBtn onClick={onClickMore(postlistdata.contents)}>
+                        ...더보기</MoreBtn>}
                     </Content>
                 </Right>
                 {userinfo.username === postlistdata.userId ?
@@ -294,6 +300,12 @@ padding: 3vw;
 color: white;
 /* position: absolute;
 z-index: 2; */
+line-height: 1rem;
+`;
+
+const MoreBtn = styled.button`
+color: #26DFA6;
+font-weight: 700;
 `;
 
 const Bottom = styled.div`
