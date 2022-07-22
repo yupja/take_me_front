@@ -15,7 +15,7 @@ import FindPwChange from "../pages/FindPwChange"; // 비밀번호 변경
 import Favorite from "../pages/Favorite"; // 즐겨찾기
 import History from "../pages/History"; // 히스토리
 import Proflie from "../pages/Proflie"; // 프로필
-import SociallLogin from "../pages/SociallLogin"; // 프로필
+import SociallLogin from "../pages/SociallLogin"; // 소셜 로그인
 import Chatting from "../components/community/ChattingWindow"//채팅
 
 

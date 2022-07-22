@@ -6,35 +6,32 @@ import instance from "../../shared/axios";
 //login
 export const LoginDB = (loginInfo, setModalStr, setNavToggles) => {
   return async function (dispatch) {
-    try{
-      const response = await instance.post("/api/user/login", loginInfo, {
-        "Content-Type": "application/json",
-        withCredentials: true,
+    console.log(loginInfo);
+    await instance.post("/api/user/login", loginInfo)
+      .then((response) => {
+        console.log(response);
+        const accessToken = response.data.accessToken;
+        const refreshToken = response.data.refreshToken;
+
+        localStorage.setItem("accessToken", accessToken);
+        setCookie('refreshToken', refreshToken, {
+          path: "/",
+          secure: true,
+          sameSite: 'none',
         })
-        if (response.data.code === 1002) {
+        window.location.href = "/save"
+        dispatch(isLogin(true))
+
+      })
+      .catch((error) => {
+        console.log(error.response.data);
+        if (error.response.data.code === 1008) {
           setModalStr('로그인 실패! 아이디 또는 비밀번호를 확인해 주세요');
           setNavToggles(true);
-          return;
-          } else {
-            console.log(response, "로그인리스폰스값")
-            const accessToken = response.data.accessToken;
-            const refreshToken = response.data.refreshToken;
-
-            console.log(accessToken, "로그인 토큰값");
-
-            localStorage.setItem("accessToken", accessToken);
-            setCookie('refreshToken', refreshToken, {
-              path: "/",
-              secure: true,
-              sameSite: 'none',
-            })
-            
-          dispatch(isLogin(true))
         }
-    }catch(error){
-        console.log("로그인 실패") //로그인실패 이걸로뜸
-      };
-}};
+      });
+  }
+};
 
 
 
