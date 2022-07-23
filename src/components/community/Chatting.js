@@ -7,6 +7,7 @@ import Modal from "../public/BasicModalForm"
 import CreateRoom from "../community/CreateRoom"
 
 import {loadChattingListRS } from "../../store/modules/community"
+import {ReactComponent as Timer} from "../../assets/icons/Timer.svg";
 
 
 
@@ -15,14 +16,57 @@ import {loadChattingListRS } from "../../store/modules/community"
 //   메세지 전송 전 subscriber 와  publicher 지정
 
 
+const RoomData = [
+  {
+    roomId: "ae8d8cb1-0a9a-43da-90c4-084df62c78ab",
+    username: "eppo",
+    comment: "지금 비가 너무 많이와서 걷기 싫은데 택시탈까?",
+    profileImg: "https://velog.velcdn.com/images/eppo/post/9fa16a22-a5e5-4675-9d4b-fbcb5c93be28/image.png",
+    time: "6m"
+  },
+  {
+    roomId: "ae8d8cb1-0a9a-43da-90c4-084df62c78ab",
+    username: "eppo",
+    comment: "지금 비가 너무 많이와서 걷기 싫은데 택시탈까?",
+    profileImg: "https://velog.velcdn.com/images/eppo/post/9fa16a22-a5e5-4675-9d4b-fbcb5c93be28/image.png",
+    time: "6m"
+  },
+  {
+    roomId: "ae8d8cb1-0a9a-43da-90c4-084df62c78ab",
+    username: "eppo",
+    comment: "지금 비가 너무 많이와서 걷기 싫은데 택시탈까?",
+    profileImg: "https://velog.velcdn.com/images/eppo/post/9fa16a22-a5e5-4675-9d4b-fbcb5c93be28/image.png",
+    time: "6m"
+  },
+  {
+    roomId: "ae8d8cb1-0a9a-43da-90c4-084df62c78ab",
+    username: "eppo",
+    comment: "지금 비가 너무 많이와서 걷기 싫은데 택시탈까?",
+    profileImg: "https://velog.velcdn.com/images/eppo/post/9fa16a22-a5e5-4675-9d4b-fbcb5c93be28/image.png",
+    time: "6m"
+  },
+  {
+    roomId: "ae8d8cb1-0a9a-43da-90c4-084df62c78ab",
+    username: "eppo",
+    comment: "지금 비가 너무 많이와서 걷기 싫은데 택시탈까?",
+    profileImg: "https://velog.velcdn.com/images/eppo/post/9fa16a22-a5e5-4675-9d4b-fbcb5c93be28/image.png",
+    time: "6m"
+  },
+]
+
+
+
 function Chatting() {
+
+
+
 
   const RoomId = "";
   const name = React.useRef();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   
-  const RoomData = useSelector(((state=> state.community.chattingList)));
+  //const RoomData = useSelector(((state=> state.community.chattingList)));
   console.log(RoomData)
 
   const [modalOpen, setModalOpen] = React.useState(false);
@@ -38,6 +82,7 @@ function Chatting() {
 
   return (
     <>
+
       <Wrap>
 
         {RoomData && RoomData.map((item, itemIndex) => {
@@ -46,9 +91,19 @@ function Chatting() {
               <ChattingList onClick={()=>{
                 navigate("/chatting", {state:item.roomId})
               }}>
-                <img src="" />
-                {item.name}
-                {item.userCount}
+                <div className="chatInfoArea">
+                  <img src={item.profileImg} />
+                  <div style={{display:"flex"}}>
+                    <span>
+                      <p style={{fontWeight:"500" , fontSize:"1.2rem"}}>{item.username}</p> {item.comment}</span>
+                   
+                  </div>
+                  <div style={{fontWeight:"500"}}><Timer/>{item.time}</div>
+                </div>
+                <div className="buttonArea">
+                  <button>쓸까?</button>
+                  <button>말까?</button>
+                </div>
               </ChattingList>
             </>
           )
@@ -88,9 +143,36 @@ padding: 1rem;
 `;
 
 const ChattingList = styled.div`
-height: 50%;
-border: 1px solid gray;
+width: 100%;
+display: flex;
+flex-direction: column;
+border: none;
+box-shadow: 0px 4px 11px 0px rgb(0 0 0 / 15%);
+padding: 1rem;
 margin-bottom: 1rem;
+
+div{
+  gap: 5px;
+}
+.chatInfoArea{
+  display: flex;
+  flex-direction: row;
+}
+.buttonArea{
+  margin-top: 5%;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+
+  button{
+  width: 50%;
+  padding: 0.5rem;
+  border-radius: 30px;
+  border: 1px solid #26DFA6;
+  color: #26DFA6;
+
+  }
+}
 `;
 
 
@@ -101,13 +183,12 @@ position: fixed;
 width: 100%;
 bottom: 20%;
 
-
 button{
     width: 80%;
-
     background: #FFB7D9;
     color: white;
     padding: 1rem;
     border-radius:30px;
 }
+
 `;
