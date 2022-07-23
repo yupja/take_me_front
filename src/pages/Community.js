@@ -5,7 +5,6 @@ import { useLocation } from "react-router";
 import CommunityTab from "../components/community/CommunityTab";
 import Chatting from "../components/community/Chatting"
 import Header from "../components/public/Header";
-import SwipeRooms from "../components/public/SwipeForm"
 
 import styled from "styled-components";
 
@@ -35,9 +34,7 @@ const Community = () => {
 
       <div style={{ width: "100%" }}>
         <RealTimeBox>
-          <TimeList>
-            <SwipeRooms/>
-          </TimeList>
+          <TimeList></TimeList>
         </RealTimeBox>
 
         <CommunityContents>
@@ -103,7 +100,6 @@ border-radius: 10px;
 
 const CommunityContents = styled.div`
 
-display: flex;
 `;
 
 export default Community;

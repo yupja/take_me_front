@@ -12,7 +12,7 @@ export const loadChattingListRS = createAsyncThunk(
   'community/chatting',
   async (thunkAPI) => {
     try {
-      const { data } = await axios.get('http://43.200.4.1/api/chat/rooms/',
+      const { data } = await axios.get('http://3.35.52.157/chat/rooms/',
        { headers: { 'Authorization':  `Bearer ${localStorage.getItem("accessToken")}` }}
       )
       return data;

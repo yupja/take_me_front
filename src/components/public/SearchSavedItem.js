@@ -6,8 +6,12 @@ import { allItemListRQ } from "../../store/modules/item"
 
 import styled from 'styled-components'
 
+import Modal from "./BasicModalForm"
+import SavedInput from "../saved/SavedInput"
 
-function SearchFavorite(props) {
+
+
+function SearchSavedItem(props) {
 
   useEffect(() => {
     dispatch(myFavoriteListRQ());
@@ -16,11 +20,20 @@ function SearchFavorite(props) {
 
   const dispatch = useDispatch();
   const list = useSelector((state) => state.item.allItemList);
-  
+  const [selecState, setSelectState] = useState(props.state);
+
   const allItemList = [];
   const makeList = list?.map((item) => {
     allItemList.push(item.itemName);
   })
+
+  //-------------- 모달
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalState, setModalState] = useState();
+  const [modalName, setModalName] = useState("");
+  const openModal = () => { setModalOpen(true); };
+  const closeModal = () => { setModalOpen(false); };
+
 
   //-------------- 드롭박스 제어 
   const [inputValue, setInputValue] = useState('');  // Input 값 제어
@@ -55,7 +68,7 @@ function SearchFavorite(props) {
   const savedItem = (clickedItem) => {
     const choosenItemIndex = allItemList?.indexOf(clickedItem)
     console.log(choosenItemIndex)
-    props.setSelectInputValue(list[choosenItemIndex])
+    props.setSelectInputValue(list.data[choosenItemIndex])
 
   };
 
@@ -89,23 +102,24 @@ function SearchFavorite(props) {
             value={inputValue}
             onChange={changeInputValue}
             onKeyUp={handleDropDownKey}
-            placeholder="태산을 찾아보세요!"
+            placeholder="오늘은 어떤걸 아끼셨나요?"
           />
 
 
           <DeleteButton onClick={() => setInputValue('')}>&times;</DeleteButton>
           {isHaveInputValue && (
             <DropDownBox>
-
               {dropDownList.length === 0 && (
                 <DropDownItem>
                   <AddFavoriteInput>
-                    앗! 아직 등록이 안되어있네요!<br />
+                    앗! 찾으시는게 아직 등록이 안되어있네요!<br />
                     새로 등록하시겠어요?
                   </AddFavoriteInput>
                   <AddButton onClick={() => {
-                    props.setNewAddGoal(true)
-                    setInputValue('')
+                    openModal();
+                    setModalState(<SavedInput closeModal={closeModal}
+                      goalItemId={props.goalItemId} />)
+                    setModalName("등록하기")
                   }}>+등록하기</AddButton>
                 </DropDownItem>
               )}
@@ -126,7 +140,17 @@ function SearchFavorite(props) {
               })}
             </DropDownBox>
           )}
+
+
+          {selecState == "saveState" ?
+            <Modal open={modalOpen} close={closeModal} header={modalName}>
+              {modalState}
+            </Modal>
+            : ""}
         </InputBox>
+
+
+
       </WholeBox>
 
     </>
@@ -135,23 +159,17 @@ function SearchFavorite(props) {
 
 
 const WholeBox = styled.div`
-
-  width: 100%;
-  // 등록하기 DropDownItem 이 나와야하는 경우  className='new' 추가!
-  .new {
-    padding:0;
-    box-shadow: 0px 4px 15px 0px rgb(0 0 0 / 25%);
-  }
+  padding: 10px;
 `;
 
 const InputBox = styled.div`
 display: flex;
-margin-left:5px;
-width:100%;
 flex-direction: row;
+margin: 0 15px;
 padding: 10px;
 border: 1px solid rgba(0, 0, 0, 0.3);
-border-radius: 30px;
+border-radius: 18px;
+z-index: 3;   
 position: relative;
 
   input{
@@ -176,34 +194,25 @@ const DeleteButton = styled.div`
 
 
 const DropDownBox = styled.ul`
-/* display: block;
-margin-left:4%;
-width:100%;
+display: block;
+width:89%;
 padding: 8px 0;
-background: white;
-border: 1px solid rgba(0, 0, 0, 0.3);
+background-color: white;
 border-top: none;
 border-radius: 0 0 16px 16px;
-list-style-type: none;
-position: absolute;
-top: 100%; left: 0; */
-
-display: block;
-width: 89%;
-padding-top: 15px;
-background: white;
-border-top: none;
-border-radius: 0 0 4px 4px;
 list-style-type: none;
 position: absolute;
 top: 103%; left: 50%;
 box-shadow: 0px 4px 4px 0px rgb(0 0 0 / 25%);
 transform: translateX(-50%);
+/* z-index: 999; */
 `;
 
 
 
 const AddFavoriteInput = styled.p`
+/* text-align: center;
+padding: 10px; */
 text-align: center;
 line-height: 20px;
 margin:0 !important;
@@ -212,6 +221,12 @@ font-size: 1rem;
 `;
 
 const AddButton = styled.button`
+/* background: #26DFA6;
+color: white;
+border: none;
+border-radius: 20px;
+padding: 10px;
+width: 80%; */
 background: #26DFA6;
 color: white;
 border: none;
@@ -238,4 +253,4 @@ const DropDownItem = styled.li`
 
 
 
-export default SearchFavorite;
+export default SearchSavedItem;

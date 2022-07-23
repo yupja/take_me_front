@@ -68,14 +68,14 @@ const ListModal = (props) => {
   };
 
   const ListBox = styled.div`
-  /* border: 1px solid goldenrod; */
+  border: 1px solid goldenrod;
   width: 90vw;
   height: 105vw;
-  /* position: absolute; */
+  position: absolute;
     /* z-index: 80; */
-    /* top: 55%;  */
-    /* left: 50%; */
-    /* transform: translate(-50%, -50%); */
+    top: 55%; 
+    left: 50%;
+    transform: translate(-50%, -50%);
     /* overflow: auto; */
   `;
 
