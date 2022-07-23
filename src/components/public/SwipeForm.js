@@ -78,7 +78,9 @@ padding: 1rem;
 const ChattingList = styled.div`
 width: 100%;
 display: flex;
+overflow-x:scroll;
 flex-direction: column;
+white-space: nowrap;
 border: none;
 box-shadow: 0px 4px 11px 0px rgb(0 0 0 / 15%);
 padding: 1rem;

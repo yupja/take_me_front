@@ -19,7 +19,7 @@ const Community = () => {
 
 
   return (
-    <div className="wrap">
+  <>
       <TopWrap>
       <Header title={title} />
       </TopWrap>
@@ -33,19 +33,18 @@ const Community = () => {
         }}>쓸까말까</div>
       </MenuBar>
 
-      <div style={{ width: "100%" }}>
-        <RealTimeBox>
-          <TimeList>
-            <SwipeRooms/>
-          </TimeList>
-        </RealTimeBox>
+      <RealTimeBox>
+        <TimeList>
+          <SwipeRooms />
+        </TimeList>
+      </RealTimeBox>
 
-        <CommunityContents>
+      <div style={{ width: "100%" }}>
+         <CommunityContents>
           {page}
         </CommunityContents>
       </div>
-    </div>
-
+  </>
   )
 };
 
