@@ -19,6 +19,7 @@ import { useLocation } from "react-router";
 import Header from "../components/public/Header"
 
 import {ReactComponent as Dot} from "../assets/icons/Dot.svg";
+import {ReactComponent as ArrowUp} from "../assets/icons/ArrowUp.svg";
 
 
 function Detail() {
@@ -41,6 +42,12 @@ function Detail() {
     const Postdata = useSelector((state) => state.community.postList);
     const userinfo = useSelector((state) => state.user.infoList)
     const myGoalList = useSelector((state=> state.goal.myGoalList));
+    const goal = {
+      goalImage : myGoalList?.image,
+      goalItemId : myGoalList?.goalItemId,
+      goalPercent : (myGoalList?.goalPercent)*0.01,
+      goalitemName: myGoalList?.itemName
+    }
     
     // console.log(commentData.data,"comment")
    
@@ -76,6 +83,7 @@ function Detail() {
     const boardId = postlistdata.boardId
     // const state = "커뮤니티"
 
+    //슬릭
     const settings = {
         dots: true,
         infinite: true,
@@ -84,7 +92,7 @@ function Detail() {
         slidesToScroll: 1
       };
 
-    const [limit, setLimit] = useState(10); 
+    const [limit, setLimit] = useState(51); 
     const toggleEllipsis = (str, limit) => {
     return {
     	string: str.slice(0, limit),
@@ -97,6 +105,11 @@ function Detail() {
   };
 
 
+  const onClickClose = (str) => {
+    setLimit(51)
+  }
+
+
 
     return (
         <>
@@ -107,10 +120,10 @@ function Detail() {
                 <div style={{backgroundColor:"transparent"}}></div>
                     <ContentsBox>
                         <DountBox>
-                        <DountChart color="#26DFA6" size="300" position="relative" />
+                        <DountChart color="#26DFA6" size="300" position="relative" percent={goal.goalPercent}/>
                         <Text>
                         <Commu>
-                            <GoalName>60%</GoalName>
+                            <GoalName><p className="goalTitle">{goal.goalitemName} {Math.floor(goal.goalPercent * 100)}%</p></GoalName>
                             <GoalName>{postlistdata.goalItemName}</GoalName>
                         </Commu>
                         <Bottom>
@@ -133,11 +146,11 @@ function Detail() {
                 <Right>
                     <Content>
                     <Nick>{postlistdata.nickname}</Nick>&nbsp;&nbsp;
-                    {postlistdata.contents}
+                    {/* {postlistdata.contents} */}
                     {toggleEllipsis(postlistdata.contents, limit).string}
                     {toggleEllipsis(postlistdata.contents, limit)
-                    .isShowMore && <button onClick={onClickMore(postlistdata.contents)}>
-                        ...더보기</button>}
+                    .isShowMore ? <MoreBtn onClick={onClickMore(postlistdata.contents)}>
+                        ...더보기</MoreBtn> : <Arr onClick={onClickClose}><ArrowUp /></Arr>}
                     </Content>
                 </Right>
                 {userinfo.username === postlistdata.userId ?
@@ -192,7 +205,7 @@ const StyledSlider = styled(Slider)`
         /* display: flex; */
     }
     .slick-dots {
-        bottom: 10px;
+        bottom: 2px;
     }
     .slick-dots li.slick-active button:before {
         color: #26DFA6;
@@ -294,6 +307,12 @@ padding: 3vw;
 color: white;
 /* position: absolute;
 z-index: 2; */
+line-height: 1rem;
+`;
+
+const MoreBtn = styled.button`
+color: #26DFA6;
+font-weight: 700;
 `;
 
 const Bottom = styled.div`
@@ -320,7 +339,7 @@ width: 100%;
 background-color: #333333;
 /* border: 5px solid blue; */
 display: flex;
-padding: 5vw 0 5vw 5vw;
+padding: 5vw 0 1vw 5vw;
 `;
 
 const Left = styled.div`
@@ -342,25 +361,11 @@ min-height: 15vw;
 /* border: 1px solid greenyellow; */
 `;
 
-const CommentBox = styled.div`
-width: 100%;
-height: 25vw;
-/* border: 1px solid green; */
+const Arr = styled.div`
+bottom: 0;
 display: flex;
-margin-top: 4vw;
-`;
-
-const CoProfile = styled.div`
-width: 8vw;
-height: 8vw;
-border-radius: 8vw;
-background-color: gray;
-`;
-
-const CreateAt = styled.span`
-margin-right: 3vw;
-font-size: 0.8rem;
-color: #999999;
+justify-content: center;
+margin-top: 3vw;
 `;
 
 const ContentsBox = styled.div`
@@ -394,28 +399,6 @@ top: 50%; left: 50%;
 transform: translate(-50%, -50%);
 `;
 
-const DelBtn = styled.button`
-background-color: transparent;
-border: none;
-`;
-
-// const Right = styled.div`
-// float: right;
-// `;
-
-const Comment = styled.div`
-width: 100%;
-height: 15vw;
-margin-top: 1.5vw;
-/* border: 1px solid orange; */
-`;
-
-const Ddu = styled.div`
-width: 100%;
-margin-left: 2vw;
-/* border: 1px solid violet; */
-`;
-
 const Enter = styled.div`
 width: 100%;
 height: 12vw;
@@ -429,14 +412,15 @@ bottom: 0;
 `;
 
 const Input = styled.input`
-width: 90%;
+width: 85%;
 height: 90%;
 border: 1px solid #A9FFE4;
 border-radius: 30vw;
 background-color: transparent;
 color: white;
-margin: 0 auto;
-padding: 4vw;
+margin: auto;
+margin-left: 5vw;
+/* padding: 4vw; */
 :focus{
     outline: none;
 }
@@ -449,7 +433,7 @@ height: 10vw;
 background-color: transparent;
 color: white;
 position: absolute;
-left: 79%;
+left: 75%;
 `;
 
 const UserInfoNav = styled.div`

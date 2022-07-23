@@ -56,7 +56,7 @@ const LikeCount = styled.div`
   align-items: center;
   
 .heart{
-  path { fill: none}
+  path { fill: #ff0044}
 }
 
 `;
