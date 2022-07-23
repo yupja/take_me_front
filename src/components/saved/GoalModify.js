@@ -3,14 +3,16 @@ import { useDispatch } from "react-redux"
 
 import Category from "../public/Category"
 import SearchItem from "../public/SearchGoal"
-import { newItemGoalAddRQ, addGoalRQ, updateGoalAPI } from "../../store/modules/goal"
+import { newItemGoalAddRQ, addGoalRQ, updateGoalAPI, newUpdateGoalAPI } from "../../store/modules/goal"
+import {addItem} from "../../store/modules/item"
 
 
 import styled from "styled-components";
 import {ReactComponent as LeftArrow} from "../../assets/icons/LeftArrow.svg"
 
-const GoalInput = (props)=>{
+const GoalModify = (props)=>{
   const dispatch = useDispatch()
+
 
 
   //-------------- 모달
@@ -41,47 +43,31 @@ const GoalInput = (props)=>{
       }
     })
   }
-
+  
 
 
 
   const sendNewData = (state) =>{
-
+    console.log("여기");    
     const formData = new FormData();
-    console.log("여기?");
-    console.log(category)
+    formData.append("image",imageFile)
 
-    formData.append("image", imageFile);
-
-     const data ={
+    
+    const  data ={
         itemName: itemName.current.value,
         defaultPrice: Number(price.current.value),
         goalItemCount: Number(goalItemCount.current.value),
         categoryId: Number(category),
+        goalId:props.goalItemId,
       }
-    
-    const json = JSON.stringify(data);
-    const blob = new Blob([json], { type: "application/json" });
-    formData.append('goalItem',blob);
 
-    console.log("없던거 ADD")
-    // if(imageFile==="null"){
-    //   alert("이미지를 첨부");
-    // }else{
-      dispatch(newItemGoalAddRQ(formData));
-    // }
-    
+      const json = JSON.stringify(data);
+      const blob = new Blob([json], { type: "application/json" });
+      formData.append('goalItem',blob);
 
-    props.closeModal();
-
-    // if(state==="ADD"){
-    //   //console.log("없던거 에드"), 확인함/ 구현완
-    //   //
-    // }
-    //else if(state==="Update"){
-    //   dispatch(addItem(data));
-    // }
-  }
+      dispatch(newUpdateGoalAPI(formData, props.goalItemId));
+      props.closeModal();
+    } 
 
 
   const sendData = (state) =>{
@@ -100,24 +86,12 @@ const GoalInput = (props)=>{
     const blob = new Blob([json], { type: "application/json" });
     formData.append('goalItem',blob);
 
-    console.log("있던거 ADD")
+    console.log("있던거 Update")
     if(imageFile==="null"){
       alert("이미지를 첨부");
     }else{
-    dispatch(addGoalRQ(formData));
+    dispatch(updateGoalAPI(formData, props.goalItemId))
   }
-
-    
-  
-  //   if(state==="ADD"){
-  //     console.log("있던거 에드")
-
-  //   }
-  //   else if(state==="Update"){
-   //.dispatch(updateGoalAPI(formData, props.goalItemId));
-  //   // }
-  // }
-
 }
 
 
@@ -202,7 +176,7 @@ const GoalInput = (props)=>{
       <Footer onClick={()=>
         {sendNewData(props.state)
         props.closeModal()}}>
-        태산 등록하기
+        없던거 태산 수정하기
       </Footer>
     :
       <Footer 
@@ -210,7 +184,7 @@ const GoalInput = (props)=>{
           sendData(props.state);
           props.closeModal();
           }}>
-        태산 등록하기
+        있던거 태산 등록하기
       </Footer>} 
     </>
   )
@@ -346,5 +320,5 @@ justify-content: center;
 `;
 
 
-export default GoalInput;
+export default GoalModify;
 
