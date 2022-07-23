@@ -8,10 +8,11 @@ import PostModal from "./PostModal";
 import { useNavigate } from "react-router-dom";
 import {getUserInfoDB} from "../../store/modules/user";
 import Like from "./Like";
-import DountChart from "../public/Goal"
-import { loadMoreContentDB, loadpostsAc } from "../../store/modules/community";
+import GoalForCum from "./GoalForCum"
+import { loadMoreContentDB, loadpostsAc, deletePostAc } from "../../store/modules/community";
 import { ReactComponent as Receipt } from "../../assets/icons/Receipt.svg";
 import { ReactComponent as Comment } from "../../assets/icons/Comment.svg";
+import {ReactComponent as Dot} from "../../assets/icons/Dot.svg";
 
 
 
@@ -27,11 +28,13 @@ const CommunityTab = () => {
   
   const  [savedListIndex, setSavedListIndex] = useState();
   const userinfo = useSelector((state) => state.user.infoList)
-  // console.log(userinfo,"userinfo")
+  console.log(userinfo,"userinfo")
   const Postdata = useSelector((state) => state.community.postList.data);
   console.log(Postdata, "postdata")
 
   const Savedata = useSelector((state) => state.saved.savedItem);
+
+
 
   const [showModall, setShowModall] = useState(false);
   const openModall = (index) => {
@@ -42,6 +45,10 @@ const CommunityTab = () => {
     setShowModall(false);
   }
 
+  const [user_nav, setUserNav] = useState(false)
+  const onClickNav = (e) => {
+    setUserNav(user_nav => user_nav ? false : true)
+}
   const [modalOpen, setModalOpen] = useState(false);
   const openModal = () => { setModalOpen(true); };
   const closeModal = () => { setModalOpen(false); };
@@ -93,19 +100,25 @@ const CommunityTab = () => {
                   {/* <Day>{postList.createAt}</Day> */}
                   <ItemImgBox>
                     <ItemImage src={postList.image}></ItemImage>
-                    <DountChart color="#26DFA6" size="150" position="relative" />
+                    <GoalForCum  className="dounut" color="#26DFA6" size="34" position="relative" percent={postList.goalPercent}/>
                   </ItemImgBox>
                   <ProfileBox>
                     <Profile src={postList.profileImg}></Profile>
                   </ProfileBox>
                 </Left>
                 <Right>
-                  <div onClick={() => { Navigate
+                  <div>
+                  <NewTop>
+                    <div onClick={() => { Navigate
                       (`/detail/${postList.boardId}`,
                       {state: {name:postList}}
                       ) }}>
-                  <NewTop>
                     {postList.goalItemName}
+                    {userinfo.username === postList.userId ?
+                    <DotBox><Dot className="dot"/></DotBox>
+
+                    : null }
+                    </div>
                   </NewTop>
                     <NewNick>
                       {postList.nickname}&nbsp;&nbsp;{postList.contents}
@@ -124,12 +137,12 @@ const CommunityTab = () => {
                       (`/detail/${postList.boardId}`,
                       {state: {name:postList}}
                       ) }}>
-                    <span onClick={() => { Navigate(`/detail/${postList.boardId}`)
+                    <Count onClick={() => { Navigate(`/detail/${postList.boardId}`)
                       }}>
                       <Comment />&nbsp;&nbsp;{postList.commentCount} 개
-                      </span>
+                      </Count>
                       </div>
-                    <div onClick={()=>{openModall(index)}}><Receipt /></div>
+                    <Rec onClick={()=>{openModall(index)}}><Receipt /></Rec>
                   </NewFoot>
                 </Right>
               </ContentBox>
@@ -165,9 +178,60 @@ const CommunityTab = () => {
 )
 };
 
+const Count = styled.span`
+display: flex;
+align-items: center;
+`;
+
+const Rec = styled.div`
+/* border: 1px solid rebeccapurple; */
+right: 0;
+margin-left: auto;
+`;
+
+const DotBox = styled.div`
+float: right;
+`;
+
+const Toggle = styled.div`
+margin-left: 0;
+width: 5%;
+height: 5%;
+float: right;
+/* border: 3px solid orange; */
+position: absolute;
+z-index: 3;
+margin-right: 5vw;
+right: 0;
+top: 0;
+.dot{
+  path { fill: #333333}
+}
+`;
+
+const UserInfoNav = styled.div`
+position: absolute;
+top: 6%;
+right: 6%;
+> div {
+    position: relative;
+    z-index: 5;
+    width: 20vw;
+    height: 18vw;
+    text-align: center;
+    line-height: 2rem;
+    font-size: 0.7rem;
+    border-radius: 1vw;
+    background: #fff;
+    box-shadow: rgb(0 0 0 / 10%) 0px 0px 8px;
+}`
+
+
 
 const LikeBox = styled.div`
 display: flex;
+width: 25%;
+margin-right: 3vw;
 `;
 
 const CreatAt = styled.div`
@@ -219,6 +283,7 @@ height: 100%;
 /* background-color: gray; */
 border-radius: 35px;
 border: none;
+position: absolute;
 
 `;
 
@@ -256,10 +321,9 @@ const ItemImgBox = styled.div`
 /* border: 1px solid red; */
 width: 31vw;
 height: 31vw;
-align-items: center;
+/* align-items: center; */
 margin: auto;
 position: relative;
-
 `;
 
 const Foot = styled.div`
@@ -311,10 +375,13 @@ position: relative;
 
 const NewTop = styled.div`
 /* border: 3px solid red; */
-width: 100%;
+width: 95%;
 height: 6vw;
 font-size: 1.2rem;
 font-weight: 700;
+.dot{
+  path { fill: #333}
+}
 `;
 
 const NewNick = styled.div`
@@ -341,7 +408,7 @@ display: flex;
 width: 85%;
 height: 7vw;
 align-items: center;
-justify-content: space-between;
+/* justify-content: space-between; */
 position: absolute;
 font-size: 0.8rem;
 bottom: 0;

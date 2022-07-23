@@ -5,7 +5,8 @@ import { useCookies } from "react-cookie";
 export const instance = axios.create({
   // baseURL: "https://api.webprogramming-mj6119.shop"
   // baseURL: "http://13.209.13.168"
-  baseURL: "http://3.35.52.157"
+  // baseURL: "http://3.35.52.157"
+  baseURL: "http://13.209.74.40"
 });
 
 instance.interceptors.request.use(

@@ -3,7 +3,10 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux/es/exports";
 import { useParams } from "react-router-dom";
 import { loadsavedAc } from "../../store/modules/saved";
-import {ReactComponent as Receipt} from "../../assets/icons/Receipt.svg";
+import {ReactComponent as ReceiptB} from "../../assets/icons/ReceiptB.svg";
+import {ReactComponent as Young} from "../../assets/icons/Young.svg";
+import {ReactComponent as Close} from "../../assets/icons/Close.svg";
+
 
 const ListModal = (props) => {
 
@@ -27,40 +30,54 @@ const ListModal = (props) => {
       {props.showModall ?
 
         <Background>
-            <ModalBox onClick={e => e.stopPropagation()}>
-                <CommentBox>
+            {/* <ModalBox onClick={e => e.stopPropagation()}> */}
+              <Young className="paper" position="relative"/>
+                {/* <CommentBox> */}
                     <Top>
                       <Icon>
-                        <Receipt className="bigger"/>
+                        <ReceiptB className="bigger"/>
                       </Icon>   
-                    <Close onClick={props.closeModall}>X</Close>
+                    <Closeb onClick={props.closeModall}><Close /></Closeb>
                     </Top>
                     <Middle>
                         <p><Spann>{saveDataa.userId}</Spann>님의 {saveDataa.goalItemName} <Spann>KEEP</Spann></p>
                         <p style={{fontWeight:"700", marginTop:"2vw"}}>{saveDataa.savedItemTotalPrice} 원</p>
                     </Middle>
-                    {saveData?.map((savedItem, inddex) => (
-                    
-                    <List key={inddex}>
+                    {saveData?.map((savedItem, index) => (
+                    <ListBox>
+                    <List key={index}>
                       <Left>
                       <CreateAt>{savedItem.createdDate.substr(0, 10).split('-','3').join(".")}</CreateAt>
-                      <SavedName>{savedItem.savedItemName}</SavedName>
+                      <SavedName>{savedItem.saveItemName}</SavedName>
                       </Left>
                       <Right>
                       <Price>{savedItem.price} 원</Price>
                       <Star>⭐</Star>
                       </Right>
                     </List>
+                    </ListBox>
                     
                     ))}
-                </CommentBox>
-            </ModalBox>
+                {/* </CommentBox> */}
+            {/* </ModalBox> */}
              <CloseBtn onClick={props.closeModall}>닫기</CloseBtn>
         </Background> : null}
 </>
 
     );
   };
+
+  const ListBox = styled.div`
+  /* border: 1px solid goldenrod; */
+  width: 90vw;
+  height: 105vw;
+  /* position: absolute; */
+    /* z-index: 80; */
+    /* top: 55%;  */
+    /* left: 50%; */
+    /* transform: translate(-50%, -50%); */
+    /* overflow: auto; */
+  `;
 
   const Background = styled.div`
   position: fixed;
@@ -70,6 +87,9 @@ const ListModal = (props) => {
   right: 0;
   background-color: rgb(0,0,0,0.3);
   /* background-color: rgba(41,41,41,0.85); */
+  .paper{
+    position: relative;
+  }
   `;
   
   const ModalBox = styled.div`
@@ -90,7 +110,7 @@ const ListModal = (props) => {
   }
   `;
   
-const Close = styled.button`
+const Closeb = styled.button`
 /* border: 5px solid violet; */
 width: 5vw;
 height: 5vw;
@@ -123,6 +143,11 @@ const Top = styled.div`
 width: 100%;
 display: flex;
 margin:1vw 0 3vw 0;
+position: absolute;
+z-index: 90;
+top: 13.5%; 
+left: 43%;
+transform: translate(-50%, -50%);
 `;
 
 const Icon = styled.div`
@@ -140,10 +165,15 @@ const Middle = styled.div`
 width: 100%;
 height: 12vw;
 /* border: 1px solid red; */
-font-size: 1rem;
+font-size: 1.5rem;
 /* font-weight: 700; */
 text-align: center;
 margin-top: 3vw;
+top: 21%;
+left: 50%;
+transform: translate(-50%, -50%);
+z-index: 80;
+position: absolute;
 `;
 
 const Spann = styled.span`
@@ -152,16 +182,20 @@ font-weight: 700;
 `;
 
 const List = styled.div`
-width: 100%;
+width: 80%;
 height: 10vw;
 /* border: 1px solid blue; */
 /* display: flex; */
 /* justify-content: space-between; */
 align-items: center;
-padding: 0 5vw 0 5vw;
 overflow: hidden; //float 랑 같이 부모 요소에!
 border-bottom: 1px solid gray;
 line-height: 10vw; //폰트의 높이!
+/* top: 2%; */
+left: 50%;
+transform: translate(-50%, -50%);
+z-index: 80;
+position: absolute;
 `;
 
 const Left = styled.div`
