@@ -22,8 +22,12 @@ const CreateRoom = () => {
   // 찬반 생성시
   const createRoom = (e) => {
     e.preventDefault();
-    console.log(RoomName.current.value)
-    dispatch(createChatRoom(RoomName.current.value));
+    const data = {
+      comment: "비가 오네요."
+    }
+    // const room = "방이름고정예정입니다"
+    // const timeLimit = 10
+    dispatch(createChatRoom(data));
   }
 
   return (

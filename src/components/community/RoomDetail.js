@@ -4,70 +4,141 @@ import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import SockJS from "sockjs-client";
 import Stomp from "stompjs";
-import { getChatting, subMessage } from "../../store/modules/community";
+import { subMessage, myInfoData } from "../../store/modules/community";
+import { getUserInfoDB } from "../../store/modules/user";
+import Header from "../public/Header";
 
 function RoomDetail() {
   const { roomId } = useParams();
   const dispatch = useDispatch();
+
+  const title = '쓸까?말까?'
   const chatRef = useRef();
-  const getMessages = useSelector((state) => state.chat);
-  console.log(getMessages);
+  const getMessages = useSelector((state) => state.community.messages);
+  const getMyInfo = useSelector((state) => state.community.myInfo);
+
+  const userInfo = useSelector((state) => state.user);
+  console.log(userInfo.infoList.nickname);
+  console.log(getMyInfo);
 
 
 
-  const sock = new SockJS('http://3.35.52.157/chatting', null, { transports: ["websocket", "xhr-streaming", "xhr-polling"] });
+  const sock = new SockJS('https://api.webprogramming-mj6119.shop/chatting', null, { transports: ["websocket", "xhr-streaming", "xhr-polling"] });
 
   let client = Stomp.over(sock);
 
-  let headers = { Authorization: localStorage.getItem('accessToken') };
   let token = localStorage.getItem('accessToken');
-
   useEffect(() => {
+    dispatch(getUserInfoDB());
+    dispatch(myInfoData());
+
     // dispatch(getChatting(roomId))// 이전 채팅 목록 불러오기
 
     client.connect({ "token": token }, () => {
+
+
+      // subscribe(path, callback)로 메시지를 받을 수 있다. callback 첫번째 파라미터의 body로 메시지의 내용이 들어온다.
       client.subscribe(`/sub/chat/room/${roomId}`, (res) => { // 메세지 수신
         console.log(res)
-        const newMessage = JSON.parse(res.body);
+        let newMessage = JSON.parse(res.body);
         console.log(newMessage);
         dispatch(subMessage(newMessage));
-      });
+        // return newMessage;
 
+        // 채팅 내역 추가
+        // chatBox.append('<li>' + content.message + '(' + content.writer + ')</li>')
+
+
+      })
+
+
+      console.log(getMyInfo);
+      const info = {
+        type: 'ENTER',
+        roomId: 123123123,
+        sender: getMyInfo.nickname,
+        profileImg: getMyInfo.profileImg
+      }
       //여기서 구독한 유저 정보를 먼저 보내준다
-      // client.send('/pub/chat/enter', {}, JSON.stringify({ roomId: roomId, writer: username }))
+      // send(path, header, message)로 메시지를 보낼 수 있다.
+      client.send(`/pub/chat/message`, { "token": token }, JSON.stringify({
+        sender: "ddd",
+        profileImg: "ddd",
+        type: 'TALK',
+        roomId: 123123123,
+      }));
+    });
 
-    })
   }, [])
 
 
+
+
+  // type: , comminet, nick, pring
+
+  // const infoChat = () => {
+
+  //   client.send(`/pub/chat/message`, { "token": token }, JSON.stringify({ type: 'TALK', roomId: roomId, sender: getMyInfo.nickname, profileImg: getMyInfo.profileImg }))
+
+  // }
 
   const myChat = (e) => {
     // setChat(chatRef.current.value)
     const msg = chatRef.current.value;
 
-    client.send(`/pub/chat/message`, { "token": token }, JSON.stringify({ type: 'TALK', roomId: roomId, message: msg }))
+    client.send(`/pub/chat/message`, { "token": token }, JSON.stringify({ type: 'TALK', roomId: roomId, message: msg, sender: getMyInfo.nickname, profileImg: getMyInfo.profileImg }))
 
     chatRef.current.value = null;
   }
 
+  const test = [
+    {
+      "sender": "eunjin1",
+      "message": "메세지123"
+    },
+    {
+      "sender": "eunjin1",
+      "message": "일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이"
+    },
+    {
+      "sender": "test2",
+      "message": "메세지123"
+    },
+    {
+      "sender": "eunjin1",
+      "message": "일이삼사오육칠팔구십일이삼이"
+    },
+    {
+      "sender": "eunjin1",
+      "message": "일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이"
+    },
+  ]
 
-
+  const userInput = `${userInfo.infoList.nickname}(으)로 댓글 달기 ...`
 
   return (
     <ChatWrap>
+      <Header title={title} />
+      <Box />
       <ChatBox>
         <Chatting>
-          {/* {getMessages.map((el, i) => (
-            <div key={i}>
-              <div className="img"><img src="https://mblogthumb-phinf.pstatic.net/MjAyMTAxMjJfNzMg/MDAxNjExMzIzMzU1NDgw.nhAuTdE8OjYs0wZAb8qpMAsUaUIZXeRKJ0zDLs5oaKIg.iONiFE4qhr5wuB2FwDe4yfO3oC9gBbOjDaCyGXxiLMkg.JPEG.sohyeon612/%EB%8B%A4%EC%9A%B4%EB%A1%9C%EB%93%9C%ED%8C%8C%EC%9D%BC%EF%BC%8D2.jpg?type=w800" alt="프로필" /></div>
-              <span>닉네임</span>
-              <p>{el.message}</p>
-            </div>
-          ))} */}
+          {userInfo?.infoList.nickname ?
+            test.map((el, i) =>
+            (
+              <div key={i} className={el.sender === userInfo.infoList.nickname ? "right" : "left"}>
+                <div className="img"><img src="https://mblogthumb-phinf.pstatic.net/MjAyMTAxMjJfNzMg/MDAxNjExMzIzMzU1NDgw.nhAuTdE8OjYs0wZAb8qpMAsUaUIZXeRKJ0zDLs5oaKIg.iONiFE4qhr5wuB2FwDe4yfO3oC9gBbOjDaCyGXxiLMkg.JPEG.sohyeon612/%EB%8B%A4%EC%9A%B4%EB%A1%9C%EB%93%9C%ED%8C%8C%EC%9D%BC%EF%BC%8D2.jpg?type=w800" alt="프로필" /></div>
+                <div className="info">
+                  <span>닉네임</span>
+                  <p>{el.message}</p>
+                </div>
+              </div>
+            )
+            ) : null
+          }
         </Chatting>
       </ChatBox>
       <Enter>
-        <Input type="text" ref={chatRef}></Input>
+        <Input type="text" placeholder={userInput} ref={chatRef} onfocus="this.placeholder=''"></Input>
         <PostBtn onClick={myChat}>게시</PostBtn>
       </Enter>
     </ChatWrap>
@@ -87,30 +158,49 @@ const Chatting = styled.div`
 background: #fff;
 width: 100%;
 padding:20px 25px; 
-div{
-  width: 100%;
-}
-.img{
-  width: 40px;
-  height: 40px;
+
+.left, .right {
+  display: flex;
+  margin-bottom: 12px; 
+
+  .img{
+  flex-shrink: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-right: 5px;
   border-radius: 50%;
   overflow: hidden;
+  border: 1px solid green;
 }
 img{
   width: 100%;
   height: 100%;
   border-radius: 50%;
 }
-span {
-  font-size: 12px;
-  color: #666;
+  .info{
+    position: relative;
+  }
+  span{
+    font-size: 0.75rem;
+    line-height: 1.25rem;
+    color: #666;
+  }
+  p{
+    border: 1px solid #26DFA6;
+    padding: 10px;
+    top:1.25rem;
+    border-radius: 100px;
+    font-size: 0.75rem;
+    line-height: 0.93rem;
+  }
 }
-p{
-  border: 1px solid #26DFA6;
-  width: 90%;
-  padding: 10px;
-  border-radius: 100px !important;
+.right {
+  flex-direction: row-reverse;
+  .img { display: none; }
+  span { display: none; }
+  p { background: #DDFFF5; }
 }
+
 
 `
 const MyChat = styled.div`
@@ -118,6 +208,7 @@ const MyChat = styled.div`
 `
 const Enter = styled.div`
 width: 100%;
+padding: 5px 25px;
 height: 12vw;
 border: none;
 background-color: #333333;
@@ -126,13 +217,17 @@ display: flex;
 align-items: center; 
 position: fixed;
 bottom: 0;
+
+input:placeholder{
+  color:#fff;
+}
 `;
 
 const Input = styled.input`
-width: 90%;
-height: 90%;
+width: 100%;
+height: 2.5rem;
 border: 1px solid #A9FFE4;
-border-radius: 30vw;
+border-radius: 20px;
 background-color: transparent;
 color: white;
 margin: 0 auto;
@@ -142,13 +237,22 @@ padding: 4vw;
 }
 `
 
+
 const PostBtn = styled.button`
-width: 10vw;
+position: absolute;
+right:0;
 height: 10vw;
+padding-right: 35px;
 border: none;
 background-color: transparent;
 color: white;
-position: absolute;
-float: left;
-left: 83%;
+font-size: 0.75rem;
+font-weight:700;
+`;
+
+const Box = styled.button`
+width: 100%;
+height:140px;
+background:#333;
+
 `;

@@ -66,6 +66,20 @@ export const getChatting = (data) => {
   };
 };
 
+// 정보 불러오기
+export const myInfoData = (data) => {
+  return async function (dispatch) {
+    await instance.get(`/api/myChatInfo`)
+      .then((res) => {
+        console.log(res);
+        dispatch(myInfo(res.data.data));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+
 
 
 
@@ -288,6 +302,7 @@ const communitySlice = createSlice({
     chattingList: [],
     getDayCountList: [],
     messages: [],
+    myInfo: [],
     // 게시판
     postList: { data: [] },
     post: [],
@@ -321,9 +336,10 @@ const communitySlice = createSlice({
         return post;
       });
     },
-    loadDetail: (state, action) => {
-      state.postList = action.payload;
+    myInfo: (state, action) => {
+      state.myInfo = action.payload
     },
+
 
     // 코멘트 리듀서 
     loadComment: (state, action) => {
@@ -337,7 +353,9 @@ const communitySlice = createSlice({
       state.getDayCountList = action.payload;
     },
     subMessage(state, action) {
+      console.log(state, action)
       state.messages.push(action.payload);
+      // state.messages = action.payload;
     },
   },
   extraReducers: {
@@ -351,5 +369,5 @@ const communitySlice = createSlice({
 
 });
 
-export const { loadComment, createComment, roadPosts, loadDetail, subMessage, getDayCountList } = communitySlice.actions;
+export const { loadComment, createComment, roadPosts, loadDetail, subMessage, getDayCountList, myInfo } = communitySlice.actions;
 export default communitySlice.reducer;
