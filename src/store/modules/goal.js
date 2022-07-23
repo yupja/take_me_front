@@ -25,7 +25,7 @@ export const addGoalRQ =(formData) =>{// 있던거 골아이템 등록
 export const newItemGoalAddRQ = (formData) =>{// 없던거 골아이템 등록 
   return async function (dispatch){
     try{
-      await instance.post('/api/newGoalItem', formData,
+      await instance.post('/api/items/goalItem', formData,
       {
         headers :  {
           "Content-Type": "multipart/form-data",
@@ -52,7 +52,25 @@ export const myReadGoalRQ = createAsyncThunk(
 
 //-------------------- UPDATE ---------------------------
 
-export const updateGoalAPI = (formData, goalItemId) => { // 모든 사람의 태산 항목
+export const newUpdateGoalAPI = (formData, goalItemId) => { 
+  return async function (dispatch) {
+    try {
+      console.log(goalItemId)
+      await instance.put(`/api/items/goalItem/${goalItemId}`, formData,{
+        headers :  {
+          "Content-Type": "multipart/form-data",
+        }
+      })
+      dispatch(myReadGoalRQ());
+    } catch (error) {
+
+    }
+  }
+
+}
+
+
+export const updateGoalAPI = (formData, goalItemId) => { 
   return async function (dispatch) {
     try {
       console.log(goalItemId)
@@ -68,6 +86,7 @@ export const updateGoalAPI = (formData, goalItemId) => { // 모든 사람의 태
   }
 
 }
+
 
 
 //-------------------- DELETE ---------------------------
