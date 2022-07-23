@@ -13,13 +13,10 @@ function RoomDetail() {
   const dispatch = useDispatch();
 
   const title = '쓸까?말까?'
+
   const chatRef = useRef();
   const getMessages = useSelector((state) => state.community.messages);
-  const getMyInfo = useSelector((state) => state.community.myInfo);
-
   const userInfo = useSelector((state) => state.user);
-  console.log(userInfo.infoList.nickname);
-  console.log(getMyInfo);
 
 
 
@@ -28,91 +25,47 @@ function RoomDetail() {
   let client = Stomp.over(sock);
 
   let token = localStorage.getItem('accessToken');
+
   useEffect(() => {
     dispatch(getUserInfoDB());
     dispatch(myInfoData());
 
-    // dispatch(getChatting(roomId))// 이전 채팅 목록 불러오기
-
     client.connect({ "token": token }, () => {
-
-
       // subscribe(path, callback)로 메시지를 받을 수 있다. callback 첫번째 파라미터의 body로 메시지의 내용이 들어온다.
       client.subscribe(`/sub/chat/room/${roomId}`, (res) => { // 메세지 수신
-        console.log(res)
         let newMessage = JSON.parse(res.body);
         console.log(newMessage);
         dispatch(subMessage(newMessage));
-        // return newMessage;
+        return newMessage;
 
         // 채팅 내역 추가
         // chatBox.append('<li>' + content.message + '(' + content.writer + ')</li>')
 
-
       })
 
-
-      console.log(getMyInfo);
       const info = {
         type: 'ENTER',
-        roomId: 123123123,
-        sender: getMyInfo.nickname,
-        profileImg: getMyInfo.profileImg
+        roomId: "01202a38-0cd1-462a-8e52-eed82a3a489d",
+        sender: "eunjin",
+        profileImg: "rrr.jpg"
       }
       //여기서 구독한 유저 정보를 먼저 보내준다
       // send(path, header, message)로 메시지를 보낼 수 있다.
-      client.send(`/pub/chat/message`, { "token": token }, JSON.stringify({
-        sender: "ddd",
-        profileImg: "ddd",
-        type: 'TALK',
-        roomId: 123123123,
-      }));
+      client.send(`/pub/chat/message`, { "token": token }, JSON.stringify(info));
     });
 
   }, [])
 
 
-
-
-  // type: , comminet, nick, pring
-
-  // const infoChat = () => {
-
-  //   client.send(`/pub/chat/message`, { "token": token }, JSON.stringify({ type: 'TALK', roomId: roomId, sender: getMyInfo.nickname, profileImg: getMyInfo.profileImg }))
-
-  // }
-
   const myChat = (e) => {
     // setChat(chatRef.current.value)
     const msg = chatRef.current.value;
 
-    client.send(`/pub/chat/message`, { "token": token }, JSON.stringify({ type: 'TALK', roomId: roomId, message: msg, sender: getMyInfo.nickname, profileImg: getMyInfo.profileImg }))
+    client.send(`/pub/chat/message`, { "token": token }, JSON.stringify({ type: 'TALK', roomId: roomId, message: msg, sender: "rrr", profileImg: "rrr.ing" }))
 
     chatRef.current.value = null;
   }
 
-  const test = [
-    {
-      "sender": "eunjin1",
-      "message": "메세지123"
-    },
-    {
-      "sender": "eunjin1",
-      "message": "일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이"
-    },
-    {
-      "sender": "test2",
-      "message": "메세지123"
-    },
-    {
-      "sender": "eunjin1",
-      "message": "일이삼사오육칠팔구십일이삼이"
-    },
-    {
-      "sender": "eunjin1",
-      "message": "일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이"
-    },
-  ]
 
   const userInput = `${userInfo.infoList.nickname}(으)로 댓글 달기 ...`
 
@@ -123,7 +76,7 @@ function RoomDetail() {
       <ChatBox>
         <Chatting>
           {userInfo?.infoList.nickname ?
-            test.map((el, i) =>
+            getMessages.map((el, i) =>
             (
               <div key={i} className={el.sender === userInfo.infoList.nickname ? "right" : "left"}>
                 <div className="img"><img src="https://mblogthumb-phinf.pstatic.net/MjAyMTAxMjJfNzMg/MDAxNjExMzIzMzU1NDgw.nhAuTdE8OjYs0wZAb8qpMAsUaUIZXeRKJ0zDLs5oaKIg.iONiFE4qhr5wuB2FwDe4yfO3oC9gBbOjDaCyGXxiLMkg.JPEG.sohyeon612/%EB%8B%A4%EC%9A%B4%EB%A1%9C%EB%93%9C%ED%8C%8C%EC%9D%BC%EF%BC%8D2.jpg?type=w800" alt="프로필" /></div>

@@ -353,7 +353,6 @@ const communitySlice = createSlice({
       state.getDayCountList = action.payload;
     },
     subMessage(state, action) {
-      console.log(state, action)
       state.messages.push(action.payload);
       // state.messages = action.payload;
     },

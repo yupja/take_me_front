@@ -79,11 +79,11 @@ const refreshToken = () => {
 
       console.log(error);
       console.log("refresh토큰도 만료! 다시 로그인해주세요!")
-      localStorage.clear();
       const deleteCookie = function (name) {
         document.cookie = name + '=; expires=Thu, 01 Jan 1999 00:00:10 GMT;';
       }
       deleteCookie('refreshToken');
+      localStorage.clear();
       alert("세션 만료 다시 로그인 해주세요.");
     });
 };
