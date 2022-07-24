@@ -9,11 +9,11 @@ import { instance } from "../../shared/axios";
 
 export const myFavoriteListRQ = createAsyncThunk(
   'get/readMyFavorite',
-   async function(dispatch){
-    try{
+  async function (dispatch) {
+    try {
       const { data } = await instance.get('/api/mypage/favorite')
       return data.data;
-    }catch(error){
+    } catch (error) {
       console.log(error)
     }
   }
@@ -59,7 +59,7 @@ export const favoriteDel = (itemId) => {
       .catch((error) => {
         console.log(error)
       });
-      dispatch(myFavoriteListRQ());
+    dispatch(myFavoriteListRQ());
   };
 };
 
@@ -73,12 +73,12 @@ const goalSlice = createSlice({
   },
   reducers: {
   },
-  extraReducers:{
-    [myFavoriteListRQ.fulfilled]: (state, action) =>{
+  extraReducers: {
+    [myFavoriteListRQ.fulfilled]: (state, action) => {
       state.myFavoriteList = action.payload
     },
   }
 });
 
-const {  } = goalSlice.actions;
+const { } = goalSlice.actions;
 export default goalSlice.reducer;

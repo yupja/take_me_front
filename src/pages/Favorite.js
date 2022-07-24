@@ -44,8 +44,7 @@ function Favorite() {
     dispatch(myFavoriteListRQ());
   }, []);
 
-  const mylist = useSelector((state) => state.favorite.myFavoriteList.data);
-  console.log(mylist)
+  const mylist = useSelector((state) => state.favorite.myFavoriteList);
 
   const [Selected, setSelected] = useState('전체');
 
@@ -70,85 +69,71 @@ function Favorite() {
   // const [dropDownList, setDropDownList] = useState(list); // 검색List 
 
 
-  const clickDropDownItem = clickedItem => {
-    // setInputValue(clickedItem);
-    // savedItem(clickedItem);
-    // setIsHaveInputValue(false);
-  };
-
-
-
-  console.log(Selected)
-
   const selectList = [
-    '식비', '카페/간식','술/유흥', '생활', '온라인쇼핑', '패션/쇼핑', '뷰티/미용', '교통',
+    '전체', '식비', '카페/간식', '술/유흥', '생활', '온라인쇼핑', '패션/쇼핑', '뷰티/미용', '교통',
     '주거/통신', '의료/건강', '금융', '문화/여가', '여행/숙박', '교육/학습', '자녀/육아', '반려동물', '경조/선물'
   ]
 
 
-  const title="즐겨찾기";
+  const title = "즐겨찾기";
   return (
     <Wrap>
-      <div style={{background:"#F8F8F8"}}>
-      <Header title={title}/>
+      <div style={{ background: "#F8F8F8" }}>
+        <Header title={title} />
         <Category>
           <select name="category" onChange={handeChangeSelect} value={Selected}>
             {selectList.map((item) => (
               <option value={item} key={item}>
                 {item}
               </option>
-              // <li key={item}
-              //   onClick={() => clickDropDownItem(item)}></li>
             ))}
-            {/* <ul>
-            </ul> */}
           </select>
           <UpArrow className="arrow" />
         </Category>
+      </div>
+      <FavoriteWrap>
+
+        <div className="SearchArea">
+          <SearchSavedItem
+            state={"티끌을 검색해주세요"}
+            setSelectInputValue={setSelectInputValue} />
         </div>
-        <FavoriteWrap>
 
-          <div className="SearchArea">
-            <SearchSavedItem
-              state={"티끌을 검색해주세요"}
-              setSelectInputValue={setSelectInputValue} />
-          </div>
-
-          <FavList>
-            <Total>{mylist && mylist.length}개</Total>
-            <ul>
-              {selectInputValue.length === 0 ? ""
-                : <li>
+        <FavList>
+          <Total>{mylist && mylist.length}개</Total>
+          <ul>
+            {selectInputValue.length === 0 ? ""
+              : <li>
+                <div>
+                  <span>⭐</span>
+                  <p>{selectInputValue.itemName}</p>
                   <div>
-                    <span>⭐</span>
-                    <p>{selectInputValue.itemName}</p>
-                    <div>
-                      <input
-                        type="Number"
-                        ref={priceInput} />
-                      <button onClick={addFavoriteData}>등록</button>
-                      <button onClick={openModal}> 새로운 아이템등록 </button>
-                    </div>
+                    <input
+                      type="Number"
+                      ref={priceInput} />
+                    <button onClick={addFavoriteData}>등록</button>
+                    <button onClick={openModal}> 새로운 아이템등록 </button>
                   </div>
-                </li>
-              }
-              {newList && newList.map((list, idx) => (
-                <FavoriteList key={list.itemId + idx}
-                  itemName={list.itemName}
-                  price={list.price}
-                  favoriteId={list.favoriteItemId}
-                  catagory={list.categoryName}
-                />
-              ))}
-            </ul>
+                </div>
+              </li>
+            }
+            {newList && newList.map((list, idx) => (
+              <FavoriteList key={list.itemId + idx}
+                itemName={list.itemName}
+                price={list.price}
+                favoriteId={list.favoriteItemId}
+                catagory={list.categoryName}
+              />
+            ))}
+          </ul>
 
-            <Modal open={modalOpen}
-              close={closeModal}
-              header={"즐겨찾기등록"}>
-              <FavoriteAdd setSelectInputValue={setSelectInputValue} />
-            </Modal>
-          </FavList>
-        </FavoriteWrap>
+          <Modal open={modalOpen}
+            close={closeModal}
+            header={"즐겨찾기등록"}>
+            <FavoriteAdd setSelectInputValue={setSelectInputValue} />
+          </Modal>
+        </FavList>
+      </FavoriteWrap>
 
     </Wrap>
 
