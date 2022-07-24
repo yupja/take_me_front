@@ -8,8 +8,16 @@ import { userSecDB } from "../store/modules/user";
 import { getInfo } from "../store/modules/info";
 import { useCookies } from "react-cookie";
 
+import { ReactComponent as Star } from "../assets/icons/Star.svg";
+import { ReactComponent as EditIProfile } from "../assets/icons/EditIProfile.svg";
+import { ReactComponent as Ghost } from "../assets/icons/Ghost.svg";
+import { ReactComponent as Withdrawal } from "../assets/icons/Withdrawal.svg";
+import { ReactComponent as Invi } from "../assets/icons/Invi.svg";
+import { ReactComponent as InfoIcon } from "../assets/icons/Info.svg";
+import { ReactComponent as Consu } from "../assets/icons/Consu.svg";
+
 function MyPage() {
-  const title="My"
+  const title = "MY"
 
   const [, , removeCookie] = useCookies(['refreshToken']);
 
@@ -55,7 +63,7 @@ function MyPage() {
 
   return (
     <>
-      <Header title={title}/>
+      <Header title={title} />
       <MyPageWrap>
         <MyInfo>
           <div><img src={state.profileImg} alt="" /></div>
@@ -65,23 +73,23 @@ function MyPage() {
           </p>
         </MyInfo>
         <MyMenu>
-          <h2><span>{state.nickname}</span>님<br />환영합니다!🖐</h2>
+          <h2><span>{state.nickname}</span> 님<br />환영합니다!🖐</h2>
           <MenuList>
             <li>
               <Link to="/favorite">
-                <div><img src="" alt="" /></div>
+                <div><Star className="starIcon" /></div>
                 <p>즐겨찾기</p>
               </Link>
             </li>
             <li>
               <Link to="/history">
-                <div><img src="" alt="" /></div>
+                <div><Ghost /></div>
                 <p>히스토리</p>
               </Link>
             </li>
             <li>
               <Link to="/proflie">
-                <div><img src="" alt="" /></div>
+                <div><EditIProfile /></div>
                 <p>프로필 편집</p>
               </Link>
             </li>
@@ -90,19 +98,19 @@ function MyPage() {
             <h3>고객 지원</h3>
             <ul>
               <li>
-                <div><img src="" alt="" /></div>
+                <div><Invi /></div>
                 <span>친구 초대하기</span>
               </li>
               <li>
-                <div><img src="" alt="" /></div>
-                <span>정보</span>
+                <div><Consu /></div>
+                <span>티끌 정보</span>
               </li>
               <li>
-                <div><img src="" alt="" /></div>
+                <div><InfoIcon /></div>
                 <span>고객의 소리</span>
               </li>
               <li onClick={() => setOpenModal(true)}>
-                <div><img src="" alt="" /></div>
+                <div><Withdrawal /></div>
                 <span>회원 탈퇴</span>
               </li>
             </ul>
@@ -181,28 +189,31 @@ width: 100%;
 const MyInfo = styled.div`
 width: 100%;
 height: 13rem;
-padding: 10px;
+padding: 10px 25px;
 text-align: center;
 div {
+  position: relative;
   width: 7.5rem;
   height: 7.5rem;
   background: #d9d9d9;
   margin: auto;
   border-radius: 50%;
+  overflow: hidden;
 }
 img{
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
 }
 p {
-  padding-top: 10px;
+  padding: 15px 10px;
   font-size: 1rem;
   color: #26DFA6;
   line-height: 1.43rem;
   font-weight: 700;
 }
 `
+
 const MenuList = styled.ul`
   display: flex;
   justify-content: space-between;
@@ -211,9 +222,6 @@ const MenuList = styled.ul`
     position: relative;
     width: 6.24rem;
     height: 6.24rem;
-    background: #fff;
-    border-radius: 5px;
-    box-shadow: 0px 4px 11px 0px rgba(0, 0, 0, 0.15);
   }
   a{
     position: absolute;
@@ -223,11 +231,21 @@ const MenuList = styled.ul`
     text-decoration: none;
   }
   div {
-    width:2.5rem;
-    height: 2.5rem;
+    width:4.37rem;
+    height: 4.37rem;
     margin: 0 auto;
-    background: #D9D9D9;
+    background: #fff;
     border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  li:nth-child(2) div{
+    box-shadow: 0px 4px 11px 0px rgba(0, 0, 0, 0.15);
+  }
+  .starIcon{
+    width: 2.5rem;
+    height : 2.5rem;
   }
   p{
     margin-top: 5px;
@@ -240,16 +258,17 @@ const MyMenu = styled.div`
 height: 72.5vh;
 background:#F8F8F8;
 text-align: center;
-padding:25px;
+padding:20px 25px;
 
   h2 {
+    padding-bottom:23px;
     font-size: 1.5rem;
-    padding-bottom:25px;
-    
+    font-weight: 700;
   }
   span {
     color:#26DFA6;
-    font-family: 'HS-Regular';
+    font-family: 'SEBANG_Gothic_Bold';
+    font-size:1.75rem;
   }
 `
 const Box = styled.div`
@@ -259,7 +278,7 @@ text-align: left;
 
 h3 {
   font-size : 1.12rem;
-  letter-spacing: -3px;
+  letter-spacing: -0.3px;
   margin-bottom: 20px;
   font-weight: 700;
 }
@@ -269,36 +288,41 @@ ul {
 }
 
 li{
+  display: flex;
   width: 50%;
   float: left;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+  align-items: center;
 }
 div {
-  display: inline-block;
   width: 1.25rem;
   height: 1.25rem;
   background: #D9D9D9;
   border-radius: 50%;
+  margin-right: 10px;
 }
 span {
   padding-left: 5px;
   font-weight: 500;
   color: #666666;
   font-family: 'Noto Sans KR';
+  font-size:1rem;
 }
 `
+
 const LoginOutBtn = styled.div`
 position: absolute;
 bottom: 50px; left: 50%;
 transform: translateX(-50%);
-text-decoration: underline;
 color: #999;
-letter-spacing: -3px;
 border: none;
 background: none;
 font-size: 1.12rem;
 font-weight: 700;
+line-height: 1.3rem;
+border-bottom: 1px solid #999;
 `
+
 const CloseBtn = styled.div`
 width:1rem; //180px
 height: 1rem;

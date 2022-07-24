@@ -2,14 +2,17 @@ import React, { useState } from "react";
 import styled, { keyframes } from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import { ReactComponent as Close } from "../../assets/icons/Close.svg";
 
 // import NavToggle from "./NavToggle";
 const slider = keyframes`
   from {
-    transform: translateX(100px);
+    transform: translateX(0px);
+    right: -60%
   }
   to {
-    transform: translateX(10px);
+    transform: translateX(0px);
+    right: 0%
   }
 `;
 
@@ -55,12 +58,10 @@ function Header(props) {
       </HamArea>
       {navToggles ?
         <>
-
           <Popup>
             <NavWrap>
               <CloseBtn onClick={closeNav}>
-                <span></span>
-                <span></span>
+                <Close />
               </CloseBtn>
               <Menu>
                 <li onClick={() => {
@@ -68,13 +69,16 @@ function Header(props) {
                 }}>데일리 티끌</li>
                 <li onClick={() => {
                   navigate("/community");
-                }}>티끌 자랑</li>
+                }}>커뮤니티</li>
                 <li onClick={() => {
                   navigate("/ranking");
                 }}>랭킹</li>
                 <li onClick={() => {
                   navigate("/mypage");
-                }}>My</li>
+                }}>MY</li>
+                <li onClick={() => {
+                  navigate("/about");
+                }}>About</li>
               </Menu>
               <Footer>
                 {localStorage.getItem('accessToken') ?
@@ -109,10 +113,11 @@ z-index: 999;
 `;
 
 const LeftArea = styled.div`
-position:absolute;
-top: 53%; left: 3%;
 h1 {
-  font-family: 'HS-Regular';
+  position: absolute;
+  left: 25px;
+  font-family: 'SEBANG_Gothic_Bold';
+  line-height: 44px;
   color: #26DFA6;
   font-size: 1.25rem;
 }
@@ -120,37 +125,27 @@ h1 {
 
 const Title = styled.h1`
 position:absolute;
-top: 53%; left: 50%;
-transform: translate(-50%,-50%);
-font-family: 'HS-Regular';
-color: white;
-font-size: 1.62rem;
+left: 50%;
+transform: translateX(-50%);
+line-height: 44px;
+font-family: 'SEBANG_Gothic_Bold';
+font-size: 1.5rem;
 `;
 
 const HamArea = styled.div`
 position:absolute;
-top: 60%; right: 3%;
+top: 50%; right: 25px;
 transform: translateY(-50%);
 `;
 
-const NavWrap = styled.div`
-width:60vw; //180px
-height: 100vh;
-background-color: #fff;
-position: absolute;
-top: 0; right: 0;
 
-button{
-
-}
-`;
 
 const CloseBtn = styled.div`
 width:1rem; //180px
 height: 1rem;
 margin-top: 10px;
 position:absolute;
-top: 0; right: 3%;
+top: 0; right: 10px;
 
 span {
   display:block;
@@ -170,17 +165,37 @@ span:last-child{
 `;
 
 const Menu = styled.ul`
-margin-left:1.8rem; //30px
-padding-top : 60px;
+padding-top : 80px;
 z-index: 100;
+text-align: center;
 li {
-  font-size: 1rem;
-  padding:0.94rem 0;
+  font-size: 1.5rem;
+  padding-bottom: 1.87rem;
+  font-family: 'SEBANG_Gothic_Bold';
+}
+li:first-child{
+  color: #26DFB3;
 }
 `
 
-const NavBtn = styled.div`
+const NavWrap = styled.div`
+width:70%; //180px
+height: 100vh;
+background-color: #fff;
+position: absolute;
+top: 0; right: 0;
 
+animation-duration: 0.3s;
+  animation-timing-function: ease-out;
+  animation-name: ${slider};
+  animation-fill-mode: forwards;
+
+button{
+
+}
+`;
+
+const NavBtn = styled.div`
 
 div {
   width:1rem;
@@ -193,7 +208,8 @@ div {
     width:100%;
     height:1px;
     margin-bottom: 3px;
-    background-color: white;
+    /* background-color: white; */
+    background-color: #000;
     transition:all .5s;
   }
   span:last-child{
@@ -203,20 +219,33 @@ div {
 `;
 
 const Footer = styled.div`
+position: absolute;
+bottom: 55px;
+left: 50%;
+transform : translateX(-50%);
 display: flex;
+width: 55%;
 justify-content: space-around;
+
+p{
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #999;
+  letter-spacing: -0.5px;
+  border-bottom : 1px solid #999;
+  line-height: 1.23rem;
+}
+p:nth-child(2) {
+  color: #26DFA6;
+  border-bottom : 1px solid #26DFA6;
+}
 `;
 
 const Popup = styled.div`
-display:flex;
 flex-direction: column;
 position: absolute;
-background-color: #ffffff;
-box-shadow: 0 2px 7px rgba(0, 0, 0, 0.3);
+background-color: rgba(0,0,0,0.7);
 width: 100%;
+height: 100vh;
 
-animation-duration: 0.3s;
-  animation-timing-function: ease-out;
-  animation-name: ${slider};
-  animation-fill-mode: forwards;
 `;

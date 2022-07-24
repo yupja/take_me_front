@@ -72,13 +72,13 @@ const refreshToken = () => {
         secure: true,
         sameSite: 'none',
       });
-      // window.location.reload();
+      window.location.reload();
     })
     .catch((error) => { // refreshToken도 만료시 재로그인
       //window.alert("로그아웃이 되었습니다. 다시 로그인해주세요!")
 
       console.log(error);
-      console.log("refresh토큰도 만료! 다시 로그인해주세요!")
+      console.log("refresh토큰 만료! 다시 로그인해주세요!")
       const deleteCookie = function (name) {
         document.cookie = name + '=; expires=Thu, 01 Jan 1999 00:00:10 GMT;';
       }
