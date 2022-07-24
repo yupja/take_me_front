@@ -51,7 +51,7 @@ const PostModal = (props) => {
     <>
         <ModalBody>
           <GoalInfo>
-            <DountChart color="#26DFA6" image={image} percent={goalPercent} size="150" />
+            <DountChart color="#26DFA6" percent={goalPercent} size="150"/>
               <TextArea>
                 <p>{title}</p>
                 <BasicImg>기본 이미지</BasicImg>
