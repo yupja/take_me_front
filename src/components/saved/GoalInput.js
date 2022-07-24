@@ -2,7 +2,7 @@ import React, {useRef, useState} from "react"
 import { useDispatch } from "react-redux"
 
 import Category from "../public/Category"
-import SearchItem from "../public/SearchGoal"
+import SearchItem from "../public/SearchItems"
 import { newItemGoalAddRQ, addGoalRQ, updateGoalAPI } from "../../store/modules/goal"
 
 
@@ -18,7 +18,7 @@ const GoalInput = (props)=>{
   const [image, setImage] = useState("https://velog.velcdn.com/images/eppo/post/f68f349d-6314-463d-beb0-3a779d24a90b/image.png");
   const [imageFile, setImageFile] = useState("null");
   const [selectInputValue , setSelectInputValue] = useState([]); 
-  const [newAddGoal, setNewAddGoal] = useState(false);
+  const [newAdd, setNewAdd] = useState(false);
 
   const itemName=useRef();
   const price=useRef();
@@ -48,8 +48,6 @@ const GoalInput = (props)=>{
   const sendNewData = (state) =>{
 
     const formData = new FormData();
-    console.log("여기?");
-    console.log(category)
 
     formData.append("image", imageFile);
 
@@ -63,24 +61,11 @@ const GoalInput = (props)=>{
     const json = JSON.stringify(data);
     const blob = new Blob([json], { type: "application/json" });
     formData.append('goalItem',blob);
-
-    console.log("없던거 ADD")
-    // if(imageFile==="null"){
-    //   alert("이미지를 첨부");
-    // }else{
-      dispatch(newItemGoalAddRQ(formData));
-    // }
+    dispatch(newItemGoalAddRQ(formData));
     
 
     props.closeModal();
 
-    // if(state==="ADD"){
-    //   //console.log("없던거 에드"), 확인함/ 구현완
-    //   //
-    // }
-    //else if(state==="Update"){
-    //   dispatch(addItem(data));
-    // }
   }
 
 
@@ -106,17 +91,7 @@ const GoalInput = (props)=>{
     }else{
     dispatch(addGoalRQ(formData));
   }
-
-    
-  
-  //   if(state==="ADD"){
-  //     console.log("있던거 에드")
-
-  //   }
-  //   else if(state==="Update"){
-   //.dispatch(updateGoalAPI(formData, props.goalItemId));
-  //   // }
-  // }
+  props.closeModal();
 
 }
 
@@ -124,7 +99,7 @@ const GoalInput = (props)=>{
   return (
   <>
     <ItemList>
-      {newAddGoal ?
+      {newAdd ?
         <>
           <ul><CategoryLi>
             <div className="leftBox">
@@ -150,8 +125,8 @@ const GoalInput = (props)=>{
             <p>이름</p>
           </div>
           <SearchItem
-            state={"goalState"}
-            setNewAddGoal={setNewAddGoal}
+            state={"태산을 찾아보세요!"}
+            setNewAdd={setNewAdd}
             setSelectInputValue={setSelectInputValue} />
         </li></ul>
       }
@@ -198,7 +173,7 @@ const GoalInput = (props)=>{
       </ul>
     </ImageDiv>
 
-    {newAddGoal? 
+    {newAdd? 
       <Footer onClick={()=>
         {sendNewData(props.state)
         props.closeModal()}}>
