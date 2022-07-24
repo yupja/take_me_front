@@ -2,9 +2,9 @@ import React,{useRef, useState} from "react";
 import { useDispatch } from "react-redux";
 import {deleteSavedList, modifySaved} from "../../store/modules/saved"
 import styled from "styled-components";
-import {ReactComponent as Edit} from "../../assets/icons/EditBlack.svg"
-import {ReactComponent as Trash} from "../../assets/icons/Trash.svg"
-import {ReactComponent as AddMintPoint} from "../../assets/icons/AddMintPoint.svg"
+
+import {EditBlack, Trash, AddMintPoint} from "../../assets/icons"
+
 
 const ModifySave = (props) =>{
     const priceInput = useRef();
@@ -43,7 +43,7 @@ const ModifySave = (props) =>{
               <button onClick={()=>{
                   setModifyView(true)
                   
-              }}><Edit/></button>
+              }}><EditBlack/></button>
               <button onClick={()=>{dispatch(deleteSavedList(props.savedItemId, props.goalItemId))
               }}><Trash/></button>
             </ButtonArea>       
