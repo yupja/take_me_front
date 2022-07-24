@@ -11,11 +11,11 @@ const PostModal = (props) => {
     const [image, setImage] = useState(props.image);
     const [imageFile, setImageFile] = useState("null");
 
-    const myGoalList = useSelector((state=> state.myGoalList));
+    const myGoalList = useSelector((state=> state.goal.myGoalList));
     console.log(myGoalList,"goallist")
     
     const title = myGoalList.itemName;
-    const goalPercent = (myGoalList.data.goalPercent)*0.01
+    const goalPercent = (myGoalList.goalPercent)*0.01
 
     const contents_ref = React.useRef();
 

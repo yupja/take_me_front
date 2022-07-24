@@ -105,7 +105,7 @@ function SearchItems(props) {
                     새로 등록하시겠어요?
                   </AddFavoriteInput>
                   <AddButton onClick={() => {
-                    props.setNewAddGoal(true)
+                    props.setNewAdd(true)
                     setInputValue('')
                   }}>+등록하기</AddButton>
                 </DropDownItem>

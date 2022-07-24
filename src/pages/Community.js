@@ -8,21 +8,21 @@ import Header from "../components/public/Header";
 import SwipeRooms from "../components/public/SwipeForm"
 
 import styled from "styled-components";
+import user from "../store/modules/user";
 
 
 const Community = () => {
   const title = "커뮤니티"
-
+  const {state} = useLocation();
 
   const navigate = useNavigate();
   const [page, setPage] = useState(<CommunityTab />);
 
 
+
   return (
-  <>
-      <TopWrap>
-      <Header title={title} />
-      </TopWrap>
+  <> 
+    <Header title={title} color={state}/>
       
       <MenuBar>
         <div onClick={()=>{
@@ -33,11 +33,10 @@ const Community = () => {
         }}>쓸까말까</div>
       </MenuBar>
 
-      <RealTimeBox>
+
         <TimeList>
           <SwipeRooms />
         </TimeList>
-      </RealTimeBox>
 
       <div style={{ width: "100%" }}>
          <CommunityContents>
@@ -49,21 +48,16 @@ const Community = () => {
 };
 
 
-const TopWrap = styled.div`
-display: flex;
-width: 100%;
-height: 6vh;
-padding: 10px;
-flex-direction: column;
-align-items: center;
-`;
 
 
 const MenuBar = styled.div`
 display: flex;
 justify-content: center;
 justify-content: space-evenly;
+margin-top: 5%;
 width : 100%;
+
+
 
 
 div{
@@ -76,25 +70,25 @@ div{
 }
 `;
 
-const RealTimeBox = styled.div`
-display: flex;
-justify-content: center;
-align-items: center;
-
-width: 100%;
-background: #F5F5F5;
-height: 4%;
-`;
 
 const TimeList = styled.div`
-width: 96%;
-height: 85%;
+width: 100%;
+height: 20%;
 display: flex;
 align-items: center;
 justify-content: center;
-background: white;
+background: #000000;
 box-shadow:initial;
-border-radius: 10px;
+overflow-x:scroll;
+
+div{
+  border-radius: 10px;
+}
+
+&::-webkit-scrollbar {
+    display: none;
+  }
+
 `;
 
 
