@@ -15,7 +15,6 @@ const ModifySave = (props) =>{
       const data = {
         price : Number(priceInput.current.value)
        }
-       console.log(data.price);
        dispatch(modifySaved(data, props.itemId))
     }
     
@@ -29,11 +28,11 @@ const ModifySave = (props) =>{
           <input 
             type="Number"
             ref={priceInput}/>
-            <button onClick={()=>{
-              modifySavedItem();
-              setModifyView(false);
+          <button onClick={()=>{
+            modifySavedItem();
+            setModifyView(false);
             }}><AddMintPoint/></button>
-            </InputArea>
+          </InputArea>
 
         </>
         : 

@@ -71,7 +71,7 @@ function Save() {
 
   const myGoalList = useSelector((state=> state.goal.myGoalList));
   const goal = {
-    goalImage : myGoalList?.goalImage,
+    goalImage : myGoalList?.image,
     goalItemId : myGoalList?.goalItemId,
     goalPercent : (myGoalList?.goalPercent)*0.01,
     goalitemName: myGoalList?.itemName
@@ -235,9 +235,10 @@ const settings = {
       </TopWrap>
 
       <SearchArea>
-        <SearchSavedItem 
+        <SearchSavedItem
           setSelectInputValue={setSelectInputValue}
           setNewAdd={setNewAdd}
+          actionState={"Save"}
           state={"오늘은 어떤 것을 아끼셨나요?"}
           goalItemId={goal.goalItemId} />
       </SearchArea>
@@ -448,7 +449,7 @@ transform: translate(-50%, -50%);
 
 
 const SearchArea = styled.div`
-padding: 1rem 1rem 0rem 1rem;
+padding: 0.5rem 1rem 0rem 1rem;
 width: 100%;
 display: flex;
 flex-direction: column;
@@ -481,7 +482,7 @@ p{
 
 
 const FavoriteItem = styled.div`
-margin-top: 5px;
+
 background: #EFEFEF;
 border-radius: 20px;
 font-size: 15px;
