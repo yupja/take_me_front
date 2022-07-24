@@ -72,7 +72,7 @@ const refreshToken = () => {
         secure: true,
         sameSite: 'none',
       });
-      window.location.reload();
+      // window.location.reload();
     })
     .catch((error) => { // refreshToken도 만료시 재로그인
       //window.alert("로그아웃이 되었습니다. 다시 로그인해주세요!")

@@ -100,7 +100,7 @@ function Favorite() {
         </div>
 
         <FavList>
-          <Total>{mylist && mylist.length}개</Total>
+          <Total>{newList && newList.length}개</Total>
           <ul>
             {selectInputValue.length === 0 ? ""
               : <li>
@@ -144,12 +144,11 @@ function Favorite() {
 export default Favorite;
 
 const Wrap = styled.div`
-/* padding: 0 25px; */
 `
 const Category = styled.div`
 position: relative;
-/* background: #F8F8F8; */
 padding: 10px 25px;
+
 select {
   width: 100%;
   text-align: center;
@@ -157,13 +156,13 @@ select {
   border: 1px solid #ccc;
   padding: 10px 0;
   appearance: none;
+  font-size: 1.125rem;
+  font-weight: 500;
 }
 .arrow {
   position: absolute;
-  top: 50%; right: 10%;
+  top: 50%; right: 13%;
   transform: translateY(-50%) rotate(180deg);
-  width: 0.56rem;
-  height: 1rem;
 }
 `
 
@@ -176,24 +175,24 @@ align-items: center;
 margin: 3% 0 0 0;
 
 .SearchArea{
+  position: relative;
+  z-index: 99;
   align-items: center;
   width: 87%;
 }
 `
 
 const Total = styled.div`
-  padding: 5px 25px;
+  padding: 10px 25px;
   text-align: right;
   border-bottom: 1px solid #CCCCCC;
-  font-size: 1.87rem;
+  font-size: 1.125rem;
 `
 const FavList = styled.div`
 width: 100%;
-margin: 3% 0 0 0;
-
 
 ul{
-  padding: 0 20px;
+  padding: 0 10px;
 }
 li{
   border-bottom: 1px solid #CCCCCC;
