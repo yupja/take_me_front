@@ -57,8 +57,7 @@ const GoalModify = (props)=>{
         itemName: itemName.current.value,
         defaultPrice: Number(price.current.value),
         goalItemCount: Number(goalItemCount.current.value),
-        categoryId: Number(category),
-        goalId:props.goalItemId,
+        categoryId: Number(category)
       }
 
       const json = JSON.stringify(data);
