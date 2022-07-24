@@ -18,7 +18,7 @@ const slider = keyframes`
 
 
 
-function Header(props) {
+function Header({ title, props }) {
   const navigate = useNavigate();
   const [navToggles, setNavToggles] = useState(false);
 
@@ -44,8 +44,7 @@ function Header(props) {
           navigate(-1);
         }}>티끌</h1>
       </LeftArea>
-      {/* <svg width="10" height="16" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M.5 8 8 .5l1.05 1.05L2.6 8l6.45 6.45L8 15.5.5 8Z" fill="#000" /></svg> */}
-      <Title>{props.title}</Title>
+      <Title style={{ color: { props } }}>{title}</Title>
       <HamArea onClick={onNav}>
         <NavBtn>
           <div>
@@ -80,6 +79,7 @@ function Header(props) {
                   navigate("/about");
                 }}>About</li>
               </Menu>
+
               <Footer>
                 {localStorage.getItem('accessToken') ?
                   <p onClick={logout}>로그아웃</p>
@@ -137,7 +137,6 @@ position:absolute;
 top: 50%; right: 25px;
 transform: translateY(-50%);
 `;
-
 
 
 const CloseBtn = styled.div`

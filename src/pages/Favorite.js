@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
-import SearchSavedItem from "../components/public/SearchSavedItem";
+import SearchSavedItem from "../components/public/SearchItems";
 import FavoriteList from "../components/mypage/FavoriteList"
 import { myFavoriteListRQ } from "../store/modules/favorite";
 import FavoriteAdd from "../components/mypage/FavoriteAdd";
@@ -80,19 +80,17 @@ function Favorite() {
 
   console.log(Selected)
 
-  // const selectList = [
-  //   '식비', '카페/간식','술/유흥', '생활', '온라인쇼핑', '패션/쇼핑', '뷰티/미용', '교통',
-  //   '주거/통신', '의료/건강', '금융', '문화/여가', '여행/숙박', '교육/학습', '자녀/육아', '반려동물', '경조/선물'
-  // ]
   const selectList = [
-    '전체', '식료품', '주류'
+    '식비', '카페/간식','술/유흥', '생활', '온라인쇼핑', '패션/쇼핑', '뷰티/미용', '교통',
+    '주거/통신', '의료/건강', '금융', '문화/여가', '여행/숙박', '교육/학습', '자녀/육아', '반려동물', '경조/선물'
   ]
 
 
+  const title="즐겨찾기";
   return (
     <Wrap>
-      <Header />
-      <FavoriteWrap>
+      <div style={{background:"#F8F8F8"}}>
+      <Header title={title}/>
         <Category>
           <select name="category" onChange={handeChangeSelect} value={Selected}>
             {selectList.map((item) => (
@@ -107,44 +105,51 @@ function Favorite() {
           </select>
           <UpArrow className="arrow" />
         </Category>
-        <SearchSavedItem
-          state={"favoriteState"}
-          setSelectInputValue={setSelectInputValue} />
-        <FavList>
-          <Total>{mylist && mylist.length}개</Total>
-          <ul>
-            {selectInputValue.length === 0 ? ""
-              : <li>
-                <div>
-                  <span>⭐</span>
-                  <p>{selectInputValue.itemName}</p>
-                  <div>
-                    <input
-                      type="Number"
-                      ref={priceInput} />
-                    <button onClick={addFavoriteData}>등록</button>
-                    <button onClick={openModal}> 새로운 아이템등록 </button>
-                  </div>
-                </div>
-              </li>
-            }
-            {newList && newList.map((list, idx) => (
-              <FavoriteList key={list.itemId + idx}
-                itemName={list.itemName}
-                price={list.price}
-                favoriteId={list.favoriteItemId}
-                catagory={list.categoryName}
-              />
-            ))}
-          </ul>
+        </div>
+        <FavoriteWrap>
 
-          <Modal open={modalOpen}
-            close={closeModal}
-            header={"즐겨찾기등록"}>
-            <FavoriteAdd setSelectInputValue={setSelectInputValue} />
-          </Modal>
-        </FavList>
-      </FavoriteWrap>
+          <div className="SearchArea">
+            <SearchSavedItem
+              state={"티끌을 검색해주세요"}
+              setSelectInputValue={setSelectInputValue} />
+          </div>
+
+          <FavList>
+            <Total>{mylist && mylist.length}개</Total>
+            <ul>
+              {selectInputValue.length === 0 ? ""
+                : <li>
+                  <div>
+                    <span>⭐</span>
+                    <p>{selectInputValue.itemName}</p>
+                    <div>
+                      <input
+                        type="Number"
+                        ref={priceInput} />
+                      <button onClick={addFavoriteData}>등록</button>
+                      <button onClick={openModal}> 새로운 아이템등록 </button>
+                    </div>
+                  </div>
+                </li>
+              }
+              {newList && newList.map((list, idx) => (
+                <FavoriteList key={list.itemId + idx}
+                  itemName={list.itemName}
+                  price={list.price}
+                  favoriteId={list.favoriteItemId}
+                  catagory={list.categoryName}
+                />
+              ))}
+            </ul>
+
+            <Modal open={modalOpen}
+              close={closeModal}
+              header={"즐겨찾기등록"}>
+              <FavoriteAdd setSelectInputValue={setSelectInputValue} />
+            </Modal>
+          </FavList>
+        </FavoriteWrap>
+
     </Wrap>
 
   )
@@ -179,6 +184,16 @@ select {
 
 const FavoriteWrap = styled.div`
 width: 100%;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+margin: 3% 0 0 0;
+
+.SearchArea{
+  align-items: center;
+  width: 87%;
+}
 `
 
 const Total = styled.div`
@@ -189,6 +204,8 @@ const Total = styled.div`
 `
 const FavList = styled.div`
 width: 100%;
+margin: 3% 0 0 0;
+
 
 ul{
   padding: 0 20px;

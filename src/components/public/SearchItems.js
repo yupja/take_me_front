@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from "react-redux"
+import SavedInput from '../saved/SavedInput'
+
+import Modal from "./BasicModalForm";
 import { myFavoriteListRQ } from "../../store/modules/favorite"
 import { allItemListRQ } from "../../store/modules/item"
+import { ReactComponent as SearchIcon } from "../../assets/icons/SearchIcon.svg";
 
 
 import styled from 'styled-components'
 
 
-function SearchFavorite(props) {
+function SearchItems(props) {
 
   useEffect(() => {
     dispatch(myFavoriteListRQ());
@@ -16,7 +20,14 @@ function SearchFavorite(props) {
 
   const dispatch = useDispatch();
   const list = useSelector((state) => state.item.allItemList);
-  
+
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalState, setModalState] = useState();
+  const [modalName, setModalName] = useState("");
+  const openModal = () => { setModalOpen(true); };
+  const closeModal = () => { setModalOpen(false); };
+
+
   const allItemList = [];
   const makeList = list?.map((item) => {
     allItemList.push(item.itemName);
@@ -84,16 +95,16 @@ function SearchFavorite(props) {
     <>
       <WholeBox>
         <InputBox isHaveInputValue={isHaveInputValue}>
-          <input
-            type='text'
-            value={inputValue}
-            onChange={changeInputValue}
-            onKeyUp={handleDropDownKey}
-            placeholder="태산을 찾아보세요!"
-          />
+          <div style={{width:"90%"}}>
+            <input
+              type='text'
+              value={inputValue}
+              onChange={changeInputValue}
+              onKeyUp={handleDropDownKey}
+              placeholder={props.state}/>
+              <div><SearchIcon onClick={() => setInputValue('')}/></div>
+          </div>
 
-
-          <DeleteButton onClick={() => setInputValue('')}>&times;</DeleteButton>
           {isHaveInputValue && (
             <DropDownBox>
 
@@ -103,10 +114,18 @@ function SearchFavorite(props) {
                     앗! 아직 등록이 안되어있네요!<br />
                     새로 등록하시겠어요?
                   </AddFavoriteInput>
-                  <AddButton onClick={() => {
-                    props.setNewAddGoal(true)
-                    setInputValue('')
-                  }}>+등록하기</AddButton>
+                  {props.actionState==="goalInput"?
+                    <AddButton onClick={() => {
+                      props.setNewAdd(true)
+                      setInputValue('')
+                    }}>+등록하기</AddButton>
+                  :
+                    <AddButton onClick={() => {
+                      openModal();
+                      setModalName("등록하기")
+                      setInputValue('')
+                    }}>+등록하기</AddButton>}
+          
                 </DropDownItem>
               )}
 
@@ -127,6 +146,14 @@ function SearchFavorite(props) {
             </DropDownBox>
           )}
         </InputBox>
+
+
+      <Modal open={modalOpen}
+        close={closeModal}
+        header={modalName}>
+        <SavedInput
+        closeModal={closeModal}/>
+      </Modal>
       </WholeBox>
 
     </>
@@ -135,44 +162,32 @@ function SearchFavorite(props) {
 
 
 const WholeBox = styled.div`
-
-  width: 100%;
-  // 등록하기 DropDownItem 이 나와야하는 경우  className='new' 추가!
-  .new {
-    padding:0;
-    box-shadow: 0px 4px 15px 0px rgb(0 0 0 / 25%);
-  }
+width: 100%;
 `;
 
 const InputBox = styled.div`
-display: flex;
-margin-left:5px;
 width:100%;
-flex-direction: row;
-padding: 10px;
-border: 1px solid rgba(0, 0, 0, 0.3);
-border-radius: 30px;
+border: 1px solid #CCCCCC;
+border-radius:30px;
 position: relative;
+display: flex;
+justify-content: center;
 
-  input{
-    flex: 1 0 0;
-    margin: 0;
-    padding: 0;
-    background-color: transparent;
-    border: none;
-    outline: none;
-    font-size: 12px;
-    text-align: center;
-  }
-  input::placeholder{
-    color: #ccc;
-  }
+div{
+  display: flex;
+  align-items: center;
+  padding: 0.2rem;
+}
+
+input{
+  display: flex;
+  text-align: center;
+  border: none;
+  outline: none;
+  width: 100%;
+}
 `;
 
-
-const DeleteButton = styled.div`
- cursor: pointer;
-`;
 
 
 const DropDownBox = styled.ul`
@@ -238,4 +253,4 @@ const DropDownItem = styled.li`
 
 
 
-export default SearchFavorite;
+export default SearchItems;

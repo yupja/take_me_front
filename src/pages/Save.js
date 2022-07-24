@@ -5,23 +5,25 @@ import { addSavedListRQ } from "../store/modules/saved"
 import { myFavoriteListRQ, favoriteDel, addFavoriteRQ } from "../store/modules/favorite";
 
 import Modal from "../components/public/BasicModalForm";
-import SearchSavedItem from "../components/public/SearchSavedItem";
+import SearchSavedItem from "../components/public/SearchItems";
 import Header from "../components/public/Header";
 import DountChart from "../components/public/Goal";
 import GoalInput from "../components/saved/GoalInput"
 import CurrentSavedItem from "../components/saved/CurrentSavedItem";
+import GoalModifyComponunt from "../components/saved/GoalModify";
 import PostModal from "../components/community/PostModal";
 
 
 import styled from "styled-components";
 import Slider from "react-slick";
 import "../styles/saveMain.css"
-import { FaRegEdit } from 'react-icons/fa'
 import { ReactComponent as CheckedStart } from "../assets/icons/CheckedStart.svg"
+import { ReactComponent as GoalModify } from "../assets/icons/GoalModify.svg"
+import { ReactComponent as WhiteTrash } from "../assets/icons/WhiteTrash.svg"
+import { ReactComponent as AddMintPoint } from "../assets/icons/AddMintPoint.svg"
+import { ReactComponent as WhiteShare } from "../assets/icons/WhiteShare.svg"
 
 
-
-import { IoArrowRedoOutline } from 'react-icons/io5'
 import { AiOutlineStar } from 'react-icons/ai'
 import { useNavigate } from "react-router-dom";
 
@@ -45,6 +47,9 @@ function Save() {
   const [modalName, setModalName] = useState("");
 
   const [selectInputValue, setSelectInputValue] = useState([]);
+  const [newAdd, setNewAdd] = useState(false);
+
+  const [touchSetMenu, setTouchSetMenu] = useState(false)
 
   const dispatch = useDispatch();
 
@@ -62,6 +67,11 @@ function Save() {
     }
   }
 
+  const changeMenu = () => {
+    if (touchSetMenu) {
+      setTouchSetMenu(false)
+    } else if (!touchSetMenu) { setTouchSetMenu(true) }
+  }
 
   const myGoalList = useSelector((state => state.goal.myGoalList));
   console.log(myGoalList);
@@ -72,7 +82,7 @@ function Save() {
     goalitemName: myGoalList?.itemName
   }
 
-
+  console.log(goal)
 
   const mylist = useSelector((state) => state.favorite.myFavoriteList);
 
@@ -125,7 +135,7 @@ function Save() {
   return (
     <Wrap>
       <TopWrap>
-        <HeaderArea><Header title={title} /></HeaderArea>
+        <HeaderArea><Header title={title} color="#FFFFFF" /></HeaderArea>
 
         {goal.goalitemName === "이름 없음" ?
           <>
@@ -134,7 +144,8 @@ function Save() {
                 openModal();
                 setModalName("내 태산 만들기!")
                 setModalState(
-                  <GoalInput state={"ADD"}
+                  <GoalInput
+                    state={"ADD"}
                     closeModal={closeModal} />)
               }}>
                 <NonGoalInnerCicle>
@@ -148,42 +159,82 @@ function Save() {
           :
           <>
             <GoalImage src={goal.goalImage} />
+            {/* <GoalImage src="https://velog.velcdn.com/images/eppo/post/c381a0b6-a326-48df-972c-693de0f6e9ac/image.png" /> */}
             <StyledSlider {...settings}>
               <div style={{ backgroundColor: "transparent" }}></div>
-              <GoalMain>
+              <GoalMain onClick={() => { changeMenu() }}>
                 <MiddleMenue>
                   <div>
-                    <DountChart color="#26DFA6" percent={goal.goalPercent} size="200" />
+                    <DountChart
+                      color="#26DFA6"
+                      percent={goal.goalPercent}
+                      size="200" />
                   </div>
+                  {touchSetMenu ?
+                    <GoalInfo>
+                      <div style={{ display: "flex", alignItems: "center", color: "white", gap: "10px" }}>
 
-                  <div className="isGoalSubmenuBox">
-                    <div>
-                      <FaRegEdit size="15" />
-                      <p onClick={() => {
-                        openModal();
-                        setModalName("태산 수정하기!")
-                        setModalState(<GoalInput
-                          state={"Update"}
-                          goalItemId={goal.goalItemId}
-                          closeModal={closeModal} />)
-                      }}>목표 변경</p>
-                    </div>
-                    <button onClick={() => {
-                      dispatch(deleteGoalRQ(goal.goalItemId))
-                    }}>삭제하기</button>
-                    <div>
-                      <IoArrowRedoOutline size="15" />
-                      <p onClick={() => {
-                        openModal();
-                        setModalName("내 태산 % 공유");
-                        setModalState(<PostModal
-                          image={goal.goalImage}
-                          percent={goal.goalPercent}
-                          closeModal={closeModal} />)
-                      }}>내 현황 공유</p>
-                    </div>
-                  </div>
-                  <p className="goalTitle">{goal.goalitemName} {Math.floor(goal.goalPercent * 100)}%</p>
+                        <div style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                          gap: "5px"
+                        }}
+                          onClick={() => {
+                            openModal();
+                            setModalName("태산 수정하기!")
+                            setModalState(<GoalModifyComponunt
+                              goalItemId={goal.goalItemId}
+                              closeModal={closeModal} />)
+                          }}>
+                          <GoalModify />
+                          <p className="clickMenuFont">목표변경</p>
+                        </div>
+
+                        <div style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                          gap: "5px"
+                        }}
+                          onClick={() => {
+                            openModal();
+                            setModalName("내 태산 % 공유");
+                            setModalState(<PostModal
+                              image={goal.goalImage}
+                              percent={goal.goalPercent}
+                              closeModal={closeModal} />)
+                          }}>
+                          <WhiteShare />
+                          <p className="clickMenuFont">공유</p>
+                        </div>
+
+                        <div style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                          gap: "5px"
+                        }}
+                          onClick={() => {
+                            dispatch(deleteGoalRQ(goal.goalItemId))
+                          }}>
+                          <WhiteTrash />
+                          <p className="clickMenuFont">목표삭제</p>
+                        </div>
+
+                      </div>
+
+                    </GoalInfo>
+                    :
+                    <>
+
+                      <GoalInfo>
+                        <p>{Math.floor(goal.goalPercent * 100)}%</p>
+                        <p style={{ fontSize: "1rem" }}>{goal.goalitemName}</p>
+                      </GoalInfo>
+                    </>
+                  }
+
                 </MiddleMenue>
 
               </GoalMain>
@@ -191,16 +242,21 @@ function Save() {
           </>}
       </TopWrap>
 
-
       <SearchArea>
-        <SearchSavedItem setSelectInputValue={setSelectInputValue}
-          state={"saveState"}
+        <SearchSavedItem
+          setSelectInputValue={setSelectInputValue}
+          setNewAdd={setNewAdd}
+          actionState={"Save"}
+          state={"오늘은 어떤 것을 아끼셨나요?"}
           goalItemId={goal.goalItemId} />
       </SearchArea>
 
       <FavoriteTag>
         {mylist && mylist.length === 0 ?
-          <NonFavoriteItem><CheckedStart />즐겨찾기를 등록하고 편하게 사용해보세요!</NonFavoriteItem>
+          <NonFavoriteItem>
+            <div><CheckedStart /></div>
+            <p>즐겨찾기를 등록하고 편하게 사용해보세요!</p>
+          </NonFavoriteItem>
           :
           <>
             {mylist && mylist?.map((item, itemIndex) => {
@@ -221,20 +277,30 @@ function Save() {
       {selectInputValue.length !== 0 ?
         <>
           <AddSavedStyle>
-            <StarArea onClick={() => { changeStar(); }}>
-              {star ?
-                <CheckedStart />
-                :
-                <AiOutlineStar />
-              }
-            </StarArea>
-            <p>{selectInputValue.itemName}</p>
-            <div>
-              <input
-                type="Number"
-                ref={priceInput} />
-              <button onClick={addSaveData}>등록</button>
-            </div>
+            <ul>
+              <li>
+                <div className="leftBox">
+                  <StarArea onClick={() => { changeStar(); }}>
+                    {star ?
+                      <CheckedStart />
+                      :
+                      <AiOutlineStar />
+                    }
+                  </StarArea>
+
+
+                  <p>{selectInputValue.itemName}</p>
+                </div>
+
+                <div className="inputBox">
+                  <input
+                    type="Number"
+                    ref={priceInput} />
+                  <button onClick={addSaveData}><AddMintPoint /></button>
+                </div>
+
+              </li>
+            </ul>
           </AddSavedStyle>
         </>
         : ""}
@@ -252,6 +318,26 @@ function Save() {
   );
 }
 export default Save;
+
+const GoalInfo = styled.div`
+position: absolute;
+display: flex;
+flex-direction: column;
+text-align: center;
+p{
+  color: #26DFA6;
+  font-size: 2rem;
+  font-weight: 500;
+  margin-top: 5%;
+}
+
+.clickMenuFont{
+  color: white;
+  font-size: 0.8rem;
+  font-weight: 200;
+}
+`;
+
 
 const Wrap = styled.div`
 width:100%;
@@ -287,7 +373,7 @@ const StyledSlider = styled(Slider)`
 
 const TopWrap = styled.div`
 width: 100%;
-height: 45vh;
+height: 40vh;
 position: relative;
 `;
 
@@ -371,22 +457,22 @@ transform: translate(-50%, -50%);
 
 
 const SearchArea = styled.div`
-padding: 0.2rem;
-width: 95%;
-height: 5vh;
+padding: 0.5rem 1rem 0rem 1rem;
+width: 100%;
 display: flex;
 flex-direction: column;
+align-items: center;
 `;
 
 const FavoriteTag = styled.div`
-height: 8vh;
+height: 5%;
 display: flex;
 align-items: center;
-width:95%;
+width:100%;
 overflow-x:scroll;
 justify-content: center;
 white-space: nowrap;
-border-bottom: 1px solid #EFEFEF;
+border-bottom: 1px solid #CCCCCC;
 
   &::-webkit-scrollbar {
     display: none;
@@ -395,11 +481,16 @@ border-bottom: 1px solid #EFEFEF;
 
 const NonFavoriteItem = styled.div`
 display: flex;
+gap: 5%;
+justify-content: center;
+p{
+  color: #26DFA6;
+}
 `;
 
 
 const FavoriteItem = styled.div`
-margin-top: 5px;
+
 background: #EFEFEF;
 border-radius: 20px;
 font-size: 15px;
@@ -411,30 +502,34 @@ margin-left: 10px;
 
 const AddSavedStyle = styled.div`
 display: flex;
-align-items: center;
-justify-content: space-between;;
-height: 2%;
-width: 95%;
-border-bottom: 1px solid #D9D9D9;
-padding: 1rem;
+flex-direction: column;
+width: 100%;
 
+ul{
+  padding: 0 10px;
+}
+li{
+  display: flex;
+  justify-content: space-around;;
+  align-items: center;
+  border-bottom: 1px solid #CCCCCC;
+  padding: 3%;
+}
+.leftBox{
+  display: flex;
+  justify-content: space-around;;
+  align-items: center;
+}
 input{
-  margin-left: 10px;
-  width: 60%;
-  background: #D9D9D9;
-  text-align: center;
+  border-radius: 30px;
+  background: #F4F4F4;
   border: none;
-  border-radius: 20px;
 }
 
-button{
-  margin-left:10px;
-  background: #26DFA6;
-  padding: 5px;
-  border-radius: 20px;
-  color: white;
+.inputBox{
+  display: flex;
+  align-content: center;
+  gap: calc();
 }
 
 `;
-
-

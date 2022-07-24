@@ -2,6 +2,9 @@ import React,{useRef, useState} from "react";
 import { useDispatch } from "react-redux";
 import {deleteSavedList, modifySaved} from "../../store/modules/saved"
 import styled from "styled-components";
+import {ReactComponent as Edit} from "../../assets/icons/EditBlack.svg"
+import {ReactComponent as Trash} from "../../assets/icons/Trash.svg"
+import {ReactComponent as AddMintPoint} from "../../assets/icons/AddMintPoint.svg"
 
 const ModifySave = (props) =>{
     const priceInput = useRef();
@@ -12,7 +15,6 @@ const ModifySave = (props) =>{
       const data = {
         price : Number(priceInput.current.value)
        }
-       console.log(data.price);
        dispatch(modifySaved(data, props.itemId))
     }
     
@@ -26,11 +28,11 @@ const ModifySave = (props) =>{
           <input 
             type="Number"
             ref={priceInput}/>
-            <button onClick={()=>{
-              modifySavedItem();
-              setModifyView(false);
-            }}>등록</button>
-            </InputArea>
+          <button onClick={()=>{
+            modifySavedItem();
+            setModifyView(false);
+            }}><AddMintPoint/></button>
+          </InputArea>
 
         </>
         : 
@@ -41,9 +43,9 @@ const ModifySave = (props) =>{
               <button onClick={()=>{
                   setModifyView(true)
                   
-              }}>수정</button>
+              }}><Edit/></button>
               <button onClick={()=>{dispatch(deleteSavedList(props.savedItemId, props.goalItemId))
-              }}>삭제</button>
+              }}><Trash/></button>
             </ButtonArea>       
         </>
 

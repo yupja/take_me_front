@@ -3,14 +3,16 @@ import { useDispatch } from "react-redux"
 
 import Category from "../public/Category"
 import SearchItem from "../public/SearchItems"
-import { newItemGoalAddRQ, addGoalRQ, updateGoalAPI } from "../../store/modules/goal"
+import { newItemGoalAddRQ, addGoalRQ, updateGoalAPI, newUpdateGoalAPI } from "../../store/modules/goal"
+import {addItem} from "../../store/modules/item"
 
 
 import styled from "styled-components";
 import {ReactComponent as LeftArrow} from "../../assets/icons/LeftArrow.svg"
 
-const GoalInput = (props)=>{
+const GoalModify = (props)=>{
   const dispatch = useDispatch()
+
 
 
   //-------------- 모달
@@ -18,7 +20,7 @@ const GoalInput = (props)=>{
   const [image, setImage] = useState("https://velog.velcdn.com/images/eppo/post/f68f349d-6314-463d-beb0-3a779d24a90b/image.png");
   const [imageFile, setImageFile] = useState("null");
   const [selectInputValue , setSelectInputValue] = useState([]); 
-  const [newAdd, setNewAdd] = useState(false);
+  const [newAddGoal, setNewAddGoal] = useState(false);
 
   const itemName=useRef();
   const price=useRef();
@@ -41,32 +43,30 @@ const GoalInput = (props)=>{
       }
     })
   }
-
+  
 
 
 
   const sendNewData = (state) =>{
-
+    console.log("여기");    
     const formData = new FormData();
+    formData.append("image",imageFile)
 
-    formData.append("image", imageFile);
-
-     const data ={
+    
+    const  data ={
         itemName: itemName.current.value,
         defaultPrice: Number(price.current.value),
         goalItemCount: Number(goalItemCount.current.value),
-        categoryId: Number(category),
+        categoryId: Number(category)
       }
-    
-    const json = JSON.stringify(data);
-    const blob = new Blob([json], { type: "application/json" });
-    formData.append('goalItem',blob);
-    dispatch(newItemGoalAddRQ(formData));
-    
 
-    props.closeModal();
+      const json = JSON.stringify(data);
+      const blob = new Blob([json], { type: "application/json" });
+      formData.append('goalItem',blob);
 
-  }
+      dispatch(newUpdateGoalAPI(formData, props.goalItemId));
+      props.closeModal();
+    } 
 
 
   const sendData = (state) =>{
@@ -85,21 +85,19 @@ const GoalInput = (props)=>{
     const blob = new Blob([json], { type: "application/json" });
     formData.append('goalItem',blob);
 
-    console.log("있던거 ADD")
+    console.log("있던거 Update")
     if(imageFile==="null"){
       alert("이미지를 첨부");
     }else{
-    dispatch(addGoalRQ(formData));
+    dispatch(updateGoalAPI(formData, props.goalItemId))
   }
-  props.closeModal();
-
 }
 
 
   return (
   <>
     <ItemList>
-      {newAdd ?
+      {newAddGoal ?
         <>
           <ul><CategoryLi>
             <div className="leftBox">
@@ -126,8 +124,7 @@ const GoalInput = (props)=>{
           </div>
           <SearchItem
             state={"태산을 찾아보세요!"}
-            setNewAdd={setNewAdd}
-            actionState={""}
+            setNewAddGoal={setNewAddGoal}
             setSelectInputValue={setSelectInputValue} />
         </li></ul>
       }
@@ -174,11 +171,11 @@ const GoalInput = (props)=>{
       </ul>
     </ImageDiv>
 
-    {newAdd? 
+    {newAddGoal? 
       <Footer onClick={()=>
         {sendNewData(props.state)
         props.closeModal()}}>
-        태산 등록하기
+        없던거 태산 수정하기
       </Footer>
     :
       <Footer 
@@ -186,7 +183,7 @@ const GoalInput = (props)=>{
           sendData(props.state);
           props.closeModal();
           }}>
-        태산 등록하기
+        있던거 태산 등록하기
       </Footer>} 
     </>
   )
@@ -322,5 +319,5 @@ justify-content: center;
 `;
 
 
-export default GoalInput;
+export default GoalModify;
 

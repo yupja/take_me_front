@@ -3,10 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { mySavedListRQ } from "../../store/modules/saved"
 import {addFavoriteRQ} from "../../store/modules/favorite"
 
+import FavoriteCheckedStar from "../mypage/FavoriteCheckedStar";
 import ModifySave from "./ModifySave";
-
 import styled from "styled-components";
-import { AiOutlineStar } from 'react-icons/ai'
 
 const CurrentSavedItem =(props)=>{
     const dispatch = useDispatch();
@@ -14,10 +13,11 @@ const CurrentSavedItem =(props)=>{
     useEffect(() => {
         dispatch(mySavedListRQ(props.goalItemId));
       }, [props.goalItemId]);
-    
 
     const mySavedList = useSelector((state) => state.saved.currentMySavedList);
-    console.log("내아낌", mySavedList)
+    const [checkedTogle, setCheckedTogle] = useState(false);
+
+
 
    
     const addFavoriteStar = (savedItemIndex) => {
@@ -42,18 +42,30 @@ const CurrentSavedItem =(props)=>{
         :
         <SavedList>
         {mySavedList&&mySavedList.data?.map((savedItem, savedItemIndex) => (
-            <JustifyContentCenter key={savedItem.savedItemId}>
-              <SListWrap>
+            <ul key={savedItem.savedItemId}>
+              <li>
+              <div className="leftBox">
+              <FavoriteCheckedStar 
+                favorite={savedItem.favorite}
+                categoryId={savedItem.categoryId}
+                itemName={savedItem.itemName}
+                price={savedItem.price}
+                itemId={savedItem.itemId}
+                />
+             
               <SavedDay>
-                {savedItem.modifiedDate.split(/[T,.]/,1)}<br/>
+                <p style={{fontSize:"0.7rem", color:"#999999"}}>
+                  {savedItem.modifiedDate.split(/[T,.]/,1)}
+                  {savedItem.categoryName}
+                </p>
+                {savedItem.itemName}
               </SavedDay>
-              <ModifySave categoryName={savedItem.categoryName}
-                              itemName={savedItem.itemName}
-                              itemId={savedItem.itemId}
+              </div>
+              <ModifySave     itemId={savedItem.itemId}
                               savedItemId={savedItem.savedItemId}
                               goalItemId={props.goalItemId}/>
-              </SListWrap>
-           </JustifyContentCenter>
+              </li>
+           </ul>
         ))}
       </SavedList>
         }
@@ -74,36 +86,12 @@ p{
 }
 `;
 
-const Star =styled.div`
-display: flex;
-width: 5vh;
-`;
 const SavedDay = styled.div`
 display:flex;
 width: 14vh;
+margin-left: 10px;
+flex-direction: column;
 `;
-
-const SListWrap = styled.div`
-display: flex;
-height: 50px;
-width: 95%;
-align-items: center;
-justify-content: space-between;
-padding: 10px;
-border-bottom: 1px solid #CCCCCC;
-
-  button{
-    background:#26DFA6;
-    color: white;
-    padding: 8px;
-    font-size: 14px;
-    border-radius: 15px;
-    border: none;
-  }
-
-`;
-
-
 
 
 const SavedList = styled.div`
@@ -112,12 +100,23 @@ flex-direction: column;
 width: 100%;
 height: 43vh;
 
+ul{
+  padding: 0 10px;
+}
+li{
+  display: flex;
+  justify-content: space-around;;
+  align-items: center;
+  border-bottom: 1px solid #CCCCCC;
+  padding: 3%;
+}
+.leftBox{
+  display: flex;
+  justify-content: space-around;;
+  align-items: center;
+}
+
 `;
 
-const JustifyContentCenter = styled.div`
-display: flex;
-justify-content: center;
-
-`;
 
 export default CurrentSavedItem;

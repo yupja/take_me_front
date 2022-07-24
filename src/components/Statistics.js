@@ -79,10 +79,6 @@ function MyStatistics() {
           가 제일 많이 아낀 <Mint>티끌</Mint>
         </Title>
         <Mint style={{fontSize:"1.5rem"}}>Best 5!</Mint>
-
-
-
-
         <CircleArea>
           <RankingNum>
            {allUserList&&allUserList.map((list, idx) =>(

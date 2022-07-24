@@ -5,8 +5,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { loadCommentAc, deleteComment, updateCommentAc, loadpostsAc, loadDetailAc }from "../../store/modules/community"
 import {getUserInfoDB} from "../../store/modules/user";
-import { ReactComponent as Edit2 } from "../../assets/icons/Edit2.svg";
+import { ReactComponent as Edit2 } from "../../assets/icons/EditBlack.svg";
 import { ReactComponent as Trash } from "../../assets/icons/Trash.svg";
+import { ReactComponent as Check } from "../../assets/icons/Check.svg";
+import { ReactComponent as Close } from "../../assets/icons/Close.svg";
 
 function CommentList(props) {
   const dispatch = useDispatch();
@@ -60,7 +62,7 @@ function CommentList(props) {
         <Right>
           <InTop>
             <InR>
-              <CommNick>{props.username}</CommNick>
+              <CommNick>{props.username}</CommNick>&nbsp;&nbsp;
               <CreateAt>{props.createdAt.substr(0, 10).split('-', '3').join(".")}</CreateAt>
             </InR>
             <InL>
@@ -69,8 +71,8 @@ function CommentList(props) {
                   {isEdit ?
                     <>
                       <EditBtn>
-                        <ModiBtn onClick={() => editComment(props.commId)}>슈정</ModiBtn>
-                        <CancBtn onClick={() => { setIsEdit(false) }}>취소</CancBtn>
+                        <ModiBtn onClick={() => editComment(props.commId)}><Check /></ModiBtn>
+                        <CancBtn onClick={() => { setIsEdit(false) }}><Close /></CancBtn>
                       </EditBtn>
                       <textarea ref={comment_ref} style={{ width: "100%" }} />
                     </>
@@ -150,7 +152,7 @@ const InR = styled.div`
 `;
 const InL = styled.div`
 /* border: 3px solid pink; */
-width: 90px;
+/* width: 90px; */
 textarea {
   position: absolute;
   left: 0;

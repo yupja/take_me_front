@@ -9,7 +9,7 @@ export const addItem = createAsyncThunk(
   'item/add',
   async (itemData, thunkAPI) =>{
     try{
-      console.log()
+      console.log(itemData)
       const itemAdd={
         categoryId: itemData.categoryId,
         itemName: itemData.itemName,
@@ -31,17 +31,10 @@ export const addItem = createAsyncThunk(
       const json = JSON.stringify(goalItem);
       const blob = new Blob([json], { type: "application/json" });
       formData.append('goalItem',blob);
-
-      if(itemData.state==="ADD"){
-        thunkAPI.dispatch(addGoalRQ(formData))
-      }else{
-        //thunkAPI.dispatch(updateGoalAPI({formData, itemData.goalId}))
-      }
-   
-
+      
+      // thunkAPI.dispatch(updateGoalAPI(formData, itemData.goalItemId))
     }catch(error){
       console.log(error)
-
     }
   }
 )
@@ -109,3 +102,5 @@ const itemSlice = createSlice({
 
 const { readeAllItem } = itemSlice.actions;
 export default itemSlice.reducer;
+
+
