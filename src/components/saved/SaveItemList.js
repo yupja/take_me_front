@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useDispatch,useSelector } from "react-redux";
 import styled from "styled-components";
 
@@ -6,11 +6,17 @@ import { getSavedList } from "../../store/modules/saved";
 import { ReactComponent as UpArrow } from "../../assets/icons/UpArrow.svg";
 import { ReactComponent as Star } from "../../assets/icons/Star.svg";
 
+import FavoriteCheckedStar from "../mypage/FavoriteCheckedStar";
+
+
+
 function SaveItemList(props) {
-  const dispatch = useDispatch();
+
+const dispatch = useDispatch();
   const propsList = props;
   const goalItemId = props.list;
   const state = useSelector((state) => state.saved.itemList)
+  console.log(state);
 
   const active = (e) => {
     setOnToggle(current => !current);
@@ -34,13 +40,19 @@ function SaveItemList(props) {
       </li>
       <ItemList toggle={blocks}>
         <ul>
-          {state.data&&state.data.length === 0 ?
+          {state.data && state.data.length === 0 ?
             null :
             <>
               {state && state.map((list, idx) => (
                 <li key={list.savedItemId}>
                   <div className="leftBox">
-                    <Star />
+                    <FavoriteCheckedStar
+                      favorite={list.favorite}
+                      categoryId={list.categoryId}
+                      itemName={list.itemName}
+                      price={list.price}
+                      itemId={list.itemId}
+                    />
                     <p>{list.year}<br />{list.day}</p>
                     <h2>{list.itemName}</h2>
                   </div>
