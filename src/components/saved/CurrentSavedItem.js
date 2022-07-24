@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { mySavedListRQ } from "../../store/modules/saved"
 import {addFavoriteRQ} from "../../store/modules/favorite"
 
+import FavoriteCheckedStar from "../mypage/FavoriteCheckedStar";
 import ModifySave from "./ModifySave";
 import styled from "styled-components";
-import {ReactComponent as EmptyStar} from "../../assets/icons/EmptyStar.svg"
 
 const CurrentSavedItem =(props)=>{
     const dispatch = useDispatch();
@@ -13,10 +13,11 @@ const CurrentSavedItem =(props)=>{
     useEffect(() => {
         dispatch(mySavedListRQ(props.goalItemId));
       }, [props.goalItemId]);
-    
 
     const mySavedList = useSelector((state) => state.saved.currentMySavedList);
-    console.log("내아낌", mySavedList)
+    const [checkedTogle, setCheckedTogle] = useState(false);
+
+
 
    
     const addFavoriteStar = (savedItemIndex) => {
@@ -44,7 +45,13 @@ const CurrentSavedItem =(props)=>{
             <ul key={savedItem.savedItemId}>
               <li>
               <div className="leftBox">
-              <EmptyStar/>
+              <FavoriteCheckedStar 
+                favorite={savedItem.favorite}
+                categoryId={savedItem.categoryId}
+                itemName={savedItem.itemName}
+                price={savedItem.price}
+                itemId={savedItem.itemId}
+                />
              
               <SavedDay>
                 <p style={{fontSize:"0.7rem", color:"#999999"}}>
