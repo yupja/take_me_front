@@ -74,7 +74,6 @@ function Save() {
   }
 
   const myGoalList = useSelector((state => state.goal.myGoalList));
-  console.log(myGoalList);
   const goal = {
     goalImage: myGoalList?.image,
     goalItemId: myGoalList?.goalItemId,
