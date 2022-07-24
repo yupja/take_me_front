@@ -12,7 +12,6 @@ const FindPw = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const state = useSelector((state) => state.user);
-  console.log(state)
   const [findPwPop, setfindPwPop] = useState(false);
 
   const emailRef = useRef();

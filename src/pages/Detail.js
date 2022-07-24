@@ -180,6 +180,7 @@ function Detail() {
                     idUser={postlistdata.userId}
                     commId={comment_list}
                     postAll={postlistdata}
+                    profileImg={comment_list.profileImg}
                 />
             ))}
             <Blank></Blank>

@@ -284,7 +284,6 @@ height: 100%;
 border-radius: 35px;
 border: none;
 position: absolute;
-
 `;
 
 const Nick = styled.div`
@@ -299,7 +298,6 @@ display: flex;
 	display: -webkit-box;
         -webkit-line-clamp: 5;
         -webkit-box-orient: vertical; */
-
 `;
 
 const Day = styled.div`
@@ -347,12 +345,11 @@ align-items: center;
 bottom: 5%;
 position: fixed;
 /* left: 39% */
-
 `;
 
 const FootBtn = styled.button`
 width: 90%;
-height: 8vh;
+height: 7vh;
 border-radius: 2rem;
 border: none;
 font-size: 1.3rem;
@@ -389,7 +386,6 @@ const NewNick = styled.div`
 width: 100%;
 height: 14vw;
 font-size: 1rem;
-
       /* width:100%; */
       overflow: hidden;
     display: -webkit-box;
@@ -412,7 +408,6 @@ align-items: center;
 position: absolute;
 font-size: 0.8rem;
 bottom: 0;
-
 `;
 
 const BlankBox = styled.div`

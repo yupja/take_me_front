@@ -3,9 +3,9 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux/es/exports";
 import { useParams } from "react-router-dom";
 import { loadsavedAc } from "../../store/modules/saved";
-import {ReactComponent as ReceiptB} from "../../assets/icons/ReceiptB.svg";
-import {ReactComponent as Young} from "../../assets/icons/Young.svg";
-import {ReactComponent as Close} from "../../assets/icons/Close.svg";
+import { ReactComponent as ReceiptB } from "../../assets/icons/ReceiptB.svg";
+import { ReactComponent as Paper } from "../../assets/icons/Paper.svg";
+import { ReactComponent as Close } from "../../assets/icons/Close.svg";
 
 
 const ListModal = (props) => {
@@ -18,81 +18,138 @@ const ListModal = (props) => {
   const boardId = (props.forsaveId)
 
   console.log(boardId);
-  
+
 
   React.useEffect(() => {
     dispatch(loadsavedAc(boardId))
     // dispatch(loadCommentAc())
-},[])
+  }, [])
 
-    return (
-      <>
+  return (
+    <>
       {props.showModall ?
 
         <Background>
-            {/* <ModalBox onClick={e => e.stopPropagation()}> */}
-              <Young className="paper" position="relative"/>
-                {/* <CommentBox> */}
-                    <Top>
-                      <Icon>
-                        <ReceiptB className="bigger"/>
-                      </Icon>   
-                    <Closeb onClick={props.closeModall}><Close /></Closeb>
-                    </Top>
-                    <Middle>
-                        <p><Spann>{saveDataa.userId}</Spann>님의 {saveDataa.goalItemName} <Spann>KEEP</Spann></p>
-                        <p style={{fontWeight:"700", marginTop:"2vw"}}>{saveDataa.savedItemTotalPrice} 원</p>
-                    </Middle>
-                    {saveData?.map((savedItem, index) => (
-                    <ListBox>
+          {/* <ModalBox onClick={e => e.stopPropagation()}> */}
+          <PaperBox>
+            <Paper className="paper" position="relative" />
+          </PaperBox>
+          {/* <CommentBox> */}
+          <BigBox>
+            <InFo>
+              <Top>
+                <Icon>
+                  <ReceiptB className="bigger" />
+                </Icon>
+                <Closeb onClick={props.closeModall}><Close /></Closeb>
+              </Top>
+              <Middle>
+                <p><Spann>{saveDataa.userId}</Spann>님의 {saveDataa.goalItemName} <Spann>KEEP</Spann></p>
+                <p style={{ fontWeight: "700", marginTop: "2vw" }}>{saveDataa.savedItemTotalPrice} 원</p>
+              </Middle>
+            </InFo>
+            <Outside>
+              <>
+                {saveData?.map((savedItem, index) => (
+                  // <ListBox>
+                  <>
                     <List key={index}>
                       <Left>
-                      <CreateAt>{savedItem.createdDate.substr(0, 10).split('-','3').join(".")}</CreateAt>
-                      <SavedName>{savedItem.saveItemName}</SavedName>
+                        <CreateAt>{savedItem.createdDate.substr(0, 10).split('-', '3').join(".")}</CreateAt>
+                        <SavedName>{savedItem.saveItemName}</SavedName>
                       </Left>
                       <Right>
-                      <Price>{savedItem.price} 원</Price>
-                      <Star>⭐</Star>
+                        <Price>{savedItem.price} 원</Price>
+                        <Star>⭐</Star>
                       </Right>
                     </List>
-                    </ListBox>
-                    
-                    ))}
-                {/* </CommentBox> */}
-            {/* </ModalBox> */}
-             <CloseBtn onClick={props.closeModall}>닫기</CloseBtn>
+                    {/* </ListBox> */}
+                  </>
+                ))}
+              </>
+            </Outside>
+          </BigBox>
+          {/* </CommentBox> */}
+          {/* </ModalBox> */}
+          <CloseBtn onClick={props.closeModall}>닫기</CloseBtn>
         </Background> : null}
-</>
+    </>
 
-    );
-  };
+  );
+};
 
-  const ListBox = styled.div`
+const InFo = styled.div`
+  /* border: 3px solid purple; */
+  display: flex;
+  /* flex-direction: column; */
+  justify-content: center;
+  width: 80%;
+  height: 20vw;
+  top: 14%;
+  position: absolute;
+
+  `;
+
+const BigBox = styled.div`
+  /* border: 1px solid gold; */
+  width: 80vw;
+  `;
+
+const PaperBox = styled.div`
+  text-align: center;
+align-items: center;
+/* float: right; */
+position: absolute;
+top: 10;
+right: 0%;
+margin-right: 1vw;
+border: none;
+  `;
+
+const Outside = styled.div`
+  /* border: 1px solid red; */
+  width: 330px;
+  height: 430px;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+margin: auto;
+align-items: center;
+position: absolute;
+z-index: 90;
+top: 55%; 
+left: 50%;
+transform: translate(-50%, -50%);
+`;
+
+const ListBox = styled.div`
   border: 1px solid goldenrod;
   width: 90vw;
   height: 105vw;
-  position: absolute;
+  /* position: absolute; */
     /* z-index: 80; */
-    top: 55%; 
-    left: 50%;
-    transform: translate(-50%, -50%);
+    /* top: 55%;  */
+    /* left: 50%; */
+    /* transform: translate(-50%, -50%); */
     /* overflow: auto; */
   `;
 
-  const Background = styled.div`
+const Background = styled.div`
   position: fixed;
   top: 0;
   left: 0;
   bottom: 0;
   right: 0;
   background-color: rgb(0,0,0,0.3);
+  display: flex;
+  justify-content: center;
   /* background-color: rgba(41,41,41,0.85); */
   .paper{
     position: relative;
   }
   `;
-  
-  const ModalBox = styled.div`
+
+const ModalBox = styled.div`
   position: fixed;
   left: 50%;
   top: 50%;
@@ -109,55 +166,50 @@ const ListModal = (props) => {
       padding: 20px;
   }
   `;
-  
-const Closeb = styled.button`
-/* border: 5px solid violet; */
-width: 5vw;
+
+const Closeb = styled.div`
+/* border: 2px solid violet; */
+width: 100%;
 height: 5vw;
-text-align: center;
 align-items: center;
 /* float: right; */
 position: absolute;
 top: 10;
-right: 0%;
+/* right: 0%; */
 margin-right: 1vw;
-background-color: white;
-border: none;
+display: flex;
+justify-content: end;
+/* background-color: white; */
+/* border: none; */
 `;
 
-const CommentBox = styled.div`
-width: 100%;
-height: 50vh;
-margin: auto 0;
-background-color: white;
-/* justify-content: center; */
-display: flex;
-flex-direction: column;
-/* border: 3px solid yellow; */
-border-radius: 3vw;
-align-items: center;
-position: relative;
-`;
+
 
 const Top = styled.div`
-width: 100%;
+width: 80vw;
+/* width: 100%; */
+/* border: 1px solid blue; */
 display: flex;
 margin:1vw 0 3vw 0;
 position: absolute;
+display: flex;
+justify-content: center;
 z-index: 90;
-top: 13.5%; 
-left: 43%;
+/* top: 13.5%;  */
+left: 50%;
 transform: translate(-50%, -50%);
 `;
 
 const Icon = styled.div`
 width: 100%;
+/* border: 1px solid red; */
 height: 3vh;
 font-size: 100rem;
 font-weight: 700;
 /* display: flex; */
 justify-content: center;
 margin-top: 3vw;
+display: flex;
 
 `;
 
@@ -166,10 +218,15 @@ width: 100%;
 height: 12vw;
 /* border: 1px solid red; */
 font-size: 1.5rem;
+font-size: 25px;
 /* font-weight: 700; */
 text-align: center;
+display: flex;
+justify-content: center;
+flex-direction: column;
 margin-top: 3vw;
-top: 21%;
+margin-bottom: 5vw;
+top: 100%;
 left: 50%;
 transform: translate(-50%, -50%);
 z-index: 80;
@@ -188,14 +245,15 @@ height: 10vw;
 /* display: flex; */
 /* justify-content: space-between; */
 align-items: center;
-overflow: hidden; //float 랑 같이 부모 요소에!
-border-bottom: 1px solid gray;
+justify-content: center;
+/* overflow: hidden; //float 랑 같이 부모 요소에! */
+/* border-bottom: 1px solid gray; */
 line-height: 10vw; //폰트의 높이!
 /* top: 2%; */
-left: 50%;
-transform: translate(-50%, -50%);
-z-index: 80;
-position: absolute;
+/* left: 50%; */
+/* transform: translate(-50%, -50%); */
+/* z-index: 80; */
+/* position: absolute; */
 `;
 
 const Left = styled.div`
@@ -228,7 +286,7 @@ font-size: 1rem;
 `;
 const CloseBtn = styled.button`
 width: 40vw;
-height: 15vw;
+height: 8vh;
 border-radius: 15vw;
 border: none;
 background-color: #26DFA6;
@@ -244,9 +302,4 @@ left: 30%;
 `;
 
 
-//   /* 팝업이 열릴때 스르륵 열리는 효과 */
-//   animation: modal-show 0.3s;
-//   overflow: hidden;
-// `;
-
-  export default ListModal;
+export default ListModal;

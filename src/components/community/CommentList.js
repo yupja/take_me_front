@@ -56,7 +56,7 @@ function CommentList(props) {
 
     <CommentBox>
       <ProBox>
-        <CoProfile></CoProfile>
+        <CoProfile src={props.profileImg}></CoProfile>
       </ProBox>
       <Ddu>
         <Right>
@@ -118,14 +118,14 @@ margin-top: 4vw;
 padding: 0 5vw;
 `;
 const ProBox = styled.div`
-width: 8vw;
-height: 7vw;
+width: 11vw;
+height: 9vw;
 `;
-const CoProfile = styled.div`
+const CoProfile = styled.img`
 width: 100%;
 height: 100%;
 border-radius: 8vw;
-background-color: gray;
+/* background-color: gray; */
 `;
 const CreateAt = styled.span`
 margin-right: 3vw;

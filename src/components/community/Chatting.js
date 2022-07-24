@@ -6,7 +6,7 @@ import styled from "styled-components";
 import Modal from "../public/BasicModalForm"
 import CreateRoom from "../community/CreateRoom"
 
-import {loadChattingListRS } from "../../store/modules/community"
+import { loadChattingListRS } from "../../store/modules/community"
 
 
 
@@ -21,8 +21,8 @@ function Chatting() {
   const name = React.useRef();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
-  const RoomData = useSelector(((state=> state.community.chattingList)));
+
+  const RoomData = useSelector(((state => state.community.chattingList)));
   console.log(RoomData)
 
   const [modalOpen, setModalOpen] = React.useState(false);
@@ -43,8 +43,8 @@ function Chatting() {
         {RoomData && RoomData.map((item, itemIndex) => {
           return (
             <>
-              <ChattingList onClick={()=>{
-                navigate("/chatting", {state:item.roomId})
+              <ChattingList onClick={() => {
+                navigate("/chatting", { state: item.roomId })
               }}>
                 <img src="" />
                 {item.name}
@@ -53,6 +53,8 @@ function Chatting() {
             </>
           )
         })}
+
+        <ChatWrap></ChatWrap>
 
 
       </Wrap>
@@ -63,7 +65,7 @@ function Chatting() {
           openModal();
           setModalName("쓸까?말까? 만들기")
           setModalState(
-          <CreateRoom close={closeModal}/>)
+            <CreateRoom close={closeModal} />)
         }}>쓸까?말까? 만들기</button>
       </RoomCreate>
       <Modal open={modalOpen}
@@ -93,21 +95,32 @@ border: 1px solid gray;
 margin-bottom: 1rem;
 `;
 
+// 찬반투표 리스트
+const ChatWrap = styled.div`
+width: 100%;
+height: 100%;
+padding: 1rem;
+`;
+
 
 const RoomCreate = styled.div`
 display: flex;
 justify-content: center;
 position: fixed;
 width: 100%;
-bottom: 20%;
+bottom: 45px;
 
 
-button{
-    width: 80%;
 
-    background: #FFB7D9;
-    color: white;
-    padding: 1rem;
-    border-radius:30px;
+button{ 
+  width: 100%;
+  background: #6C8BED;
+  box-shadow: 0 4px 11px 0px rgba(0,0,0,0.25);
+  margin: 0 10px;
+  padding: 20px 0;
+  border-radius:59px;
+  opacity: 95%;
+  font-size: 1.25rem;
+  color: #fff;
 }
 `;
