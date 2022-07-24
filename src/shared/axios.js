@@ -3,8 +3,9 @@ import { getCookie, setCookie, removeCookie } from "../store/modules/cookie";
 import { useCookies } from "react-cookie";
 
 export const instance = axios.create({
-  baseURL: "https://api.webprogramming-mj6119.shop"
-  // baseURL: "http://13.209.13.168"
+  // baseURL: "https://api.webprogramming-mj6119.shop"
+  // // baseURL: "http://13.209.13.168"
+  baseURL: "http://43.200.4.1"
 });
 
 instance.interceptors.request.use(
@@ -57,16 +58,18 @@ const refreshToken = () => {
     .then((response) => { //새로운 토큰2개 재발급 완료시
       console.log(response);
       console.log("재발급 완료")
-      const deleteCookie = function (name) {
-        document.cookie = name + '=; expires=Thu, 01 Jan 1999 00:00:10 GMT;';
-      }
-      deleteCookie('refreshToken');
-      localStorage.clear();
+
+      // const deleteCookie = function (name) {
+      //   document.cookie = name + '=; expires=Thu, 01 Jan 1999 00:00:10 GMT;';
+      // }
+      // deleteCookie('refreshToken');
+      // localStorage.clear();
 
       const accessToken = response.data.accessToken;
       const refreshToken = response.data.refreshToken;
 
       localStorage.setItem("accessToken", accessToken);
+      
       setCookie('refreshToken', refreshToken, {
         path: "/",
         secure: true,
