@@ -194,7 +194,7 @@ div {
     width:100%;
     height:1px;
     margin-bottom: 3px;
-    background-color: white;
+    background-color: black;
     transition:all .5s;
   }
   span:last-child{
