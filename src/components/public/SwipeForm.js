@@ -1,4 +1,4 @@
-import React, {useState, useRef} from "react";
+import React, {useState, useRef, useEffect} from "react";
 import styled from "styled-components";
 import {ReactComponent as Timer} from "../../assets/icons/Timer.svg";
 
@@ -47,22 +47,20 @@ const SwipeForm = () =>{
     const [position, setPosition] = useState();
     const [loop, setLoop] = useState(null);
     
+  
     return (
         <>
         {RoomData.map((item, idx)=>(
         <Wrap>
             <ChattingList>
-                    <div className="swipeItem">
+                    <SwipeItem>
                       <img src={item.profileImg} />
                       <div style={{display:"flex"}}>
                         <span>
                           <p style={{fontWeight:"500" , fontSize:"1.2rem"}}>{item.username}</p> {item.comment}</span>
-                       
                       </div>
-                      <div style={{fontWeight:"500"}}><Timer/>{item.time}</div>
-                    </div>
-    
-                </ChattingList>
+                      </SwipeItem>
+            </ChattingList>
             </Wrap>
         ))}
         </>
@@ -73,25 +71,33 @@ const Wrap = styled.div`
 width: 100%;
 height: 100%;
 padding: 1rem;
+display: flex;
+justify-content: center;
+
 `;
+
+const SwipeItem = styled.div`
+flex-direction: column;
+white-space: nowrap;
+`;
+
 
 const ChattingList = styled.div`
 width: 100%;
 display: flex;
-overflow-x:scroll;
-flex-direction: column;
-white-space: nowrap;
+background: white;
 border: none;
 box-shadow: 0px 4px 11px 0px rgb(0 0 0 / 15%);
-padding: 1rem;
-margin-bottom: 1rem;
+padding: 1.5rem;
+
 
 div{
   gap: 5px;
 }
-.chatInfoArea{
-  display: flex;
-  flex-direction: row;
+
+.swipeItem{
+
+
 }
 .buttonArea{
   margin-top: 5%;
