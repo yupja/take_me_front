@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from "react-redux"
+import SavedInput from '../saved/SavedInput'
+
+import Modal from "./BasicModalForm";
 import { myFavoriteListRQ } from "../../store/modules/favorite"
 import { allItemListRQ } from "../../store/modules/item"
 import { ReactComponent as SearchIcon } from "../../assets/icons/SearchIcon.svg";
@@ -17,7 +20,14 @@ function SearchItems(props) {
 
   const dispatch = useDispatch();
   const list = useSelector((state) => state.item.allItemList);
-  
+
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalState, setModalState] = useState();
+  const [modalName, setModalName] = useState("");
+  const openModal = () => { setModalOpen(true); };
+  const closeModal = () => { setModalOpen(false); };
+
+
   const allItemList = [];
   const makeList = list?.map((item) => {
     allItemList.push(item.itemName);
@@ -104,10 +114,18 @@ function SearchItems(props) {
                     앗! 아직 등록이 안되어있네요!<br />
                     새로 등록하시겠어요?
                   </AddFavoriteInput>
-                  <AddButton onClick={() => {
-                    props.setNewAdd(true)
-                    setInputValue('')
-                  }}>+등록하기</AddButton>
+                  {props.actionState==="goalInput"?
+                    <AddButton onClick={() => {
+                      props.setNewAdd(true)
+                      setInputValue('')
+                    }}>+등록하기</AddButton>
+                  :
+                    <AddButton onClick={() => {
+                      openModal();
+                      setModalName("등록하기")
+                      setInputValue('')
+                    }}>+등록하기</AddButton>}
+          
                 </DropDownItem>
               )}
 
@@ -128,6 +146,14 @@ function SearchItems(props) {
             </DropDownBox>
           )}
         </InputBox>
+
+
+      <Modal open={modalOpen}
+        close={closeModal}
+        header={modalName}>
+        <SavedInput
+        closeModal={closeModal}/>
+      </Modal>
       </WholeBox>
 
     </>
