@@ -57,24 +57,27 @@ function Header({title, props}) {
 
           <Popup>
             <NavWrap>
-              <CloseBtn onClick={closeNav}>
-                <span></span>
-                <span></span>
-              </CloseBtn>
               <Menu>
-                <li onClick={() => {
-                  navigate("/save", {state : "#FFFFFF"});
-                }}>데일리 티끌</li>
-                <li onClick={() => {
-                  navigate("/community",  {state : "#FFFFFF"});
-                }}>티끌 자랑</li>
-                <li onClick={() => {
-                  navigate("/ranking");
-                }}>랭킹</li>
-                <li onClick={() => {
-                  navigate("/mypage");
-                }}>My</li>
+                <div>
+                  <CloseBtn onClick={closeNav}>
+                    <span></span>
+                    <span></span>
+                  </CloseBtn>
+                </div>
+                  <li onClick={() => {
+                      navigate("/save", {state : "#FFFFFF"});
+                    }}>데일리 티끌</li>
+                    <li onClick={() => {
+                      navigate("/community",  {state : "#FFFFFF"});
+                    }}>티끌 자랑</li>
+                    <li onClick={() => {
+                      navigate("/ranking");
+                    }}>랭킹</li>
+                    <li onClick={() => {
+                      navigate("/mypage");
+                    }}>My</li>
               </Menu>
+
               <Footer>
                 {localStorage.getItem('accessToken') ?
                   <p onClick={logout}>로그아웃</p>
@@ -132,7 +135,7 @@ transform: translateY(-50%);
 `;
 
 const NavWrap = styled.div`
-width:60vw; //180px
+width:70vw; //180px
 height: 100vh;
 background-color: #fff;
 position: absolute;
