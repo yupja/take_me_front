@@ -2,7 +2,7 @@ import React, {useRef, useState} from "react"
 import { useDispatch } from "react-redux"
 
 import Category from "../public/Category"
-import SearchItem from "../public/SearchGoal"
+import SearchItem from "../public/SearchItems"
 import { newItemGoalAddRQ, addGoalRQ, updateGoalAPI, newUpdateGoalAPI } from "../../store/modules/goal"
 import {addItem} from "../../store/modules/item"
 
@@ -123,7 +123,7 @@ const GoalModify = (props)=>{
             <p>이름</p>
           </div>
           <SearchItem
-            state={"goalState"}
+            state={"태산을 찾아보세요!"}
             setNewAddGoal={setNewAddGoal}
             setSelectInputValue={setSelectInputValue} />
         </li></ul>

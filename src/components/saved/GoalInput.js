@@ -127,6 +127,7 @@ const GoalInput = (props)=>{
           <SearchItem
             state={"태산을 찾아보세요!"}
             setNewAdd={setNewAdd}
+            actionState={""}
             setSelectInputValue={setSelectInputValue} />
         </li></ul>
       }
