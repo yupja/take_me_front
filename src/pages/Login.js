@@ -14,15 +14,6 @@ function Login() {
   const dispatch = useDispatch();
   const userState = useSelector((state) => state.user)
 
-  const [modalOpen, setModalOpen] = useState(false);
-  const [modalState, setModalState] = useState();
-  const [modalName, setModalName] = useState("");
-
-
-  const openModal = () => { setModalOpen(true); };
-  const closeModal = () => { setModalOpen(false); };
-
-
   // 로그인 정보 가져오기
   const userId = useRef();
   const userPw = useRef();
@@ -31,16 +22,14 @@ function Login() {
   const [navToggles, setNavToggles] = useState(false);
   const [ModalStr, setModalStr] = useState('');
 
-  // const onNav = (e) => {
-  //   setNavToggles(true)
-  // }
+
   const closeNav = (e) => {
     setNavToggles(false)
   }
 
   // 로그인 버튼 클릭시
-  const login = () => {
-    
+  const login = (e) => {
+    e.preventDefault();
     const loginInfo = {
       username: userId.current.value,
       password: userPw.current.value,
@@ -53,8 +42,6 @@ function Login() {
       return;
     }
     dispatch(LoginDB(loginInfo, setModalStr, setNavToggles));
-
-
   }
 
   return (
@@ -82,10 +69,7 @@ function Login() {
               ref={userPw}
             />
           </label>
-          <InputBtn onClick={ async()=>{
-            login();
-            navigate("/save");
-            }}>로그인하기</InputBtn>
+          <InputBtn onClick={login}>로그인하기</InputBtn>
         </Form>
         <Licks>
           <Link to="/signup">회원가입</Link>
@@ -236,6 +220,7 @@ padding: 0 25px;
 position: fixed;
 top: 0; left: 0;
 background: rgba(0,0,0,0.7);
+z-index: 999;
 `
 const ModalBox = styled.div`
 position: absolute;

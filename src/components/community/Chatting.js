@@ -6,7 +6,7 @@ import styled from "styled-components";
 import Modal from "../public/BasicModalForm"
 import CreateRoom from "../community/CreateRoom"
 import ChattingInfo from "./ChattingInfo";
-import {loadChattingListRS } from "../../store/modules/community"
+import { loadChattingListRS } from "../../store/modules/community"
 
 
 
@@ -65,8 +65,8 @@ function Chatting() {
   const name = React.useRef();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
-  //const RoomData = useSelector(((state=> state.community.chattingList)));
+
+  const RoomData = useSelector(((state => state.community.chattingList)));
   console.log(RoomData)
 
   const [modalOpen, setModalOpen] = React.useState(false);
@@ -88,30 +88,31 @@ function Chatting() {
         {RoomData && RoomData.map((item, itemIndex) => {
           return (
             <>
-
-            <ChattingInfo
-              roomId={item.roomId}
-              profileImg={item.profileImg}
-              userName={item.username}
-              comment={item.comment}
-              time={item.time}/>
+              <ChattingInfo
+                roomId={item.roomId}
+                profileImg={item.profileImg}
+                userName={item.username}
+                comment={item.comment}
+                time={item.time} />
             </>
           )
         })}
 
 
+
+
       </Wrap>
 
-   
+
       <BtnBox>
         <FootBtn onClick={() => {
           openModal();
           setModalName("쓸까?말까? 만들기")
           setModalState(
-          <CreateRoom close={closeModal}/>)}}>
-            쓸까?말까? 만들기
+            <CreateRoom close={closeModal} />)
+        }}>
+          쓸까?말까? 만들기
         </FootBtn>
-
       </BtnBox>
 
       <Modal open={modalOpen}

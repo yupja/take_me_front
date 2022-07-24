@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { myReadGoalRQ, deleteGoalRQ } from "../store/modules/goal"
-import {addSavedListRQ} from "../store/modules/saved"
-import { myFavoriteListRQ, favoriteDel,addFavoriteRQ } from "../store/modules/favorite";
+import { addSavedListRQ } from "../store/modules/saved"
+import { myFavoriteListRQ, favoriteDel, addFavoriteRQ } from "../store/modules/favorite";
 
 import Modal from "../components/public/BasicModalForm";
 import SearchSavedItem from "../components/public/SearchItems";
@@ -17,63 +17,68 @@ import PostModal from "../components/community/PostModal";
 import styled from "styled-components";
 import Slider from "react-slick";
 import "../styles/saveMain.css"
-import {ReactComponent as CheckedStart} from "../assets/icons/CheckedStart.svg"
-import {ReactComponent as GoalModify} from "../assets/icons/GoalModify.svg"
-import {ReactComponent as WhiteTrash} from "../assets/icons/WhiteTrash.svg"
-import {ReactComponent as AddMintPoint} from "../assets/icons/AddMintPoint.svg"
-import {ReactComponent as WhiteShare} from "../assets/icons/WhiteShare.svg"
+import { ReactComponent as CheckedStart } from "../assets/icons/CheckedStart.svg"
+import { ReactComponent as GoalModify } from "../assets/icons/GoalModify.svg"
+import { ReactComponent as WhiteTrash } from "../assets/icons/WhiteTrash.svg"
+import { ReactComponent as AddMintPoint } from "../assets/icons/AddMintPoint.svg"
+import { ReactComponent as WhiteShare } from "../assets/icons/WhiteShare.svg"
 
 
 import { AiOutlineStar } from 'react-icons/ai'
+import { useNavigate } from "react-router-dom";
 
 
 
 
 function Save() {
+  const navigate = useNavigate();
+  const loggedInfo = localStorage.getItem('accessToken');
+  if (loggedInfo === null) {
+    navigate('/');
+  }
 
-  const isLogin = useSelector((state=> state.user.isLogin));
-  
   useEffect(() => {
     dispatch(myReadGoalRQ());
     dispatch(myFavoriteListRQ());
-  }, [isLogin]);
+  }, []);
 
   const [modalOpen, setModalOpen] = useState(false);
   const [modalState, setModalState] = useState();
   const [modalName, setModalName] = useState("");
 
-  const [selectInputValue , setSelectInputValue] = useState([]); 
+  const [selectInputValue, setSelectInputValue] = useState([]);
   const [newAdd, setNewAdd] = useState(false);
 
-  const [touchSetMenu , setTouchSetMenu] =useState(false)
+  const [touchSetMenu, setTouchSetMenu] = useState(false)
 
   const dispatch = useDispatch();
 
   const openModal = () => { setModalOpen(true); };
   const closeModal = () => { setModalOpen(false); };
 
-  
-  const [ star, setStar] = useState(false);
 
-  const changeStar = () =>{
-    if(star){
+  const [star, setStar] = useState(false);
+
+  const changeStar = () => {
+    if (star) {
       setStar(false);
-    }else{
+    } else {
       setStar(true);
     }
   }
 
-  const changeMenu = ()=>{
-    if(touchSetMenu){
+  const changeMenu = () => {
+    if (touchSetMenu) {
       setTouchSetMenu(false)
-    }else if(!touchSetMenu){setTouchSetMenu(true)}
+    } else if (!touchSetMenu) { setTouchSetMenu(true) }
   }
 
-  const myGoalList = useSelector((state=> state.goal.myGoalList));
+  const myGoalList = useSelector((state => state.goal.myGoalList));
+  console.log(myGoalList);
   const goal = {
-    goalImage : myGoalList?.image,
-    goalItemId : myGoalList?.goalItemId,
-    goalPercent : (myGoalList?.goalPercent)*0.01,
+    goalImage: myGoalList?.image,
+    goalItemId: myGoalList?.goalItemId,
+    goalPercent: (myGoalList?.goalPercent) * 0.01,
     goalitemName: myGoalList?.itemName
   }
 
@@ -87,67 +92,67 @@ function Save() {
   const priceInput = useRef();
 
   //api/savedItem, 기존에 있던 아이템으로 티끌 등록
-  const addSaveData = () =>{
-    let sendData ={
-        itemId : selectInputValue.itemId,
-        price :priceInput.current.value,
+  const addSaveData = () => {
+    let sendData = {
+      itemId: selectInputValue.itemId,
+      price: priceInput.current.value,
+      goalItemId: goal.goalItemId
+    }
+    dispatch(addSavedListRQ(sendData));
+
+    if (star) {
+      sendData = {
+        itemId: selectInputValue.itemId,
+        categoryId: selectInputValue.categoryId,
+        price: priceInput.current.value,
         goalItemId: goal.goalItemId
       }
-      dispatch(addSavedListRQ(sendData));
-      
-      if(star){
-        sendData ={
-          itemId : selectInputValue.itemId,
-          categoryId:selectInputValue.categoryId,
-          price :priceInput.current.value,
-          goalItemId: goal.goalItemId
-        }
-        dispatch(addFavoriteRQ(sendData))
-      }
+      dispatch(addFavoriteRQ(sendData))
+    }
 
     setSelectInputValue([])
   }
 
 
-  const addFavoriteSaved = (itemIndex)=>{
-    let sendData={
-        itemId : mylist[itemIndex].itemId,
-        price :mylist[itemIndex].price,
-        goalItemId: goal.goalItemId
-      }
-    
+  const addFavoriteSaved = (itemIndex) => {
+    let sendData = {
+      itemId: mylist[itemIndex].itemId,
+      price: mylist[itemIndex].price,
+      goalItemId: goal.goalItemId
+    }
+
     dispatch(addSavedListRQ(sendData));
   }
-//
+  //
 
-const settings = {
-  dots: true,
-  infinite: true,
-  speed: 500,
-  slidesToShow: 1,
-  slidesToScroll: 1
-};
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1
+  };
   return (
     <Wrap>
       <TopWrap>
-      <HeaderArea><Header title={title} color="#FFFFFF"/></HeaderArea>
+        <HeaderArea><Header title={title} color="#FFFFFF" /></HeaderArea>
 
         {goal.goalitemName === "이름 없음" ?
-          <> 
-          <InitGoalArea>
-            <Circle onClick={() => {
-              openModal();
-              setModalName("내 태산 만들기!")
-              setModalState(
-                <GoalInput 
-                  state={"ADD"}
-                  closeModal={closeModal} />)
-            }}>
-              <NonGoalInnerCicle>
-                <p style={{fontSize:"1.5rem", fontWeight:"bold"}}>티끌모아 태산!</p>
-                <p>+ 태산 만들기!</p>
-              </NonGoalInnerCicle>
-            </Circle>
+          <>
+            <InitGoalArea>
+              <Circle onClick={() => {
+                openModal();
+                setModalName("내 태산 만들기!")
+                setModalState(
+                  <GoalInput
+                    state={"ADD"}
+                    closeModal={closeModal} />)
+              }}>
+                <NonGoalInnerCicle>
+                  <p style={{ fontSize: "1.5rem", fontWeight: "bold" }}>티끌모아 태산!</p>
+                  <p>+ 태산 만들기!</p>
+                </NonGoalInnerCicle>
+              </Circle>
 
             </InitGoalArea>
           </>
@@ -167,55 +172,58 @@ const settings = {
                   </div>
                   {touchSetMenu ?
                     <GoalInfo>
-                    <div style={{display:"flex", alignItems:"center", color:"white", gap:"10px"}}>
+                      <div style={{ display: "flex", alignItems: "center", color: "white", gap: "10px" }}>
 
-                      <div style={{
-                        display:"flex", 
-                        flexDirection:"column", 
-                        alignItems:"center", 
-                        gap:"5px"}}
-                        onClick={() => {
-                          openModal();
-                          setModalName("태산 수정하기!")
-                          setModalState(<GoalModifyComponunt
-                            goalItemId={goal.goalItemId}
-                            closeModal={closeModal} />)
-                        }}>
-                        <GoalModify/>
-                        <p className="clickMenuFont">목표변경</p>
+                        <div style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                          gap: "5px"
+                        }}
+                          onClick={() => {
+                            openModal();
+                            setModalName("태산 수정하기!")
+                            setModalState(<GoalModifyComponunt
+                              goalItemId={goal.goalItemId}
+                              closeModal={closeModal} />)
+                          }}>
+                          <GoalModify />
+                          <p className="clickMenuFont">목표변경</p>
+                        </div>
+
+                        <div style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                          gap: "5px"
+                        }}
+                          onClick={() => {
+                            openModal();
+                            setModalName("내 태산 % 공유");
+                            setModalState(<PostModal
+                              image={goal.goalImage}
+                              percent={goal.goalPercent}
+                              closeModal={closeModal} />)
+                          }}>
+                          <WhiteShare />
+                          <p className="clickMenuFont">공유</p>
+                        </div>
+
+                        <div style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                          gap: "5px"
+                        }}
+                          onClick={() => {
+                            dispatch(deleteGoalRQ(goal.goalItemId))
+                          }}>
+                          <WhiteTrash />
+                          <p className="clickMenuFont">목표삭제</p>
+                        </div>
+
                       </div>
 
-                      <div style={{
-                        display:"flex", 
-                        flexDirection:"column", 
-                        alignItems:"center", 
-                        gap:"5px"}}
-                        onClick={() => {
-                          openModal();
-                          setModalName("내 태산 % 공유");
-                          setModalState(<PostModal 
-                            image={goal.goalImage} 
-                            percent={goal.goalPercent}
-                            closeModal={closeModal}/>)
-                        }}>
-                        <WhiteShare/>
-                        <p className="clickMenuFont">공유</p>
-                      </div>
-
-                      <div style={{
-                        display:"flex", 
-                        flexDirection:"column", 
-                        alignItems:"center", 
-                        gap:"5px"}}
-                        onClick={() => {
-                          dispatch(deleteGoalRQ(goal.goalItemId))
-                        }}>
-                        <WhiteTrash/>
-                        <p className="clickMenuFont">목표삭제</p>
-                      </div>
-
-                    </div>
-                    
                     </GoalInfo>
                     :
                     <>
@@ -248,7 +256,7 @@ const settings = {
           <NonFavoriteItem>
             <div><CheckedStart /></div>
             <p>즐겨찾기를 등록하고 편하게 사용해보세요!</p>
-            </NonFavoriteItem>
+          </NonFavoriteItem>
           :
           <>
             {mylist && mylist?.map((item, itemIndex) => {
@@ -271,24 +279,24 @@ const settings = {
           <AddSavedStyle>
             <ul>
               <li>
-              <div className="leftBox">
-                <StarArea onClick={() => { changeStar(); }}>
-                  {star ?
-                    <CheckedStart />
-                    :
-                    <AiOutlineStar />
-                  }
-                </StarArea>
+                <div className="leftBox">
+                  <StarArea onClick={() => { changeStar(); }}>
+                    {star ?
+                      <CheckedStart />
+                      :
+                      <AiOutlineStar />
+                    }
+                  </StarArea>
 
 
-                <p>{selectInputValue.itemName}</p>
+                  <p>{selectInputValue.itemName}</p>
                 </div>
-                
+
                 <div className="inputBox">
-                <input
-                  type="Number"
-                  ref={priceInput} />
-                <button onClick={addSaveData}><AddMintPoint/></button>
+                  <input
+                    type="Number"
+                    ref={priceInput} />
+                  <button onClick={addSaveData}><AddMintPoint /></button>
                 </div>
 
               </li>
@@ -401,7 +409,7 @@ justify-content: center;
 `;
 
 
-const StarArea =styled.div`
+const StarArea = styled.div`
 display: flex;
 width: 5vh;
 `;
