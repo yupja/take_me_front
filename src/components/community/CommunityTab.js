@@ -139,7 +139,7 @@ const CommunityTab = () => {
                       ) }}>
                     <Count onClick={() => { Navigate(`/detail/${postList.boardId}`)
                       }}>
-                      <Comment />&nbsp;&nbsp;{postList.commentCount} 개
+                      <Comment />&nbsp;&nbsp;{postList.commentCount}
                       </Count>
                       </div>
                     <Rec onClick={()=>{openModall(index)}}><Receipt /></Rec>
