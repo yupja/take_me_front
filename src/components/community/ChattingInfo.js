@@ -5,7 +5,7 @@ import TimerFunction from "../public/Timer"
 
 
 import styled from "styled-components";
-import {ReactComponent as Timer} from "../../assets/icons/Timer.svg";
+import {Timer} from "../../assets/icons"
 
 const ChattingInfo = (props) =>{
     const navigate = useNavigate();
