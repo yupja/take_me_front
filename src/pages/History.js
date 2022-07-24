@@ -14,6 +14,8 @@ function History() {
     dispatch(getHistory());
   }, []);
 
+ console.log(state);
+
   // 태산 만들기 오류로 등록 불가 -> 히스토리 목록에 보이는게 없음 -> 테스트코드를 지우지 못함:)
   // 데이터가 있다면 b -> state
   
@@ -32,6 +34,10 @@ function History() {
                 itemName={list.itemName}
                 list={list.goalItemId}
               />
+
+              
+
+              
             ))}
           </ul>
         </HistoryList>

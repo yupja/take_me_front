@@ -44,7 +44,7 @@ function Favorite() {
     dispatch(myFavoriteListRQ());
   }, []);
 
-  const mylist = useSelector((state) => state.favorite.myFavoriteList.data);
+  const mylist = useSelector((state) => state.favorite.myFavoriteList);
   console.log(mylist)
 
   const [Selected, setSelected] = useState('전체');
@@ -133,6 +133,7 @@ function Favorite() {
                 </li>
               }
               {newList && newList.map((list, idx) => (
+                
                 <FavoriteList key={list.itemId + idx}
                   itemName={list.itemName}
                   price={list.price}
