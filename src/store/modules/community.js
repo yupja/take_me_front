@@ -5,11 +5,11 @@ import { instance } from "../../shared/axios";
 
 
 
-// [커뮤니티 채팅 API/보람+호양]-----------------------------------------------------
+// [커뮤니티 채팅 API/보람]-----------------------------------------------------
 
 
 export const loadChattingListRS = createAsyncThunk(
-  'community/chatting',
+  'read/chatRoom',
   async (thunkAPI) => {
     try {
       const { data } = await axios.get('/api/chat/rooms/')
@@ -23,7 +23,7 @@ export const loadChattingListRS = createAsyncThunk(
 export const createChattingRoomRQ = (roomName) => {
   return async function (dispatch) {
     try {
-      await axios.post('http://3.35.52.157/chat/rooms/', roomName) //폼데이터로 넘기기
+      await axios.post('/chat/rooms/', roomName) //폼데이터로 넘기기
       // 채팅방 생성 함수 끝난 후 네비게이트로 채팅 디테일 컴포넌트로 이동 
     } catch (error) {
       console.log(error);
@@ -32,13 +32,24 @@ export const createChattingRoomRQ = (roomName) => {
 }
 
 
+export const closedChttingLog = createAsyncThunk(
+  'read/closedChattinglog',
+  async (thunkAPI) => {
+    try {
+      const { data } = await axios.get('/api/closedChat/rooms')
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  })
+
+
 
 // [커뮤니티 채팅 API / 은진] -------------------------------------------------
 
 // 방생성
 export const createChatRoom = (data) => {
   return async function (dispatch) {
-    console.log(data);
 
     await instance.post(`/api/chat/room`, data)
       .then((res) => {
@@ -299,6 +310,7 @@ const communitySlice = createSlice({
   initialState: {
     // 채팅
     chattingList: [],
+    closedChttingLogo:[],
     getDayCountList: [],
     messages: [],
     myInfo: [],
@@ -363,6 +375,11 @@ const communitySlice = createSlice({
     [likeChange.fulfilled]: (state, action) => {
       state.likeList = action.payload
     },
+    [closedChttingLog.fulfilled]: (state, action) => {
+      state.likeList = action.payload
+    },
+
+    
   }
 
 });

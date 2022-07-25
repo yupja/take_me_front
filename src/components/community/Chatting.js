@@ -6,7 +6,7 @@ import styled from "styled-components";
 import Modal from "../public/BasicModalForm"
 import CreateRoom from "../community/CreateRoom"
 import ChattingInfo from "./ChattingInfo";
-import { loadChattingListRS } from "../../store/modules/community"
+import { loadChattingListRS, closedChttingLog } from "../../store/modules/community"
 
 
 
@@ -76,7 +76,8 @@ function Chatting() {
   const closeModal = () => { setModalOpen(false); };
 
   React.useEffect(() => {
-    dispatch(loadChattingListRS())
+    dispatch(loadChattingListRS());
+    dispatch(closedChttingLog());
   }, [])
 
 
