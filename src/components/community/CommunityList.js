@@ -43,7 +43,6 @@ const NewCommunityList = () => {
   const userinfo = useSelector((state) => state.user.infoList)
   const Postdata = useSelector((state) => state.community.postList.data);
   const Savedata = useSelector((state) => state.saved.savedItem);
-  console.log(Postdata)
 
 
   return (
@@ -105,7 +104,7 @@ const NewCommunityList = () => {
             openModal();
             setModalName("내 태산 % 공유");
             setModalState(<PostModal close={closeModal} />)
-          }}>내 태산 %  공유</button>
+          }}><p>내 태산 %  공유</p></button>
         </div>
       </Wrap>
 
@@ -129,9 +128,9 @@ flex-direction: column;
 
 .buttonBox{
   display: flex;
-  width: 38%;
+  width: 80%;
   border-radius: 30px;
-  padding:1.5rem;
+  padding: 1rem;
   position: fixed;
   bottom: 10%;
   background: #26DFA6;
@@ -140,7 +139,10 @@ flex-direction: column;
   button{
     color: white;
     font-weight: 500;
-    font-size: 1rem;
+
+  }
+  p{
+    font-size: 1.5rem;
   }
 }
 

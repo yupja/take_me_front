@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router";
 
-import Chatting from "../components/community/Chatting"
+import ChattingList from "../components/community/ChattingList"
 import Header from "../components/public/Header";
 import SwipeRooms from "../components/public/SwipeForm"
 
@@ -28,7 +28,7 @@ const Community = () => {
             setPage(<CommunityList />)
           }}>티끌자랑</div>
           <div onClick={()=>{
-            setPage(<Chatting/>)
+            setPage(<ChattingList/>)
           }}>쓸까말까</div>
         </MenuBar>
 

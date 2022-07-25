@@ -39,7 +39,7 @@ export const closedChttingLog = createAsyncThunk(
   async (thunkAPI) => {
     try {
       const { data } = await instance.get('/api/closedChat/rooms')
-      return data;
+      return data.data;
     } catch (error) {
       console.log(error);
     }
@@ -313,7 +313,7 @@ const communitySlice = createSlice({
   initialState: {
     // 채팅
     chattingList: [],
-    closedChttingLog: [],
+    closedChttingLogList: [],
     getDayCountList: [],
     messages: [],
     myInfo: [],
@@ -379,7 +379,7 @@ const communitySlice = createSlice({
       state.likeList = action.payload
     },
     [closedChttingLog.fulfilled]: (state, action) => {
-      state.closedChttingLog = action.payload
+      state.closedChttingLogList = action.payload
     },
 
 
