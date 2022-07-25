@@ -25,10 +25,7 @@ const ChattingInfo = (props) =>{
             </div>
             <div style={{fontWeight:"500"}}><Timer/><TimerFunction/></div>
           </div>
-          <div className="buttonArea">
-            <button>쓸까?</button>
-            <button>말까?</button>
-          </div>
+
         </ChattingList>
       </>
     )
