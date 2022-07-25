@@ -21,14 +21,14 @@ function RoomDetail() {
 
 
   // const sock = new SockJS('https://api.webprogramming-mj6119.shop/chatting', null, { transports: ["websocket", "xhr-streaming", "xhr-polling"] });
-  const sock = new SockJS('http://43.200.4.1/chatting', null, { transports: ["websocket", "xhr-streaming", "xhr-polling"] });
+  const sock = new SockJS('https://api.webprogramming-mj6119.shop/chatting', null, { transports: ["websocket", "xhr-streaming", "xhr-polling"] });
 
   let client = Stomp.over(sock);
 
   let token = localStorage.getItem('accessToken');
 
   useEffect(() => {
-    dispatch(getUserInfoDB());
+    // dispatch(getUserInfoDB());
     dispatch(myInfoData());
 
     client.connect({ "token": token }, () => {
@@ -36,8 +36,8 @@ function RoomDetail() {
       client.subscribe(`/sub/chat/room/${roomId}`, (res) => { // 메세지 수신
         let newMessage = JSON.parse(res.body);
         console.log(newMessage);
-        dispatch(subMessage(newMessage));
-        return newMessage;
+        // dispatch(subMessage(newMessage));
+        // return newMessage;
 
         // 채팅 내역 추가
         // chatBox.append('<li>' + content.message + '(' + content.writer + ')</li>')
@@ -46,13 +46,15 @@ function RoomDetail() {
 
       const info = {
         type: 'ENTER',
-        roomId: "01202a38-0cd1-462a-8e52-eed82a3a489d",
+        roomId: roomId,
         sender: "eunjin",
-        profileImg: "rrr.jpg"
+        profileImg: "rrr.jpg",
+        userCount: 3,
       }
+      console.log(roomId);
       //여기서 구독한 유저 정보를 먼저 보내준다
       // send(path, header, message)로 메시지를 보낼 수 있다.
-      client.send(`/pub/chat/message`, { "token": token }, JSON.stringify(info));
+      // client.send(`/pub/chat/message`, {}, JSON.stringify(info));
     });
 
   }, [])

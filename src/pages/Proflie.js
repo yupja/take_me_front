@@ -113,16 +113,11 @@ function Proflie() {
   }
 
   const emailCheck = (e) => {
+    const emailText = emailRef.current.value;
     const emailCheckStr = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
 
-    console.log("검사시작!")
-    const email = emailRef.current.value;
-    if (emailCheckStr.test(email)) {
-      console.log("검사통과")
-      dispatch(emailCheckDB(email, setResultAlert))
-      setOnToggle(false);
-      setFocus(true);
-      console.log(onToggle, focus);
+    if (emailCheckStr.test(emailText)) {
+      dispatch(emailCheckDB(emailText, setResultAlert))
     } else {
       setResultAlert("🚨이메일 형식으로 적어주세요")
     }
@@ -156,10 +151,58 @@ function Proflie() {
     }
   }
 
+  // 이메일 중복검사 팝업
+
+  const [navToggles, setNavToggles] = useState(false);
+  const [ModalStr, setModalStr] = useState('');
+
+
+  const closeNav = (e) => {
+    setNavToggles(false);
+    setResultAlert("");
+  }
+
+  const changeEmail = (e) => {
+    e.preventDefault();
+    const emailText = emailRef.current.value;
+    if (resultAlert.includes("사용")) {
+      setEmail(emailText);
+      console.log(emailText)
+      setNavToggles(false);
+    } else {
+      setResultAlert("중복체크를 확인해주세요!")
+    }
+  }
+
+
+  const emailEdit = (e) => {
+    e.preventDefault();
+    setNavToggles(true)
+  }
+
+
 
 
   return (
     <>
+      {navToggles ?
+        <ModalWrap>
+          <ModalBox>
+            <h1>이메일 변경</h1>
+            <CloseBtn onClick={closeNav}>
+              <span></span>
+              <span></span>
+            </CloseBtn>
+            <div className="cont">
+              <input type="textarea" defaultValue={email} ref={emailRef} maxlength='32' onChange={() => { setResultAlert('') }} />
+              <button onClick={emailCheck}>중복체크</button>
+            </div>
+            {resultAlert}
+            <button className="change" onClick={changeEmail}>변경하기</button>
+          </ModalBox>
+        </ModalWrap>
+        : null
+      }
       <Header title={title} />
       <ProflieWrap>
         <MyInfo>
@@ -194,10 +237,9 @@ function Proflie() {
           </div>
           <div>
             <span>이메일</span>
-            <input type="text" className="email" defaultValue={email} disabled={focus} ref={emailRef} />
-            <p className="result">{resultAlert}</p>
+            <h2 className="email">{email}</h2>
             <div className="editBtn" onClick={active}>
-              {onToggle === true ? <button onClick={emailCheck}>중복체크</button> : <Edit />}
+              <Edit onClick={emailEdit} />
             </div>
           </div>
         </SubInfo>
@@ -359,13 +401,11 @@ div.editBtn{
   }
 }
 .email{
-  background: none;
-  border: none;
+  display: inline-block;
   margin-left : 20px;
   font-weight: 700;
   font-size: 1rem;
   color: #000;
-
 }
   .result {
   display: inline-block;
@@ -406,3 +446,99 @@ font-weight: 700;
 padding: 22px 0;
 
 `
+
+
+// 모달
+const ModalWrap = styled.div`
+width: 100%;
+height: 100vh;
+padding: 0 25px;
+position: fixed;
+top: 0; left: 0;
+background: rgba(0,0,0,0.7);
+z-index: 999;
+`
+const ModalBox = styled.div`
+position: absolute;
+top: 50%; left: 50%;
+transform: translate(-50%,-50%);
+width: 90%;
+height: 12.12rem;
+background: #fff;
+border-radius: 5px;
+overflow: hidden;
+
+h1 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  text-align: center;
+  line-height:62px;
+}
+ h3 {
+  font-size: 1.5rem;
+  padding: 20px 0;
+  white-space: pre-wrap;
+ }
+ div.cont{
+  position: relative;
+  margin: 0 10px;
+  padding: 15px 0;
+  border-bottom : 1px solid #ddd;
+  button{
+    position: absolute;
+    right: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4.43rem;
+    text-align: center;
+    color: #999;
+    padding: 3px 5px;
+    font-weight: 500;
+    font-size: 0.875rem;
+    border: 1px solid #dbdbdb;
+    border-radius: 3.12rem;
+  }
+ }
+ input {
+  width: 75%;
+  background : none;
+  border: none;
+  text-align: center;
+ }
+ input:focus{
+  outline:none;
+ }
+ button.change {
+  font-size:0.93rem;
+  font-weight: 700;
+  color: #fff;
+  width: 100%;
+  background: #26DFA6;
+  padding: 16px 0;
+  position: absolute;
+  bottom: 0; left: 0;
+ }
+`
+
+const CloseBtn = styled.div`
+width:15px;
+height: 15px;
+position:absolute;
+top: 13px; right: 5%;
+
+span {
+  display:block;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width:100%;
+  height:1px;
+  background-color: #999999;
+}
+span:first-child{
+  transform: rotate(45deg) translateX(0%);
+  }
+span:last-child{
+  transform: rotate(135deg) translateX(0%);
+  }
+`;
