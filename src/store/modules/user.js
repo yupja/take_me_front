@@ -43,7 +43,6 @@ export const getUserInfoDB = () => {
       withCredentials: true,
     })
       .then((response) => {
-        console.log(response);
         const username = response.data.data.username;
         const nickname = response.data.data.nickname;
         const email = response.data.data.email;
