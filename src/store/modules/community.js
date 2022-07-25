@@ -55,8 +55,8 @@ export const createChatRoom = (data) => {
 
     await instance.post(`/api/chat/room`, data)
       .then((res) => {
+        const roodId = res.data.data.roomId
         console.log(res)
-        const roodId = res.data.roomId
         window.location.href = `/chat/roomdetail/${roodId}`;
       })
       .catch((error) => {
@@ -313,7 +313,7 @@ const communitySlice = createSlice({
   initialState: {
     // 채팅
     chattingList: [],
-    closedChttingLog:[],
+    closedChttingLog: [],
     getDayCountList: [],
     messages: [],
     myInfo: [],
@@ -382,7 +382,7 @@ const communitySlice = createSlice({
       state.closedChttingLog = action.payload
     },
 
-    
+
   }
 
 });
