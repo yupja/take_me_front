@@ -8,21 +8,23 @@ import SaveItemList from "../components/saved/SaveItemList";
 import { getHistory } from "../store/modules/info";
 
 function History() {
+  const title = "히스토리";
   const dispatch = useDispatch();
   const state = useSelector((state) => state.info.historyList)
+  console.log(state);
+  console.log(state[3]?.savedItems);
   useEffect(() => {
     dispatch(getHistory());
   }, []);
 
- console.log(state);
 
   // 태산 만들기 오류로 등록 불가 -> 히스토리 목록에 보이는게 없음 -> 테스트코드를 지우지 못함:)
   // 데이터가 있다면 b -> state
-  
+
 
   return (
     <>
-      <Header />
+      <Header title={title} />
       <HistoryWrap>
         <Total>총 <span>{state.length}</span>개 태산</Total>
         <HistoryList>
@@ -32,12 +34,13 @@ function History() {
                 key={idx}
                 reachedAt={list.reachedAt}
                 itemName={list.itemName}
-                list={list.goalItemId}
+                items={list.savedItems}
+                total={list.totalPrice}
               />
 
-              
 
-              
+
+
             ))}
           </ul>
         </HistoryList>
@@ -59,10 +62,10 @@ const Total = styled.div`
   text-align: center;
   font-size:2.12rem;
   font-weight: 700;
-  font-family: 'HS-Regular';
+  font-family: 'SEBANG_Gothic_Bold';
   span{
     color: #26DFA6;
-      font-family: 'HS-Regular';
+    font-family: 'SEBANG_Gothic_Bold';
   }
 `
 
