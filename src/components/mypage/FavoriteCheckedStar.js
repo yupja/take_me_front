@@ -15,6 +15,8 @@ const FavoriteCheckedStar =(props) =>{
     const clickStar =()=>{
         let sendData={};
 
+        console.log(star)
+
         if(star){
             setStar(false)
         }else if(!star){

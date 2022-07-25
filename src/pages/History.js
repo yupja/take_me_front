@@ -37,6 +37,10 @@ function History() {
                 items={list.savedItems}
                 total={list.totalPrice}
               />
+
+
+
+
             ))}
           </ul>
         </HistoryList>

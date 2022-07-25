@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from "react";
+import React, {useState, useRef, useEffect, useLayoutEffect} from "react";
 import styled from "styled-components";
 import {ReactComponent as Timer} from "../../assets/icons/Timer.svg";
 
@@ -40,19 +40,58 @@ const RoomData = [
     },
   ]
 
+  
+function useInterval(callback, delay) {
+  const savedCallback = useRef();
+
+  useLayoutEffect(() => {
+    savedCallback.current = callback;
+  }, [callback]);
+
+  useEffect(() => {
+    if (!delay && delay !== 0) {
+      return undefined;
+    }
+    const id = setInterval(() => savedCallback.current(), delay);
+    return () => clearInterval(id);
+  }, [delay]);
+}
 
 
 const SwipeForm = () =>{
     const swifeRef = useRef<HTMLDivElement>(null);
-    const [position, setPosition] = useState();
+    const [currentIndex, setCurrentIndex] = useState(0);
     const [loop, setLoop] = useState(null);
-    
+
+    const setInfiniteSlide = (datas, slideToAdd) => {
+      const newSlides = [...datas];
+      const size = datas.length;
+      for (let i = 0; i < slideToAdd; i += 1) {
+        const first = {
+          ...datas[i % size],
+          id: datas.length + i,
+        };
+        const last = {
+          ...datas[datas.length - 1 - (i % size)],
+          id: -(i + 1),
+        };
+        newSlides.unshift(last);
+        newSlides.push(first);
+      }
+      return newSlides;
+    };
+
+
+    useInterval(() => {
+      setCurrentIndex(currentIndex => currentIndex + 1);
+  }, 2000)
   
     return (
         <>
         {RoomData.map((item, idx)=>(
         <Wrap>
-            <ChattingList>
+            <ChattingList
+              style={{transform: `translateX(${(-100 / RoomData.length+2) * (currentIndex)}%)`}}>
                     <SwipeItem>
                       <img src={item.profileImg} />
                       <div style={{display:"flex"}}>
@@ -79,8 +118,38 @@ justify-content: center;
 const SwipeItem = styled.div`
 flex-direction: column;
 white-space: nowrap;
+
 `;
 
+
+const SlideTrack = styled.ul`
+  display: flex;
+  width: 100%;
+  height: 400px;
+  padding: 0;
+  margin: 0;
+  transform: ${({
+    slideItemWidth,
+    slideMargin,
+    slideX,
+    previewRatio,
+    currentIndex,
+    slideToShow,
+  }) =>
+    `translateX(calc((${slideItemWidth} + ${slideMargin}px) * ${
+      currentIndex - (slideToShow - 1) / 2
+    } * -1 - ${
+      1 - (previewRatio || 1)
+    } * (${slideItemWidth}) +  ${slideX}px))`};
+  &:not(.no-effect) {
+    transition: transform ${({ transitionSpeed }) => transitionSpeed}ms;
+  }
+  gap: ${({ slideMargin, slideToShow }) =>
+    slideToShow > 1 ? slideMargin : 0}px;
+  > li {
+    flex: 0 0 ${({ slideItemWidth }) => `calc(${slideItemWidth})`};
+  }
+`;
 
 const ChattingList = styled.div`
 width: 100%;

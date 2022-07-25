@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
@@ -6,12 +6,15 @@ import { getSavedList } from "../../store/modules/saved";
 import { ReactComponent as UpArrow } from "../../assets/icons/UpArrow.svg";
 import { ReactComponent as Star } from "../../assets/icons/Star.svg";
 
+import FavoriteCheckedStar from "../mypage/FavoriteCheckedStar";
+
+
+
 function SaveItemList(props) {
   const propsList = props;
   const items = props.items;
   const total = props.total;
   const itemList = useSelector((state) => state.saved.itemList)
-
 
   const active = (e) => {
     setOnToggle(current => !current);
@@ -19,7 +22,6 @@ function SaveItemList(props) {
   }
   const [onToggle, setOnToggle] = useState(false);
   const [blocks, setBlocks] = useState(false);
-
 
 
   return (

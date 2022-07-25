@@ -19,14 +19,16 @@ export const myFavoriteListRQ = createAsyncThunk(
   }
 )
 
+
 //--------------------- CREATE ---------------------------
 
 export const addFavoriteRQ = createAsyncThunk( // 내 즐겨찾기 등록 
   'add/addFavorite',
   async (sendData, thunkAPI) => {
     try {
-      await instance.post("/api/mypage/favorite", sendData)
+      const {data} = await instance.post("/api/mypage/favorite", sendData)
       thunkAPI.dispatch(myFavoriteListRQ());
+      return data
     } catch (error) {
       console.log(error);
     }
@@ -69,6 +71,7 @@ const goalSlice = createSlice({
   name: "favoriteItem",
   initialState: {
     myFavoriteList: [],
+    currentFavoriteId: "",
 
   },
   reducers: {
@@ -77,6 +80,10 @@ const goalSlice = createSlice({
     [myFavoriteListRQ.fulfilled]: (state, action) => {
       state.myFavoriteList = action.payload
     },
+    [addFavoriteRQ.fulfilled]: (state, action) =>{
+      state.currentFavoriteId = action.payload
+    },
+    
   }
 });
 
