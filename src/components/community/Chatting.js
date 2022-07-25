@@ -66,8 +66,8 @@ function Chatting() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const RoomData = useSelector(((state => state.community.chattingList)));
-  console.log(RoomData)
+  //const RoomData = useSelector(((state => state.community.chattingList)));
+  //console.log(RoomData)
 
   const [modalOpen, setModalOpen] = React.useState(false);
   const [modalState, setModalState] = React.useState();
