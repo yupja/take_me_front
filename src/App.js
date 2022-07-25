@@ -5,12 +5,16 @@ import { createGlobalStyle } from "styled-components";
 
 function App() {
   return (
-    <div className="App">
+      <div className="mobile">
       <GlobalStyle />
       <Router />
-    </div>
+      </div>
+
   );
 }
+
+
+
 
 const GlobalStyle = createGlobalStyle`
 ${reset}; 
