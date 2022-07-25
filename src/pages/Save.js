@@ -155,7 +155,6 @@ function Save() {
           :
           <>
             <GoalImage src={goal.goalImage} />
-            {/* <GoalImage src="https://velog.velcdn.com/images/eppo/post/c381a0b6-a326-48df-972c-693de0f6e9ac/image.png" /> */}
             <StyledSlider {...settings}>
               <div style={{ backgroundColor: "transparent" }}></div>
               <GoalMain onClick={() => { changeMenu() }}>
