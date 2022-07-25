@@ -14,8 +14,8 @@ const PostModal = (props) => {
     const myGoalList = useSelector((state=> state.goal.myGoalList));
     console.log(myGoalList,"goallist")
     
-    const title = myGoalList.data.itemName;
-    const goalPercent = (myGoalList.data.goalPercent)*0.01
+    const title = myGoalList.itemName;
+    const goalPercent = (myGoalList.goalPercent)*0.01
 
     const contents_ref = React.useRef();
 
@@ -51,7 +51,7 @@ const PostModal = (props) => {
     <>
         <ModalBody>
           <GoalInfo>
-            <DountChart color="#26DFA6" image={image} percent={goalPercent} size="150" />
+            <DountChart color="#26DFA6" percent={goalPercent} size="150"/>
               <TextArea>
                 <p>{title}</p>
                 <BasicImg>기본 이미지</BasicImg>

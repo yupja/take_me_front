@@ -4,6 +4,9 @@ import {myMonthPriceListRQ, allUserMonthPriceListRQ, allMonthCountListRQ,
         myDayCountListRQ, getDayCount, myMonthCountListRQ} from "../store/modules/statistics"
 import { useDispatch, useSelector } from "react-redux"
 import styled from "styled-components";
+
+import { Icon1, Icon2, Icon3, Icon4, Icon5, Icon6, Icon7, Icon8, Icon9, Icon10,
+         Icon11, Icon12, Icon13, Icon14, Icon15, Icon16, Icon17, Icon18, Icon19 } from "../assets/categoryIcons";
 import {ReactComponent as ChangeRank} from "../assets/icons/ChangeRank.svg"
 
 
@@ -26,6 +29,8 @@ function MyStatistics() {
    //---------------- 통계 상태 스테이트 ------------------------- 
    const [dayMonth, setDayMonth] = useState(true); //월별이냐 일별이냐
    const [priceCount, setPriceCount] = useState(true); //가격별이냐 횟수별이냐
+   const Icons =[Icon1, Icon2, Icon3, Icon4, Icon5, Icon6, Icon7, Icon8, Icon9, Icon10,
+   Icon11, Icon12, Icon13, Icon14, Icon15, Icon16, Icon17, Icon18, Icon19]
 
 
   //---------------- 데이터 불러오기 ------------------------- 
@@ -74,25 +79,24 @@ function MyStatistics() {
   return (
     <>
     <Wrap>
+      <AllUserArea>
         <Title>
           <Mint>내</Mint>
           가 제일 많이 아낀 <Mint>티끌</Mint>
         </Title>
         <Mint style={{fontSize:"1.5rem"}}>Best 5!</Mint>
-
-
-
-
         <CircleArea>
           <RankingNum>
-           {allUserList&&allUserList.map((list, idx) =>(
+           {myList&&myList.map((list, idx) =>(
             <li key={idx}>
-            <p>{list.rankPrice}st <span>{list.itemName}</span></p>
+              <p>{list.rankPrice}st </p>
+              <img src={Icons[list.categoryId-1]}/>
+              <p>{list.itemName}</p>
             </li>
           ))}
           </RankingNum>
         </CircleArea>
-
+        </AllUserArea>
       
 
       <AllUserArea>
@@ -107,8 +111,12 @@ function MyStatistics() {
           <RankingNum>
            {allUserList&&allUserList.map((list, idx) =>(
             <li key={idx}>
-            <p>{list.rankPrice}st <span>{list.itemName}</span></p>
+              <p>{list.rankPrice}st </p>
+              <img src={Icons[list.categoryId-1]}/>
+              <p>{list.itemName}</p>
             </li>
+
+
           ))}
           </RankingNum>
         </CircleArea>
@@ -118,7 +126,7 @@ function MyStatistics() {
 
       </AllUserArea>
 
-      <div style={{marginTop:"1rem"}}>
+      <div style={{marginTop:"1.5rem"}}>
         <Title>
             <Mint>다른</Mint>
             사람들이 설정한<Mint>태산</Mint><p>은?</p>
@@ -126,8 +134,9 @@ function MyStatistics() {
 
         <BottomCircleArea>
            {allUserGoal && allUserGoal.map((list, idx) => (
-            <div key={idx}>
-              <Circle>{list.rankCount}st {list.itemName}</Circle>
+            <div key={idx} className="outSideDiv">
+              <img src={Icons[list.categoryId-1]}/>
+              <p>{list.itemName}</p>
             </div>
           ))}
         </BottomCircleArea>
@@ -173,15 +182,29 @@ align-items: center;
 overflow: auto;
 white-space: nowrap;
 overflow: scroll;
-padding: 25px 0;
+height: 100%;
+gap: 3%;
+
+
 
 li{
   width: 5rem;
   height: 5rem;
-  background: #c9c9c9;
   border-radius: 50%;
   margin-right: 10px;
   text-align: center;
+  margin-left: 2%;
+  display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+  img{
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    box-shadow: 0px 4px 11px 0px rgb(0 0 0 / 15%)
+  }
 }
 li:first-child{
   width: 8.12rem;
@@ -189,9 +212,10 @@ li:first-child{
 }
 p {
   position: relative;
-  top: -8px;
+  margin-top: 10%;
   font-size: 1.5rem;
-  color:#000;
+
+  color:#6A8EFF;
   /* display: none; */
 }
 span{
@@ -201,9 +225,12 @@ li:first-child span{
   color:#6a8eff;
   display: inline;
 }
+
 &::-webkit-scrollbar {
     display: none;
   }
+
+
 `;
 
 
@@ -218,26 +245,25 @@ display: flex;
 
 const Wrap = styled.div`
 width: 100%;
-height: 100%;
+height: 25vh;
 padding: 1rem;
 
-&::-webkit-scrollbar {
-    display: none;
-  }
 
 `;
 
 const AllUserArea = styled.div`
 display: flex;
 flex-direction: column;
-height: 30vh;
+height: 35vh;
+
 `;
 
 const CircleArea = styled.div`
 display: flex;
 flex-direction: row;
-padding: 1rem;
+
 align-items: center;
+height: 100%;
 overflow: scroll;
 
 &::-webkit-scrollbar {
@@ -246,26 +272,36 @@ overflow: scroll;
 
 `;
 
-const Circle = styled.div`
-display: flex;
-background: #D9D9D9;
-margin-right: 1rem;
-width: 100px;
-height: 100px;
-border-radius: 50%;
-`;
 
 
 const BottomCircleArea = styled.div`
 display:block;
 float: left;
 overflow: auto;
-padding: 0.3rem;
+margin-top: 10%;
 
-div{
-  float: left;
-  margin-top:0.5rem;
+
+.outSideDiv{
+  float: left;  
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin: 2%;
+
+    
+  img{
+
+    border-radius: 50%;
+    width: 100px;
+    object-fit: cover;
+    box-shadow: 0px 4px 11px 0px rgb(0 0 0 / 15%);
+  }
+  p{
+    margin-top: 10%;
+  }
 }
+
+
 `;
 
 const ButtonArea = styled.div`

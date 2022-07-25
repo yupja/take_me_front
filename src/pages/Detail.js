@@ -28,8 +28,6 @@ function Detail() {
     const comment_ref = React.useRef();
 
     const boardIdex = params.boardId;
-    // console.log(boardIdex, "idex")
-
 
     React.useEffect(() => {
         dispatch(loadCommentAc(boardIdex))
@@ -48,21 +46,16 @@ function Detail() {
       goalPercent : (myGoalList?.goalPercent)*0.01,
       goalitemName: myGoalList?.itemName
     }
-    
-    // console.log(commentData.data,"comment")
    
     const createComment = (boardId) => {
-        // console.log(comment_ref.current.value, "create확인");
         const data = {
             comment: comment_ref.current.value,
         }
         dispatch(createCommentAc(data, postlistdata.boardId))
         window.location.reload();
     };
-    // console.log(Postdata,"postdata")
 
     const [user_nav, setUserNav] = useState(false)
-
     const onClickNav = (e) => {
         setUserNav(user_nav => user_nav ? false : true)
     }
@@ -77,11 +70,8 @@ function Detail() {
     }
     
     const  state  = useLocation();
-    // console.log(state.state.name,"state")
     const postlistdata = state.state.name
-    // console.log(postlistdata.boardId,"dsdsdsdsd")
     const boardId = postlistdata.boardId
-    // const state = "커뮤니티"
 
     //슬릭
     const settings = {
@@ -108,8 +98,6 @@ function Detail() {
   const onClickClose = (str) => {
     setLimit(51)
   }
-
-
 
     return (
         <>

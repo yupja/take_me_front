@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { loadCommentAc, deleteComment, updateCommentAc, loadpostsAc, loadDetailAc }from "../../store/modules/community"
 import {getUserInfoDB} from "../../store/modules/user";
-import { ReactComponent as Edit2 } from "../../assets/icons/Edit2.svg";
+import { ReactComponent as Edit2 } from "../../assets/icons/EditBlack.svg";
 import { ReactComponent as Trash } from "../../assets/icons/Trash.svg";
 import { ReactComponent as Check } from "../../assets/icons/Check.svg";
 import { ReactComponent as Close } from "../../assets/icons/Close.svg";
@@ -28,9 +28,6 @@ function CommentList(props) {
   const commentData = useSelector((state) => state.community.commentList);
   const Postdata = useSelector((state) => state.community.postList);
 
-  console.log(commentData.data, "디테일코멘트")
-  console.log(props.commId.commentId, "prooooops")
-
   const [isEdit, setIsEdit] = useState(false);
 
   const openEdit = () => {
@@ -38,7 +35,6 @@ function CommentList(props) {
   }
 
   const editComment = () => {
-    // console.log(comment_ref.current.value,"ref")
     const data = {
       comment: comment_ref.current.value,
       boardId: props.postAll.boardId,
@@ -48,8 +44,6 @@ function CommentList(props) {
     setIsEdit(false)
     window.location.reload();
   }
-
-  // console.log(props.user,props.username,"user?")
 
   const state = "커뮤니티"
   return (

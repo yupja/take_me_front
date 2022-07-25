@@ -105,6 +105,7 @@ export const modifySaved = (data, itemId) => {
   return async function (dispatch) {
     try {
       await instance.put(`/api/savedItem/${itemId}`, data)
+      dispatch(myReadGoalRQ())
 
     } catch (error) {
       console.log(error)

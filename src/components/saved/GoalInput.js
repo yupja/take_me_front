@@ -2,32 +2,29 @@ import React, {useRef, useState} from "react"
 import { useDispatch } from "react-redux"
 
 import Category from "../public/Category"
-import SearchGoal from "../public/SearchGoal"
-
+import SearchItem from "../public/SearchItems"
 import { newItemGoalAddRQ, addGoalRQ, updateGoalAPI } from "../../store/modules/goal"
 
 
 import styled from "styled-components";
-
+import {ReactComponent as LeftArrow} from "../../assets/icons/LeftArrow.svg"
 
 const GoalInput = (props)=>{
   const dispatch = useDispatch()
 
 
   //-------------- 모달
-
-
-
-
   const [category , setCategory] = useState();
-  const [image, setImage] = useState();
+  const [image, setImage] = useState("https://velog.velcdn.com/images/eppo/post/f68f349d-6314-463d-beb0-3a779d24a90b/image.png");
   const [imageFile, setImageFile] = useState("null");
   const [selectInputValue , setSelectInputValue] = useState([]); 
-  const [newAddGoal, setNewAddGoal] = useState(false);
+  const [newAdd, setNewAdd] = useState(false);
 
   const itemName=useRef();
   const price=useRef();
   const goalItemCount=useRef();
+
+
 
   const imageUpLoad = async (e)=>{
     imagePreview(e.target.files[0])
@@ -46,51 +43,29 @@ const GoalInput = (props)=>{
   }
 
 
+
+
   const sendNewData = (state) =>{
-    let data = {} 
+
     const formData = new FormData();
 
     formData.append("image", imageFile);
-    
 
-    if(state==="Update"){
-      data ={
+     const data ={
         itemName: itemName.current.value,
-        price: Number(price.current.value),
-        goalItemCount: Number(goalItemCount.current.value),
-        categoryId: Number(category),
-        state: state,
-        goalId:props.goalId
-      }
-    }else {
-      data ={
-        itemName: itemName.current.value,
-        price: Number(price.current.value),
+        defaultPrice: Number(price.current.value),
         goalItemCount: Number(goalItemCount.current.value),
         categoryId: Number(category),
       }
-    }
+    
     const json = JSON.stringify(data);
     const blob = new Blob([json], { type: "application/json" });
     formData.append('goalItem',blob);
-
-    console.log("없던거 ADD")
-    if(imageFile==="null"){
-      alert("이미지를 첨부");
-    }else{
-      dispatch(newItemGoalAddRQ(formData));
-    }
+    dispatch(newItemGoalAddRQ(formData));
     
 
     props.closeModal();
 
-    // if(state==="ADD"){
-    //   //console.log("없던거 에드"), 확인함/ 구현완
-    //   //
-    // }
-    //else if(state==="Update"){
-    //   dispatch(addItem(data));
-    // }
   }
 
 
@@ -116,167 +91,224 @@ const GoalInput = (props)=>{
     }else{
     dispatch(addGoalRQ(formData));
   }
-
-    
-  
-  //   if(state==="ADD"){
-  //     console.log("있던거 에드")
-
-  //   }
-  //   else if(state==="Update"){
-    dispatch(updateGoalAPI(formData, props.goalItemId));
-  //   // }
-  // }
+  props.closeModal();
 
 }
 
 
- return (
-    <>
-      {/* <ModalBody>
-
-        {newAddGoal? 
+  return (
+  <>
+    <ItemList>
+      {newAdd ?
         <>
-        <SelectedBoxDiv style={{width:"95%",display:"block"}}>
-          <Category  setCategory={setCategory}/>
-        </SelectedBoxDiv>
-        <div> 
-          <p>ItemName</p>
-          <input 
-            type='text' 
-            ref={itemName} />
-        </div></>
-       :
-       <SelectedBoxDiv>
-        <p>이름</p>
-        <SearchGoalArea>
-          <SearchGoal 
-            state={"goalState"}
-            setNewAddGoal={setNewAddGoal}
-            setSelectInputValue={setSelectInputValue}/>
-          </SearchGoalArea>
-        </SelectedBoxDiv>
-        }
+          <ul><CategoryLi>
+            <div className="leftBox">
+              <p>카테고리</p>
+            </div>
+            <div className="categoryDiv">
+              <Category 
+                setCategory={setCategory} />
+            </div>
+          </CategoryLi></ul>
+          <ul><li>
+            <div className="leftBox">
+              <p>이름</p>
+            </div>
+            <input
+              className="inputStyle"
+              ref={itemName} />
+          </li></ul>
+        </>
+        :
+        <ul><li>
+          <div className="leftBox">
+            <p>이름</p>
+          </div>
+          <SearchItem
+            state={"태산을 찾아보세요!"}
+            setNewAdd={setNewAdd}
+            actionState={"goalInput"}
+            setSelectInputValue={setSelectInputValue} />
+        </li></ul>
+      }
 
-        <InputPriceBoxDiv>
-          <p >Price</p>
-          <input 
-            type='text' 
-            ref={price} />
-        </InputPriceBoxDiv> 
-        
-        <div>
-          <p>수량</p> 
-          <input 
-            type="Number" 
-            ref={goalItemCount}/>
+      <ul><li>
+        <div className="leftBox">
+          <p>가격</p>
         </div>
+        <input
+          className="inputStyle"
+          ref={price} />
+      </li></ul>
 
+      <ul><li>
+        <div className="leftBox">
+          <p>수량</p>
+        </div>
+        <input
+          className="inputStyle"
+          ref={goalItemCount}></input>
+      </li></ul>
+    </ItemList>
 
-        <ImgBox>
-          <img src={image}/><br/>
-          <input 
-            type="file" 
-            name="image" 
-            multiple="multiple"
-            onChange={imageUpLoad}/>
-        </ImgBox> 
+    <ImageDiv>
+      <ul>
+        <li>
+          <div className="leftBox">
+            <img src={image} />
+          </div>
+          <div>
+            <label style={{ background: "#6A8EFF" }}>
+              <LeftArrow />기본 이미지 </label>
+            <label htmlFor="ex_file" style={{ marginTop: "5%" }}>
+              <LeftArrow /> 이미지 등록 </label>
+            <input
+              type="file"
+              name="image"
+              id="ex_file"
+              multiple="multiple"
+              style={{ display: "none" }}
+              onChange={imageUpLoad} />
+          </div>
+        </li>
+      </ul>
+    </ImageDiv>
 
-      </ModalBody>
-      {newAddGoal? 
-        <Footer onClick={()=>{sendNewData(props.state)}}>
-          태산 등록하기
-        </Footer>
-      :
-        <Footer 
-          onClick={()=>{
-            sendData(props.state);
-            props.closeModal();
-            }}>
-          태산 등록하기
-        </Footer>} */}
-
-
-     <ItemList>
-       <ul>
-
-         <li>
-           <div className="leftBox">
-
-             <p><br /></p>
-             <h2></h2>
-           </div>
-           <p className="price"></p>
-         </li>
-
-       </ul>
-     </ItemList>
-  </>
+    {newAdd? 
+      <Footer onClick={()=>
+        {sendNewData(props.state)
+        props.closeModal()}}>
+        태산 등록하기
+      </Footer>
+    :
+      <Footer 
+        onClick={()=>{
+          sendData(props.state);
+          props.closeModal();
+          }}>
+        태산 등록하기
+      </Footer>} 
+    </>
   )
-
 }
 
-const ImgBox = styled.div`
-display: flex;
-flex-direction: row;
-img{
-  width: 50%;
+
+const ItemList = styled.div`
+width: 100%;
+margin: 1rem 0 1rem 0;
+
+ul{
+  padding: 0 10px;
 }
-`;
-
-const ImgArea = styled.img`
-border: 1px solid gray;
-
-`;
-
-
-const SelectedBoxDiv = styled.div`
-display: flex;
-width: 100%;
-justify-content: center;
-`
-
-const InputPriceBoxDiv = styled.div`
-width: 100%;
-display:flex;
-justify-content: center;
-
+li{
+  display: flex;
+  justify-content: space-around;;
+  align-items: center;
+  padding: 5px 15px;
+}
+.leftBox{
+  display: flex;
+  justify-content: space-around;;
+  align-items: center;
+  padding-left: 5px;
+}
+.leftBox p{
+  width: 100%;
+  font-size: 1rem;
+  color: #333;
+  text-align: left;
+}
+.inputStyle{
+  display: flex;
+  width: 68%;
+  align-items: center;
+  border: 1px solid #CCCCCC;
+  border-radius  : 20px ;
+  padding: 0.15rem;
+}
 input{
-width: 72%;
-padding: 0.3rem;
-border-radius: 30px;
-border: 1px solid #CCCCCC;
+  display: flex;
+  align-items: center;
+  
+}
+`;
 
-margin-left: 0.8rem;
+
+const ImageDiv = styled.div`
+width: 100%;
+
+ul{
+  padding: 0 10px;
+}
+li{
+  display: flex;
+  justify-content: space-around;;
+  align-items: center;
+}
+.leftBox{
+  display: flex;
+  justify-content: space-around;;
+  align-items: center;
+
+}
+.leftBox p{
+  font-size: 1rem;
+  color: #333;
+  text-align: left;
 
 }
 
-
-`;
-
-const SearchGoalArea = styled.div`
-width: 80%;
-`;
-
-
-
-
-const ModalBody = styled.div`
-display: flex;
-flex-direction: column;
-align-items: center;
+label{
+  width: 100%;
+  padding: 0.5rem;
+  background: #26DFA6;
+  color: white;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  font-weight: 500;
+  border-radius:30px;
+}
 
 div{
-    display:  flex;;
-    padding: 0.3rem;
-    align-items: center;
-    }
-p{
-    margin-right: 0.2rem;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 5%;
 }
-
+img{
+  display: flex;
+  width: 60%;
+  border-radius:50%;
+}
 `;
 
+const CategoryLi = styled.div`
+display: flex;
+justify-content: space-evenly;;
+align-items: center;
+
+.leftBox{
+  display: flex;
+  justify-content: space-evenly;
+
+  align-items: center;
+  padding-left: 5px;
+}
+.leftBox p{
+  width: 100%;
+  font-size: 1rem;
+  color: #333;
+  text-align: left;
+}
+
+.categoryDiv{
+  width: 62%;
+  margin-right: 4%;
+  padding-bottom: 2%;
+}
+`;
 
 const Footer = styled.button`
 padding: 1rem;
@@ -290,66 +322,4 @@ justify-content: center;
 `;
 
 
-
-
-const GoalList = styled.div`
-  border-bottom: 1px solid #CCCCCC;
-  overflow: hidden;
-  height: 3.12rem;
-  line-height: 3.12rem;
-  padding: 0 25px;
-
-h2{
-  float: right;
-  font-size:1.25rem;
-  font-weight: 700;
-}
-
-span{
-  padding-left: 10px;
-  font-weight: 700;
-  font-size:1.25rem;
-}
-`
-
-const ItemList = styled.div`
-width: 100%;
-
-h2 {
-  font-size: 1rem;
-  font-weight: 500;
-  color: #333;
-}
-ul{
-  padding: 0 10px;
-}
-li{
-  display: flex;
-  justify-content: space-between;
-  border-bottom: 1px solid #CCCCCC;
-  align-items: center;
-  padding: 10px 15px;
-}
-.leftBox{
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-left: 5px;
-}
-.leftBox p{
-  font-size: 0.62rem;
-  color: #333;
-  text-align: left;
-  padding: 0 10px;
-}
-
-.price{
-  font-size: 1rem;
-  font-weight: 700;
-  color: #999;
-}
-`;
-
-
 export default GoalInput;
-

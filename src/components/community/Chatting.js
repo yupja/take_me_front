@@ -5,14 +5,55 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Modal from "../public/BasicModalForm"
 import CreateRoom from "../community/CreateRoom"
-
+import ChattingInfo from "./ChattingInfo";
 import { loadChattingListRS } from "../../store/modules/community"
+
 
 
 
 //  소켓js , stompjs 인스톨 
 //  서버와 연결할 클라이언트 connection 생성
 //   메세지 전송 전 subscriber 와  publicher 지정
+
+
+const RoomData = [
+  {
+    roomId: "ae8d8cb1-0a9a-43da-90c4-084df62c78ab",
+    username: "eppo",
+    comment: "지금 비가 너무 많이와서 걷기 싫은데 택시탈까?",
+    profileImg: "https://velog.velcdn.com/images/eppo/post/9fa16a22-a5e5-4675-9d4b-fbcb5c93be28/image.png",
+    time: "6m"
+  },
+  {
+    roomId: "ae8d8cb1-0a9a-43da-90c4-084df62c78ab",
+    username: "eppo",
+    comment: "지금 비가 너무 많이와서 걷기 싫은데 택시탈까?",
+    profileImg: "https://velog.velcdn.com/images/eppo/post/9fa16a22-a5e5-4675-9d4b-fbcb5c93be28/image.png",
+    time: "5m"
+  },
+  {
+    roomId: "ae8d8cb1-0a9a-43da-90c4-084df62c78ab",
+    username: "eppo",
+    comment: "지금 비가 너무 많이와서 걷기 싫은데 택시탈까?",
+    profileImg: "https://velog.velcdn.com/images/eppo/post/9fa16a22-a5e5-4675-9d4b-fbcb5c93be28/image.png",
+    time: "9m"
+  },
+  {
+    roomId: "ae8d8cb1-0a9a-43da-90c4-084df62c78ab",
+    username: "eppo",
+    comment: "지금 비가 너무 많이와서 걷기 싫은데 택시탈까?",
+    profileImg: "https://velog.velcdn.com/images/eppo/post/9fa16a22-a5e5-4675-9d4b-fbcb5c93be28/image.png",
+    time: "10m"
+  },
+  {
+    roomId: "ae8d8cb1-0a9a-43da-90c4-084df62c78ab",
+    username: "eppo",
+    comment: "지금 비가 너무 많이와서 걷기 싫은데 택시탈까?",
+    profileImg: "https://velog.velcdn.com/images/eppo/post/9fa16a22-a5e5-4675-9d4b-fbcb5c93be28/image.png",
+    time: "6m"
+  },
+]
+
 
 
 function Chatting() {
@@ -43,31 +84,33 @@ function Chatting() {
         {RoomData && RoomData.map((item, itemIndex) => {
           return (
             <>
-              <ChattingList onClick={() => {
-                navigate("/chatting", { state: item.roomId })
-              }}>
-                <img src="" />
-                {item.name}
-                {item.userCount}
-              </ChattingList>
+              <ChattingInfo
+                roomId={item.roomId}
+                profileImg={item.profileImg}
+                userName={item.username}
+                comment={item.comment}
+                time={item.time} />
             </>
           )
         })}
 
-        <ChatWrap></ChatWrap>
+
 
 
       </Wrap>
 
-      <RoomCreate>
 
-        <button type="button" onClick={() => {
+      <BtnBox>
+        <FootBtn onClick={() => {
           openModal();
           setModalName("쓸까?말까? 만들기")
           setModalState(
             <CreateRoom close={closeModal} />)
-        }}>쓸까?말까? 만들기</button>
-      </RoomCreate>
+        }}>
+          쓸까?말까? 만들기
+        </FootBtn>
+      </BtnBox>
+
       <Modal open={modalOpen}
         close={closeModal}
         header={modalName}>
@@ -80,47 +123,33 @@ function Chatting() {
 export default Chatting;
 
 
-
-
-
 const Wrap = styled.div`
 width: 100%;
 height: 100%;
 padding: 1rem;
 `;
 
-const ChattingList = styled.div`
-height: 50%;
-border: 1px solid gray;
-margin-bottom: 1rem;
-`;
-
-// 찬반투표 리스트
-const ChatWrap = styled.div`
+const BtnBox = styled.div`
 width: 100%;
-height: 100%;
-padding: 1rem;
-`;
-
-
-const RoomCreate = styled.div`
+height: 8vh;
+margin: 0 auto;
 display: flex;
 justify-content: center;
+align-items: center;
+bottom: 5%;
 position: fixed;
-width: 100%;
-bottom: 45px;
+/* left: 39% */
+`;
 
-
-
-button{ 
-  width: 100%;
-  background: #6C8BED;
-  box-shadow: 0 4px 11px 0px rgba(0,0,0,0.25);
-  margin: 0 10px;
-  padding: 20px 0;
-  border-radius:59px;
-  opacity: 95%;
-  font-size: 1.25rem;
-  color: #fff;
-}
+const FootBtn = styled.button`
+width: 90%;
+height: 8vh;
+border-radius: 2rem;
+border: none;
+font-size: 1.3rem;
+color: white;
+font-weight: 500;
+background-color: #6A8EFF;
+box-shadow: 5px 5px 5px rgb(110, 110, 110, 0.4);
+opacity: 95%;
 `;

@@ -17,9 +17,6 @@ const ListModal = (props) => {
   const saveDataa = useSelector((state) => state.saved.savedItem.data);
   const boardId = (props.forsaveId)
 
-  console.log(boardId);
-
-
   React.useEffect(() => {
     dispatch(loadsavedAc(boardId))
     // dispatch(loadCommentAc())

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
 import { ReactComponent as Trash } from "../../assets/icons/Trash.svg";
-import { ReactComponent as Edit } from "../../assets/icons/Edit2.svg";
+import { ReactComponent as Edit } from "../../assets/icons/EditBlack.svg";
 import { favoriteUpdate, favoriteDel } from "../../store/modules/favorite";
 
 

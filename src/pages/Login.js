@@ -13,16 +13,6 @@ function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const userState = useSelector((state) => state.user)
-  console.log(userState)
-
-  const [modalOpen, setModalOpen] = useState(false);
-  const [modalState, setModalState] = useState();
-  const [modalName, setModalName] = useState("");
-
-
-  const openModal = () => { setModalOpen(true); };
-  const closeModal = () => { setModalOpen(false); };
-
 
   // 로그인 정보 가져오기
   const userId = useRef();

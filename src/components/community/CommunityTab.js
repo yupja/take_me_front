@@ -12,9 +12,7 @@ import GoalForCum from "./GoalForCum"
 import { loadMoreContentDB, loadpostsAc, deletePostAc } from "../../store/modules/community";
 import { ReactComponent as Receipt } from "../../assets/icons/Receipt.svg";
 import { ReactComponent as Comment } from "../../assets/icons/Comment.svg";
-import {ReactComponent as Dot} from "../../assets/icons/Dot.svg";
-
-
+import { ReactComponent as Dot } from "../../assets/icons/Dot.svg";
 
 const CommunityTab = () => {
 
@@ -27,14 +25,10 @@ const CommunityTab = () => {
   const Navigate = useNavigate();
   
   const  [savedListIndex, setSavedListIndex] = useState();
+
   const userinfo = useSelector((state) => state.user.infoList)
-  console.log(userinfo,"userinfo")
   const Postdata = useSelector((state) => state.community.postList.data);
-  console.log(Postdata, "postdata")
-
   const Savedata = useSelector((state) => state.saved.savedItem);
-
-
 
   const [showModall, setShowModall] = useState(false);
   const openModall = (index) => {
@@ -48,7 +42,7 @@ const CommunityTab = () => {
   const [user_nav, setUserNav] = useState(false)
   const onClickNav = (e) => {
     setUserNav(user_nav => user_nav ? false : true)
-}
+  }
   const [modalOpen, setModalOpen] = useState(false);
   const openModal = () => { setModalOpen(true); };
   const closeModal = () => { setModalOpen(false); };
@@ -86,8 +80,6 @@ const CommunityTab = () => {
           observer && observer.disconnect();
       };
   }, [target]);
-  // console.log(Postdata,"확인")
-
 
   return (
     <Box>
@@ -152,9 +144,6 @@ const CommunityTab = () => {
       }
       )}
       <BlankBox></BlankBox>
-
-
-
          <BtnBox>
         <FootBtn onClick={openModal}>내 태산 % 공유</FootBtn>
 
@@ -225,8 +214,6 @@ right: 6%;
     background: #fff;
     box-shadow: rgb(0 0 0 / 10%) 0px 0px 8px;
 }`
-
-
 
 const LikeBox = styled.div`
 display: flex;
