@@ -1,4 +1,4 @@
-import React ,{ useEffect} from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -7,15 +7,15 @@ import Modal from "../public/BasicModalForm";
 import CreateRoom from "./CreateRoom";
 import ChattingInfo from "./ChattingInfo";
 import ProgressBar from "../public/ProgressBar"
-import {ChattingEnd} from "../../assets/icons"
+import { ChattingEnd } from "../../assets/icons"
 import { loadChattingListRS, closedChttingLog } from "../../store/modules/community"
 
 
 
 
 //  소켓js , stompjs 인스톨 
-//  서버와 연결할 클라이언트 connection 생성
-//   메세지 전송 전 subscriber 와  publicher 지정
+//  서버와 연결할 클라이언트 connection 생성
+//   메세지 전송 전 subscriber 와  publicher 지정
 
 
 function Chatting() {
@@ -42,17 +42,16 @@ function Chatting() {
 
 
   const RoomList = useSelector(((state => state.community.chattingList)));
-  const ClodesRoomList = useSelector(((state => state.community.closedChttingLogList)));
+  const ClosedRoomList = useSelector(((state => state.community.closedChttingLogList)));
   console.log(RoomList)
-  console.log(ClodesRoomList)
-  
+  console.log(ClosedRoomList)
+
   return (
     <>
 
       <Wrap>
 
         {/* <div>
-
         {RoomList&&RoomList.map((item, itemIndex) => {
           return (
             <>
@@ -67,7 +66,7 @@ function Chatting() {
         })}
         </div> */}
 
-        {ClodesRoomList && ClodesRoomList?.map((item, itemIndex) => (
+        {ClosedRoomList && ClosedRoomList?.map((item, itemIndex) => (
           <ChattingList>
             <div className="closedRoomList" key={item.roomId}>
 
@@ -104,10 +103,10 @@ function Chatting() {
         <div className="buttonBox">
           <button onClick={() => {
             openModal();
-            setModalName("내 태산 % 공유");
+            setModalName("쓸까? 말까? 만들기");
             setModalState(
               <CreateRoom close={closeModal} />)
-          }}><p>내 태산 %  공유</p></button>
+          }}><p>쓸까? 말까? 만들기</p></button>
         </div>
 
 
@@ -134,8 +133,6 @@ height: 100%;
 padding: 1rem;
 flex-direction: column;
 align-items: center;
-
-
 .buttonBox{
   display: flex;
   width: 90%;
@@ -145,7 +142,6 @@ align-items: center;
   bottom: 10%;
   background: #6485EC;
   justify-content: center;
-
   button{
     color: white;
     font-weight: 500;
@@ -155,7 +151,6 @@ align-items: center;
     font-size: 1.5rem;
   }
 }
-
 `;
 
 
@@ -164,12 +159,9 @@ const ChattingList = styled.div`
 width: 100%;
 display: flex;
 flex-direction: column;
-
 border: none;
 box-shadow: 0px 4px 11px 0px rgb(0 0 0 / 15%);
-
 margin-bottom: 1rem;
-
 .listWrap{
   display: flex;
   padding: 0.5rem;
@@ -192,21 +184,14 @@ margin-bottom: 1rem;
     width: 100%
   }
 }
-
 .bottonArea{
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
   padding: 0.5rem;
-
 }
 `;
-
-
-
-
-
 
 
 
