@@ -58,17 +58,17 @@ const refreshToken = () => {
       console.log(response);
       console.log("재발급 완료")
 
-      // const deleteCookie = function (name) {
-      //   document.cookie = name + '=; expires=Thu, 01 Jan 1999 00:00:10 GMT;';
-      // }
-      // deleteCookie('refreshToken');
-      // localStorage.clear();
+      const deleteCookie = function (name) {
+        document.cookie = name + '=; expires=Thu, 01 Jan 1999 00:00:10 GMT;';
+      }
+      deleteCookie('refreshToken');
+      localStorage.clear();
 
       const accessToken = response.data.accessToken;
       const refreshToken = response.data.refreshToken;
 
       localStorage.setItem("accessToken", accessToken);
-      
+
       setCookie('refreshToken', refreshToken, {
         path: "/",
         secure: true,
