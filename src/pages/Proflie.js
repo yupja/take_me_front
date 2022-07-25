@@ -9,14 +9,16 @@ import { ReactComponent as Edit } from "../assets/icons/EditMint.svg";
 import { useCookies } from "react-cookie";
 
 import { emailCheckDB } from "../store/modules/user";
+import { nickCheckDB } from "../store/modules/user";
 
 function Proflie() {
   const dispatch = useDispatch();
+  const title = '프로필 편집'
   const infoState = useSelector((state) => state.info.infoList);
 
 
   useEffect(() => {
-    dispatch(getInfo())
+    dispatch(getInfo());
   }, [dispatch])
 
 
@@ -94,6 +96,7 @@ function Proflie() {
 
   // 이메일 중복체크 / 토클
   const emailRef = useRef();
+  const [userNickAlert, setUserNickAlert] = useState('');
 
   const [onToggle, setOnToggle] = useState(false);
   const [focus, setFocus] = useState(true);
@@ -130,15 +133,38 @@ function Proflie() {
     localStorage.clear();
     removeCookie('refreshToken', { path: '/' });
   }
+  // 닉네임 중복검사
+  // const onNickChange = () => {
+  //   const nick = nickRef.current.value;
+  //   if (nickCheckStr.test(nick)) {
+  //     setUserNickAlert("")
+  //   } else {
+  //     setUserNickAlert("🚨 2~12글자, 특수문자를 제외하고 작성해주세요.")
+  //     // 한글, 영문, 특수문자 (- _ .) 포함한 2 ~ 12글자 닉네임
+  //   }
+  // }
+  const nickCheckStr = /^[a-zA-Zㄱ-힣0-9-_.]{2,12}$/;
+
+  const nickCheck = (e) => {
+    e.preventDefault();
+    const nick = nickRef.current.value;
+    if (nickCheckStr.test(nick)) {
+      dispatch(nickCheckDB(nick, setUserNickAlert))
+    } else {
+      alert("2~12글자, 특수문자를 제외하고 작성해주세요.")
+      // 한글, 영문, 특수문자 (- _ .) 포함한 2 ~ 12글자 닉네임
+    }
+  }
+
 
 
   return (
     <>
-      <Header />
+      <Header title={title} />
       <ProflieWrap>
         <MyInfo>
           <ProflieImg>
-            <img src={image} alt="" />
+            <div><img src={image} alt="" /></div>
             <label htmlFor="file">
               <Edit />
             </label>
@@ -148,7 +174,12 @@ function Proflie() {
               accept=".jpg, .png, image/jpeg, .svg" />
           </ProflieImg>
           <Nick>
-            <span><input type="text" defaultValue={infoState.nickname} ref={nickRef} /></span><span className="box">님</span>
+            <div>
+              <input type="textarea" defaultValue={infoState.nickname} ref={nickRef} />
+              <button onClick={nickCheck}>중복체크</button>
+              {userNickAlert}
+            </div>
+            <span className="box"> 님</span>
           </Nick>
           <input type="text" className="word" ref={introDescRef} defaultValue={
             infoState.introDesc === null ?
@@ -221,19 +252,37 @@ const Nick = styled.div`
 font-weight: bold;
 font-size: 1.5rem;
 margin: 10px 0px;
-span {
+div {
   color:#26DFA6;
-  padding-right: 5px;
-  width: 120px;
-  display: inline-block;
+  display: inline;
+  position: relative;
 }
-span.box{
+.box{
   display: inline;
 }
 input{
-  border: none;
+  border: 1px solid #ccc;
+  background: #fff;
   color: #26DFA6;
-  width: 100%;
+  width: 91%;
+  font-weight: 700;
+  font-size:1.365rem;
+  padding-left: 15px;
+  border-radius: 2.43rem;
+}
+button{
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4.43rem;
+  text-align: center;
+  color: #999;
+  padding: 3px 5px;
+  font-weight: 500;
+  font-size: 0.875rem;
+  border: 1px solid #dbdbdb;
+  border-radius: 3.12rem;
 }
 `
 
@@ -244,7 +293,17 @@ const ProflieImg = styled.div`
   background: #d9d9d9;
   margin: auto;
   border-radius: 50%;
+  div {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    position: absolute;
+    overflow: hidden;
+  }
   label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     position: absolute;
     right: 0;
     bottom: 0;
@@ -252,12 +311,12 @@ const ProflieImg = styled.div`
     background: #666;
     width: 2.5rem;
     height: 2.5rem;
-    line-height: 2.5rem;
   }
   img {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
   }
   .icon{
     position: absolute;
