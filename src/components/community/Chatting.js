@@ -1,4 +1,4 @@
-import React from "react";
+import React ,{ useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -59,15 +59,16 @@ const RoomData = [
 function Chatting() {
 
 
-
+  useEffect(() => {
+    dispatch(loadChattingListRS());
+    dispatch(closedChttingLog());
+  }, [])
 
   const RoomId = "";
   const name = React.useRef();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  //const RoomData = useSelector(((state => state.community.chattingList)));
-  //console.log(RoomData)
 
   const [modalOpen, setModalOpen] = React.useState(false);
   const [modalState, setModalState] = React.useState();
@@ -75,12 +76,13 @@ function Chatting() {
   const openModal = () => { setModalOpen(true); };
   const closeModal = () => { setModalOpen(false); };
 
-  React.useEffect(() => {
-    dispatch(loadChattingListRS());
-    dispatch(closedChttingLog());
-  }, [])
 
 
+
+  const Room = useSelector(((state => state.community.chattingList)));
+  console.log(Room)
+
+  
   return (
     <>
 

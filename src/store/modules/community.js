@@ -11,8 +11,10 @@ import { instance } from "../../shared/axios";
 export const loadChattingListRS = createAsyncThunk(
   'read/chatRoom',
   async (thunkAPI) => {
+    console.log("여기?");
     try {
       const { data } = await axios.get('/api/chat/rooms/')
+      console.log(data);
       return data;
     } catch (error) {
       console.log(error);
@@ -53,6 +55,7 @@ export const createChatRoom = (data) => {
 
     await instance.post(`/api/chat/room`, data)
       .then((res) => {
+        console.log(res)
         const roodId = res.data.roomId
         window.location.href = `/chat/roomdetail/${roodId}`;
       })
