@@ -2,14 +2,12 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router";
 
-import CommunityTab from "../components/community/CommunityTab";
 import Chatting from "../components/community/Chatting"
 import Header from "../components/public/Header";
 import SwipeRooms from "../components/public/SwipeForm"
 
 import styled from "styled-components";
-import user from "../store/modules/user";
-import NewCommunityList from "../components/community/NewCommunityList";
+import CommunityList from "../components/community/CommunityList";
 
 
 const Community = () => {
@@ -17,7 +15,7 @@ const Community = () => {
   const {state} = useLocation();
 
   const navigate = useNavigate();
-  const [page, setPage] = useState(<NewCommunityList />);
+  const [page, setPage] = useState(<CommunityList />);
 
 
 
@@ -27,7 +25,7 @@ const Community = () => {
       <div style={{width:"100%"}}>
         <MenuBar>
           <div onClick={()=>{
-            setPage(<NewCommunityList />)
+            setPage(<CommunityList />)
           }}>티끌자랑</div>
           <div onClick={()=>{
             setPage(<Chatting/>)

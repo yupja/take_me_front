@@ -1,3 +1,4 @@
+import { borderRadius } from "@mui/system";
 import styled, { keyframes } from "styled-components";
 
 function DountChart({ color, percent, size, image }) {
@@ -25,6 +26,18 @@ function DountChart({ color, percent, size, image }) {
           strokeDashoffset={2 * Math.PI * 90 * 0.25}
         />
       </AniSvg>
+      <div style={{
+        overflow: "hidden",
+        display:"flex",
+        alignItems: "center",
+        justifyContent:"center",
+        position: "absolute",
+        width: "75%"
+        }}>
+      <Img 
+      size={size/2+'px'}
+      src={image}/>
+      </div>
       
     </Chart>
   );
@@ -33,6 +46,8 @@ function DountChart({ color, percent, size, image }) {
 export default DountChart;
 
 const Chart = styled.div`
+overflow: hidden;
+border-radius:50%;
 display: flex;
 align-items: center;
 justify-content: center;
@@ -58,5 +73,11 @@ const circleFill = keyframes`
 
 const AnimatedCircle = styled.circle`
   animation: ${circleFill} 2s ease;
+`;
+
+const Img = styled.img`
+  border-radius: 50%;
+  width: ${({ size }) => size};
+  height: ${({ size }) => size};
 `;
 
