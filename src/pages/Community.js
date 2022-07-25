@@ -9,6 +9,7 @@ import SwipeRooms from "../components/public/SwipeForm"
 
 import styled from "styled-components";
 import user from "../store/modules/user";
+import NewCommunityList from "../components/community/NewCommunityList";
 
 
 const Community = () => {
@@ -16,32 +17,35 @@ const Community = () => {
   const {state} = useLocation();
 
   const navigate = useNavigate();
-  const [page, setPage] = useState(<CommunityTab />);
+  const [page, setPage] = useState(<NewCommunityList />);
 
 
 
   return (
   <> 
     <Header title={title} color={state}/>
-      
-      <MenuBar>
-        <div onClick={()=>{
-          setPage(<CommunityTab />)
-        }}>티끌자랑</div>
-        <div onClick={()=>{
-          setPage(<Chatting/>)
-        }}>쓸까말까</div>
-      </MenuBar>
+      <div style={{width:"100%"}}>
+        <MenuBar>
+          <div onClick={()=>{
+            setPage(<NewCommunityList />)
+          }}>티끌자랑</div>
+          <div onClick={()=>{
+            setPage(<Chatting/>)
+          }}>쓸까말까</div>
+        </MenuBar>
 
 
         <TimeList>
           <SwipeRooms />
         </TimeList>
 
-      <div style={{ width: "100%" }}>
-         <CommunityContents>
-          {page}
-        </CommunityContents>
+        <div style={{ width: "100%" }}>
+          <CommunityContents>
+            {page}
+          </CommunityContents>
+        </div>
+
+
       </div>
   </>
   )

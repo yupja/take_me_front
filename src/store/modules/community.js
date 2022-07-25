@@ -13,7 +13,7 @@ export const loadChattingListRS = createAsyncThunk(
   async (thunkAPI) => {
     console.log("여기?");
     try {
-      const { data } = await axios.get('/api/chat/rooms/')
+      const { data } = await instance.get('/api/chat/rooms/')
       console.log(data);
       return data;
     } catch (error) {
@@ -25,7 +25,7 @@ export const loadChattingListRS = createAsyncThunk(
 export const createChattingRoomRQ = (roomName) => {
   return async function (dispatch) {
     try {
-      await axios.post('/chat/rooms/', roomName) //폼데이터로 넘기기
+      await instance.post('/chat/rooms/', roomName) //폼데이터로 넘기기
       // 채팅방 생성 함수 끝난 후 네비게이트로 채팅 디테일 컴포넌트로 이동 
     } catch (error) {
       console.log(error);
@@ -38,7 +38,7 @@ export const closedChttingLog = createAsyncThunk(
   'read/closedChattinglog',
   async (thunkAPI) => {
     try {
-      const { data } = await axios.get('/api/closedChat/rooms')
+      const { data } = await instance.get('/api/closedChat/rooms')
       return data;
     } catch (error) {
       console.log(error);
@@ -313,7 +313,7 @@ const communitySlice = createSlice({
   initialState: {
     // 채팅
     chattingList: [],
-    closedChttingLogo:[],
+    closedChttingLog:[],
     getDayCountList: [],
     messages: [],
     myInfo: [],
@@ -379,7 +379,7 @@ const communitySlice = createSlice({
       state.likeList = action.payload
     },
     [closedChttingLog.fulfilled]: (state, action) => {
-      state.likeList = action.payload
+      state.closedChttingLog = action.payload
     },
 
     

@@ -79,9 +79,10 @@ function Chatting() {
 
 
 
-  const Room = useSelector(((state => state.community.chattingList)));
-  console.log(Room)
-
+  const RoomList = useSelector(((state => state.community.chattingList)));
+  const ClodesRoomList = useSelector(((state => state.community.chattingList)));
+  console.log(RoomList)
+  console.log(ClodesRoomList)
   
   return (
     <>
