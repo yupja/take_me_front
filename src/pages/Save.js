@@ -5,11 +5,12 @@ import { addSavedListRQ } from "../store/modules/saved"
 import { myFavoriteListRQ, favoriteDel, addFavoriteRQ } from "../store/modules/favorite";
 
 import Modal from "../components/public/BasicModalForm";
-import SearchSavedItem from "../components/public/SearchSavedItem";
+import SearchSavedItem from "../components/public/SearchItems";
 import Header from "../components/public/Header";
 import DountChart from "../components/public/Goal";
 import GoalInput from "../components/saved/GoalInput"
 import CurrentSavedItem from "../components/saved/CurrentSavedItem";
+import GoalModifyComponunt from "../components/saved/GoalModify";
 import PostModal from "../components/community/PostModal";
 
 
@@ -80,7 +81,7 @@ function Save() {
     goalitemName: myGoalList?.itemName
   }
 
-
+  console.log(goal)
 
   const mylist = useSelector((state) => state.favorite.myFavoriteList);
 
@@ -132,6 +133,9 @@ function Save() {
   };
   return (
     <Wrap>
+      <GuideBack>
+
+      </GuideBack>
       <TopWrap>
         <HeaderArea><Header title={title} color="#FFFFFF" /></HeaderArea>
 
@@ -160,10 +164,13 @@ function Save() {
             {/* <GoalImage src="https://velog.velcdn.com/images/eppo/post/c381a0b6-a326-48df-972c-693de0f6e9ac/image.png" /> */}
             <StyledSlider {...settings}>
               <div style={{ backgroundColor: "transparent" }}></div>
-              <GoalMain>
+              <GoalMain onClick={() => { changeMenu() }}>
                 <MiddleMenue>
                   <div>
-                    <DountChart color="#26DFA6" percent={goal.goalPercent} size="200" />
+                    <DountChart
+                      color="#26DFA6"
+                      percent={goal.goalPercent}
+                      size="200" />
                   </div>
                   {touchSetMenu ?
                     <GoalInfo>
@@ -314,6 +321,16 @@ function Save() {
 }
 export default Save;
 
+const GuideBack = styled.div`
+width: 100%;
+height: 100%;
+/* background-color: rgb(0,0,0,0.8); */
+border: 3px solid black;
+/* background-color: red; */
+position: absolute;
+z-index: 2;
+`;
+
 const GoalInfo = styled.div`
 position: absolute;
 display: flex;
@@ -325,7 +342,6 @@ p{
   font-weight: 500;
   margin-top: 5%;
 }
-
 .clickMenuFont{
   color: white;
   font-size: 0.8rem;
@@ -379,20 +395,16 @@ align-items: center;
 flex-direction: column;
 justify-content: center;
 background: #333333;
-
 `;
 
 
 const GoalImage = styled.img`
-
 width: 100%;
 height:100%;
 background-color: #F5F5F5;
 display: flex;
-
 position: absolute;
 object-fit: cover;
-
 `;
 
 const MiddleMenue = styled.div`
@@ -418,7 +430,6 @@ justify-content: center;
 flex-direction: column;
 align-items: center;
 height: 100%;
-
 `;
 
 const Circle = styled.div`
@@ -427,7 +438,6 @@ height: 180px;
 border-radius: 50%;
 background:  #26DFA6;
 color : white;
-
 display: flex;
 align-items: center;
 justify-content: center;
@@ -456,10 +466,11 @@ padding: 0.5rem 1rem 0rem 1rem;
 width: 100%;
 display: flex;
 flex-direction: column;
+align-items: center;
 `;
 
 const FavoriteTag = styled.div`
-height: 8vh;
+height: 5%;
 display: flex;
 align-items: center;
 width:100%;
@@ -467,7 +478,6 @@ overflow-x:scroll;
 justify-content: center;
 white-space: nowrap;
 border-bottom: 1px solid #CCCCCC;
-
   &::-webkit-scrollbar {
     display: none;
   }
@@ -484,7 +494,6 @@ p{
 
 
 const FavoriteItem = styled.div`
-
 background: #EFEFEF;
 border-radius: 20px;
 font-size: 15px;
@@ -498,7 +507,6 @@ const AddSavedStyle = styled.div`
 display: flex;
 flex-direction: column;
 width: 100%;
-
 ul{
   padding: 0 10px;
 }
@@ -519,11 +527,9 @@ input{
   background: #F4F4F4;
   border: none;
 }
-
 .inputBox{
   display: flex;
   align-content: center;
   gap: calc();
 }
-
 `;

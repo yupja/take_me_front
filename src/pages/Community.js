@@ -95,7 +95,8 @@ div{
 
 
 const CommunityContents = styled.div`
-
+width: 100%;
+display: flex;
 `;
 
 export default Community;

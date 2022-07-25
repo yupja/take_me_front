@@ -17,6 +17,7 @@ import History from "../pages/History"; // 히스토리
 import Proflie from "../pages/Proflie"; // 프로필
 import SociallLogin from "../pages/SociallLogin"; // 소셜 로그인
 import RoomDetail from "../components/community/RoomDetail"//채팅
+import Guide from "../components/community/Guide"//가이드
 
 
 
@@ -48,6 +49,7 @@ function Router() {
         <Route path="/oauth2/redirect" element={<SociallLogin />} />
         {/* <Route path="/chatting" element={<Chatting />} /> */}
         <Route path="/chat/roomdetail/:roomId" element={<RoomDetail />} />
+        <Route path="/guide" element={<Guide />} />
 
 
       </Routes >
