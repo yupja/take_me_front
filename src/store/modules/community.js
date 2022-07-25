@@ -313,7 +313,7 @@ const communitySlice = createSlice({
   initialState: {
     // 채팅
     chattingList: [],
-    closedChttingLogo: [],
+    closedChttingLog: [],
     getDayCountList: [],
     messages: [],
     myInfo: [],
