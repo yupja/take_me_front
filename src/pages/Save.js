@@ -17,11 +17,8 @@ import PostModal from "../components/community/PostModal";
 import styled from "styled-components";
 import Slider from "react-slick";
 import "../styles/saveMain.css"
-import { ReactComponent as CheckedStart } from "../assets/icons/CheckedStart.svg"
-import { ReactComponent as GoalModify } from "../assets/icons/GoalModify.svg"
-import { ReactComponent as WhiteTrash } from "../assets/icons/WhiteTrash.svg"
-import { ReactComponent as AddMintPoint } from "../assets/icons/AddMintPoint.svg"
-import { ReactComponent as WhiteShare } from "../assets/icons/WhiteShare.svg"
+import { CheckedStart, GoalModify, WhiteTrash , 
+        AddMintPoint, WhiteShare} from "../assets/icons"
 
 
 import { AiOutlineStar } from 'react-icons/ai'

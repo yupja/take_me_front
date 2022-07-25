@@ -89,7 +89,7 @@ function Chatting() {
 
       <Wrap>
 
-        {RoomData && RoomData.map((item, itemIndex) => {
+        {RoomList&&RoomList.map((item, itemIndex) => {
           return (
             <>
               <ChattingInfo
