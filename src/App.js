@@ -1,18 +1,18 @@
 import React from "react";
 import reset from "./styles/reset.css";
 import Router from "./shared/Router";
-import { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 
 function App() {
   return (
-      <div className="mobile">
+
+      <div>
       <GlobalStyle />
       <Router />
       </div>
 
   );
 }
-
 
 
 
