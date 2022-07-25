@@ -53,7 +53,8 @@ export const createChatRoom = (data) => {
 
     await instance.post(`/api/chat/room`, data)
       .then((res) => {
-        const roodId = res.data.roomId
+        const roodId = res.data.data.roomId
+        console.log(res)
         window.location.href = `/chat/roomdetail/${roodId}`;
       })
       .catch((error) => {
@@ -310,7 +311,7 @@ const communitySlice = createSlice({
   initialState: {
     // 채팅
     chattingList: [],
-    closedChttingLogo:[],
+    closedChttingLogo: [],
     getDayCountList: [],
     messages: [],
     myInfo: [],
@@ -379,7 +380,7 @@ const communitySlice = createSlice({
       state.likeList = action.payload
     },
 
-    
+
   }
 
 });
