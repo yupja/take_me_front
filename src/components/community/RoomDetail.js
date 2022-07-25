@@ -15,6 +15,11 @@ function RoomDetail() {
   const title = '쓸까?말까?'
 
   const chatRef = useRef();
+  const scrollRef = useRef();
+
+  const [chat, setChat] = useState([])
+  // 데이터가 실시간으로 쌓여서 출력하는 스테이트 받아서 뿌리는 건 쳇이야 
+
   const getMessages = useSelector((state) => state.community.messages);
   const myInfo = useSelector((state) => state.community.myInfo);
   // console.log(getMessages);
@@ -31,6 +36,10 @@ function RoomDetail() {
 
   // 토큰
   let token = localStorage.getItem('accessToken');
+
+  useEffect(() => {
+    scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
+  }, [getMessages]);
 
   useEffect(() => {
     // 유저 데이터 get
@@ -57,10 +66,17 @@ function RoomDetail() {
     });
   }, [])
 
-
+  const handleOnKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      myChat();
+    }
+  };
   // 채팅 전송
-  const myChat = (e) => {
+  const myChat = () => {
     const msg = chatRef.current.value;
+    if (msg === '') {
+      return
+    }
     const masData = {
       type: 'TALK',
       roomId: roomId,
@@ -78,8 +94,8 @@ function RoomDetail() {
     <ChatWrap>
       <Header title={title} />
       <Box />
-      <ChatBox>
-        <Chatting>
+      <ChatBox className="chatbox">
+        <Chatting ref={scrollRef}>
           {myInfo?.nickname &&
             getMessages.map((el, i) =>
               el.type === "TALK" ?
@@ -91,7 +107,7 @@ function RoomDetail() {
                       <p>{el.message}</p>
                     </div>
                   </div>) :
-                <EnterMsg>
+                <EnterMsg key={i}>
                   <span>{el.message.split('님')[0]}</span>
                   {el.message.substring(el.message.length - 13)}
                 </EnterMsg>
@@ -100,7 +116,13 @@ function RoomDetail() {
         </Chatting>
       </ChatBox>
       <Enter>
-        <Input type="text" placeholder={userInput} ref={chatRef} onfocus="this.placeholder=''"></Input>
+        <Input
+          type="text"
+          placeholder={userInput}
+          ref={chatRef}
+          onfocus="this.placeholder=''"
+          onKeyPress={handleOnKeyPress}
+        ></Input>
         <PostBtn onClick={myChat}>게시</PostBtn>
       </Enter>
     </ChatWrap>
@@ -114,13 +136,16 @@ const ChatWrap = styled.div`
 
 `
 const ChatBox = styled.div`
+    width: 100%;
+    overflow: overlay;
+    height: 73vh;
 
 `
 const EnterMsg = styled.p`
   text-align: center;
   color: #26DFB3;
   font-size: 0.75rem; 
-  margin: 15px 0;
+  margin-bottom: 15px;
   span{
     font-weight: 700;
     
