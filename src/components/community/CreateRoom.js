@@ -5,32 +5,40 @@ import { createChatRoom } from "../../store/modules/community";
 
 import { ReactComponent as Minus } from "../../assets/icons/Minus.svg";
 import { ReactComponent as Plus } from "../../assets/icons/Plus.svg";
+import { useNavigate } from "react-router-dom";
 
 
-const CreateRoom = () => {
+const CreateRoom = (props) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const comment = useRef();
   const [count, setCount] = useState(1);
 
-  // const roomCreate = async () => {
-  //   try {
-  //     const data = await axios.post('http://3.35.52.157/api/chat/room', { name: RoomName.current.value },
-  //       { headers: { 'Authorization': `Bearer ${localStorage.getItem("accessToken")}` } })
-  //     console.log(data)
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // }
-
-  // 찬반 생성시
-  const createRoom = (e) => {
-    e.preventDefault();
-    const data = {
-      comment: comment.current.value,
-      timeLimit: Number(count)
+  const getChttingData =(index)=>{
+    const sendData ={
+      sender : props.nickname,
+      profileImg: props.profileImg,
+      authorNickname : props.nickname,
+      authorProfileImg : props.profileImg,
+      userCount : Number(0),
+      comment : comment.current.value,
+      timeLimit:  count
     }
-    dispatch(createChatRoom(data));
-  }
+
+    dispatch(createChatRoom(sendData, navigate));
+  
+    }
+
+
+  // const createRoom = (e) => {
+  //   e.preventDefault();
+  //   const data = {
+  //     comment: comment.current.value,
+  //     timeLimit: Number(count)
+  //   }
+  //   dispatch(createChatRoom(data));
+  //   getChttingData();
+  // }
 
   return (
     <>
@@ -42,7 +50,7 @@ const CreateRoom = () => {
         </TimeLimit>
         <textarea ref={comment} maxLength="79" />
       </Wrap>
-      <Footer onClick={createRoom}>공유하기</Footer>
+      <Footer onClick={getChttingData}>공유하기</Footer>
     </>
 
   )
