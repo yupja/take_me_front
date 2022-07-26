@@ -6,12 +6,17 @@ import SockJS from "sockjs-client";
 import Stomp from "stompjs";
 import { subMessage, myInfoData } from "../../store/modules/community";
 import Header from "../public/Header";
+// import ChattingInfo from "./ChattingInfo";
 
 function RoomDetail() {
   const { state } = useLocation();
   const { roomId } = useParams();
   const dispatch = useDispatch();
   const getMessages = useSelector((state) => state.community.messages);
+  console.log(getMessages);
+  console.log(state);
+
+  // 타이머
 
   // const getChttingData =(index)=>{
   //   sendData ={
@@ -31,8 +36,10 @@ function RoomDetail() {
   const scrollRef = useRef();
 
 
-  const sock = new SockJS('https://api.webprogramming-mj6119.shop/chatting', null, { transports: ["websocket", "xhr-streaming", "xhr-polling"] });
+  const sock = new SockJS('http://43.200.4.1/chatting', null, { transports: ["websocket", "xhr-streaming", "xhr-polling"] });
+  // const sock = new SockJS('https://api.webprogramming-mj6119.shop/chatting', null, { transports: ["websocket", "xhr-streaming", "xhr-polling"] });
   let client = Stomp.over(sock);
+  // let client = Stomp.over(sock);
 
   // 토큰
   let token = localStorage.getItem('accessToken');
@@ -63,6 +70,8 @@ function RoomDetail() {
 
 
 
+
+
   }, [])
 
   //연결 해제
@@ -77,7 +86,7 @@ function RoomDetail() {
   useEffect(() => {
     window.addEventListener("beforeunload", disconnects);
     console.log('새로고침 확인')
-  }, [])
+  }, [getMessages])
 
 
 
@@ -107,7 +116,7 @@ function RoomDetail() {
   const userInput = `${state.sender}(으)로 댓글 달기 ...`
 
 
-  //은진님 이거 집어넣으시면 돼요 ㅋㅋ 제가 레이아웃 확인해서 보내드리려고 했는데 어디가 어딘지 모르겠네여어... 
+
   //   <ChattingInfo
   //   profileImg={state.authorProfileImg}
   //   userName={state.authorNickname}
@@ -115,11 +124,36 @@ function RoomDetail() {
   //   time={state.timeLimit} 
   //   />
   // </Box>
+  //   <ChattingInfo
+  //   profileImg={state.authorProfileImg}
+  //   userName={state.authorNickname}
+  //   comment={state.comment}
+  //   time={state.timeLimit}
+  // />
 
   return (
     <ChatWrap>
       <Header title={title} />
-      <Box />
+      <Box className="boxx">
+        <div>
+          <ListInfo>
+            <div>
+              <span>LIVE</span>
+              <img src="" alt="" />
+            </div>
+            <InfoText>
+              <span>닉네임</span>
+              집 앞 뛰면 3분거리..비닐수산 산다 만다?..
+            </InfoText>
+            <strong>00:00</strong>
+          </ListInfo>
+          <Vote>
+            <button>쓰자!</button>
+            <button>멈춰!</button>
+          </Vote>
+          <p>조회수<span>20</span></p>
+        </div>
+      </Box>
       <ChatBox className="chatbox">
         <Chatting ref={scrollRef}>
           {state.sender &&
@@ -129,7 +163,7 @@ function RoomDetail() {
                   <div key={i} className={el.sender === state.sender ? "right" : "left"}>
                     <div className="img"><img src={el.profileImg} alt="프로필" /></div>
                     <div className="info">
-                      <span>닉네임</span>
+                      <span>{getMessages.sender}</span>
                       <p>{el.message}</p>
                     </div>
                   </div>) :
@@ -162,6 +196,22 @@ export default RoomDetail;
 const ChatWrap = styled.div`
 
 `
+// 상단 투표 정보
+const ListInfo = styled.div`
+
+`
+const InfoText = styled.p`
+
+
+`
+const Vote = styled.p`
+
+
+`
+
+
+
+
 const ChatBox = styled.div`
     width: 100%;
     overflow: overlay;
