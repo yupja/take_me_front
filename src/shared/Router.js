@@ -34,8 +34,8 @@ function Router() {
         <Route path="/community" element={<Community />} />
         <Route path="/community/:id" element={<Community />} />
         <Route path="/ranking" element={<Ranking />} />
-        <Route path="/" element={<Login />} />
-        {/* <Route path="/login" element={<Login />} /> */}
+        <Route path="/" element={<Save />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/user/findid" element={<FindId />} />
         <Route path="/user/findpw" element={<FindPw />} />

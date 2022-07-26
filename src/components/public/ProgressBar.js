@@ -8,13 +8,13 @@ const PercentProgressBar =(props)=>{
         <TrueBarDiv>
             <True 
                 className="true"
-                percent={props.true}> {props.true}</True>
+                percent={props.true}> {props.true}%</True>
        </TrueBarDiv>
 
        <FalseBarDiv>
             <False 
                 className="false"
-                percent={props.false}>{props.false}</False>
+                percent={props.false}>{props.false}%</False>
        </FalseBarDiv>
        </div>
     </>
