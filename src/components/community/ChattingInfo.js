@@ -47,10 +47,7 @@ const ChattingInfo = (props) =>{
         
         <div className="contentsBox">
           <span>
-            <span style={{
-              fontWeight:"500" , 
-              fontSize:"1.2rem", 
-              marginRight:"5%"}}>
+            <span className="innerSpan">
               {props.userName}</span> {props.comment}</span>
           <div className="stateArea"><ChattingEnd/></div>
         </div>
@@ -114,11 +111,18 @@ margin-bottom: 1rem; */
   width: 100%;
   max-height: 60px;
   display: flex;
-  font-size: row;
 
   span{
-    width: 80%;
+    width: 100%;
+    display: flex;
     overflow-y:scroll;
+    .innerSpan{
+      display: flex;
+      width: 100%;
+      font-weight: 500;
+      font-size: 1rem;
+      margin-right: 5px;
+    }
   }
   .stateArea{
     display: flex;

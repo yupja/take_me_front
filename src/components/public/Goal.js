@@ -11,7 +11,7 @@ function DountChart({ color, percent, size, image }) {
           r="90"
           fill="none"
           stroke="#ebebeb"
-          strokeWidth="5"
+          strokeWidth="10"
         />
         <AnimatedCircle
           cx="100"
@@ -19,26 +19,14 @@ function DountChart({ color, percent, size, image }) {
           r="90"
           fill="none"
           stroke={color}
-          strokeWidth="5"
+          strokeWidth="8"
           strokeDasharray={`${2 * Math.PI * 90 * percent} ${
             2 * Math.PI * 90 * (1 - percent)
           }`}
           strokeDashoffset={2 * Math.PI * 90 * 0.25}
         />
       </AniSvg>
-      <div style={{
-        overflow: "hidden",
-        display:"flex",
-        alignItems: "center",
-        justifyContent:"center",
-        position: "absolute",
-        width: "75%"
-        }}>
-      <Img 
-      size={size/2+'px'}
-      src={image}/>
-      </div>
-      
+
     </Chart>
   );
 }
@@ -54,7 +42,6 @@ justify-content: center;
 width: ${({ size }) => size};
 height: ${({ size }) => size};
 position: relative;
-padding: 10px;
 `;
 
 const TextArea = styled.div`

@@ -6,7 +6,6 @@ import Modal from "../public/BasicModalForm";
 import PostModal from "./PostModal";
 
 import Like from "./Like";
-import GoalForCum from "./GoalForCum"
 import ListModal from "./ListModal";
 import GoalChart from "../public/Goal";
 
@@ -14,11 +13,11 @@ import { useNavigate } from "react-router-dom";
 import { getUserInfoDB } from "../../store/modules/user";
 import { loadMoreContentDB, loadpostsAc, deletePostAc } from "../../store/modules/community";
 
-import {  Young, Comment, Binheart,  SaveList } from "../../assets/icons";
+import {  Comment, Binheart,  SaveList } from "../../assets/icons";
 import { listClasses } from "@mui/material";
 
 
-const NewCommunityList = () => {
+const CommunityList = () => {
 
   useEffect(() => {
     dispatch(loadpostsAc())
@@ -54,15 +53,18 @@ const NewCommunityList = () => {
 
               <li>
                 <ImageBox>
-                <div>
-                  <GoalChart
-                  color="#26DFA6"
-                  percent={postList.goalPercent}
-                  //image ="https://velog.velcdn.com/images/eppo/post/c381a0b6-a326-48df-972c-693de0f6e9ac/image.png"
-                  image={postList.image}
-                  size="140"/>
+
+                  <div className="goalDiv">
+                    <GoalChart color="#26DFA6" percent={postList.goalPercent} size="150"/>
                   </div>
+
+                  <div className="imgDiv">
+                    <img src={postList.image}/>
+                  </div>
+
                 </ImageBox>
+
+                
                 <div className="contentForm">
                   <div onClick={() => {
                       Navigate
@@ -190,11 +192,22 @@ li{
 
 const ImageBox = styled.div`
 
-  img{
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
+.goalDiv{
+    position: relative;
+    z-index: 1;
+    background: red;
   }
+  img{
+    position: relative;
+    overflow: hidden;
+    object-fit: cover;
+    max-width: 12rem;
+    width: 100%;
+    max-height: 12rem;
+    height: 100%;
+    z-index: 2;
+  }
+
 `;
 
-export default NewCommunityList;
+export default CommunityList;

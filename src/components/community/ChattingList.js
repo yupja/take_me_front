@@ -9,13 +9,6 @@ import ChattingInfo from "./ChattingInfo";
 import { loadChattingListRS, closedChttingListRS, myInfoData } from "../../store/modules/community"
 
 
-
-
-//  소켓js , stompjs 인스톨 
-//  서버와 연결할 클라이언트 connection 생성
-//   메세지 전송 전 subscriber 와  publicher 지정
-
-
 function Chatting() {
 
 
@@ -156,7 +149,7 @@ align-items: center;
   border-radius: 30px;
   padding:1rem;
   position: fixed;
-  bottom: 30%;
+  bottom: 10%;
   background: #6485EC;
   justify-content: center;
   button{
