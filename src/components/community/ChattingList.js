@@ -22,9 +22,8 @@ function Chatting() {
   const name = React.useRef();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   let sendData={}
-
-
 
   const [modalOpen, setModalOpen] = React.useState(false);
   const [modalState, setModalState] = React.useState();
@@ -34,10 +33,14 @@ function Chatting() {
 
 
 
+  
 
   const RoomList = useSelector(((state => state.community.chattingList)));
   const ClosedRoomList = useSelector(((state => state.community.closedChttingList)));
   const userInfo = useSelector((state)=>state.community.myInfo)
+
+  console.log(RoomList)
+
 
   const getChttingData =(index)=>{
   sendData ={
@@ -77,7 +80,8 @@ function Chatting() {
                 profileImg={item.authorProfileImg}
                 userName={item.authorNickname}
                 comment={item.comment}
-                time={item.time} 
+                createdAt={item.createdAt}
+                timeLimit={item.timeLimit}
                 currentState={"Live"}/>
             </ChattingList>
             </div>
@@ -97,7 +101,6 @@ function Chatting() {
               profileImg={item.authorProfileImg}
               userName={item.authorNickname}
               comment={item.comment}
-              time={item.time}
               currentState={"END"} />
           </ChattingList>
           </div>
@@ -115,6 +118,7 @@ function Chatting() {
                   close={closeModal}
                   nickname={userInfo.nickname}
                   profileImg={userInfo.profileImg} />)
+
             }}><p>쓸까? 말까? 만들기</p></button>
           </div>
 
