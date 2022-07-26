@@ -13,8 +13,8 @@ export const loadChattingListRS = createAsyncThunk(
     console.log("여기?");
     try {
       const { data } = await instance.get('/api/chat/rooms/')
-      console.log(data);
-      return data;
+
+      return data.data;
     } catch (error) {
       console.log(error);
     }
