@@ -8,7 +8,7 @@ import CreateRoom from "./CreateRoom";
 import ChattingInfo from "./ChattingInfo";
 import ProgressBar from "../public/ProgressBar"
 import { ChattingEnd } from "../../assets/icons"
-import { loadChattingListRS, closedChttingLog } from "../../store/modules/community"
+import { loadChattingListRS, closedChttingListRS, myInfoData } from "../../store/modules/community"
 
 
 
@@ -22,8 +22,9 @@ function Chatting() {
 
 
   useEffect(() => {
-    //dispatch(loadChattingListRS());
-    dispatch(closedChttingLog());
+    dispatch(loadChattingListRS());
+    dispatch(closedChttingListRS());
+    dispatch(myInfoData())
   }, [])
 
   const RoomId = "";
@@ -42,37 +43,71 @@ function Chatting() {
 
 
   const RoomList = useSelector(((state => state.community.chattingList)));
-  const ClosedRoomList = useSelector(((state => state.community.closedChttingLogList)));
+  const ClosedRoomList = useSelector(((state => state.community.closedChttingList)));
+  const userInfo = useSelector((state)=>state.community.myInfo)
+  let sendData={}
   console.log(RoomList)
   console.log(ClosedRoomList)
+  console.log(userInfo)
+
+
+
+  const getChttingData =(index)=>{
+  sendData ={
+    roomId:RoomList[index].roomId,
+    sender : userInfo.nickname,
+    profileImg: userInfo.profileImg,
+    authorNickname : RoomList[index].authorNickname,
+    authorProfileImg : RoomList[index].authorProfileImg,
+    userCount : RoomList[index].userCount,
+    comment : RoomList[index].comment,
+    createdAt:RoomList[index].createdAt,
+    timeLimit:RoomList[index].timeLimit
+  }
+
+  console.log(sendData)
+  navigate(`/chat/roomdetail/${sendData.roomId}`, {state:sendData});
+
+  }
+
 
   return (
     <>
 
       <Wrap>
 
-        {/* <div>
+        <AllchattingList>
+
+        <div>
         {RoomList&&RoomList.map((item, itemIndex) => {
           return (
             <>
+            <OnpenChattingList
+                  onClick={()=>{
+                    getChttingData(itemIndex);
+                  }}>
               <ChattingInfo
                 roomId={item.roomId}
                 profileImg={item.profileImg}
                 userName={item.username}
                 comment={item.comment}
                 time={item.time} />
+            </OnpenChattingList>
             </>
           )
         })}
-        </div> */}
+        </div>
 
         {ClosedRoomList && ClosedRoomList?.map((item, itemIndex) => (
-          <ChattingList>
+          <ClosedChattingList>
             <div className="closedRoomList" key={item.roomId}>
 
               <ul>
                 <li>
-                  <div className="listWrap">
+                  <div className="listWrap"
+                    onClick={()=>{
+                      navigate(`/chat/closedChttinglog/${item.roomId}`);
+                    }}>
                     <div className="imageBox"><img src={item.authorProfileImg} /></div>
                     <div className="textContents">
                       <span style={{ fontWeight: "bold", marginRight: "5%" }}>{item.authorNickname}</span>
@@ -96,9 +131,10 @@ function Chatting() {
               </ul>
 
             </div>
-          </ChattingList>
+          </ClosedChattingList>
 
         ))}
+        </AllchattingList>
 
         <div className="buttonBox">
           <button onClick={() => {
@@ -133,6 +169,8 @@ height: 100%;
 padding: 1rem;
 flex-direction: column;
 align-items: center;
+
+
 .buttonBox{
   display: flex;
   width: 90%;
@@ -153,9 +191,16 @@ align-items: center;
 }
 `;
 
+const AllchattingList = styled.div`
+max-width: 390px;
+width:100%;
+max-height: 844px;
+`;
 
+const OnpenChattingList = styled.div`
+`;
 
-const ChattingList = styled.div`
+const ClosedChattingList = styled.div`
 width: 100%;
 display: flex;
 flex-direction: column;
@@ -192,7 +237,3 @@ margin-bottom: 1rem;
   padding: 0.5rem;
 }
 `;
-
-
-
-

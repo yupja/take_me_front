@@ -4,7 +4,6 @@ import { instance } from "../../shared/axios";
 
 
 
-
 // [커뮤니티 채팅 API/보람]-----------------------------------------------------
 
 
@@ -14,8 +13,8 @@ export const loadChattingListRS = createAsyncThunk(
     console.log("여기?");
     try {
       const { data } = await instance.get('/api/chat/rooms/')
-      console.log(data);
-      return data;
+
+      return data.data;
     } catch (error) {
       console.log(error);
     }
@@ -34,8 +33,8 @@ export const createChattingRoomRQ = (roomName) => {
 }
 
 
-export const closedChttingLog = createAsyncThunk(
-  'read/closedChattinglog',
+export const closedChttingListRS = createAsyncThunk(
+  'read/closedChattingList',
   async (thunkAPI) => {
     try {
       const { data } = await instance.get('/api/closedChat/rooms')
@@ -45,6 +44,20 @@ export const closedChttingLog = createAsyncThunk(
     }
   })
 
+
+  export const closedChttingLogRS = createAsyncThunk(
+    'read/closedChattingLog',
+    async (roomId, thunkAPI) => {
+      console.log(roomId)
+      try {
+        const { data } = await instance.get(`/api/closedChat/room/${roomId}`)
+        return data.data;
+      } catch (error) {
+        console.log(error);
+      }
+    })
+
+    
 
 
 // [커뮤니티 채팅 API / 은진] -------------------------------------------------
@@ -311,7 +324,8 @@ const communitySlice = createSlice({
   initialState: {
     // 채팅
     chattingList: [],
-    closedChttingLogList: [],
+    closedChttingList: [],
+    closedChttingLog : [], 
     getDayCountList: [],
     messages: [],
     myInfo: [],
@@ -376,9 +390,14 @@ const communitySlice = createSlice({
     [likeChange.fulfilled]: (state, action) => {
       state.likeList = action.payload
     },
-    [closedChttingLog.fulfilled]: (state, action) => {
-      state.closedChttingLogList = action.payload
+    // 종료된 채팅 리스트 
+    [closedChttingListRS.fulfilled]: (state, action) => {
+      state.closedChttingList = action.payload
     },
+    // 종료된 채팅 개별로그 closedChttingLogRS
+    [closedChttingLogRS.fulfilled]: (state, action) => {
+      state.closedChttingLog = action.payload
+    }
 
 
   }

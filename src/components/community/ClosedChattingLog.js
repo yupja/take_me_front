@@ -4,17 +4,27 @@ import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Header from "../public/Header";
 
+import {closedChttingLogRS} from "../../store/modules/community"
+
 function RoomDetail() {
-  const { roomId } = useParams();
+  const  roomId  = useParams();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    //dispatch(loadChattingListRS());
+   dispatch(closedChttingLogRS(roomId.closedRoomId));
+  }, [])
+
 
   const title = '쓸까?말까?'
 
-  const chatRef = useRef();
-  const getMessages = useSelector((state) => state.community.messages);
-  const userInfo = useSelector((state) => state.user);
+  //const chatRef = useRef();
+  const getMessages = useSelector((state) => state.community.closedChttingLog);
+
+  console.log(getMessages)
 
 
+  console.log(getMessages.authorNickname)
 
   return (
     <ChatWrap>
@@ -22,24 +32,12 @@ function RoomDetail() {
       <Box />
       <ChatBox>
         <Chatting>
-          {/* {userInfo?.infoList.nickname ?
-            getMessages.map((el, i) =>
-            (
-              <div key={i} className={el.sender === userInfo.infoList.nickname ? "right" : "left"}>
-                <div className="img"><img src="https://mblogthumb-phinf.pstatic.net/MjAyMTAxMjJfNzMg/MDAxNjExMzIzMzU1NDgw.nhAuTdE8OjYs0wZAb8qpMAsUaUIZXeRKJ0zDLs5oaKIg.iONiFE4qhr5wuB2FwDe4yfO3oC9gBbOjDaCyGXxiLMkg.JPEG.sohyeon612/%EB%8B%A4%EC%9A%B4%EB%A1%9C%EB%93%9C%ED%8C%8C%EC%9D%BC%EF%BC%8D2.jpg?type=w800" alt="프로필" /></div>
-                <div className="info">
-                  <span>닉네임</span>
-                  <p>{el.message}</p>
-                </div>
-              </div>
-            )
-            ) : null
-          } */}
+
+
         </Chatting>
       </ChatBox>
       <Enter>
-        {/* <Input type="text" placeholder={userInput} ref={chatRef} onfocus="this.placeholder=''"></Input>
-        <PostBtn onClick={myChat}>게시</PostBtn> */}
+
       </Enter>
     </ChatWrap>
   )
@@ -49,7 +47,6 @@ function RoomDetail() {
 export default RoomDetail;
 
 const ChatWrap = styled.div`
-
 `
 const ChatBox = styled.div`
 
@@ -107,7 +104,10 @@ const MyChat = styled.div`
 
 `
 const Enter = styled.div`
+
+max-width: 390px;
 width: 100%;
+
 padding: 5px 25px;
 height: 12vw;
 border: none;
@@ -152,6 +152,7 @@ font-weight:700;
 
 const Box = styled.button`
 width: 100%;
+
 height:140px;
 background:#333;
 
