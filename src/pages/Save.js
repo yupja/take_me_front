@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 import { myReadGoalRQ, deleteGoalRQ } from "../store/modules/goal"
 import { addSavedListRQ } from "../store/modules/saved"
 import { myFavoriteListRQ, favoriteDel, addFavoriteRQ } from "../store/modules/favorite";
@@ -39,7 +40,13 @@ function Save() {
 
   useEffect(() => {
     dispatch(myReadGoalRQ());
-    dispatch(myFavoriteListRQ()); 
+    dispatch(myFavoriteListRQ());
+    if (state.state.signupUrl.state && state.state.loginUrl) {
+      setShowModal(true)
+  }else{
+    setShowModal(false)
+  }
+    // openGuide();
   }, []);
 
   const [modalOpen, setModalOpen] = useState(false);
@@ -58,15 +65,17 @@ function Save() {
 
   const [showModal, setShowModal] = useState(false);
   const openGuide = () => {
+    // if (state.state.signupUrl.state && state.state.loginUrl) {
       setShowModal(true)
-  }
+  // }else{
+  //   setShowModal(false)
+  // }
+}
   const closeGuide = () => {
       setShowModal(false);
   }
 
-  const saveprevUrl = document.referrer;
-  console.log(saveprevUrl,"세이브입니다만")
-
+  const  state  = useLocation();
 
   const [star, setStar] = useState(false);
 
@@ -320,12 +329,13 @@ function Save() {
         header={modalName}>
         {modalState}
       </Modal>
-
+      {/* 가이드 모달 */}
+{showModal ?
       <Guide 
       open={showModal}
       close={closeGuide}
-      // onClose={handleClose}
-      />
+      /> 
+     : null}
     </Wrap>
   );
     }     

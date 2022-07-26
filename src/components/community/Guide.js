@@ -40,7 +40,7 @@ const Guide = (props) => {
       </Div>
       <Div>
       <GoalImage src={M_guide_4} className="lastPage"></GoalImage>
-      <CloseBtn>마침</CloseBtn>
+      <CloseBtn onClick={props.close}>마침</CloseBtn>
       </Div>
     </ StyledSlider>
    </Divvv> {/* }: null } */}
@@ -48,15 +48,16 @@ const Guide = (props) => {
   )
 }
 
+
 const Divvv = styled.div`
-width:"100%";
- height:"100%";
+width:"390";
+ height:"844px";
   border:"1px solid red";
    display:"flex";
    justify-content: center;
    align-items: center;
    background-color: #111;
-   /* position: absolute; */
+   position: absolute;
    z-index: 99;
    top: 0;
 `;
@@ -73,7 +74,8 @@ background-color: black;
 
 const StyledSlider = styled(Slider)`
     .slick-list {
-        width: 100%;
+        width: 390px;
+        height: 844px;
         /* margin-left: 14vw; */
         margin-top: 0;
         /* height: 100%; */
@@ -91,8 +93,9 @@ const StyledSlider = styled(Slider)`
     }
    
     .slick-next.slick-disabled:before{
-      content: '';
-
+      /* content: '마침?'; */
+      display: none;
+      top: 100px
     }
     .slick-next:before {
     content: '다음 >';
@@ -100,6 +103,7 @@ const StyledSlider = styled(Slider)`
  
 .slick-prev:before {
     content: '< 이전';
+    /* z-index: 99; */
 }
 
 .slick-prev:before, .slick-next:before {
@@ -126,7 +130,7 @@ const StyledSlider = styled(Slider)`
     top: 90%;
     display: block;
     width: 70px;
-    height: 50px;
+    height: 50p7x;
     padding: 0;
     transform: translate(0, -50%);
     cursor: pointer;
@@ -144,11 +148,6 @@ width: 100%;
 
 position: absolute;
 object-fit: cover; */
-.lastPage{
-  .slick-next:before {
-    content: '마침 >';
-}
-}
 `;
 
 const CloseBtn = styled.div`
@@ -161,9 +160,12 @@ right: 30px;
 position: absolute;
 top: 90%;
 font-size: 23px;
-z-index: 10;
+z-index: 99;
 font-weight: 100;
-/* border: 1px solid red; */
+/* background-color: blue; */
+/* border: 1px solid 
+red; */
+position: fixed;
 `;
 
 export default Guide;

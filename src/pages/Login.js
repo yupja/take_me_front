@@ -51,14 +51,21 @@ function Login() {
       setNavToggles(true)
       return;
     }
-    dispatch(LoginDB(loginInfo, setModalStr, setNavToggles));
+
+    const urlData = {
+      signupUrl : state,
+      loginUrl : window.location.href
+    }
+
+    dispatch(LoginDB(loginInfo, setModalStr, setNavToggles, navigate, urlData));
   }
   const loginprevUrl = document.referrer;
   console.log(loginprevUrl,"가입하고왔습니다만")
   console.log(window.location.href,"location")
-  const state = useLocation();
-  console.log(state,"state?")
 
+  const  state  = useLocation();
+  console.log(state,"state")
+ 
   return (
     <>
       <div className="topWrap">
