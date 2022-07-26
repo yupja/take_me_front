@@ -1,14 +1,13 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import TimerFunction from "../public/Timer"
 import ProgressBar from "../public/ProgressBar"
 
 
 import styled from "styled-components";
-import {Timer} from "../../assets/icons"
+import {Timer, ChattingEnd} from "../../assets/icons"
 
 const ChattingInfo = (props) =>{
+  console.log()
   return (
   <>
   {props.currentState==="Live"? 
@@ -21,12 +20,16 @@ const ChattingInfo = (props) =>{
         
         <div className="contentsBox">
           <span>
-            <span style={{fontWeight:"500" , fontSize:"1.2rem"}}>{props.userName}</span> {props.comment}</span>
+            <span style={{
+              fontWeight:"500", 
+              fontSize:"1.2rem",
+              marginRight:"5%"}}>
+              {props.userName}</span> {props.comment}</span>
           <div className="timerArea"><Timer/><TimerFunction/></div>
         </div>
       </div>
 
-      <div className="buttonArea">
+      <div className="bottomArea">
         <button>쓸까?</button>
         <button>말까?</button>
 
@@ -39,28 +42,33 @@ const ChattingInfo = (props) =>{
     <ChattingList>
       <div className="chatInfoArea">
         <div className="imgBox">
-        <img src={props.authorProfileImg} />
+        <img src={props.profileImg} />
         </div>
         
         <div className="contentsBox">
           <span>
-            <span style={{fontWeight:"500" , fontSize:"1.2rem"}}>{props.authorNickname}</span> {props.comment}</span>
-          <div className="timerArea"><Timer/><TimerFunction/></div>
+            <span style={{
+              fontWeight:"500" , 
+              fontSize:"1.2rem", 
+              marginRight:"5%"}}>
+              {props.userName}</span> {props.comment}</span>
+          <div className="stateArea"><ChattingEnd/></div>
         </div>
       </div>
 
+      <div className="bottomArea">
+        <span>쓰자!</span>
+        <div style={{ 
+          width: "65%",
+          marginTop:"0.5rem"}}>
+          <ProgressBar
+            true={40}
+            false={60} />
+        </div>
 
-             {/* <div className="bottonArea">
-                     <span>쓰자!</span>
-                     <div style={{ width: "65%" }}>
-                      <ProgressBar
-                        true={item.voteFalsePercent}
-                        false={item.voteTruePercent} />
-                    </div>
+        <span>멈춰!</span>
 
-                    <span>멈춰!</span>
-                  </div> */}
-
+      </div>
   </ChattingList>
   
   }
@@ -112,7 +120,7 @@ margin-bottom: 1rem; */
     width: 80%;
     overflow-y:scroll;
   }
-  .timerArea{
+  .stateArea{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -123,11 +131,15 @@ margin-bottom: 1rem; */
 }
 
 
-.buttonArea{
+.bottomArea{
 display: flex;
 justify-content: space-evenly;
 align-items: center;
 padding: 0.3rem 0 0.3rem 0;
+
+  span{
+    font-size: 1.2rem;
+  }
 
   button{
   width: 42%;
