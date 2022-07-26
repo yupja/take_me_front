@@ -21,7 +21,7 @@ export const loadChattingListRS = createAsyncThunk(
   //Top5 오픈룸 조회 
 
   export const topListRS = createAsyncThunk(
-    'read/chatRoom',
+    'read/topList',
     async (thunkAPI) => {
       try {
         const { data } = await instance.get('/api/chat/room/top')
