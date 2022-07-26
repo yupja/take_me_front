@@ -31,7 +31,11 @@ function RoomDetail() {
   const scrollRef = useRef();
 
 
-  const sock = new SockJS('https://api.webprogramming-mj6119.shop/chatting', null, { transports: ["websocket", "xhr-streaming", "xhr-polling"] });
+  // const sock = new SockJS('https://api.webprogramming-mj6119.shop/chatting', null, { transports: ["websocket", "xhr-streaming", "xhr-polling"] });
+
+  const sock = new SockJS('http://43.200.4.1/chatting', null, { transports: ["websocket", "xhr-streaming", "xhr-polling"] });
+
+  
   let client = Stomp.over(sock);
 
   // 토큰

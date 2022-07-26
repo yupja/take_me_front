@@ -10,10 +10,8 @@ import { instance } from "../../shared/axios";
 export const loadChattingListRS = createAsyncThunk(
   'read/chatRoom',
   async (thunkAPI) => {
-    console.log("여기?");
     try {
       const { data } = await instance.get('/api/chat/rooms/')
-
       return data.data;
     } catch (error) {
       console.log(error);
@@ -36,7 +34,6 @@ export const closedChttingListRS = createAsyncThunk(
   export const closedChttingLogRS = createAsyncThunk(
     'read/closedChattingLog',
     async (roomId, thunkAPI) => {
-      console.log(roomId)
       try {
         const { data } = await instance.get(`/api/closedChat/room/${roomId}`)
         return data.data;
@@ -86,7 +83,6 @@ export const myInfoData = (data) => {
   return async function (dispatch) {
     await instance.get(`/api/myChatInfo`)
       .then((res) => {
-        console.log(res);
         dispatch(myInfo(res.data.data));
       })
       .catch((error) => {
