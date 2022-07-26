@@ -69,17 +69,16 @@ function Chatting() {
         {RoomList&&RoomList.map((item, itemIndex) => {
           return (
             <>
-            <ChattingList>
+            <ChattingList     onClick={()=>{
+                  getChttingData(itemIndex);
+                }}>
               <ChattingInfo
                 roomId={item.roomId}
                 profileImg={item.authorProfileImg}
                 userName={item.authorNickname}
                 comment={item.comment}
                 time={item.time} 
-                currentState={"Live"}
-                onClick={()=>{
-                  getChttingData(itemIndex);
-                }}/>
+                currentState={"Live"}/>
             </ChattingList>
             </>
           )
