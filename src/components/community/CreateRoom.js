@@ -1,13 +1,16 @@
-import React, { useRef } from "react";
-import axios from "axios";
+import React, { useRef, useState } from "react";
 import styled from "styled-components";
-import { createChatRoom } from "../../store/modules/community";
 import { useDispatch } from "react-redux";
+import { createChatRoom } from "../../store/modules/community";
+
+import { ReactComponent as Minus } from "../../assets/icons/Minus.svg";
+import { ReactComponent as Plus } from "../../assets/icons/Plus.svg";
 
 
 const CreateRoom = () => {
   const dispatch = useDispatch();
-  const RoomName = useRef();
+  const comment = useRef();
+  const [count, setCount] = useState(1);
 
   // const roomCreate = async () => {
   //   try {
@@ -23,25 +26,23 @@ const CreateRoom = () => {
   const createRoom = (e) => {
     e.preventDefault();
     const data = {
-      comment: "비가 오네요.",
-      timeLimit : Number(10)
+      comment: comment.current.value,
+      timeLimit: Number(count)
     }
-    // const room = "방이름고정예정입니다"
-    // const timeLimit = 10
     dispatch(createChatRoom(data));
   }
 
   return (
     <>
       <Wrap>
-        <p>방 이름</p>
-        <input ref={RoomName}></input>
-        <div>타이머 : 10분 고정</div>
+        <TimeLimit>
+          <button onClick={() => { count > 1 && setCount(count - 1) }}><Minus /></button>
+          {count} 분
+          <button onClick={() => { count < 10 && setCount(count + 1) }}><Plus /></button>
+        </TimeLimit>
+        <textarea ref={comment} maxLength="79" />
       </Wrap>
-      <Footer onClick={
-        // roomCreate();
-        createRoom
-      }>방 개설하기</Footer>
+      <Footer onClick={createRoom}>공유하기</Footer>
     </>
 
   )
@@ -50,11 +51,35 @@ const CreateRoom = () => {
 
 
 const Wrap = styled.div`
-display: flex;
-justify-content: space-around;;
 align-items: center;
 padding: 1rem;
+textarea {
+  width: 100%;
+    height: 6.5rem;
+    line-height: 1.31rem;
+    padding: 9px;
+    border: 1px solid #ccc;
+    border-radius : 5px;
+    margin-top: 10px;
+    resize: none;
+    outline: #26DFA6;
+} 
+`;
 
+const TimeLimit = styled.div`
+display: flex;
+align-items: center;
+justify-content: space-between;
+padding: 0 19px;
+margin: auto;
+width: 9.125rem;
+height: 3.75rem;
+border: 1px solid #6a8eff;
+border-radius: 3.68rem;
+font-weight: 700;
+font-size: 1.25rem;
+color: #333;
+text-align: center;
 `;
 
 const Footer = styled.button`
