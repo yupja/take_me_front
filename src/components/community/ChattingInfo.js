@@ -1,18 +1,24 @@
 import React, {useState, useEffect} from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
 import TimerFunction from "../public/Timer"
 import ProgressBar from "../public/ProgressBar"
 
 import styled from "styled-components";
 import {Timer, ChattingEnd} from "../../assets/icons"
-import { CircularProgress } from "@mui/material";
 import Loading from "../public/Loading";
+
 
 const ChattingInfo = (props) =>{
 
   const [minutes, setMinutes] = useState();
   const [seconds, setSeconds] = useState();
-  const [ready, setReady] = useState(true)
-  
+  const [ready, setReady] = useState(true);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     getTime();
@@ -21,14 +27,34 @@ const ChattingInfo = (props) =>{
     }, 100)
  
   },[])
+  
+  const userInfo = useSelector((state)=>state.community.myInfo)
+
+  const getChttingData =(index)=>{
+    const sendData ={
+        roomId:props.roomId,
+        sender : userInfo.nickname,
+        profileImg: userInfo.profileImg,
+        authorNickname : props.authorNickname,
+        authorProfileImg : props.authorProfileImg,
+        userCount : props.userCount,
+        comment : props.comment,
+        createdAt:props.createdAt,
+        timeLimit:props.timeLimit
+    }
+
+    console.log(sendData)
+  
+    navigate(`/chat/roomdetail/${sendData.roomId}`, {state:sendData});
+  
+    }
+  
 
 
   const getTime=()=>{
-
     const createTime = new Date(props.createdAt);
     createTime.setMinutes(createTime.getMinutes()+props.timeLimit)
     const currentTime = new Date();
-
     let diff = (createTime-currentTime)
     const diffHours = Math.floor(diff / (1000 * 60 * 60));
     diff -= diffHours * (1000 * 60 * 60);
@@ -46,16 +72,19 @@ const ChattingInfo = (props) =>{
   { props.currentState==="Live" ? 
   
     <ChattingList>
-    <div className="chatInfoArea">
+    <div className="chatInfoArea"
+      onClick={()=>{
+        getChttingData();
+      }}>
       <div className="imgBox">
       Live
-      <img src={props.profileImg} />
+      <img src={props.authorProfileImg} />
       </div>
       
       <div className="contentsBox">
         <span>
           <span className="innerSpan">
-            {props.userName}</span> {props.comment}</span>
+            {props.authorNickname}</span> {props.comment}</span>
         <div className="timerArea">
           <Timer/>
           <TimerFunction
