@@ -15,6 +15,8 @@ const ChattingInfo = (props) =>{
 
   const [minutes, setMinutes] = useState();
   const [seconds, setSeconds] = useState();
+  console.log(minutes)
+  console.log(seconds)
 
 
   const getTime=()=>{
@@ -37,7 +39,7 @@ const ChattingInfo = (props) =>{
 
 
   <>
-  { minutes && seconds && props.currentState==="Live"? 
+  { props.currentState==="Live"&& minutes? 
   
     <ChattingList>
     <div className="chatInfoArea">
