@@ -8,7 +8,7 @@ import CreateRoom from "./CreateRoom";
 import ChattingInfo from "./ChattingInfo";
 import ProgressBar from "../public/ProgressBar"
 import { ChattingEnd } from "../../assets/icons"
-import { loadChattingListRS, closedChttingLog } from "../../store/modules/community"
+import { loadChattingListRS, closedChttingListRS } from "../../store/modules/community"
 
 
 
@@ -23,7 +23,7 @@ function Chatting() {
 
   useEffect(() => {
     //dispatch(loadChattingListRS());
-    dispatch(closedChttingLog());
+    dispatch(closedChttingListRS());
   }, [])
 
   const RoomId = "";
@@ -42,7 +42,7 @@ function Chatting() {
 
 
   const RoomList = useSelector(((state => state.community.chattingList)));
-  const ClosedRoomList = useSelector(((state => state.community.closedChttingLogList)));
+  const ClosedRoomList = useSelector(((state => state.community.closedChttingList)));
   console.log(RoomList)
   console.log(ClosedRoomList)
 
@@ -72,7 +72,10 @@ function Chatting() {
 
               <ul>
                 <li>
-                  <div className="listWrap">
+                  <div className="listWrap"
+                    onClick={()=>{
+                      navigate(`/chat/closedChttinglog/${item.roomId}`);
+                    }}>
                     <div className="imageBox"><img src={item.authorProfileImg} /></div>
                     <div className="textContents">
                       <span style={{ fontWeight: "bold", marginRight: "5%" }}>{item.authorNickname}</span>
@@ -192,7 +195,3 @@ margin-bottom: 1rem;
   padding: 0.5rem;
 }
 `;
-
-
-
-
