@@ -14,7 +14,6 @@ import { getUserInfoDB } from "../../store/modules/user";
 import { loadMoreContentDB, loadpostsAc, deletePostAc } from "../../store/modules/community";
 
 import {  Comment, Binheart,  SaveList } from "../../assets/icons";
-import { listClasses } from "@mui/material";
 
 
 const CommunityList = () => {
