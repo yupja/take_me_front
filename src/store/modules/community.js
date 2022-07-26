@@ -42,7 +42,18 @@ export const closedChttingListRS = createAsyncThunk(
       }
     })
 
-    
+
+    export const chattingVote = (voteData)=> {
+      console.log(voteData)
+      return async function(dispatch){
+        try{
+          await instance.post(`/api/chat/room/${voteData.roomId}/vote`, {
+            prosCons : voteData.prosCons
+          })
+        }catch(error){
+          console.log(error)          
+        }
+    }}
 
 
 // [커뮤니티 채팅 API / 은진] -------------------------------------------------

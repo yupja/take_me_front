@@ -6,6 +6,7 @@ import TimerFunction from "../public/Timer"
 import ProgressBar from "../public/ProgressBar"
 
 import styled from "styled-components";
+import { chattingVote } from "../../store/modules/community"
 import {Timer, ChattingEnd} from "../../assets/icons"
 import Loading from "../public/Loading";
 
@@ -15,6 +16,7 @@ const ChattingInfo = (props) =>{
   const [minutes, setMinutes] = useState();
   const [seconds, setSeconds] = useState();
   const [ready, setReady] = useState(true);
+  const [vote, setVote] = useState(props.prosCons);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -29,6 +31,28 @@ const ChattingInfo = (props) =>{
   },[])
   
   const userInfo = useSelector((state)=>state.community.myInfo)
+
+
+
+
+  const chageVote = () =>{
+    let sendData={}
+    if(vote){
+      setVote(false)
+      sendData={
+        roomId: props.roomId,
+        prosCons : false
+      }
+      dispatch(chattingVote(sendData))
+
+    }else if(!vote){
+      setVote(true)
+      sendData={
+        roomId: props.roomId,
+        prosCons : true
+      }
+      dispatch(chattingVote(sendData))
+  }}
 
   const getChttingData =(index)=>{
     const sendData ={
@@ -50,7 +74,6 @@ const ChattingInfo = (props) =>{
     }
   
 
-
   const getTime=()=>{
     const createTime = new Date(props.createdAt);
     createTime.setMinutes(createTime.getMinutes()+props.timeLimit)
@@ -67,44 +90,70 @@ const ChattingInfo = (props) =>{
   }
 
   
-  return  ready? <Loading/>: (
-  <>
-  { props.currentState==="Live" ? 
-  
-    <ChattingList>
-    <div className="chatInfoArea"
-      onClick={()=>{
-        getChttingData();
-      }}>
-      <div className="imgBox">
-      Live
-      <img src={props.authorProfileImg} />
-      </div>
-      
-      <div className="contentsBox">
-        <span>
-          <span className="innerSpan">
-            {props.authorNickname}</span> {props.comment}</span>
-        <div className="timerArea">
-          <Timer/>
-          <TimerFunction
-              min={minutes}
-              sec={seconds}/>
-        </div>
-      </div>
-    </div>
+  return ready ? <Loading /> : (
+    <>
+      {props.currentState === "Live" ?
 
-    <div className="bottomArea">
-      <button>쓸까?</button>
-      <button>말까?</button>
+        <ChattingList>
+          <div className="chatInfoArea"
+            onClick={() => {
+              getChttingData();
+            }}>
+            <div className="imgBox">
+              Live
+              <img src={props.authorProfileImg} />
+            </div>
 
-    </div>
+            <div className="contentsBox">
+              <span>
+                <span className="innerSpan">
+                  {props.authorNickname}</span> {props.comment}</span>
+              <div className="timerArea">
+                <Timer />
+                <TimerFunction
+                  min={minutes}
+                  sec={seconds} />
+              </div>
+            </div>
+          </div>
 
-  </ChattingList>
 
-  :
-  ""
-  }
+          <div className="bottomArea">
+            {vote ?
+              <button style={{
+                background: "#26DFA6",
+                color: "white"
+              }}
+                disabled
+              >쓸까?</button>
+              :
+              <button
+                onClick={() => { chageVote() }}>말까?</button>
+
+            }
+
+
+            {vote ?
+              <button
+                onClick={() => { chageVote() }}>쓸까?</button>
+
+              :
+              <button style={{
+                background: "#26DFA6",
+                color: "white"
+              }}
+                disabled
+              >말까?</button>
+
+            }
+
+          </div>
+
+        </ChattingList>
+
+        :
+        ""
+      }
 
   { props.currentState==="END"? 
       <ChattingList>
