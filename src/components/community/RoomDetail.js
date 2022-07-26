@@ -5,15 +5,13 @@ import { useDispatch, useSelector } from "react-redux";
 import SockJS from "sockjs-client";
 import Stomp from "stompjs";
 import { subMessage, myInfoData } from "../../store/modules/community";
-import { getUserInfoDB } from "../../store/modules/user";
-import ChattingInfo from "./ChattingInfo";
 import Header from "../public/Header";
 
 function RoomDetail() {
-  const {state} = useLocation();
+  const { state } = useLocation();
   const { roomId } = useParams();
   const dispatch = useDispatch();
-  console.log(state);
+  const getMessages = useSelector((state) => state.community.messages);
 
   // const getChttingData =(index)=>{
   //   sendData ={
@@ -27,27 +25,10 @@ function RoomDetail() {
   //     createdAt:RoomList[index].createdAt,
   //     timeLimit:RoomList[index].timeLimit
   //   }
-  
-
-
 
   const title = '쓸까?말까?'
-
   const chatRef = useRef();
   const scrollRef = useRef();
-
-  const [chat, setChat] = useState([])
-  // 데이터가 실시간으로 쌓여서 출력하는 스테이트 받아서 뿌리는 건 쳇이야 
-
-  const getMessages = useSelector((state) => state.community.messages);
-  const myInfo = useSelector((state) => state.community.myInfo);
-  // console.log(getMessages);
-  // console.log(myInfo);
-
-
-  // ***********임시 데이터**************** //
-  const nick = "Eunjin";
-  const img = "aaa.jpg";
 
 
   const sock = new SockJS('https://api.webprogramming-mj6119.shop/chatting', null, { transports: ["websocket", "xhr-streaming", "xhr-polling"] });
@@ -61,9 +42,6 @@ function RoomDetail() {
   }, [getMessages]);
 
   useEffect(() => {
-    // 유저 데이터 get
-    dispatch(myInfoData());
-
     // 소켓 연결
     client.connect({ "token": token }, () => {
       // 채팅방 구독
@@ -76,14 +54,33 @@ function RoomDetail() {
       const info = {
         type: 'ENTER',
         roomId: roomId,
-        sender: nick,
-        profileImg: img,
-        userCount: 3,
+        sender: state.sender,
+        profileImg: state.profileImg,
       }
       // 유저 정보 전송(입장메시지용)
       client.send(`/pub/chat/message`, {}, JSON.stringify(info));
     });
+
+
+
   }, [])
+
+  //연결 해제
+  function disconnects() {
+    console.log("확인")
+    if (client !== null) {
+      client.send("/pub/chat/message", {}, JSON.stringify({ type: "QUIT", sender: state.sender }));
+      client.disconnect();
+    }
+  }
+
+  useEffect(() => {
+    window.addEventListener("beforeunload", disconnects);
+    console.log('새로고침 확인')
+  }, [])
+
+
+
 
   const handleOnKeyPress = (e) => {
     if (e.key === 'Enter') {
@@ -100,37 +97,37 @@ function RoomDetail() {
       type: 'TALK',
       roomId: roomId,
       message: msg,
-      sender: nick,
-      profileImg: img,
+      sender: state.sender,
+      profileImg: state.profileImg,
     }
     client.send(`/pub/chat/message`, { "token": token }, JSON.stringify(masData))
     chatRef.current.value = null;
   }
 
-  const userInput = `${myInfo.nickname}(으)로 댓글 달기 ...`
+  const userInput = `${state.sender}(으)로 댓글 달기 ...`
 
 
   //은진님 이거 집어넣으시면 돼요 ㅋㅋ 제가 레이아웃 확인해서 보내드리려고 했는데 어디가 어딘지 모르겠네여어... 
-//   <ChattingInfo
-//   profileImg={state.authorProfileImg}
-//   userName={state.authorNickname}
-//   comment={state.comment}
-//   time={state.timeLimit} 
-//   />
-// </Box>
+  //   <ChattingInfo
+  //   profileImg={state.authorProfileImg}
+  //   userName={state.authorNickname}
+  //   comment={state.comment}
+  //   time={state.timeLimit} 
+  //   />
+  // </Box>
 
   return (
     <ChatWrap>
       <Header title={title} />
-      <Box/>
+      <Box />
       <ChatBox className="chatbox">
         <Chatting ref={scrollRef}>
-          {myInfo?.nickname &&
+          {state.sender &&
             getMessages.map((el, i) =>
               el.type === "TALK" ?
                 (
-                  <div key={i} className={el.sender === myInfo.nickname ? "right" : "left"}>
-                    <div className="img"><img src="https://mblogthumb-phinf.pstatic.net/MjAyMTAxMjJfNzMg/MDAxNjExMzIzMzU1NDgw.nhAuTdE8OjYs0wZAb8qpMAsUaUIZXeRKJ0zDLs5oaKIg.iONiFE4qhr5wuB2FwDe4yfO3oC9gBbOjDaCyGXxiLMkg.JPEG.sohyeon612/%EB%8B%A4%EC%9A%B4%EB%A1%9C%EB%93%9C%ED%8C%8C%EC%9D%BC%EF%BC%8D2.jpg?type=w800" alt="프로필" /></div>
+                  <div key={i} className={el.sender === state.sender ? "right" : "left"}>
+                    <div className="img"><img src={el.profileImg} alt="프로필" /></div>
                     <div className="info">
                       <span>닉네임</span>
                       <p>{el.message}</p>
@@ -197,7 +194,6 @@ padding:20px 25px;
   margin-right: 5px;
   border-radius: 50%;
   overflow: hidden;
-  border: 1px solid green;
 }
 img{
   width: 100%;
