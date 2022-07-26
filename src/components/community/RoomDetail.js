@@ -130,21 +130,6 @@ function RoomDetail() {
   const userInput = `${state.sender}(으)로 댓글 달기 ...`
 
 
-
-  //   <ChattingInfo
-  //   profileImg={state.authorProfileImg}
-  //   userName={state.authorNickname}
-  //   comment={state.comment}
-  //   time={state.timeLimit} 
-  //   />
-  // </Box>
-  //   <ChattingInfo
-  //   profileImg={state.authorProfileImg}
-  //   userName={state.authorNickname}
-  //   comment={state.comment}
-  //   time={state.timeLimit}
-  // />
-
   return (
     <ChatWrap>
       <Header title={title} />

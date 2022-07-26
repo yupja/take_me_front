@@ -1,27 +1,85 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
 import TimerFunction from "../public/Timer"
 import ProgressBar from "../public/ProgressBar"
 
-
 import styled from "styled-components";
+import { chattingVote } from "../../store/modules/community"
 import { Timer, ChattingEnd } from "../../assets/icons"
+import Loading from "../public/Loading";
 
 
 const ChattingInfo = (props) => {
-  useEffect(() => {
-    getTime();
-  }, [props.createdAt])
-
 
   const [minutes, setMinutes] = useState();
   const [seconds, setSeconds] = useState();
+  const [ready, setReady] = useState(true);
+  const [vote, setVote] = useState(props.prosCons);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+
+  useEffect(() => {
+    getTime();
+    setTimeout(() => {
+      setReady(false)
+    }, 100)
+
+  }, [])
+
+  const userInfo = useSelector((state) => state.community.myInfo)
+
+
+
+
+  const chageVote = () => {
+    let sendData = {}
+    if (vote) {
+      setVote(false)
+      sendData = {
+        roomId: props.roomId,
+        prosCons: false
+      }
+      dispatch(chattingVote(sendData))
+
+    } else if (!vote) {
+      setVote(true)
+      sendData = {
+        roomId: props.roomId,
+        prosCons: true
+      }
+      dispatch(chattingVote(sendData))
+    }
+  }
+
+  const getChttingData = (index) => {
+    const sendData = {
+      roomId: props.roomId,
+      sender: userInfo.nickname,
+      profileImg: userInfo.profileImg,
+      authorNickname: props.authorNickname,
+      authorProfileImg: props.authorProfileImg,
+      userCount: props.userCount,
+      comment: props.comment,
+      createdAt: props.createdAt,
+      timeLimit: props.timeLimit
+    }
+
+    console.log(sendData)
+
+    navigate(`/chat/roomdetail/${sendData.roomId}`, { state: sendData });
+
+  }
 
 
   const getTime = () => {
     const createTime = new Date(props.createdAt);
+    createTime.setMinutes(createTime.getMinutes() + props.timeLimit)
     const currentTime = new Date();
-
-    let diff = (createTime - currentTime) - (props.timeLimit * (1000 * 60))
+    let diff = (createTime - currentTime)
     const diffHours = Math.floor(diff / (1000 * 60 * 60));
     diff -= diffHours * (1000 * 60 * 60);
     let diffMin = Math.floor(diff / (1000 * 60));
@@ -33,23 +91,24 @@ const ChattingInfo = (props) => {
   }
 
 
-  return (
-
-
+  return ready ? <Loading /> : (
     <>
       {props.currentState === "Live" ?
 
         <ChattingList>
-          <div className="chatInfoArea">
+          <div className="chatInfoArea"
+            onClick={() => {
+              getChttingData();
+            }}>
             <div className="imgBox">
               Live
-              <img src={props.profileImg} />
+              <img src={props.authorProfileImg} />
             </div>
 
             <div className="contentsBox">
               <span>
                 <span className="innerSpan">
-                  {props.userName}</span> {props.comment}</span>
+                  {props.authorNickname}</span> {props.comment}</span>
               <div className="timerArea">
                 <Timer />
                 <TimerFunction
@@ -59,9 +118,35 @@ const ChattingInfo = (props) => {
             </div>
           </div>
 
+
           <div className="bottomArea">
-            <button>쓸까?</button>
-            <button>말까?</button>
+            {vote ?
+              <button style={{
+                background: "#26DFA6",
+                color: "white"
+              }}
+                disabled
+              >쓸까?</button>
+              :
+              <button
+                onClick={() => { chageVote() }}>말까?</button>
+
+            }
+
+
+            {vote ?
+              <button
+                onClick={() => { chageVote() }}>쓸까?</button>
+
+              :
+              <button style={{
+                background: "#26DFA6",
+                color: "white"
+              }}
+                disabled
+              >말까?</button>
+
+            }
 
           </div>
 
@@ -70,6 +155,7 @@ const ChattingInfo = (props) => {
         :
         ""
       }
+
 
       {props.currentState === "END" ?
         <ChattingList>

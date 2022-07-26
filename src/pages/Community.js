@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router";
-
+import { useDispatch, useSelector } from "react-redux";
+import { topListRS } from "../store/modules/community";
 import ChattingList from "../components/community/ChattingList"
 import Header from "../components/public/Header";
 import SwipeRooms from "../components/public/SwipeForm"
@@ -13,9 +14,19 @@ import CommunityList from "../components/community/CommunityList";
 const Community = () => {
   const title = "커뮤니티"
   const {state} = useLocation();
-
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [isLoad, setLoad] = useState(false);
   const [page, setPage] = useState(<CommunityList />);
+
+  useEffect(()=>{
+    if(isLoad){
+      dispatch(topListRS());
+      setLoad(false)
+    }
+
+  },[isLoad])
+  const topRoomList = useSelector(((state => state.community.topChttingList)));
 
 
 
@@ -34,7 +45,7 @@ const Community = () => {
 
 
         <TimeList>
-          <SwipeRooms />
+          <SwipeRooms topRoomList={topRoomList}/>
         </TimeList>
 
         <div style={{ width: "100%" }}>
