@@ -23,7 +23,8 @@ const CreateRoom = () => {
   const createRoom = (e) => {
     e.preventDefault();
     const data = {
-      comment: "비가 오네요."
+      comment: "비가 오네요.",
+      timeLimit : Number(10)
     }
     // const room = "방이름고정예정입니다"
     // const timeLimit = 10

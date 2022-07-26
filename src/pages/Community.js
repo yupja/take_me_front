@@ -2,13 +2,12 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router";
 
-import CommunityTab from "../components/community/CommunityTab";
-import Chatting from "../components/community/Chatting"
+import ChattingList from "../components/community/ChattingList"
 import Header from "../components/public/Header";
 import SwipeRooms from "../components/public/SwipeForm"
 
 import styled from "styled-components";
-import user from "../store/modules/user";
+import CommunityList from "../components/community/CommunityList";
 
 
 const Community = () => {
@@ -16,32 +15,35 @@ const Community = () => {
   const {state} = useLocation();
 
   const navigate = useNavigate();
-  const [page, setPage] = useState(<CommunityTab />);
+  const [page, setPage] = useState(<CommunityList />);
 
 
 
   return (
   <> 
     <Header title={title} color={state}/>
-      
-      <MenuBar>
-        <div onClick={()=>{
-          setPage(<CommunityTab />)
-        }}>티끌자랑</div>
-        <div onClick={()=>{
-          setPage(<Chatting/>)
-        }}>쓸까말까</div>
-      </MenuBar>
+      <div style={{width:"100%"}}>
+        <MenuBar>
+          <div onClick={()=>{
+            setPage(<CommunityList />)
+          }}>티끌자랑</div>
+          <div onClick={()=>{
+            setPage(<ChattingList/>)
+          }}>쓸까말까</div>
+        </MenuBar>
 
 
         <TimeList>
           <SwipeRooms />
         </TimeList>
 
-      <div style={{ width: "100%" }}>
-         <CommunityContents>
-          {page}
-        </CommunityContents>
+        <div style={{ width: "100%" }}>
+          <CommunityContents>
+            {page}
+          </CommunityContents>
+        </div>
+
+
       </div>
   </>
   )

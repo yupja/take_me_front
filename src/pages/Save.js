@@ -12,16 +12,14 @@ import GoalInput from "../components/saved/GoalInput"
 import CurrentSavedItem from "../components/saved/CurrentSavedItem";
 import GoalModifyComponunt from "../components/saved/GoalModify";
 import PostModal from "../components/community/PostModal";
+import Guide from "../components/community/Guide"
 
 
 import styled from "styled-components";
 import Slider from "react-slick";
 import "../styles/saveMain.css"
-import { ReactComponent as CheckedStart } from "../assets/icons/CheckedStart.svg"
-import { ReactComponent as GoalModify } from "../assets/icons/GoalModify.svg"
-import { ReactComponent as WhiteTrash } from "../assets/icons/WhiteTrash.svg"
-import { ReactComponent as AddMintPoint } from "../assets/icons/AddMintPoint.svg"
-import { ReactComponent as WhiteShare } from "../assets/icons/WhiteShare.svg"
+import { CheckedStart, GoalModify, WhiteTrash , 
+  AddMintPoint, WhiteShare} from "../assets/icons"
 
 
 import { AiOutlineStar } from 'react-icons/ai'
@@ -39,7 +37,7 @@ function Save() {
 
   useEffect(() => {
     dispatch(myReadGoalRQ());
-    dispatch(myFavoriteListRQ());
+    dispatch(myFavoriteListRQ()); 
   }, []);
 
   const [modalOpen, setModalOpen] = useState(false);
@@ -55,6 +53,17 @@ function Save() {
 
   const openModal = () => { setModalOpen(true); };
   const closeModal = () => { setModalOpen(false); };
+
+  const [showModal, setShowModal] = useState(false);
+  const openGuide = () => {
+      setShowModal(true)
+  }
+  const closeGuide = () => {
+      setShowModal(false);
+  }
+
+  const saveprevUrl = document.referrer;
+  console.log(saveprevUrl,"세이브입니다만")
 
 
   const [star, setStar] = useState(false);
@@ -133,9 +142,6 @@ function Save() {
   };
   return (
     <Wrap>
-      <GuideBack>
-
-      </GuideBack>
       <TopWrap>
         <HeaderArea><Header title={title} color="#FFFFFF" /></HeaderArea>
 
@@ -316,20 +322,17 @@ function Save() {
         header={modalName}>
         {modalState}
       </Modal>
+
+      <Guide 
+      open={showModal}
+      close={closeGuide}
+      // onClose={handleClose}
+      />
     </Wrap>
   );
-}
+    }     
 export default Save;
 
-const GuideBack = styled.div`
-width: 100%;
-height: 100%;
-/* background-color: rgb(0,0,0,0.8); */
-border: 3px solid black;
-/* background-color: red; */
-position: absolute;
-z-index: 2;
-`;
 
 const GoalInfo = styled.div`
 position: absolute;
@@ -353,6 +356,8 @@ p{
 const Wrap = styled.div`
 width:100%;
 height: 100%;
+/* position: relative; */
+/* z-index: 1; */
 `;
 
 const HeaderArea = styled.div`

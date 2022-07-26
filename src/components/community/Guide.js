@@ -9,8 +9,11 @@ import M_guide_1 from "../../assets/guide/M_guide_1.png"
 import M_guide_2 from "../../assets/guide/M_guide_2.png" 
 import M_guide_3 from "../../assets/guide/M_guide_3.png" 
 import M_guide_4 from "../../assets/guide/M_guide_4.png" 
+import { useNavigate } from "react-router-dom";
 
 const Guide = (props) => {
+
+  const Navigate = useNavigate();
 
   const settings = {
     dots: true,
@@ -24,7 +27,6 @@ const Guide = (props) => {
   return(
     <>
     {/* {props.showModal ? */}
-
     <Divvv>
     <StyledSlider {...settings}>
       <Div>
@@ -38,15 +40,13 @@ const Guide = (props) => {
       </Div>
       <Div>
       <GoalImage src={M_guide_4} className="lastPage"></GoalImage>
-      <CloseBtn onClick={props.closeGuide}></CloseBtn>
+      <CloseBtn>마침 ></CloseBtn>
       </Div>
     </ StyledSlider>
-   </Divvv> {/*}: null } */}
+   </Divvv> {/* }: null } */}
    </>
   )
 }
-
-
 
 const Divvv = styled.div`
 width:"100%";
@@ -56,6 +56,9 @@ width:"100%";
    justify-content: center;
    align-items: center;
    background-color: #111;
+   /* position: absolute; */
+   z-index: 99;
+   top: 0;
 `;
 
 const Div = styled.div`
@@ -88,13 +91,13 @@ const StyledSlider = styled(Slider)`
     }
    
     .slick-next.slick-disabled:before{
-      content: '마침 >';
+      content: '';
 
     }
     .slick-next:before {
     content: '다음 >';
 }
-
+ 
 .slick-prev:before {
     content: '< 이전';
 }
@@ -102,7 +105,7 @@ const StyledSlider = styled(Slider)`
 .slick-prev:before, .slick-next:before {
     font-size: 20px;
     line-height: 1;
-    opacity: .75;
+    /* opacity: .75; */
     color: #26dfa6;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -149,8 +152,8 @@ object-fit: cover; */
 `;
 
 const CloseBtn = styled.div`
-width: 15vw;
-height: 5vw;
+width: 65px;
+height: 30px;
 color: #26dfa6;
 right: 30px;
 /* display: flex; */
@@ -159,6 +162,7 @@ position: absolute;
 top: 90%;
 font-size: 23px;
 z-index: 10;
+font-weight: 100;
 /* border: 1px solid red; */
 `;
 

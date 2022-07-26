@@ -58,17 +58,17 @@ const refreshToken = () => {
       console.log(response);
       console.log("재발급 완료")
 
-      // const deleteCookie = function (name) {
-      //   document.cookie = name + '=; expires=Thu, 01 Jan 1999 00:00:10 GMT;';
-      // }
-      // deleteCookie('refreshToken');
-      // localStorage.clear();
+      const deleteCookie = function (name) {
+        document.cookie = name + '=; expires=Thu, 01 Jan 1999 00:00:10 GMT;';
+      }
+      deleteCookie('refreshToken');
+      localStorage.clear();
 
       const accessToken = response.data.accessToken;
       const refreshToken = response.data.refreshToken;
 
       localStorage.setItem("accessToken", accessToken);
-      
+
       setCookie('refreshToken', refreshToken, {
         path: "/",
         secure: true,
@@ -81,11 +81,11 @@ const refreshToken = () => {
 
       console.log(error);
       console.log("refresh토큰 만료! 다시 로그인해주세요!")
-      const deleteCookie = function (name) {
-        document.cookie = name + '=; expires=Thu, 01 Jan 1999 00:00:10 GMT;';
-      }
-      deleteCookie('refreshToken');
-      localStorage.clear();
+      // const deleteCookie = function (name) {
+      //   document.cookie = name + '=; expires=Thu, 01 Jan 1999 00:00:10 GMT;';
+      // }
+      // deleteCookie('refreshToken');
+      // localStorage.clear();
       alert("세션 만료 다시 로그인 해주세요.");
     });
 };

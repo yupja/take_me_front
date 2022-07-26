@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { LoginDB } from "../store/modules/user";
 import { useNavigate } from "react-router-dom";
 
@@ -13,6 +13,16 @@ function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const userState = useSelector((state) => state.user)
+  console.log(userState)
+
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalState, setModalState] = useState();
+  const [modalName, setModalName] = useState("");
+
+
+  const openModal = () => { setModalOpen(true); };
+  const closeModal = () => { setModalOpen(false); };
+
 
   // 로그인 정보 가져오기
   const userId = useRef();
@@ -43,6 +53,11 @@ function Login() {
     }
     dispatch(LoginDB(loginInfo, setModalStr, setNavToggles));
   }
+  const loginprevUrl = document.referrer;
+  console.log(loginprevUrl,"가입하고왔습니다만")
+  console.log(window.location.href,"location")
+  const state = useLocation();
+  console.log(state,"state?")
 
   return (
     <>

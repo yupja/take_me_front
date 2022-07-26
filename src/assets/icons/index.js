@@ -33,8 +33,11 @@ import { ReactComponent as WhiteShare } from './AddMintPoint.svg';
 import { ReactComponent as WhiteTrash } from './AddMintPoint.svg';
 import { ReactComponent as Withdrawal } from './AddMintPoint.svg';
 import { ReactComponent as Young } from './AddMintPoint.svg';
+import { ReactComponent as SaveList } from './SaveList.svg';
+import { ReactComponent as ChattingEnd } from './ChattingEnd.svg'
+
 
 export { AddMintPoint, ArrowUp, BigReceipt, Binheart, ChangeRank, Check, CheckedStart, Close, 
          Comment, Consu, Dot, EditBlack, EditIProfile, EditMint, EmptyStar, Ghost, GoalModify, Google,
          Info, Invi, Kakao, Key, LeftArrow, Receipt, ReceiptB, SearchIcon, Star, StarColor, Timer
-         ,Trash, UpArrow, WhiteShare, WhiteTrash , Withdrawal, Young};
+         ,Trash, UpArrow, WhiteShare, WhiteTrash , Withdrawal, Young, SaveList, ChattingEnd};

@@ -43,7 +43,6 @@ export const getUserInfoDB = () => {
       withCredentials: true,
     })
       .then((response) => {
-        console.log(response);
         const username = response.data.data.username;
         const nickname = response.data.data.nickname;
         const email = response.data.data.email;
@@ -133,6 +132,7 @@ export const nickCheckDB = (nick, setUserNickAlert) => {
       withCredentials: true,
     })
       .then((res) => {
+        console.log(res)
         if (res.data.result === true) {
           setUserNickAlert("사용 가능한 닉네임입니다")
         } else {
@@ -140,7 +140,7 @@ export const nickCheckDB = (nick, setUserNickAlert) => {
         }
       })
       .catch((error) => {
-        window.alert(error.response.data.message);
+        console.log(error)
       });
   };
 };

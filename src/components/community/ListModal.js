@@ -13,11 +13,12 @@ const ListModal = (props) => {
   const dispatch = useDispatch();
   const params = useParams();
 
-  const saveData = useSelector((state) => state.saved.savedItem.data.savedItemList);
-  const saveDataa = useSelector((state) => state.saved.savedItem.data);
+  const savedListData = useSelector((state) => state.saved.savedItem.data.savedItemList);
+  const saveData = useSelector((state) => state.saved.savedItem.data);
   const boardId = (props.forsaveId)
 
   React.useEffect(() => {
+    // dispatch(loadsavedAc())
     dispatch(loadsavedAc(boardId))
     // dispatch(loadCommentAc())
   }, [])
@@ -41,8 +42,8 @@ const ListModal = (props) => {
                 <Closeb onClick={props.closeModall}><Close /></Closeb>
               </Top>
               <Middle>
-                <p><Spann>{saveDataa.userId}</Spann>님의 {saveDataa.goalItemName} <Spann>KEEP</Spann></p>
-                <p style={{ fontWeight: "700", marginTop: "2vw" }}>{saveDataa.savedItemTotalPrice} 원</p>
+                <p><Spann>{saveData.userId}</Spann>님의 {saveData.goalItemName} <Spann>KEEP</Spann></p>
+                <p style={{ fontWeight: "700", marginTop: "2vw" }}>{saveData.savedItemTotalPrice} 원</p>
               </Middle>
             </InFo>
             <Outside>
@@ -156,13 +157,37 @@ const ModalBox = styled.div`
   /* border: 5px solid red; */
   box-shadow: rgb(0 0 0 / 9%) 0px 2px 12px 0px;
   display: flex;
-  z-index: 99;
-    @media screen and (max-width:600px){
-      width: 100vw;
-      height: 100vh;
-      padding: 20px;
+  height: 10%;
+  border-bottom: 1px solid #CCCCCC;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5%;
+
+  .header{
+    display: flex;
+    margin-bottom: 5%;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
   }
-  `;
+
+  .leftBox{
+  gap:10%;
+  width: 40%;
+  display: flex;
+  justify-content: space-around;;
+  align-items: center;
+  padding-left: 5px;
+}
+.rightBox{
+  width: 15%;
+  gap: 30%;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+`;
 
 const Closeb = styled.div`
 /* border: 2px solid violet; */
