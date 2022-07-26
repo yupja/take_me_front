@@ -37,7 +37,7 @@ const ChattingInfo = (props) =>{
 
 
   <>
-  { minutes && seconds && props.currentState==="Live"? 
+  { props.currentState==="Live"&& minutes? 
   
     <ChattingList>
     <div className="chatInfoArea">
