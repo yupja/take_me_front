@@ -65,11 +65,9 @@ export const closedChttingListRS = createAsyncThunk(
 // 방생성
 export const createChatRoom = (data) => {
   return async function (dispatch) {
-
     await instance.post(`/api/chat/room`, data)
       .then((res) => {
         const roodId = res.data.data.roomId
-        console.log(res)
         window.location.href = `/chat/roomdetail/${roodId}`;
       })
       .catch((error) => {
