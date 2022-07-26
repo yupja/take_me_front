@@ -9,8 +9,7 @@ import ChattingInfo from "./ChattingInfo";
 import { loadChattingListRS, closedChttingListRS, myInfoData } from "../../store/modules/community"
 
 
-function Chatting() {
-
+function ChattingList() {
 
   useEffect(() => {
     dispatch(loadChattingListRS());
@@ -22,9 +21,6 @@ function Chatting() {
   const name = React.useRef();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  let sendData={}
-
-
 
   const [modalOpen, setModalOpen] = React.useState(false);
   const [modalState, setModalState] = React.useState();
@@ -32,59 +28,38 @@ function Chatting() {
   const openModal = () => { setModalOpen(true); };
   const closeModal = () => { setModalOpen(false); };
 
-
-
-
   const RoomList = useSelector(((state => state.community.chattingList)));
   const ClosedRoomList = useSelector(((state => state.community.closedChttingList)));
   const userInfo = useSelector((state)=>state.community.myInfo)
 
-  const getChttingData =(index)=>{
-  sendData ={
-    roomId:RoomList[index].roomId,
-    sender : userInfo.nickname,
-    profileImg: userInfo.profileImg,
-    authorNickname : RoomList[index].authorNickname,
-    authorProfileImg : RoomList[index].authorProfileImg,
-    userCount : RoomList[index].userCount,
-    comment : RoomList[index].comment,
-    createdAt:RoomList[index].createdAt,
-    timeLimit:RoomList[index].timeLimit
-  }
-
-  navigate(`/chat/roomdetail/${sendData.roomId}`, {state:sendData});
-
-  }
-
-
   return (
     <>
-
       <Wrap>
 
         <AllchattingList>
-
         <div>
         {RoomList&&RoomList.map((item, itemIndex) => {
           return (
             <>
             <div key={item.roomId}>
-            <ChattingList     onClick={()=>{
-                  getChttingData(itemIndex);
-                }}>
+            <ChattingListDiv>
               <ChattingInfo 
                 roomId={item.roomId}
-                profileImg={item.authorProfileImg}
-                userName={item.authorNickname}
+                authorProfileImg={item.authorProfileImg}
+                authorNickname={item.authorNickname}
                 comment={item.comment}
-                time={item.time} 
+                userCount = {item.userCount}
+                createdAt={item.createdAt}
+                timeLimit={item.timeLimit}
+                prosCons={item.prosCons}
                 currentState={"Live"}/>
-            </ChattingList>
+            </ChattingListDiv>
             </div>
             </>
           )
         })}
         </div>
+
 
         {ClosedRoomList && ClosedRoomList?.map((item, itemIndex) => (
           <div key={item.roomId}>
@@ -97,7 +72,6 @@ function Chatting() {
               profileImg={item.authorProfileImg}
               userName={item.authorNickname}
               comment={item.comment}
-              time={item.time}
               currentState={"END"} />
           </ChattingList>
           </div>
@@ -117,9 +91,6 @@ function Chatting() {
                   profileImg={userInfo.profileImg} />)
             }}><p>쓸까? 말까? 만들기</p></button>
           </div>
-
-
-
       </Wrap>
 
       <Modal open={modalOpen}
@@ -131,7 +102,7 @@ function Chatting() {
 
   )
 }
-export default Chatting;
+export default ChattingList;
 
 
 const Wrap = styled.div`
@@ -170,7 +141,6 @@ width:100%;
 max-height: 844px;
 `;
 
-const ChattingList = styled.div`
+const ChattingListDiv = styled.div`
 `;
-
 

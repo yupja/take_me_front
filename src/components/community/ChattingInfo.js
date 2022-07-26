@@ -1,45 +1,162 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
 import TimerFunction from "../public/Timer"
 import ProgressBar from "../public/ProgressBar"
 
-
 import styled from "styled-components";
+import { chattingVote } from "../../store/modules/community"
 import {Timer, ChattingEnd} from "../../assets/icons"
+import Loading from "../public/Loading";
+
 
 const ChattingInfo = (props) =>{
-  console.log()
-  return (
-  <>
-  {props.currentState==="Live"? 
-    <ChattingList>
-      <div className="chatInfoArea">
-        <div className="imgBox">
-        Live
-        <img src={props.profileImg} />
-        </div>
-        
-        <div className="contentsBox">
-          <span>
-            <span style={{
-              fontWeight:"500", 
-              fontSize:"1.2rem",
-              marginRight:"5%"}}>
-              {props.userName}</span> {props.comment}</span>
-          <div className="timerArea"><Timer/><TimerFunction/></div>
-        </div>
-      </div>
 
-      <div className="bottomArea">
-        <button>쓸까?</button>
-        <button>말까?</button>
+  const [minutes, setMinutes] = useState();
+  const [seconds, setSeconds] = useState();
+  const [ready, setReady] = useState(true);
+  const [vote, setVote] = useState(props.prosCons);
 
-      </div>
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-    </ChattingList>
 
-    :
+  useEffect(() => {
+    getTime();
+    setTimeout(()=>{
+      setReady(false)
+    }, 100)
+ 
+  },[])
+  
+  const userInfo = useSelector((state)=>state.community.myInfo)
+
+
+
+
+  const chageVote = () =>{
+    let sendData={}
+    if(vote){
+      setVote(false)
+      sendData={
+        roomId: props.roomId,
+        prosCons : false
+      }
+      dispatch(chattingVote(sendData))
+
+    }else if(!vote){
+      setVote(true)
+      sendData={
+        roomId: props.roomId,
+        prosCons : true
+      }
+      dispatch(chattingVote(sendData))
+  }}
+
+  const getChttingData =(index)=>{
+    const sendData ={
+        roomId:props.roomId,
+        sender : userInfo.nickname,
+        profileImg: userInfo.profileImg,
+        authorNickname : props.authorNickname,
+        authorProfileImg : props.authorProfileImg,
+        userCount : props.userCount,
+        comment : props.comment,
+        createdAt:props.createdAt,
+        timeLimit:props.timeLimit
+    }
+
+    console.log(sendData)
+  
+    navigate(`/chat/roomdetail/${sendData.roomId}`, {state:sendData});
+  
+    }
+  
+
+  const getTime=()=>{
+    const createTime = new Date(props.createdAt);
+    createTime.setMinutes(createTime.getMinutes()+props.timeLimit)
+    const currentTime = new Date();
+    let diff = (createTime-currentTime)
+    const diffHours = Math.floor(diff / (1000 * 60 * 60));
+    diff -= diffHours * (1000 * 60 * 60);
+    let diffMin = Math.floor(diff / (1000 * 60));
+    diff -= diffMin * (1000 * 60);
+    const diffSec = Math.floor(diff / 100000);
     
-    <ChattingList>
+    setMinutes(diffMin);
+    setSeconds(diffSec);
+  }
+
+  
+  return ready ? <Loading /> : (
+    <>
+      {props.currentState === "Live" ?
+
+        <ChattingList>
+          <div className="chatInfoArea"
+            onClick={() => {
+              getChttingData();
+            }}>
+            <div className="imgBox">
+              Live
+              <img src={props.authorProfileImg} />
+            </div>
+
+            <div className="contentsBox">
+              <span>
+                <span className="innerSpan">
+                  {props.authorNickname}</span> {props.comment}</span>
+              <div className="timerArea">
+                <Timer />
+                <TimerFunction
+                  min={minutes}
+                  sec={seconds} />
+              </div>
+            </div>
+          </div>
+
+
+          <div className="bottomArea">
+            {vote ?
+              <button style={{
+                background: "#26DFA6",
+                color: "white"
+              }}
+                disabled
+              >쓸까?</button>
+              :
+              <button
+                onClick={() => { chageVote() }}>말까?</button>
+
+            }
+
+
+            {vote ?
+              <button
+                onClick={() => { chageVote() }}>쓸까?</button>
+
+              :
+              <button style={{
+                background: "#26DFA6",
+                color: "white"
+              }}
+                disabled
+              >말까?</button>
+
+            }
+
+          </div>
+
+        </ChattingList>
+
+        :
+        ""
+      }
+
+  { props.currentState==="END"? 
+      <ChattingList>
       <div className="chatInfoArea">
         <div className="imgBox">
         <img src={props.profileImg} />
@@ -52,7 +169,7 @@ const ChattingInfo = (props) =>{
           <div className="stateArea"><ChattingEnd/></div>
         </div>
       </div>
-
+  
       <div className="bottomArea">
         <span>쓰자!</span>
         <div style={{ 
@@ -62,16 +179,16 @@ const ChattingInfo = (props) =>{
             true={40}
             false={60} />
         </div>
-
-        <span>멈춰!</span>
-
-      </div>
-  </ChattingList>
   
-  }
+        <span>멈춰!</span>
+  
+      </div>
+    </ChattingList>
+    :""}
 
 
-      </>
+
+  </>
     )
 
 }
@@ -113,12 +230,13 @@ margin-bottom: 1rem; */
   display: flex;
 
   span{
-    width: 100%;
+    width: 80%;
     display: flex;
     overflow-y:scroll;
+
     .innerSpan{
       display: flex;
-      width: 100%;
+      width: 25%;
       font-weight: 500;
       font-size: 1rem;
       margin-right: 5px;

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 
-export default function Timer() {
-  const [minutes, setMinutes] = useState(2);
-  const [seconds, setSeconds] = useState(0);
+export default function Timer(props) {
+  const [minutes, setMinutes] = useState(Number(props.min));
+  const [seconds, setSeconds] = useState(Number(props.sec));
+  
 
   useEffect(() => {
     const countdown = setInterval(() => {

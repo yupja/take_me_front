@@ -33,10 +33,6 @@ import { useNavigate } from "react-router-dom";
 
 function Save() {
   const navigate = useNavigate();
-  // const loggedInfo = localStorage.getItem('accessToken');
-  // // if (loggedInfo === null) {
-  // //   navigate('/');
-  // // }
 
   useEffect(() => {
     dispatch(myReadGoalRQ());

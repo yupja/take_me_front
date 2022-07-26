@@ -1,46 +1,10 @@
 import React, {useState, useRef, useEffect, useLayoutEffect} from "react";
 import styled from "styled-components";
+
 import {ReactComponent as Timer} from "../../assets/icons/Timer.svg";
 
-const RoomData = [
-    {
-      roomId: "ae8d8cb1-0a9a-43da-90c4-084df62c78ab",
-      username: "eppo",
-      comment: "지금 비가 너무 많이와서 걷기 싫은데 택시탈까?",
-      profileImg: "https://velog.velcdn.com/images/eppo/post/9fa16a22-a5e5-4675-9d4b-fbcb5c93be28/image.png",
-      time: "6m"
-    },
-    {
-      roomId: "ae8d8cb1-0a9a-43da-90c4-084df62c78ab",
-      username: "eppo",
-      comment: "지금 비가 너무 많이와서 걷기 싫은데 택시탈까?",
-      profileImg: "https://velog.velcdn.com/images/eppo/post/9fa16a22-a5e5-4675-9d4b-fbcb5c93be28/image.png",
-      time: "6m"
-    },
-    {
-      roomId: "ae8d8cb1-0a9a-43da-90c4-084df62c78ab",
-      username: "eppo",
-      comment: "지금 비가 너무 많이와서 걷기 싫은데 택시탈까?",
-      profileImg: "https://velog.velcdn.com/images/eppo/post/9fa16a22-a5e5-4675-9d4b-fbcb5c93be28/image.png",
-      time: "6m"
-    },
-    {
-      roomId: "ae8d8cb1-0a9a-43da-90c4-084df62c78ab",
-      username: "eppo",
-      comment: "지금 비가 너무 많이와서 걷기 싫은데 택시탈까?",
-      profileImg: "https://velog.velcdn.com/images/eppo/post/9fa16a22-a5e5-4675-9d4b-fbcb5c93be28/image.png",
-      time: "6m"
-    },
-    {
-      roomId: "ae8d8cb1-0a9a-43da-90c4-084df62c78ab",
-      username: "eppo",
-      comment: "지금 비가 너무 많이와서 걷기 싫은데 택시탈까?",
-      profileImg: "https://velog.velcdn.com/images/eppo/post/9fa16a22-a5e5-4675-9d4b-fbcb5c93be28/image.png",
-      time: "6m"
-    },
-  ]
+import ChattingInfo from "../community/ChattingInfo";
 
-  
 function useInterval(callback, delay) {
   const savedCallback = useRef();
 
@@ -58,7 +22,7 @@ function useInterval(callback, delay) {
 }
 
 
-const SwipeForm = () =>{
+const SwipeForm = (props) =>{
     const swifeRef = useRef<HTMLDivElement>(null);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [loop, setLoop] = useState(null);
@@ -88,20 +52,16 @@ const SwipeForm = () =>{
   
     return (
         <>
-        {RoomData.map((item, idx)=>(
-        <Wrap>
+        {props.topRoomList.map((item, idx)=>(
+        <Wrap key={idx}>
             <ChattingList
-              style={{transform: `translateX(${(-100 / RoomData.length+2) * (currentIndex)}%)`}}>
+              style={{transform: `translateX(${(-100 / props.topRoomList.length+2) * (currentIndex)}%)`}}>
                     <SwipeItem>
-                      <img src={item.profileImg} />
-                      <div style={{display:"flex"}}>
-                        <span>
-                          <p style={{fontWeight:"500" , fontSize:"1.2rem"}}>{item.username}</p> {item.comment}</span>
-                      </div>
+                      <ChattingInfo/>
                       </SwipeItem>
             </ChattingList>
             </Wrap>
-        ))}
+        ))} 
         </>
     )
 } 
