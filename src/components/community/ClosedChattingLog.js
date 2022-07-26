@@ -4,7 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Header from "../public/Header";
 
-import {closedChttingLogRS, myInfoData} from "../../store/modules/community"
+import {closedChttingLogRS} from "../../store/modules/community"
 
 function RoomDetail() {
   const  roomId  = useParams();
@@ -13,7 +13,6 @@ function RoomDetail() {
   useEffect(() => {
     //dispatch(loadChattingListRS());
    dispatch(closedChttingLogRS(roomId.closedRoomId));
-   dispatch(myInfoData())
   }, [])
 
 
@@ -21,9 +20,7 @@ function RoomDetail() {
 
   //const chatRef = useRef();
   const getMessages = useSelector((state) => state.community.closedChttingLog);
-  const userInfo = useSelector((state)=>state.community.myInfo)
 
-  console.log(userInfo)
   console.log(getMessages)
 
 
