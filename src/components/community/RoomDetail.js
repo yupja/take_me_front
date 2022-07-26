@@ -15,86 +15,114 @@ function RoomDetail() {
   const title = '쓸까?말까?'
 
   const chatRef = useRef();
+  const scrollRef = useRef();
+
+  const [chat, setChat] = useState([])
+  // 데이터가 실시간으로 쌓여서 출력하는 스테이트 받아서 뿌리는 건 쳇이야 
+
   const getMessages = useSelector((state) => state.community.messages);
-  const userInfo = useSelector((state) => state.user);
+  const myInfo = useSelector((state) => state.community.myInfo);
+  // console.log(getMessages);
+  // console.log(myInfo);
 
 
+  // ***********임시 데이터**************** //
+  const nick = "Eunjin";
+  const img = "aaa.jpg";
 
-  // const sock = new SockJS('https://api.webprogramming-mj6119.shop/chatting', null, { transports: ["websocket", "xhr-streaming", "xhr-polling"] });
+
   const sock = new SockJS('https://api.webprogramming-mj6119.shop/chatting', null, { transports: ["websocket", "xhr-streaming", "xhr-polling"] });
-
   let client = Stomp.over(sock);
 
+  // 토큰
   let token = localStorage.getItem('accessToken');
 
   useEffect(() => {
-    // dispatch(getUserInfoDB());
+    scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
+  }, [getMessages]);
+
+  useEffect(() => {
+    // 유저 데이터 get
     dispatch(myInfoData());
 
+    // 소켓 연결
     client.connect({ "token": token }, () => {
-      // subscribe(path, callback)로 메시지를 받을 수 있다. callback 첫번째 파라미터의 body로 메시지의 내용이 들어온다.
-      client.subscribe(`/sub/chat/room/${roomId}`, (res) => { // 메세지 수신
+      // 채팅방 구독
+      client.subscribe(`/sub/chat/room/${roomId}`, (res) => {
         let newMessage = JSON.parse(res.body);
-        console.log(newMessage);
-        // dispatch(subMessage(newMessage));
-        // return newMessage;
-
-        // 채팅 내역 추가
-        // chatBox.append('<li>' + content.message + '(' + content.writer + ')</li>')
-
+        dispatch(subMessage(newMessage));
       })
 
+      // 유저 정보 전송 데이터
       const info = {
         type: 'ENTER',
         roomId: roomId,
-        sender: "eunjin",
-        profileImg: "rrr.jpg",
+        sender: nick,
+        profileImg: img,
         userCount: 3,
       }
-      console.log(roomId);
-      //여기서 구독한 유저 정보를 먼저 보내준다
-      // send(path, header, message)로 메시지를 보낼 수 있다.
-      // client.send(`/pub/chat/message`, {}, JSON.stringify(info));
+      // 유저 정보 전송(입장메시지용)
+      client.send(`/pub/chat/message`, {}, JSON.stringify(info));
     });
-
   }, [])
 
-
-  const myChat = (e) => {
-    // setChat(chatRef.current.value)
+  const handleOnKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      myChat();
+    }
+  };
+  // 채팅 전송
+  const myChat = () => {
     const msg = chatRef.current.value;
-
-    client.send(`/pub/chat/message`, { "token": token }, JSON.stringify({ type: 'TALK', roomId: roomId, message: msg, sender: "rrr", profileImg: "rrr.ing" }))
-
+    if (msg === '') {
+      return
+    }
+    const masData = {
+      type: 'TALK',
+      roomId: roomId,
+      message: msg,
+      sender: nick,
+      profileImg: img,
+    }
+    client.send(`/pub/chat/message`, { "token": token }, JSON.stringify(masData))
     chatRef.current.value = null;
   }
 
-
-  const userInput = `${userInfo.infoList.nickname}(으)로 댓글 달기 ...`
+  const userInput = `${myInfo.nickname}(으)로 댓글 달기 ...`
 
   return (
     <ChatWrap>
       <Header title={title} />
       <Box />
-      <ChatBox>
-        <Chatting>
-          {userInfo?.infoList.nickname ?
+      <ChatBox className="chatbox">
+        <Chatting ref={scrollRef}>
+          {myInfo?.nickname &&
             getMessages.map((el, i) =>
-            (
-              <div key={i} className={el.sender === userInfo.infoList.nickname ? "right" : "left"}>
-                <div className="img"><img src="https://mblogthumb-phinf.pstatic.net/MjAyMTAxMjJfNzMg/MDAxNjExMzIzMzU1NDgw.nhAuTdE8OjYs0wZAb8qpMAsUaUIZXeRKJ0zDLs5oaKIg.iONiFE4qhr5wuB2FwDe4yfO3oC9gBbOjDaCyGXxiLMkg.JPEG.sohyeon612/%EB%8B%A4%EC%9A%B4%EB%A1%9C%EB%93%9C%ED%8C%8C%EC%9D%BC%EF%BC%8D2.jpg?type=w800" alt="프로필" /></div>
-                <div className="info">
-                  <span>닉네임</span>
-                  <p>{el.message}</p>
-                </div>
-              </div>
+              el.type === "TALK" ?
+                (
+                  <div key={i} className={el.sender === myInfo.nickname ? "right" : "left"}>
+                    <div className="img"><img src="https://mblogthumb-phinf.pstatic.net/MjAyMTAxMjJfNzMg/MDAxNjExMzIzMzU1NDgw.nhAuTdE8OjYs0wZAb8qpMAsUaUIZXeRKJ0zDLs5oaKIg.iONiFE4qhr5wuB2FwDe4yfO3oC9gBbOjDaCyGXxiLMkg.JPEG.sohyeon612/%EB%8B%A4%EC%9A%B4%EB%A1%9C%EB%93%9C%ED%8C%8C%EC%9D%BC%EF%BC%8D2.jpg?type=w800" alt="프로필" /></div>
+                    <div className="info">
+                      <span>닉네임</span>
+                      <p>{el.message}</p>
+                    </div>
+                  </div>) :
+                <EnterMsg key={i}>
+                  <span>{el.message.split('님')[0]}</span>
+                  {el.message.substring(el.message.length - 13)}
+                </EnterMsg>
             )
-            ) : null
           }
         </Chatting>
       </ChatBox>
       <Enter>
-        <Input type="text" placeholder={userInput} ref={chatRef} onfocus="this.placeholder=''"></Input>
+        <Input
+          type="text"
+          placeholder={userInput}
+          ref={chatRef}
+          onfocus="this.placeholder=''"
+          onKeyPress={handleOnKeyPress}
+        ></Input>
         <PostBtn onClick={myChat}>게시</PostBtn>
       </Enter>
     </ChatWrap>
@@ -108,7 +136,20 @@ const ChatWrap = styled.div`
 
 `
 const ChatBox = styled.div`
+    width: 100%;
+    overflow: overlay;
+    height: 73vh;
 
+`
+const EnterMsg = styled.p`
+  text-align: center;
+  color: #26DFB3;
+  font-size: 0.75rem; 
+  margin-bottom: 15px;
+  span{
+    font-weight: 700;
+    
+  }
 `
 const Chatting = styled.div`
 background: #fff;
