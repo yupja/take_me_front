@@ -2,42 +2,48 @@ import React, {useState, useEffect} from "react";
 import TimerFunction from "../public/Timer"
 import ProgressBar from "../public/ProgressBar"
 
-
 import styled from "styled-components";
 import {Timer, ChattingEnd} from "../../assets/icons"
-
+import { CircularProgress } from "@mui/material";
+import Loading from "../public/Loading";
 
 const ChattingInfo = (props) =>{
-  useEffect(() => {
-    getTime();
-  },[props.createdAt])
-
 
   const [minutes, setMinutes] = useState();
   const [seconds, setSeconds] = useState();
+  const [ready, setReady] = useState(true)
+  
+
+  useEffect(() => {
+    getTime();
+    setTimeout(()=>{
+      setReady(false)
+    }, 100)
+ 
+  },[])
 
 
   const getTime=()=>{
+
     const createTime = new Date(props.createdAt);
+    createTime.setMinutes(createTime.getMinutes()+props.timeLimit)
     const currentTime = new Date();
 
-    let diff = (createTime - currentTime)-(props.timeLimit*(1000*60))
+    let diff = (createTime-currentTime)
     const diffHours = Math.floor(diff / (1000 * 60 * 60));
     diff -= diffHours * (1000 * 60 * 60);
     let diffMin = Math.floor(diff / (1000 * 60));
     diff -= diffMin * (1000 * 60);
     const diffSec = Math.floor(diff / 100000);
-
+    
     setMinutes(diffMin);
     setSeconds(diffSec);
   }
 
-
-  return (
-
-
+  
+  return  ready? <Loading/>: (
   <>
-  { props.currentState==="Live"&& minutes? 
+  { props.currentState==="Live" ? 
   
     <ChattingList>
     <div className="chatInfoArea">
