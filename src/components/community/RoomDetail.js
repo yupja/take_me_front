@@ -64,7 +64,27 @@ function RoomDetail() {
       // 유저 정보 전송(입장메시지용)
       client.send(`/pub/chat/message`, {}, JSON.stringify(info));
     });
+
+
+
   }, [])
+
+  //연결 해제
+  function disconnects() {
+    console.log("확인")
+    if (client !== null) {
+      client.send("/pub/chat/message", {}, JSON.stringify({ type: "QUIT", sender: nick }));
+      client.disconnect();
+    }
+  }
+
+  useEffect(() => {
+    window.addEventListener("beforeunload", disconnects);
+    console.log('새로고침 확인')
+  }, [])
+
+
+
 
   const handleOnKeyPress = (e) => {
     if (e.key === 'Enter') {
