@@ -31,6 +31,8 @@ function Chatting() {
   const name = React.useRef();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  let sendData={}
+
 
 
   const [modalOpen, setModalOpen] = React.useState(false);
@@ -45,12 +47,7 @@ function Chatting() {
   const RoomList = useSelector(((state => state.community.chattingList)));
   const ClosedRoomList = useSelector(((state => state.community.closedChttingList)));
   const userInfo = useSelector((state)=>state.community.myInfo)
-  let sendData={}
-  console.log(RoomList)
   console.log(ClosedRoomList)
-  console.log(userInfo)
-
-
 
   const getChttingData =(index)=>{
   sendData ={
@@ -65,7 +62,6 @@ function Chatting() {
     timeLimit:RoomList[index].timeLimit
   }
 
-  console.log(sendData)
   navigate(`/chat/roomdetail/${sendData.roomId}`, {state:sendData});
 
   }
@@ -88,10 +84,11 @@ function Chatting() {
                   }}>
               <ChattingInfo
                 roomId={item.roomId}
-                profileImg={item.profileImg}
-                userName={item.username}
+                profileImg={item.authorProfileImg}
+                userName={item.authorNickname}
                 comment={item.comment}
-                time={item.time} />
+                time={item.time} 
+                currentState={"Live"}/>
             </OnpenChattingList>
             </>
           )
@@ -99,39 +96,37 @@ function Chatting() {
         </div>
 
         {ClosedRoomList && ClosedRoomList?.map((item, itemIndex) => (
-          <ClosedChattingList>
-            <div className="closedRoomList" key={item.roomId}>
+          // <ClosedChattingList>
+          //   <div className="closedRoomList" key={item.roomId}>
 
-              <ul>
-                <li>
-                  <div className="listWrap"
-                    onClick={()=>{
-                      navigate(`/chat/closedChttinglog/${item.roomId}`);
-                    }}>
-                    <div className="imageBox"><img src={item.authorProfileImg} /></div>
-                    <div className="textContents">
-                      <span style={{ fontWeight: "bold", marginRight: "5%" }}>{item.authorNickname}</span>
-                      <span>{item.comment}</span>
-                    </div>
-                    <div className="endPoint"><ChattingEnd /></div>
-                  </div>
+          //     <ul>
+          //       <li>
+          //         <div className="listWrap"
+          //           onClick={()=>{
+          //             navigate(`/chat/closedChttinglog/${item.roomId}`);
+          //           }}>
+          //           <div className="imageBox"><img src={item.authorProfileImg} /></div>
+          //           <div className="textContents">
+          //             <span style={{ fontWeight: "bold", marginRight: "5%" }}>{item.authorNickname}</span>
+          //             <span>{item.comment}</span>
+          //           </div>
+          //           <div className="endPoint"><ChattingEnd /></div>
+          //         </div>
 
-                  <div className="bottonArea">
-                    <span>쓰자!</span>
-                    <div style={{ width: "65%" }}>
-                      <ProgressBar
-                        true={item.voteFalsePercent}
-                        false={item.voteTruePercent} />
-                    </div>
 
-                    <span>멈춰!</span>
-                  </div>
+          //       </li>
+          //     </ul>
 
-                </li>
-              </ul>
+          //   </div>
+          // </ClosedChattingList>
 
-            </div>
-          </ClosedChattingList>
+          <ChattingInfo
+            roomId={item.roomId}
+            profileImg={item.authorProfileImg}
+            userName={item.authorNickname}
+            comment={item.comment}
+            time={item.time} 
+            currentState={"END"}/>
 
         ))}
         </AllchattingList>
@@ -141,7 +136,10 @@ function Chatting() {
             openModal();
             setModalName("쓸까? 말까? 만들기");
             setModalState(
-              <CreateRoom close={closeModal} />)
+              <CreateRoom 
+                close={closeModal}
+                nickname={userInfo.nickname}
+                profileImg={userInfo.profileImg} />)
           }}><p>쓸까? 말까? 만들기</p></button>
         </div>
 
@@ -177,7 +175,7 @@ align-items: center;
   border-radius: 30px;
   padding:1rem;
   position: fixed;
-  bottom: 10%;
+  bottom: 30%;
   background: #6485EC;
   justify-content: center;
   button{
