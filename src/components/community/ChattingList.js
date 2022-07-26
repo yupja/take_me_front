@@ -11,7 +11,6 @@ import { loadChattingListRS, closedChttingListRS, myInfoData } from "../../store
 
 function ChattingList() {
 
-
   useEffect(() => {
     dispatch(loadChattingListRS());
     dispatch(closedChttingListRS());
@@ -23,27 +22,23 @@ function ChattingList() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-
   const [modalOpen, setModalOpen] = React.useState(false);
   const [modalState, setModalState] = React.useState();
   const [modalName, setModalName] = React.useState("");
   const openModal = () => { setModalOpen(true); };
   const closeModal = () => { setModalOpen(false); };
 
-
-
   const RoomList = useSelector(((state => state.community.chattingList)));
   const ClosedRoomList = useSelector(((state => state.community.closedChttingList)));
   const userInfo = useSelector((state)=>state.community.myInfo)
 
+  console.log(RoomList)
 
   return (
     <>
-
       <Wrap>
 
         <AllchattingList>
-
         <div>
         {RoomList&&RoomList.map((item, itemIndex) => {
           return (
@@ -58,6 +53,7 @@ function ChattingList() {
                 userCount = {item.userCount}
                 createdAt={item.createdAt}
                 timeLimit={item.timeLimit}
+                prosCons={item.prosCons}
                 currentState={"Live"}/>
             </ChattingListDiv>
             </div>
@@ -95,12 +91,8 @@ function ChattingList() {
                   close={closeModal}
                   nickname={userInfo.nickname}
                   profileImg={userInfo.profileImg} />)
-
             }}><p>쓸까? 말까? 만들기</p></button>
           </div>
-
-
-
       </Wrap>
 
       <Modal open={modalOpen}
