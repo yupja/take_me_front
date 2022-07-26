@@ -1,16 +1,35 @@
 import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import SockJS from "sockjs-client";
 import Stomp from "stompjs";
 import { subMessage, myInfoData } from "../../store/modules/community";
 import { getUserInfoDB } from "../../store/modules/user";
+import ChattingInfo from "./ChattingInfo";
 import Header from "../public/Header";
 
 function RoomDetail() {
+  const {state} = useLocation();
   const { roomId } = useParams();
   const dispatch = useDispatch();
+  console.log(state);
+
+  // const getChttingData =(index)=>{
+  //   sendData ={
+  //     roomId:RoomList[index].roomId,
+  //     sender : userInfo.nickname,
+  //     profileImg: userInfo.profileImg,
+  //     authorNickname : RoomList[index].authorNickname,
+  //     authorProfileImg : RoomList[index].authorProfileImg,
+  //     userCount : RoomList[index].userCount,
+  //     comment : RoomList[index].comment,
+  //     createdAt:RoomList[index].createdAt,
+  //     timeLimit:RoomList[index].timeLimit
+  //   }
+  
+
+
 
   const title = '쓸까?말까?'
 
@@ -90,10 +109,20 @@ function RoomDetail() {
 
   const userInput = `${myInfo.nickname}(으)로 댓글 달기 ...`
 
+
+  //은진님 이거 집어넣으시면 돼요 ㅋㅋ 제가 레이아웃 확인해서 보내드리려고 했는데 어디가 어딘지 모르겠네여어... 
+//   <ChattingInfo
+//   profileImg={state.authorProfileImg}
+//   userName={state.authorNickname}
+//   comment={state.comment}
+//   time={state.timeLimit} 
+//   />
+// </Box>
+
   return (
     <ChatWrap>
       <Header title={title} />
-      <Box />
+      <Box/>
       <ChatBox className="chatbox">
         <Chatting ref={scrollRef}>
           {myInfo?.nickname &&
@@ -249,6 +278,7 @@ font-weight:700;
 `;
 
 const Box = styled.button`
+
 width: 100%;
 height:140px;
 background:#333;

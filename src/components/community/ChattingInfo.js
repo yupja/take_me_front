@@ -15,10 +15,7 @@ const ChattingInfo = (props) =>{
           <div className="chatInfoArea">
             <img src={props.profileImg} />
             <div 
-              style={{display:"flex"}}
-              onClick={()=>{
-                navigate("/chatting", {state:props.roomId})
-              }}>
+              style={{display:"flex"}}>
               <span>
                 <p style={{fontWeight:"500" , fontSize:"1.2rem"}}>{props.userName}</p> {props.comment}</span>
              
