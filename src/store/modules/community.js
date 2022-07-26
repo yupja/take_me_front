@@ -31,18 +31,18 @@ export const closedChttingListRS = createAsyncThunk(
   })
 
 
-  export const closedChttingLogRS = createAsyncThunk(
-    'read/closedChattingLog',
-    async (roomId, thunkAPI) => {
-      try {
-        const { data } = await instance.get(`/api/closedChat/room/${roomId}`)
-        return data.data;
-      } catch (error) {
-        console.log(error);
-      }
-    })
+export const closedChttingLogRS = createAsyncThunk(
+  'read/closedChattingLog',
+  async (roomId, thunkAPI) => {
+    try {
+      const { data } = await instance.get(`/api/closedChat/room/${roomId}`)
+      return data.data;
+    } catch (error) {
+      console.log(error);
+    }
+  })
 
-    
+
 
 
 // [커뮤니티 채팅 API / 은진] -------------------------------------------------
@@ -54,13 +54,13 @@ export const createChatRoom = (sendData, navigate) => {
       comment: sendData.comment,
       timeLimit: sendData.timeLimit
     })
-    .then((res) => {
-      const roodId = res.data.data.roomId
-      navigate(`/chat/roomdetail/${roodId}`, {state:sendData});
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+      .then((res) => {
+        const roodId = res.data.data.roomId
+        navigate(`/chat/roomdetail/${roodId}`, { state: sendData });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 };
 
@@ -312,7 +312,7 @@ const communitySlice = createSlice({
     // 채팅
     chattingList: [],
     closedChttingList: [],
-    closedChttingLog : [], 
+    closedChttingLog: [],
     getDayCountList: [],
     messages: [],
     myInfo: [],
@@ -365,8 +365,16 @@ const communitySlice = createSlice({
       console.log(action.payload);
       state.getDayCountList = action.payload;
     },
+
+    // 채팅 메시지
     subMessage(state, action) {
       state.messages.push(action.payload);
+      // state.messages = action.payload;
+    },
+    // 채팅 메시지 삭제
+    delMessage(state, action) {
+      console.log("dho")
+      state.messages = [];
       // state.messages = action.payload;
     },
   },
@@ -391,5 +399,5 @@ const communitySlice = createSlice({
 
 });
 
-export const { loadComment, createComment, roadPosts, loadDetail, subMessage, getDayCountList, myInfo } = communitySlice.actions;
+export const { loadComment, createComment, roadPosts, loadDetail, subMessage, getDayCountList, myInfo, delMessage } = communitySlice.actions;
 export default communitySlice.reducer;

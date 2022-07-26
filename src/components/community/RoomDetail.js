@@ -4,17 +4,34 @@ import { Link, useParams, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import SockJS from "sockjs-client";
 import Stomp from "stompjs";
-import { subMessage, myInfoData } from "../../store/modules/community";
+import { subMessage, delMessage } from "../../store/modules/community";
 import Header from "../public/Header";
 // import ChattingInfo from "./ChattingInfo";
+
 
 function RoomDetail() {
   const { state } = useLocation();
   const { roomId } = useParams();
   const dispatch = useDispatch();
   const getMessages = useSelector((state) => state.community.messages);
-  console.log(getMessages);
-  console.log(state);
+
+  console.log(getMessages)
+
+
+  useEffect(() => {
+    return (() => {
+      dispatch(delMessage());
+      disconnects();
+    })
+  }, []);
+
+
+  // const list = [];
+  // const lists = () => {
+  //   list.push(getMessages)
+  //   console.log(list)
+
+  // }
 
   // const getChttingData =(index)=>{
   //   sendData ={
@@ -34,6 +51,7 @@ function RoomDetail() {
   const scrollRef = useRef();
 
 
+
   const sock = new SockJS('http://43.200.4.1/chatting', null, { transports: ["websocket", "xhr-streaming", "xhr-polling"] });
   // const sock = new SockJS('https://api.webprogramming-mj6119.shop/chatting', null, { transports: ["websocket", "xhr-streaming", "xhr-polling"] });
   let client = Stomp.over(sock);
@@ -43,7 +61,10 @@ function RoomDetail() {
 
   useEffect(() => {
     scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
+
   }, [getMessages]);
+
+
 
   useEffect(() => {
     // 소켓 연결
@@ -64,8 +85,6 @@ function RoomDetail() {
       // 유저 정보 전송(입장메시지용)
       client.send(`/pub/chat/message`, {}, JSON.stringify(info));
     });
-
-
 
   }, [])
 
@@ -318,7 +337,7 @@ font-size: 0.75rem;
 font-weight:700;
 `;
 
-const Box = styled.button`
+const Box = styled.div`
 
 width: 100%;
 height:140px;
