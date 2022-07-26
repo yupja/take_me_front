@@ -59,7 +59,9 @@ const CommunityList = () => {
                   </div>
 
                   <div className="imgDiv">
-                    <img src={postList.image}/>
+                    <img 
+                      src={postList.image}
+                      style={{width:"140px", height:"140px"}}/>
                   </div>
 
                 </ImageBox>
@@ -137,6 +139,7 @@ flex-direction: column;
   bottom: 10%;
   background: #26DFA6;
   justify-content: center;
+  z-index: 1;
 
   button{
     color: white;
@@ -191,22 +194,23 @@ li{
 
 
 const ImageBox = styled.div`
-
+width: 150px;
+display: flex;
+justify-content: center;
+align-items: center;
+position: relative;
 .goalDiv{
-    position: relative;
+    position: absolute;
     z-index: 1;
-    background: red;
+
   }
-  img{
-    position: relative;
-    overflow: hidden;
-    object-fit: cover;
-    max-width: 12rem;
-    width: 100%;
-    max-height: 12rem;
-    height: 100%;
-    z-index: 2;
-  }
+.imgDiv{
+  overflow: hidden;
+  border-radius:50%;
+  position: relative;
+}
+
+
 
 `;
 
