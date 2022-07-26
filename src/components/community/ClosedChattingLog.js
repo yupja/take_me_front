@@ -1,14 +1,15 @@
 import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Header from "../public/Header";
 
 import {closedChttingLogRS} from "../../store/modules/community"
 import ChattingInfo from "./ChattingInfo";
 
-function RoomDetail() {
+function RoomDetail(props) {
   const  roomId  = useParams();
+  const {state} = useLocation();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -16,33 +17,40 @@ function RoomDetail() {
    dispatch(closedChttingLogRS(roomId.closedRoomId));
   }, [])
 
-
   const title = '쓸까?말까?'
 
   //const chatRef = useRef();
-  const getMessages = useSelector((state) => state.community.closedChttingLog);
+  const getData = useSelector((state) => state.community.closedChttingLog);
+  const chattingLog = getData.chatLogList;
+  console.log(chattingLog)
+  console.log(state)
 
-  console.log(getMessages)
-
-
-  console.log(getMessages.authorNickname)
 
   return (
     <ChatWrap>
       <Header title={title} />
       <Box>
         <ChattingInfo
-          profileImg={getMessages.authorProfileImg}
-          userName={getMessages.authorNickname}
-          comment={getMessages.comment}
+          profileImg={getData.authorProfileImg}
+          userName={getData.authorNickname}
+          comment={getData.comment}
           currentState={"END"} />
       </Box>
 
       
-      <ChatBox>
+      <ChatBox className="chatbox">
         <Chatting>
-
-
+          { chattingLog&&chattingLog?.map((list, index)=>(
+            <div>
+              <div key={index} className={list.sender === state ? "right" : "left"}>
+              <div className="img"><img src={list.profileImg}/></div>
+                    <div className="info">
+                      <span>{list.nickname}</span>
+                      <p>{list.message}</p>
+                    </div>
+              </div> 
+            </div>
+          ))}
         </Chatting>
       </ChatBox>
     </ChatWrap>

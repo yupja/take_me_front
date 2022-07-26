@@ -1,78 +1,112 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import TimerFunction from "../public/Timer"
 import ProgressBar from "../public/ProgressBar"
 
 
 import styled from "styled-components";
-import {Timer, ChattingEnd} from "../../assets/icons"
+import { Timer, ChattingEnd } from "../../assets/icons"
 
-const ChattingInfo = (props) =>{
-  console.log()
-  return (
-  <>
-  {props.currentState==="Live"? 
-    <ChattingList>
-      <div className="chatInfoArea">
-        <div className="imgBox">
-        Live
-        <img src={props.profileImg} />
-        </div>
-        
-        <div className="contentsBox">
-          <span>
-            <span style={{
-              fontWeight:"500", 
-              fontSize:"1.2rem",
-              marginRight:"5%"}}>
-              {props.userName}</span> {props.comment}</span>
-          <div className="timerArea"><Timer/><TimerFunction/></div>
-        </div>
-      </div>
 
-      <div className="bottomArea">
-        <button>쓸까?</button>
-        <button>말까?</button>
+const ChattingInfo = (props) => {
+  useEffect(() => {
+    getTime();
+  }, [props.createdAt])
 
-      </div>
 
-    </ChattingList>
+  const [minutes, setMinutes] = useState();
+  const [seconds, setSeconds] = useState();
 
-    :
-    
-    <ChattingList>
-      <div className="chatInfoArea">
-        <div className="imgBox">
-        <img src={props.profileImg} />
-        </div>
-        
-        <div className="contentsBox">
-          <span>
-            <span className="innerSpan">
-              {props.userName}</span> {props.comment}</span>
-          <div className="stateArea"><ChattingEnd/></div>
-        </div>
-      </div>
 
-      <div className="bottomArea">
-        <span>쓰자!</span>
-        <div style={{ 
-          width: "65%",
-          marginTop:"0.5rem"}}>
-          <ProgressBar
-            true={40}
-            false={60} />
-        </div>
+  const getTime = () => {
+    const createTime = new Date(props.createdAt);
+    const currentTime = new Date();
 
-        <span>멈춰!</span>
+    let diff = (createTime - currentTime) - (props.timeLimit * (1000 * 60))
+    const diffHours = Math.floor(diff / (1000 * 60 * 60));
+    diff -= diffHours * (1000 * 60 * 60);
+    let diffMin = Math.floor(diff / (1000 * 60));
+    diff -= diffMin * (1000 * 60);
+    const diffSec = Math.floor(diff / 100000);
 
-      </div>
-  </ChattingList>
-  
+    setMinutes(diffMin);
+    setSeconds(diffSec);
   }
 
 
-      </>
-    )
+  return (
+
+
+    <>
+      {props.currentState === "Live" ?
+
+        <ChattingList>
+          <div className="chatInfoArea">
+            <div className="imgBox">
+              Live
+              <img src={props.profileImg} />
+            </div>
+
+            <div className="contentsBox">
+              <span>
+                <span className="innerSpan">
+                  {props.userName}</span> {props.comment}</span>
+              <div className="timerArea">
+                <Timer />
+                <TimerFunction
+                  min={minutes}
+                  sec={seconds} />
+              </div>
+            </div>
+          </div>
+
+          <div className="bottomArea">
+            <button>쓸까?</button>
+            <button>말까?</button>
+
+          </div>
+
+        </ChattingList>
+
+        :
+        ""
+      }
+
+      {props.currentState === "END" ?
+        <ChattingList>
+          <div className="chatInfoArea">
+            <div className="imgBox">
+              <img src={props.profileImg} />
+            </div>
+
+            <div className="contentsBox">
+              <span>
+                <span className="innerSpan">
+                  {props.userName}</span> {props.comment}</span>
+              <div className="stateArea"><ChattingEnd /></div>
+            </div>
+          </div>
+
+          <div className="bottomArea">
+            <span>쓰자!</span>
+            <div style={{
+              width: "65%",
+              marginTop: "0.5rem"
+            }}>
+              <ProgressBar
+                true={40}
+                false={60} />
+            </div>
+
+            <span>멈춰!</span>
+
+          </div>
+        </ChattingList>
+        : ""}
+
+
+
+    </>
+  )
 
 }
 
@@ -113,12 +147,13 @@ margin-bottom: 1rem; */
   display: flex;
 
   span{
-    width: 100%;
+    width: 80%;
     display: flex;
     overflow-y:scroll;
+
     .innerSpan{
       display: flex;
-      width: 100%;
+      width: 25%;
       font-weight: 500;
       font-size: 1rem;
       margin-right: 5px;

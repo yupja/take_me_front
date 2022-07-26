@@ -6,7 +6,6 @@ export const instance = axios.create({
   baseURL: "http://43.200.4.1"
   // baseURL: "https://api.webprogramming-mj6119.shop"
   // // baseURL: "http://13.209.13.168"
-  // baseURL: "http://43.200.4.1"
 });
 
 instance.interceptors.request.use(

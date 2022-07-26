@@ -16,8 +16,6 @@ function RoomDetail() {
   console.log(getMessages);
   console.log(state);
 
-  // 타이머
-
   // const getChttingData =(index)=>{
   //   sendData ={
   //     roomId:RoomList[index].roomId,
@@ -39,7 +37,6 @@ function RoomDetail() {
   const sock = new SockJS('http://43.200.4.1/chatting', null, { transports: ["websocket", "xhr-streaming", "xhr-polling"] });
   // const sock = new SockJS('https://api.webprogramming-mj6119.shop/chatting', null, { transports: ["websocket", "xhr-streaming", "xhr-polling"] });
   let client = Stomp.over(sock);
-  // let client = Stomp.over(sock);
 
   // 토큰
   let token = localStorage.getItem('accessToken');
@@ -70,8 +67,6 @@ function RoomDetail() {
 
 
 
-
-
   }, [])
 
   //연결 해제
@@ -86,7 +81,7 @@ function RoomDetail() {
   useEffect(() => {
     window.addEventListener("beforeunload", disconnects);
     console.log('새로고침 확인')
-  }, [getMessages])
+  }, [])
 
 
 
@@ -151,7 +146,7 @@ function RoomDetail() {
             <button>쓰자!</button>
             <button>멈춰!</button>
           </Vote>
-          <p>조회수<span>20</span></p>
+          <p>현재인원수<span>20</span></p>
         </div>
       </Box>
       <ChatBox className="chatbox">
@@ -163,7 +158,7 @@ function RoomDetail() {
                   <div key={i} className={el.sender === state.sender ? "right" : "left"}>
                     <div className="img"><img src={el.profileImg} alt="프로필" /></div>
                     <div className="info">
-                      <span>{getMessages.sender}</span>
+                      <span>{el.sender}</span>
                       <p>{el.message}</p>
                     </div>
                   </div>) :
