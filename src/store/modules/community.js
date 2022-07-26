@@ -6,7 +6,7 @@ import { instance } from "../../shared/axios";
 
 // [커뮤니티 채팅 API/보람]-----------------------------------------------------
 
-
+// 오픈룸 조회 
 export const loadChattingListRS = createAsyncThunk(
   'read/chatRoom',
   async (thunkAPI) => {
@@ -18,7 +18,23 @@ export const loadChattingListRS = createAsyncThunk(
     }
   })
 
+  //Top5 오픈룸 조회 
 
+  export const topListRS = createAsyncThunk(
+    'read/chatRoom',
+    async (thunkAPI) => {
+      try {
+        const { data } = await instance.get('/api/chat/room/top')
+        console.log(data)
+        return data.data;
+      } catch (error) {
+        console.log(error);
+      }
+    })
+
+
+
+// 종료된 채팅 목록 조호 ㅣ
 export const closedChttingListRS = createAsyncThunk(
   'read/closedChattingList',
   async (thunkAPI) => {
@@ -31,7 +47,8 @@ export const closedChttingListRS = createAsyncThunk(
   })
 
 
-  export const closedChttingLogRS = createAsyncThunk(
+//종료된 채팅 조회 상세로그
+export const closedChttingLogRS = createAsyncThunk(
     'read/closedChattingLog',
     async (roomId, thunkAPI) => {
       try {
@@ -42,8 +59,8 @@ export const closedChttingListRS = createAsyncThunk(
       }
     })
 
-
-    export const chattingVote = (voteData)=> {
+// 찬반투표
+  export const chattingVote = (voteData)=> {
       console.log(voteData)
       return async function(dispatch){
         try{
@@ -54,7 +71,6 @@ export const closedChttingListRS = createAsyncThunk(
           console.log(error)          
         }
     }}
-
 
 // [커뮤니티 채팅 API / 은진] -------------------------------------------------
 
@@ -322,6 +338,7 @@ const communitySlice = createSlice({
   initialState: {
     // 채팅
     chattingList: [],
+    topChttingList:[],
     closedChttingList: [],
     closedChttingLog : [], 
     getDayCountList: [],
@@ -381,6 +398,7 @@ const communitySlice = createSlice({
       // state.messages = action.payload;
     },
   },
+  
   extraReducers: {
     [loadChattingListRS.fulfilled]: (state, action) => {
       state.chattingList = action.payload
@@ -395,7 +413,10 @@ const communitySlice = createSlice({
     // 종료된 채팅 개별로그 closedChttingLogRS
     [closedChttingLogRS.fulfilled]: (state, action) => {
       state.closedChttingLog = action.payload
-    }
+    },
+    [topListRS.fulfilled]: (state, action) => {
+      state.topChttingList = action.payload
+    },
 
 
   }
