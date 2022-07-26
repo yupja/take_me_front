@@ -21,18 +21,6 @@ export const loadChattingListRS = createAsyncThunk(
   })
 
 
-export const createChattingRoomRQ = (roomName) => {
-  return async function (dispatch) {
-    try {
-      await instance.post('/chat/rooms/', roomName) //폼데이터로 넘기기
-      // 채팅방 생성 함수 끝난 후 네비게이트로 채팅 디테일 컴포넌트로 이동 
-    } catch (error) {
-      console.log(error);
-    }
-  }
-}
-
-
 export const closedChttingListRS = createAsyncThunk(
   'read/closedChattingList',
   async (thunkAPI) => {
@@ -63,16 +51,19 @@ export const closedChttingListRS = createAsyncThunk(
 // [커뮤니티 채팅 API / 은진] -------------------------------------------------
 
 // 방생성
-export const createChatRoom = (data) => {
+export const createChatRoom = (sendData, navigate) => {
   return async function (dispatch) {
-    await instance.post(`/api/chat/room`, data)
-      .then((res) => {
-        const roodId = res.data.data.roomId
-        window.location.href = `/chat/roomdetail/${roodId}`;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    await instance.post(`/api/chat/room`, {
+      comment: sendData.comment,
+      timeLimit: sendData.timeLimit
+    })
+    .then((res) => {
+      const roodId = res.data.data.roomId
+      navigate(`/chat/roomdetail/${roodId}`, {state:sendData});
+    })
+    .catch((error) => {
+      console.log(error);
+    });
   };
 };
 
