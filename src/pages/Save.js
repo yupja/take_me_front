@@ -17,8 +17,10 @@ import PostModal from "../components/community/PostModal";
 import styled from "styled-components";
 import Slider from "react-slick";
 import "../styles/saveMain.css"
-import { CheckedStart, GoalModify, WhiteTrash , 
-        AddMintPoint, WhiteShare} from "../assets/icons"
+import {
+  CheckedStart, GoalModify, WhiteTrash,
+  AddMintPoint, WhiteShare
+} from "../assets/icons"
 
 
 import { AiOutlineStar } from 'react-icons/ai'
@@ -78,11 +80,7 @@ function Save() {
     goalitemName: myGoalList?.itemName
   }
 
-  console.log(goal)
-
   const mylist = useSelector((state) => state.favorite.myFavoriteList);
-
-
 
   const title = "데일리 티끌"
   const priceInput = useRef();
