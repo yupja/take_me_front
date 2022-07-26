@@ -194,7 +194,7 @@ function Proflie() {
               <span></span>
             </CloseBtn>
             <div className="cont">
-              <input type="textarea" defaultValue={email} ref={emailRef} maxlength='32' onChange={() => { setResultAlert('') }} />
+              <input type="text" defaultValue={email} ref={emailRef} onChange={() => { setResultAlert('') }} />
               <button onClick={emailCheck}>중복체크</button>
             </div>
             {resultAlert}
@@ -224,7 +224,7 @@ function Proflie() {
             </div>
             <span className="box"> 님</span>
           </Nick>
-          <input type="text" className="word" ref={introDescRef} defaultValue={
+          <input type="text" className="word" maxLength="32" ref={introDescRef} defaultValue={
             infoState.introDesc === null ?
               "기본 소개글" : infoState.introDesc
           }>

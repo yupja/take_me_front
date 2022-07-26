@@ -118,6 +118,7 @@ function RoomDetail() {
       <Enter>
         <Input
           type="text"
+          maxLength="25"
           placeholder={userInput}
           ref={chatRef}
           onfocus="this.placeholder=''"
