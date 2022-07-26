@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Header from "../public/Header";
 
 import {closedChttingLogRS} from "../../store/modules/community"
+import ChattingInfo from "./ChattingInfo";
 
 function RoomDetail() {
   const  roomId  = useParams();
@@ -29,16 +30,21 @@ function RoomDetail() {
   return (
     <ChatWrap>
       <Header title={title} />
-      <Box />
+      <Box>
+        <ChattingInfo
+          profileImg={getMessages.authorProfileImg}
+          userName={getMessages.authorNickname}
+          comment={getMessages.comment}
+          currentState={"END"} />
+      </Box>
+
+      
       <ChatBox>
         <Chatting>
 
 
         </Chatting>
       </ChatBox>
-      <Enter>
-
-      </Enter>
     </ChatWrap>
   )
 };
@@ -97,63 +103,11 @@ img{
   span { display: none; }
   p { background: #DDFFF5; }
 }
-
-
 `
-const MyChat = styled.div`
-
-`
-const Enter = styled.div`
-
-max-width: 390px;
-width: 100%;
-
-padding: 5px 25px;
-height: 12vw;
-border: none;
-background-color: #333333;
-display: flex;
-/* justify-content: center; */
-align-items: center; 
-position: fixed;
-bottom: 0;
-
-input:placeholder{
-  color:#fff;
-}
-`;
-
-const Input = styled.input`
-width: 100%;
-height: 2.5rem;
-border: 1px solid #A9FFE4;
-border-radius: 20px;
-background-color: transparent;
-color: white;
-margin: 0 auto;
-padding: 4vw;
-:focus{
-    outline: none;
-}
-`
-
-
-const PostBtn = styled.button`
-position: absolute;
-right:0;
-height: 10vw;
-padding-right: 35px;
-border: none;
-background-color: transparent;
-color: white;
-font-size: 0.75rem;
-font-weight:700;
-`;
-
 const Box = styled.button`
 width: 100%;
-
 height:140px;
 background:#333;
+color: white;
 
 `;
