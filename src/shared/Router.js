@@ -35,8 +35,8 @@ function Router() {
         <Route path="/community" element={<Community />} />
         <Route path="/community/:id" element={<Community />} />
         <Route path="/ranking" element={<Ranking />} />
-        <Route path="/" element={<Login />} />
-        {/* <Route path="/login" element={<Login />} /> */}
+        <Route path="/" element={<Save />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/user/findid" element={<FindId />} />
         <Route path="/user/findpw" element={<FindPw />} />
@@ -48,7 +48,6 @@ function Router() {
         <Route path="/proflie" element={<Proflie />} />
         <Route path="/ranking" element={<Ranking />} />
         <Route path="/oauth2/redirect" element={<SociallLogin />} />
-        {/* <Route path="/chatting" element={<Chatting />} /> */}
         <Route path="/chat/roomdetail/:roomId" element={<RoomDetail />} />
         <Route path="/guide" element={<Guide />} />
         <Route path="/chat/closedChttinglog/:closedRoomId" element={< closedChttinglog/>} />

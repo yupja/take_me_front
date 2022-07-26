@@ -26,7 +26,7 @@ import { ReactComponent as ReceiptB } from './AddMintPoint.svg';
 import { ReactComponent as SearchIcon } from './AddMintPoint.svg';
 import { ReactComponent as Star } from './AddMintPoint.svg';
 import { ReactComponent as StarColor } from './AddMintPoint.svg';
-import { ReactComponent as Timer } from './AddMintPoint.svg';
+import { ReactComponent as Timer } from './Timer.svg';
 import { ReactComponent as Trash } from './AddMintPoint.svg';
 import { ReactComponent as UpArrow } from './AddMintPoint.svg';
 import { ReactComponent as WhiteShare } from './AddMintPoint.svg';

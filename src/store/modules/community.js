@@ -4,38 +4,23 @@ import { instance } from "../../shared/axios";
 
 
 
-
 // [커뮤니티 채팅 API/보람]-----------------------------------------------------
 
 
 export const loadChattingListRS = createAsyncThunk(
   'read/chatRoom',
   async (thunkAPI) => {
-    console.log("여기?");
     try {
       const { data } = await instance.get('/api/chat/rooms/')
-      console.log(data);
-      return data;
+      return data.data;
     } catch (error) {
       console.log(error);
     }
   })
 
 
-export const createChattingRoomRQ = (roomName) => {
-  return async function (dispatch) {
-    try {
-      await instance.post('/chat/rooms/', roomName) //폼데이터로 넘기기
-      // 채팅방 생성 함수 끝난 후 네비게이트로 채팅 디테일 컴포넌트로 이동 
-    } catch (error) {
-      console.log(error);
-    }
-  }
-}
-
-
-export const closedChttingLog = createAsyncThunk(
-  'read/closedChattinglog',
+export const closedChttingListRS = createAsyncThunk(
+  'read/closedChattingList',
   async (thunkAPI) => {
     try {
       const { data } = await instance.get('/api/closedChat/rooms')
@@ -46,22 +31,36 @@ export const closedChttingLog = createAsyncThunk(
   })
 
 
+  export const closedChttingLogRS = createAsyncThunk(
+    'read/closedChattingLog',
+    async (roomId, thunkAPI) => {
+      try {
+        const { data } = await instance.get(`/api/closedChat/room/${roomId}`)
+        return data.data;
+      } catch (error) {
+        console.log(error);
+      }
+    })
+
+    
+
 
 // [커뮤니티 채팅 API / 은진] -------------------------------------------------
 
 // 방생성
-export const createChatRoom = (data) => {
+export const createChatRoom = (sendData, navigate) => {
   return async function (dispatch) {
-
-    await instance.post(`/api/chat/room`, data)
-      .then((res) => {
-        const roodId = res.data.data.roomId
-        console.log(res)
-        window.location.href = `/chat/roomdetail/${roodId}`;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    await instance.post(`/api/chat/room`, {
+      comment: sendData.comment,
+      timeLimit: sendData.timeLimit
+    })
+    .then((res) => {
+      const roodId = res.data.data.roomId
+      navigate(`/chat/roomdetail/${roodId}`, {state:sendData});
+    })
+    .catch((error) => {
+      console.log(error);
+    });
   };
 };
 
@@ -84,7 +83,6 @@ export const myInfoData = (data) => {
   return async function (dispatch) {
     await instance.get(`/api/myChatInfo`)
       .then((res) => {
-        console.log(res);
         dispatch(myInfo(res.data.data));
       })
       .catch((error) => {
@@ -313,7 +311,8 @@ const communitySlice = createSlice({
   initialState: {
     // 채팅
     chattingList: [],
-    closedChttingLogList: [],
+    closedChttingList: [],
+    closedChttingLog : [], 
     getDayCountList: [],
     messages: [],
     myInfo: [],
@@ -378,9 +377,14 @@ const communitySlice = createSlice({
     [likeChange.fulfilled]: (state, action) => {
       state.likeList = action.payload
     },
-    [closedChttingLog.fulfilled]: (state, action) => {
-      state.closedChttingLogList = action.payload
+    // 종료된 채팅 리스트 
+    [closedChttingListRS.fulfilled]: (state, action) => {
+      state.closedChttingList = action.payload
     },
+    // 종료된 채팅 개별로그 closedChttingLogRS
+    [closedChttingLogRS.fulfilled]: (state, action) => {
+      state.closedChttingLog = action.payload
+    }
 
 
   }

@@ -40,7 +40,7 @@ const Guide = (props) => {
       </Div>
       <Div>
       <GoalImage src={M_guide_4} className="lastPage"></GoalImage>
-      <CloseBtn>마침 ></CloseBtn>
+      <CloseBtn>마침</CloseBtn>
       </Div>
     </ StyledSlider>
    </Divvv> {/* }: null } */}

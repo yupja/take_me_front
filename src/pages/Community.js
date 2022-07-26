@@ -75,7 +75,8 @@ div{
 
 const TimeList = styled.div`
 width: 100%;
-height: 20%;
+max-height: 140px;
+height: 100%;
 display: flex;
 align-items: center;
 justify-content: center;

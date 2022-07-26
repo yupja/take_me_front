@@ -18,8 +18,10 @@ import Guide from "../components/community/Guide"
 import styled from "styled-components";
 import Slider from "react-slick";
 import "../styles/saveMain.css"
-import { CheckedStart, GoalModify, WhiteTrash , 
-  AddMintPoint, WhiteShare} from "../assets/icons"
+import {
+  CheckedStart, GoalModify, WhiteTrash,
+  AddMintPoint, WhiteShare
+} from "../assets/icons"
 
 
 import { AiOutlineStar } from 'react-icons/ai'
@@ -30,10 +32,10 @@ import { useNavigate } from "react-router-dom";
 
 function Save() {
   const navigate = useNavigate();
-  const loggedInfo = localStorage.getItem('accessToken');
-  if (loggedInfo === null) {
-    navigate('/');
-  }
+  // const loggedInfo = localStorage.getItem('accessToken');
+  // // if (loggedInfo === null) {
+  // //   navigate('/');
+  // // }
 
   useEffect(() => {
     dispatch(myReadGoalRQ());
@@ -90,11 +92,7 @@ function Save() {
     goalitemName: myGoalList?.itemName
   }
 
-  console.log(goal)
-
   const mylist = useSelector((state) => state.favorite.myFavoriteList);
-
-
 
   const title = "데일리 티끌"
   const priceInput = useRef();

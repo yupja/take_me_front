@@ -1,46 +1,58 @@
 import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Header from "../public/Header";
 
-function RoomDetail() {
-  const { roomId } = useParams();
+import {closedChttingLogRS} from "../../store/modules/community"
+import ChattingInfo from "./ChattingInfo";
+
+function RoomDetail(props) {
+  const  roomId  = useParams();
+  const {state} = useLocation();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    //dispatch(loadChattingListRS());
+   dispatch(closedChttingLogRS(roomId.closedRoomId));
+  }, [])
 
   const title = '쓸까?말까?'
 
-  const chatRef = useRef();
-  const getMessages = useSelector((state) => state.community.messages);
-  const userInfo = useSelector((state) => state.user);
-
+  //const chatRef = useRef();
+  const getData = useSelector((state) => state.community.closedChttingLog);
+  const chattingLog = getData.chatLogList;
+  console.log(chattingLog)
+  console.log(state)
 
 
   return (
     <ChatWrap>
       <Header title={title} />
-      <Box />
-      <ChatBox>
+      <Box>
+        <ChattingInfo
+          profileImg={getData.authorProfileImg}
+          userName={getData.authorNickname}
+          comment={getData.comment}
+          currentState={"END"} />
+      </Box>
+
+      
+      <ChatBox className="chatbox">
         <Chatting>
-          {/* {userInfo?.infoList.nickname ?
-            getMessages.map((el, i) =>
-            (
-              <div key={i} className={el.sender === userInfo.infoList.nickname ? "right" : "left"}>
-                <div className="img"><img src="https://mblogthumb-phinf.pstatic.net/MjAyMTAxMjJfNzMg/MDAxNjExMzIzMzU1NDgw.nhAuTdE8OjYs0wZAb8qpMAsUaUIZXeRKJ0zDLs5oaKIg.iONiFE4qhr5wuB2FwDe4yfO3oC9gBbOjDaCyGXxiLMkg.JPEG.sohyeon612/%EB%8B%A4%EC%9A%B4%EB%A1%9C%EB%93%9C%ED%8C%8C%EC%9D%BC%EF%BC%8D2.jpg?type=w800" alt="프로필" /></div>
-                <div className="info">
-                  <span>닉네임</span>
-                  <p>{el.message}</p>
-                </div>
-              </div>
-            )
-            ) : null
-          } */}
+          { chattingLog&&chattingLog?.map((list, index)=>(
+            <div>
+              <div key={index} className={list.sender === state ? "right" : "left"}>
+              <div className="img"><img src={list.profileImg}/></div>
+                    <div className="info">
+                      <span>{list.nickname}</span>
+                      <p>{list.message}</p>
+                    </div>
+              </div> 
+            </div>
+          ))}
         </Chatting>
       </ChatBox>
-      <Enter>
-        {/* <Input type="text" placeholder={userInput} ref={chatRef} onfocus="this.placeholder=''"></Input>
-        <PostBtn onClick={myChat}>게시</PostBtn> */}
-      </Enter>
     </ChatWrap>
   )
 };
@@ -49,7 +61,6 @@ function RoomDetail() {
 export default RoomDetail;
 
 const ChatWrap = styled.div`
-
 `
 const ChatBox = styled.div`
 
@@ -100,59 +111,11 @@ img{
   span { display: none; }
   p { background: #DDFFF5; }
 }
-
-
 `
-const MyChat = styled.div`
-
-`
-const Enter = styled.div`
-width: 100%;
-padding: 5px 25px;
-height: 12vw;
-border: none;
-background-color: #333333;
-display: flex;
-/* justify-content: center; */
-align-items: center; 
-position: fixed;
-bottom: 0;
-
-input:placeholder{
-  color:#fff;
-}
-`;
-
-const Input = styled.input`
-width: 100%;
-height: 2.5rem;
-border: 1px solid #A9FFE4;
-border-radius: 20px;
-background-color: transparent;
-color: white;
-margin: 0 auto;
-padding: 4vw;
-:focus{
-    outline: none;
-}
-`
-
-
-const PostBtn = styled.button`
-position: absolute;
-right:0;
-height: 10vw;
-padding-right: 35px;
-border: none;
-background-color: transparent;
-color: white;
-font-size: 0.75rem;
-font-weight:700;
-`;
-
 const Box = styled.button`
 width: 100%;
 height:140px;
 background:#333;
+color: white;
 
 `;

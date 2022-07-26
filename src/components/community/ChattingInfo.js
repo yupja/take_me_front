@@ -1,32 +1,76 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import TimerFunction from "../public/Timer"
+import ProgressBar from "../public/ProgressBar"
 
 
 import styled from "styled-components";
-import {Timer} from "../../assets/icons"
+import {Timer, ChattingEnd} from "../../assets/icons"
 
 const ChattingInfo = (props) =>{
-    const navigate = useNavigate();
-    return (
-        <>
-        <ChattingList>
-          <div className="chatInfoArea">
-            <img src={props.profileImg} />
-            <div 
-              style={{display:"flex"}}
-              onClick={()=>{
-                navigate("/chatting", {state:props.roomId})
-              }}>
-              <span>
-                <p style={{fontWeight:"500" , fontSize:"1.2rem"}}>{props.userName}</p> {props.comment}</span>
-             
-            </div>
-            <div style={{fontWeight:"500"}}><Timer/><TimerFunction/></div>
-          </div>
+  console.log()
+  return (
+  <>
+  {props.currentState==="Live"? 
+    <ChattingList>
+      <div className="chatInfoArea">
+        <div className="imgBox">
+        Live
+        <img src={props.profileImg} />
+        </div>
+        
+        <div className="contentsBox">
+          <span>
+            <span style={{
+              fontWeight:"500", 
+              fontSize:"1.2rem",
+              marginRight:"5%"}}>
+              {props.userName}</span> {props.comment}</span>
+          <div className="timerArea"><Timer/><TimerFunction/></div>
+        </div>
+      </div>
 
-        </ChattingList>
+      <div className="bottomArea">
+        <button>쓸까?</button>
+        <button>말까?</button>
+
+      </div>
+
+    </ChattingList>
+
+    :
+    
+    <ChattingList>
+      <div className="chatInfoArea">
+        <div className="imgBox">
+        <img src={props.profileImg} />
+        </div>
+        
+        <div className="contentsBox">
+          <span>
+            <span className="innerSpan">
+              {props.userName}</span> {props.comment}</span>
+          <div className="stateArea"><ChattingEnd/></div>
+        </div>
+      </div>
+
+      <div className="bottomArea">
+        <span>쓰자!</span>
+        <div style={{ 
+          width: "65%",
+          marginTop:"0.5rem"}}>
+          <ProgressBar
+            true={40}
+            false={60} />
+        </div>
+
+        <span>멈춰!</span>
+
+      </div>
+  </ChattingList>
+  
+  }
+
+
       </>
     )
 
@@ -34,35 +78,85 @@ const ChattingInfo = (props) =>{
 
 
 const ChattingList = styled.div`
+max-width: 355px;
+min-height: 108px;
 width: 100%;
+height: 100%;
 display: flex;
 flex-direction: column;
 border: none;
 box-shadow: 0px 4px 11px 0px rgb(0 0 0 / 15%);
-padding: 1rem;
-margin-bottom: 1rem;
+/* padding: 1rem;
+margin-bottom: 1rem; */
 
-div{
-  gap: 5px;
-}
+
 .chatInfoArea{
   display: flex;
   flex-direction: row;
+
+  .imgBox{
+    padding: 1rem 1rem 0 1rem;
+  
+  img{
+    width: 54px;
+    height: 54px;
+    border-radius:50%;
+  }
+
+  }
 }
-.buttonArea{
-  margin-top: 5%;
+
+.contentsBox{
+  padding-top: 1rem;
   width: 100%;
+  max-height: 60px;
   display: flex;
-  justify-content: space-around;
+
+  span{
+    width: 100%;
+    display: flex;
+    overflow-y:scroll;
+    .innerSpan{
+      display: flex;
+      width: 100%;
+      font-weight: 500;
+      font-size: 1rem;
+      margin-right: 5px;
+    }
+  }
+  .stateArea{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+  }
+
+}
+
+
+.bottomArea{
+display: flex;
+justify-content: space-evenly;
+align-items: center;
+padding: 0.3rem 0 0.3rem 0;
+
+  span{
+    font-size: 1.2rem;
+  }
 
   button{
-  width: 50%;
+  width: 42%;
   padding: 0.5rem;
+  font-size: 1rem;
   border-radius: 30px;
   border: 1px solid #26DFA6;
   color: #26DFA6;
 
   }
+
+
+
 }
 `;
 
