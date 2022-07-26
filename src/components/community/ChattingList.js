@@ -6,8 +6,6 @@ import styled from "styled-components";
 import Modal from "../public/BasicModalForm";
 import CreateRoom from "./CreateRoom";
 import ChattingInfo from "./ChattingInfo";
-import ProgressBar from "../public/ProgressBar"
-import { ChattingEnd } from "../../assets/icons"
 import { loadChattingListRS, closedChttingListRS, myInfoData } from "../../store/modules/community"
 
 
@@ -78,70 +76,53 @@ function Chatting() {
         {RoomList&&RoomList.map((item, itemIndex) => {
           return (
             <>
-            <OnpenChattingList
-                  onClick={()=>{
-                    getChttingData(itemIndex);
-                  }}>
+            <ChattingList>
               <ChattingInfo
                 roomId={item.roomId}
                 profileImg={item.authorProfileImg}
                 userName={item.authorNickname}
                 comment={item.comment}
                 time={item.time} 
-                currentState={"Live"}/>
-            </OnpenChattingList>
+                currentState={"Live"}
+                onClick={()=>{
+                  getChttingData(itemIndex);
+                }}/>
+            </ChattingList>
             </>
           )
         })}
         </div>
 
         {ClosedRoomList && ClosedRoomList?.map((item, itemIndex) => (
-          // <ClosedChattingList>
-          //   <div className="closedRoomList" key={item.roomId}>
+          <ChattingList
+            onClick={() => {
+             navigate(`/chat/closedChttinglog/${item.roomId}`);
+            }}>
+            <ChattingInfo
+              roomId={item.roomId}
+              profileImg={item.authorProfileImg}
+              userName={item.authorNickname}
+              comment={item.comment}
+              time={item.time}
+              currentState={"END"} />
+          </ChattingList>
 
-          //     <ul>
-          //       <li>
-          //         <div className="listWrap"
-          //           onClick={()=>{
-          //             navigate(`/chat/closedChttinglog/${item.roomId}`);
-          //           }}>
-          //           <div className="imageBox"><img src={item.authorProfileImg} /></div>
-          //           <div className="textContents">
-          //             <span style={{ fontWeight: "bold", marginRight: "5%" }}>{item.authorNickname}</span>
-          //             <span>{item.comment}</span>
-          //           </div>
-          //           <div className="endPoint"><ChattingEnd /></div>
-          //         </div>
+          ))}
 
 
-          //       </li>
-          //     </ul>
+          </AllchattingList>
 
-          //   </div>
-          // </ClosedChattingList>
-
-          <ChattingInfo
-            roomId={item.roomId}
-            profileImg={item.authorProfileImg}
-            userName={item.authorNickname}
-            comment={item.comment}
-            time={item.time} 
-            currentState={"END"}/>
-
-        ))}
-        </AllchattingList>
-
-        <div className="buttonBox">
-          <button onClick={() => {
-            openModal();
-            setModalName("쓸까? 말까? 만들기");
-            setModalState(
-              <CreateRoom 
-                close={closeModal}
-                nickname={userInfo.nickname}
-                profileImg={userInfo.profileImg} />)
-          }}><p>쓸까? 말까? 만들기</p></button>
-        </div>
+          <div className="buttonBox">
+            <button onClick={() => {
+              openModal();
+              setModalName("쓸까? 말까? 만들기");
+              setModalState(
+                <CreateRoom 
+                  close={closeModal}
+                  nickname={userInfo.nickname}
+                  profileImg={userInfo.profileImg} />)
+            }}><p>쓸까? 말까? 만들기</p></button>
+          </div>
 
 
 
@@ -195,43 +176,7 @@ width:100%;
 max-height: 844px;
 `;
 
-const OnpenChattingList = styled.div`
+const ChattingList = styled.div`
 `;
 
-const ClosedChattingList = styled.div`
-width: 100%;
-display: flex;
-flex-direction: column;
-border: none;
-box-shadow: 0px 4px 11px 0px rgb(0 0 0 / 15%);
-margin-bottom: 1rem;
-.listWrap{
-  display: flex;
-  padding: 0.5rem;
-  .imageBox{
-    width: 30%;
-  }
-  .textContents{  
-    padding: 1rem;
-  }
-  .endPoint{
-    display: flex;
-    align-items: center;
-  }
-}
-.closedRoomList{
-  display: flex;
-  flex-direction: row;
-  
-  img{
-    width: 100%
-  }
-}
-.bottonArea{
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-around;
-  padding: 0.5rem;
-}
-`;
+
