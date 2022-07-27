@@ -28,9 +28,6 @@ function CommentList(props) {
   const commentData = useSelector((state) => state.community.commentList);
   const Postdata = useSelector((state) => state.community.postList);
 
-  console.log(commentData.data, "디테일코멘트")
-  console.log(props.commId.commentId, "prooooops")
-
   const [isEdit, setIsEdit] = useState(false);
 
   const openEdit = () => {
@@ -38,7 +35,6 @@ function CommentList(props) {
   }
 
   const editComment = () => {
-    // console.log(comment_ref.current.value,"ref")
     const data = {
       comment: comment_ref.current.value,
       boardId: props.postAll.boardId,
@@ -49,14 +45,12 @@ function CommentList(props) {
     window.location.reload();
   }
 
-  // console.log(props.user,props.username,"user?")
-
   const state = "커뮤니티"
   return (
 
     <CommentBox>
       <ProBox>
-        <CoProfile></CoProfile>
+        <CoProfile src={props.profileImg}></CoProfile>
       </ProBox>
       <Ddu>
         <Right>
@@ -118,14 +112,14 @@ margin-top: 4vw;
 padding: 0 5vw;
 `;
 const ProBox = styled.div`
-width: 8vw;
-height: 7vw;
+width: 11vw;
+height: 9vw;
 `;
-const CoProfile = styled.div`
+const CoProfile = styled.img`
 width: 100%;
 height: 100%;
 border-radius: 8vw;
-background-color: gray;
+/* background-color: gray; */
 `;
 const CreateAt = styled.span`
 margin-right: 3vw;

@@ -1,10 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { setCookie } from "./cookie";
 import instance from "../../shared/axios";
+import { Navigate } from "react-router-dom";
 
 
 //login
-export const LoginDB = (loginInfo, setModalStr, setNavToggles) => {
+export const LoginDB = (loginInfo, setModalStr, setNavToggles, navigate, urlData) => {
   return async function (dispatch) {
     console.log(loginInfo);
     await instance.post("/api/user/login", loginInfo)
@@ -19,7 +20,10 @@ export const LoginDB = (loginInfo, setModalStr, setNavToggles) => {
           secure: true,
           sameSite: 'none',
         })
-        window.location.href = "/save"
+        console.log(urlData,"??")
+
+        // window.location.href = "/save"
+        navigate('/save', {state:urlData})
         dispatch(isLogin(true))
 
       })
@@ -73,8 +77,7 @@ export const addUserDB = (userInfo) => {
     })
       .then((response) => {
         console.log("유저 등록 성공");
-        window.location.reload('/');
-
+        window.location.reload('/login')
       })
       .catch((error) => {
         window.alert(error.response.data.message);

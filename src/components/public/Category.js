@@ -2,7 +2,7 @@ import React, {useRef, useState}  from "react";
 
 import styled from 'styled-components'
 
-const Category = (props) => {
+const Category = (props ) => {
 
   const handleChange = event => {
     props.setCategory(event.target.value);
@@ -12,7 +12,7 @@ const Category = (props) => {
     <SelectBox onChange={handleChange} defaultValue={0}>
       <option value={0} 
               disabled 
-              style={{display:"none", color:"#CCCCCC"}}
+              style={{display:"none"}}
               >카테고리가 뭘까요?</option>
       <option value={1}>식비</option>
       <option value={2}>카페/간식</option>
@@ -32,7 +32,6 @@ const Category = (props) => {
       <option value={16}>자녀/육아</option>
       <option value={17}>반려동물</option>
       <option value={18}>경조/선물</option>
-      <option value={19}>가전제품/디지털</option>
     </SelectBox>
   );
 }
@@ -46,9 +45,7 @@ width: 100%;
 height: 100%;
 text-align: center;
 border-radius: 35px;
-font-size: 16px;;
-padding: 0.16rem;
-border: 1px solid #CCCCCC;
-
+font-size: 16px;
+padding: 11px;
 `;
 export default Category;

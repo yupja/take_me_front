@@ -64,7 +64,7 @@ const GoalModify = (props)=>{
       const blob = new Blob([json], { type: "application/json" });
       formData.append('goalItem',blob);
 
-      dispatch(newUpdateGoalAPI(formData, props.goalItemId));
+      // dispatch(newUpdateGoalAPI(formData, props.goalItemId));
       props.closeModal();
     } 
 
