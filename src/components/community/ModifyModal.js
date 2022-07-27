@@ -6,80 +6,80 @@ import { createPostAc, UpdatePost } from "../../store/modules/community";
 
 const ModifyModal = (props) => {
 
-    const dispatch = useDispatch();
-    const [image, setImage] = useState("null");
-    const [imageFile, setImageFile] = useState("null");
+  const dispatch = useDispatch();
+  const [image, setImage] = useState("null");
+  const [imageFile, setImageFile] = useState("null");
 
-    const title_ref = React.useRef();
-    const contents_ref = React.useRef();
+  const title_ref = React.useRef();
+  const contents_ref = React.useRef();
 
-    const imageUpLoad = async (e)=>{
-        imagePreview(e.target.files[0]);
-        setImageFile(e.target.files[0]);
+  const imageUpLoad = async (e) => {
+    imagePreview(e.target.files[0]);
+    setImageFile(e.target.files[0]);
+  }
+
+  const imagePreview = (fileBlob) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(fileBlob);
+    return new Promise((resolve) => {
+      reader.onload = () => {
+        setImage(reader.result);
+        resolve();
       }
-    
-      const imagePreview = (fileBlob) =>{
-        const reader = new FileReader();
-        reader.readAsDataURL(fileBlob);
-        return new Promise((resolve) =>{
-          reader.onload = () => {
-            setImage(reader.result);
-            resolve();
-          }
-        })
-      }
+    })
+  }
 
-      console.log(props.formodiId,"propopop")
+  console.log(props.formodiId, "propopop")
 
-    const modiPost = () => {
-        const data = {
-            title : title_ref.current.value,
-            contents:contents_ref.current.value,
-            file: imageFile,
-            boardId : props.formodiId
-        }
-        console.log(data,"공유하기")
-        dispatch(UpdatePost(data))
+  const modiPost = () => {
+    const data = {
+      title: title_ref.current.value,
+      contents: contents_ref.current.value,
+      file: imageFile,
+      boardId: props.formodiId
     }
+    console.log(data, "공유하기")
+    dispatch(UpdatePost(data))
+  }
 
-  
-    return (
-      <>
+
+  return (
+    <>
       {props.showModall ?
 
         <Background>
-            <ModalBox onClick={e => e.stopPropagation()}>
-            
-                <CommentBox>
-                    <Top>
-                    <Head>내 태산 % 게시글 수정</Head>    
-                    <Close onClick={props.closeModall}>X</Close>
-                    </Top>
-                    <Middle>
-                        <Profile src={image}></Profile>
-                        <Right>
-                            <DeImg>기본 이미지</DeImg>
-                                    <AddImg className="filebox">
-                                    <label htmlFor="ex_file" style={{magin:" 0 auto"}}>이미지 등록</label>
-                                    <input type="file"
-                                            name="image" 
-                                            multiple="multiple"
-                                            onChange={imageUpLoad}
-                                    id="ex_file" style={{display:"none"}}/> 
-                                    </AddImg>
-                        </Right>
-                    </Middle>
-                    <Goal ref={title_ref}></Goal>
-                    <Input ref={contents_ref}></Input>
-                    <Btn onClick={modiPost}>수정하기</Btn>
+          <ModalBox onClick={e => e.stopPropagation()}>
 
-                </CommentBox>
-            </ModalBox>
+            <CommentBox>
+              <Top>
+                <Head>내 태산 % 게시글 수정</Head>
+                <Close onClick={props.closeModall}>X</Close>
+              </Top>
+              <Middle>
+                <Profile src={image}></Profile>
+                <Right>
+                  <DeImg>기본 이미지</DeImg>
+                  <AddImg className="filebox">
+                    <label htmlFor="ex_file" style={{ magin: " 0 auto" }}>이미지 등록</label>
+                    <input type="file"
+                      name="image"
+                      multiple="multiple"
+                      onChange={imageUpLoad}
+                      id="ex_file" style={{ display: "none" }} />
+                  </AddImg>
+                </Right>
+              </Middle>
+              <Goal ref={title_ref}></Goal>
+              <Input ref={contents_ref}></Input>
+              <Btn onClick={modiPost}>수정하기</Btn>
+
+            </CommentBox>
+          </ModalBox>
         </Background> : null}
-</>
+    </>
 
-    );
-  };
+  );
+};
 
 const Background = styled.div`
 position: fixed;
@@ -103,7 +103,7 @@ background-color: rgb(0,0,0,0.3);
 box-shadow: rgb(0 0 0 / 9%) 0px 2px 12px 0px;
 display: flex;
 
-  @media screen and (max-width:600px){
+  @media screen and (600px){
     width: 100vw;
     height: 100vh;
     padding: 20px;
@@ -267,4 +267,4 @@ bottom: 0;
 //   overflow: hidden;
 // `;
 
-  export default ModifyModal;
+export default ModifyModal;

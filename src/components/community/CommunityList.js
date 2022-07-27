@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { getUserInfoDB } from "../../store/modules/user";
 import { loadMoreContentDB, loadpostsAc, deletePostAc } from "../../store/modules/community";
 
-import {  Comment, Binheart,  SaveList } from "../../assets/icons";
+import { Comment, Binheart, SaveList } from "../../assets/icons";
 
 
 const CommunityList = () => {
@@ -37,7 +37,7 @@ const CommunityList = () => {
   const closeModal = () => { setModalOpen(false); };
 
 
-  
+
   const userinfo = useSelector((state) => state.user.infoList)
   const Postdata = useSelector((state) => state.community.postList.data);
   const Savedata = useSelector((state) => state.saved.savedItem);
@@ -48,55 +48,56 @@ const CommunityList = () => {
       <Wrap>
         {Postdata.map((postList, index) => {
           return (
-            <ul key={index}>       
+            <ul key={index}>
 
               <li>
                 <ImageBox>
 
                   <div className="goalDiv">
-                    <GoalChart color="#26DFA6" percent={postList.goalPercent} size="150"/>
+                    <GoalChart color="#26DFA6" percent={postList.goalPercent} size="150" />
                   </div>
 
                   <div className="imgDiv">
-                    <img 
+                    <img
                       src={postList.image}
-                      style={{width:"140px", height:"140px"}}/>
+                      style={{ width: "140px", height: "140px" }} />
                   </div>
 
                 </ImageBox>
 
-                
+
                 <div className="contentForm">
                   <div onClick={() => {
-                      Navigate
-                        (`/detail/${postList.boardId}`,
-                          { state: { name: postList } }
-                        )
-                    }}>
-                    <p style={{fontSize:"1.5rem"}}>{postList.goalItemName}</p>
+                    Navigate
+                      (`/detail/${postList.boardId}`,
+                        { state: { name: postList } }
+                      )
+                  }}>
+                    <p style={{ fontSize: "1.5rem" }}>{postList.goalItemName}</p>
                     <div className="textArea">
-                      <p style={{fontSize:"1.2rem"}}>{postList.nickname}</p>
+                      <p style={{ fontSize: "1.2rem" }}>{postList.nickname}</p>
                       {postList.contents}
-                  </div>
+                    </div>
                   </div>
                   <div className="boardInfo">
-                  <div>
-                  <Binheart/> {postList.likeCount}
-                  <Comment/> {postList.commentCount}
-                  </div>
+                    <div>
+                      <Binheart /> {postList.likeCount}
+                      <Comment /> {postList.commentCount}
+                    </div>
 
-                  <SaveList onClick={() => {
-                            openModal();
-                            setModalName(<SaveList/>);
-                            setModalState(<ListModal
-                              boardId={postList.boardId}
-                              goalItemName={postList.goalItemName}
-                              />)}}/>
+                    <SaveList onClick={() => {
+                      openModal();
+                      setModalName(<SaveList />);
+                      setModalState(<ListModal
+                        boardId={postList.boardId}
+                        goalItemName={postList.goalItemName}
+                      />)
+                    }} />
                   </div>
                 </div>
-                </li>
+              </li>
 
-              </ul>
+            </ul>
 
           );
 
@@ -130,20 +131,18 @@ align-items: center;
 flex-direction: column;
 
 .buttonBox{
-  display: flex;
-  width: 80%;
-  border-radius: 30px;
+  width: 90%;
+  border-radius: 59px;
   padding: 1rem;
-  position: fixed;
+  position: absolute;
   bottom: 10%;
   background: #26DFA6;
-  justify-content: center;
+  text-align: center;
   z-index: 1;
 
   button{
     color: white;
     font-weight: 500;
-
   }
   p{
     font-size: 1.5rem;

@@ -129,11 +129,11 @@ function RoomDetail() {
           <div className="userInfo">
             <div className="profileBox">
               <span className="live">LIVE</span>
-              <div className="profile"><img src={state.profileImg} alt="" /></div>
+              <div className="profile"><img src={state.authorProfileImg} alt="" /></div>
             </div>
             <InfoText>
-              <span>{state.sender} </span>
-              {state.commen}
+              <span>{state.authorNickname} </span>
+              {state.comment}
             </InfoText>
           </div>
           <strong>{state.timeLimit}:00</strong>
@@ -259,13 +259,11 @@ const MyChat = styled.div`
 const Enter = styled.div`
 width: 100%;
 padding: 5px 25px;
-height: 12vw;
 border: none;
 background-color: #333333;
 display: flex;
-/* justify-content: center; */
 align-items: center; 
-position: fixed;
+position: absolute;
 bottom: 0;
 
 input:placeholder{
@@ -275,13 +273,12 @@ input:placeholder{
 
 const Input = styled.input`
 width: 100%;
-height: 2.5rem;
 border: 1px solid #A9FFE4;
-border-radius: 20px;
+border-radius: 40px;
 background-color: transparent;
 color: white;
 margin: 0 auto;
-padding: 4vw;
+padding: 0.81rem;
 :focus{
     outline: none;
 }
@@ -290,9 +287,8 @@ padding: 4vw;
 
 const PostBtn = styled.button`
 position: absolute;
-right:0;
+right: 2.25rem;
 height: 10vw;
-padding-right: 35px;
 border: none;
 background-color: transparent;
 color: white;
