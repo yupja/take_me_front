@@ -18,7 +18,8 @@ import DountChart from "../components/public/Goal";
 import { useLocation } from "react-router";
 import Header from "../components/public/Header"
 
-import { Dot, ArrowUp} from "../assets/icons";
+import {ReactComponent as Dot} from "../assets/icons/Dot.svg";
+import {ReactComponent as ArrowUp} from "../assets/icons/ArrowUp.svg";
 
 
 function Detail() {
@@ -112,11 +113,9 @@ function Detail() {
 
     return (
         <>
-         <Wrap>
-        <TopWrap>
         <Header title={"커뮤니티"} />
-        
-            <GoalImage src={postlistdata.image}/>
+            <Box>
+            <BImg src={postlistdata.image}></BImg>
             <StyledSlider {...settings}>
                 <div style={{backgroundColor:"transparent"}}></div>
                     <ContentsBox>
@@ -139,9 +138,7 @@ function Detail() {
                          </DountBox>
                     </ContentsBox>
             </StyledSlider>  
-
-            </TopWrap>
-
+            </Box>
             <Con>
                 <Left>
                     <WriterImg src={postlistdata.profileImg}></WriterImg>
@@ -174,27 +171,22 @@ function Detail() {
                     : null
                 }
             </Con>
-
-            <div className="bottomArea">
-                <div className="commentArea">
-                {commentData.data && commentData.data?.map((comment_list, index) => (
-                    <CommentList key={index}
-                        username={comment_list.username}
-                        createdAt={comment_list.createdAt}
-                        comment={comment_list.comment}
-                        user={userinfo.username}
-                        idUser={postlistdata.userId}
-                        commId={comment_list}
-                        postAll={postlistdata}
-                    />
-                ))}
-            </div>
-
-            <div className="inputArea">
-                <input ref={comment_ref}></input>
+            {commentData.data && commentData.data?.map((comment_list, index) => (
+                <CommentList key={index}
+                    username={comment_list.username}
+                    createdAt={comment_list.createdAt}
+                    comment={comment_list.comment}
+                    user={userinfo.username}
+                    idUser={postlistdata.userId}
+                    commId={comment_list}
+                    postAll={postlistdata}
+                />
+            ))}
+            <Blank></Blank>
+            <Enter>
+                <Input ref={comment_ref}></Input>
                 <PostBtn onClick={createComment}>게시</PostBtn>
-            </div>
-            </div>
+            </Enter>
 
             {/* 게시글 수정모달 */}
             {showModall ?
@@ -202,53 +194,14 @@ function Detail() {
                     formodiId={postlistdata.boardId}
                 />
                 : null}
-
-</Wrap>
         </>
     )
 };
 
-
-const Wrap = styled.div`
-width:100%;
-height: 100%;
-
-.bottomArea{
-    width: 100%;
-}
-.commentArea{
-    height: 36%;
-
-}
-.inputArea{
-    height: 5%;
- display: flex;
-    
-}
-`;
-const TopWrap = styled.div`
-width: 100%;
-height: 40vh;
-position: relative;
-`;
-
-const GoalImage = styled.img`
-
-width: 100%;
-height:100%;
-background-color: #F5F5F5;
-display: flex;
-
-position: absolute;
-object-fit: cover;
-
-`;
-
-
 const StyledSlider = styled(Slider)`
     .slick-list {
         width: 100%;
-        height: 100%;
+        height: 80vw;
         /* display: flex; */
     }
     .slick-dots {
@@ -261,6 +214,16 @@ const StyledSlider = styled(Slider)`
         color: #999;
         opacity: 1;
     }
+`;
+const Box = styled.div`
+width: 100%;
+height: 80vw;
+/* border: 3px solid red; */
+/* display: flex; */
+align-items: center;
+flex-direction: column;
+/* padding: 0 5vw; */
+position: relative;
 `;
 
 
@@ -406,13 +369,19 @@ margin-top: 3vw;
 `;
 
 const ContentsBox = styled.div`
+width: 100%;
+height: 80vw;
+/* border: 5px solid purple; */
 display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+text-align: center;
+/* position: absolute; */
 z-index: 2;
 background-color: rgb(0,0,0,0.5);
 justify-content: center;
-flex-direction: column;
 align-items: center;
-height: 100%;
 `;
 
 const DountBox = styled.div`
@@ -484,6 +453,10 @@ right: 6%;
     box-shadow: rgb(0 0 0 / 10%) 0px 0px 8px;
 }`
 
-
+const Blank = styled.div`
+width: 100%;
+height: 12vw;
+/* border: 1px solid black; */
+`;
 
 export default Detail;
