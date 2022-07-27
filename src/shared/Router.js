@@ -28,7 +28,7 @@ function Router() {
     <BrowserRouter>
       <Routes>
         {/* <Route path="*" element={<NotFound />} /> */}
-        {/* <Route path="/main" element={<Main />} />  */}
+        <Route path="/main" element={<Main />} />
         <Route path="/save" element={<Save />} />
         {/* <Route path="/statistics" element={<Statistics />} /> */}
         {/* <Route path="/detail/:boardId" element={<Detail />} /> */}
@@ -52,7 +52,7 @@ function Router() {
         <Route path="/oauth2/redirect" element={<SociallLogin />} />
         <Route path="/chat/roomdetail/:roomId" element={<RoomDetail />} />        
         <Route path="/guide" element={<Guide />} />
-        <Route path="/chat/closedChttinglog/:closedRoomId" element={< closedChttinglog/>} />
+        <Route path="/chat/closedChttinglog/:closedRoomId" element={< closedChttinglog />} />
 
 
       </Routes >
