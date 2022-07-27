@@ -2,12 +2,12 @@ import React, {useState, useRef } from "react";
 import { useDispatch} from "react-redux";
 import styled from "styled-components";
 
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 import Header from "../components/public/Header";
 import { emailCheckDB, idCheckDB, nickCheckDB, addUserDB } from "../store/modules/user";
 
-function SignUp() {
+function SignUp(e) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -119,7 +119,10 @@ function SignUp() {
     dispatch(nickCheckDB(nick, setUserNickAlert))
   }
 
-
+  const signprevUrl = document.referrer;
+  console.log(signprevUrl,"회원가입했습니다만?")
+  console.log(window.location.href,"location")
+  const signupUrl = window.location.href
 
   // 회원가입
   const signup = async () => {
@@ -164,9 +167,12 @@ function SignUp() {
     }
 
     dispatch(addUserDB(userInfo));
-    navigate("/")
+    navigate("/login",{state:signupUrl})
   }
 
+
+
+  
 
 
   return (
