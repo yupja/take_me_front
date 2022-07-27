@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 import { myReadGoalRQ, deleteGoalRQ } from "../store/modules/goal"
 import { addSavedListRQ } from "../store/modules/saved"
 import { myFavoriteListRQ, favoriteDel, addFavoriteRQ } from "../store/modules/favorite";
@@ -12,6 +13,7 @@ import GoalInput from "../components/saved/GoalInput"
 import CurrentSavedItem from "../components/saved/CurrentSavedItem";
 import GoalModifyComponunt from "../components/saved/GoalModify";
 import PostModal from "../components/community/PostModal";
+import Guide from "../components/community/Guide"
 
 
 import styled from "styled-components";
@@ -35,6 +37,12 @@ function Save() {
   useEffect(() => {
     dispatch(myReadGoalRQ());
     dispatch(myFavoriteListRQ());
+    if (state.state.signupUrl.state && state.state.loginUrl) {
+      setShowModal(true)
+  }else{
+    setShowModal(false)
+  }
+    // openGuide();
   }, []);
 
   const [modalOpen, setModalOpen] = useState(false);
@@ -51,6 +59,19 @@ function Save() {
   const openModal = () => { setModalOpen(true); };
   const closeModal = () => { setModalOpen(false); };
 
+  const [showModal, setShowModal] = useState(false);
+  const openGuide = () => {
+    // if (state.state.signupUrl.state && state.state.loginUrl) {
+      setShowModal(true)
+  // }else{
+  //   setShowModal(false)
+  // }
+}
+  const closeGuide = () => {
+      setShowModal(false);
+  }
+
+  const  state  = useLocation();
 
   const [star, setStar] = useState(false);
 
@@ -149,6 +170,7 @@ function Save() {
           :
           <>
             <GoalImage src={goal.goalImage} />
+            {/* <GoalImage src="https://velog.velcdn.com/images/eppo/post/c381a0b6-a326-48df-972c-693de0f6e9ac/image.png" /> */}
             <StyledSlider {...settings}>
               <div style={{ backgroundColor: "transparent" }}></div>
               <GoalMain onClick={() => { changeMenu() }}>
@@ -303,10 +325,18 @@ function Save() {
         header={modalName}>
         {modalState}
       </Modal>
+      {/* 가이드 모달 */}
+{showModal ?
+      <Guide 
+      open={showModal}
+      close={closeGuide}
+      /> 
+     : null}
     </Wrap>
   );
-}
+    }     
 export default Save;
+
 
 const GoalInfo = styled.div`
 position: absolute;
@@ -319,7 +349,6 @@ p{
   font-weight: 500;
   margin-top: 5%;
 }
-
 .clickMenuFont{
   color: white;
   font-size: 0.8rem;
@@ -331,6 +360,8 @@ p{
 const Wrap = styled.div`
 width:100%;
 height: 100%;
+/* position: relative; */
+/* z-index: 1; */
 `;
 
 const HeaderArea = styled.div`
@@ -373,20 +404,16 @@ align-items: center;
 flex-direction: column;
 justify-content: center;
 background: #333333;
-
 `;
 
 
 const GoalImage = styled.img`
-
 width: 100%;
 height:100%;
 background-color: #F5F5F5;
 display: flex;
-
 position: absolute;
 object-fit: cover;
-
 `;
 
 const MiddleMenue = styled.div`
@@ -412,7 +439,6 @@ justify-content: center;
 flex-direction: column;
 align-items: center;
 height: 100%;
-
 `;
 
 const Circle = styled.div`
@@ -421,7 +447,6 @@ height: 180px;
 border-radius: 50%;
 background:  #26DFA6;
 color : white;
-
 display: flex;
 align-items: center;
 justify-content: center;
@@ -462,7 +487,6 @@ overflow-x:scroll;
 justify-content: center;
 white-space: nowrap;
 border-bottom: 1px solid #CCCCCC;
-
   &::-webkit-scrollbar {
     display: none;
   }
@@ -479,7 +503,6 @@ p{
 
 
 const FavoriteItem = styled.div`
-
 background: #EFEFEF;
 border-radius: 20px;
 font-size: 15px;
@@ -493,7 +516,6 @@ const AddSavedStyle = styled.div`
 display: flex;
 flex-direction: column;
 width: 100%;
-
 ul{
   padding: 0 10px;
 }
@@ -514,11 +536,9 @@ input{
   background: #F4F4F4;
   border: none;
 }
-
 .inputBox{
   display: flex;
   align-content: center;
   gap: calc();
 }
-
 `;

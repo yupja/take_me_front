@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
-import SearchSavedItem from "../components/public/SearchItems";
+import SearchSavedItem from "../components/public/SearchSavedItem";
 import FavoriteList from "../components/mypage/FavoriteList"
 import { myFavoriteListRQ } from "../store/modules/favorite";
 import FavoriteAdd from "../components/mypage/FavoriteAdd";

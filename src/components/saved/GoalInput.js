@@ -323,4 +323,3 @@ justify-content: center;
 
 
 export default GoalInput;
-
