@@ -28,6 +28,7 @@ function Header({ title, props }) {
   const logout = (e) => {
     localStorage.clear();
     removeCookie('refreshToken', { path: '/' });
+    window.location.href('/login');
   }
 
   const onNav = (e) => {
@@ -76,7 +77,7 @@ function Header({ title, props }) {
                   navigate("/mypage");
                 }}>MY</li>
                 <li onClick={() => {
-                  navigate("/about");
+                  navigate("/main");
                 }}>About</li>
               </Menu>
 
