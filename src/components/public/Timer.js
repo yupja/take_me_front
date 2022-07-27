@@ -7,9 +7,9 @@ export default function Timer(props) {
 
   useEffect(() => {
     const countdown = setInterval(() => {
-      if(parseInt(minutes)>10){
+      if(parseInt(minutes)>10 
+        || (parseInt(minutes)===0)&&(parseInt(seconds)===0)){
         props.setTimeOutLimit(false)
-        console.log("10분초과 ")
       }
       if (parseInt(seconds) > 0) {
         setSeconds(parseInt(seconds) - 1);
