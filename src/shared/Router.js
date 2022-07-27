@@ -5,6 +5,7 @@ import Main from "../pages/Main" // 메인
 import Save from "../pages/Save";  // 아끼기
 import MyPage from "../pages/MyPage"; // 마이페이지 
 import Community from "../pages/Community"; // 커뮤니티 
+import CommunityChatting from "../pages/CommunityChtting";
 import Detail from "../pages/Detail"; //상세페이지
 import Ranking from "../pages/Ranking" // 통계
 import Login from "../pages/Login" // 로그인
@@ -33,6 +34,7 @@ function Router() {
         {/* <Route path="/detail/:boardId" element={<Detail />} /> */}
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/community" element={<Community />} />
+        <Route path="/chattingList" element={< CommunityChatting/>} />
         <Route path="/community/:id" element={<Community />} />
         <Route path="/ranking" element={<Ranking />} />
         <Route path="/save" element={<Save />} />
@@ -48,7 +50,7 @@ function Router() {
         <Route path="/proflie" element={<Proflie />} />
         <Route path="/ranking" element={<Ranking />} />
         <Route path="/oauth2/redirect" element={<SociallLogin />} />
-        <Route path="/chat/roomdetail/:roomId" element={<RoomDetail />} />
+        <Route path="/chat/roomdetail/:roomId" element={<RoomDetail />} />        
         <Route path="/guide" element={<Guide />} />
         <Route path="/chat/closedChttinglog/:closedRoomId" element={< closedChttinglog/>} />
 
