@@ -8,6 +8,9 @@ import { subMessage, delMessage } from "../../store/modules/community";
 import Header from "../public/Header";
 import { BsSortNumericDown } from "react-icons/bs";
 // import ChattingInfo from "./ChattingInfo";
+// import Timer from "../public/Timer";
+
+import TimerFunction from "../public/Timer"
 
 
 function RoomDetail() {
@@ -24,8 +27,6 @@ function RoomDetail() {
   }, []);
 
   console.log(state)
-
-
   // const getChttingData =(index)=>{
   //   sendData ={
   //     roomId:RoomList[index].roomId,
@@ -126,6 +127,7 @@ function RoomDetail() {
   return (
     <ChatWrap>
       <Header title={title} />
+
       <Box>
         <ListInfo>
           <div className="userInfo">
@@ -138,7 +140,11 @@ function RoomDetail() {
               {state.comment}
             </InfoText>
           </div>
-          <strong>{state.timeLimit}:00</strong>
+          <strong>
+            <TimerFunction
+              min={state.minutes}
+              sec={state.seconds} />
+          </strong>
         </ListInfo>
         <Vote>
           <button>쓰자!</button>
