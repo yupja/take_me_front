@@ -6,6 +6,7 @@ import SockJS from "sockjs-client";
 import Stomp from "stompjs";
 import { subMessage, delMessage } from "../../store/modules/community";
 import Header from "../public/Header";
+import { BsSortNumericDown } from "react-icons/bs";
 // import ChattingInfo from "./ChattingInfo";
 
 
@@ -22,6 +23,7 @@ function RoomDetail() {
     })
   }, []);
 
+  console.log(state)
 
 
   // const getChttingData =(index)=>{

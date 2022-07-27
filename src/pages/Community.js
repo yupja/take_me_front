@@ -13,37 +13,37 @@ import CommunityList from "../components/community/CommunityList";
 
 const Community = () => {
   const title = "커뮤니티"
-  const { state } = useLocation();
+  const {state} = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isLoad, setLoad] = useState(false);
   const [page, setPage] = useState(<CommunityList />);
 
-  useEffect(() => {
+  useEffect(()=>{
 
-    dispatch(topListRS());
-  }, [isLoad])
+      dispatch(topListRS());
+    },[isLoad])
   const topRoomList = useSelector(((state => state.community.topChttingList)));
   console.log(topRoomList)
 
 
 
   return (
-    <>
-      <Header title={title} color={state} />
-      <div style={{ width: "100%" }}>
+  <> 
+    <Header title={title} color={state}/>
+      <div style={{width:"100%"}}>
         <MenuBar>
-          <div onClick={() => {
+          <div onClick={()=>{
             setPage(<CommunityList />)
           }}>티끌자랑</div>
-          <div onClick={() => {
-            setPage(<ChattingList />)
+          <div onClick={()=>{
+            setPage(<ChattingList/>)
           }}>쓸까말까</div>
         </MenuBar>
 
 
         <TimeList>
-          <SwipeRooms topRoomList={topRoomList} />
+          <SwipeRooms topRoomList={topRoomList}/>
         </TimeList>
 
         <div style={{ width: "100%" }}>
@@ -54,7 +54,7 @@ const Community = () => {
 
 
       </div>
-    </>
+  </>
   )
 };
 
@@ -78,7 +78,6 @@ div{
     padding: 10px;
     border-bottom: none;
     border-radius: 10px 10px 0px 0px;
-    cursor: pointer;
 }
 `;
 
