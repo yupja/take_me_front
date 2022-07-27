@@ -108,7 +108,8 @@ export default Header;
 const HeaderWrap = styled.div`
 position: fixed;
 top: 0;
-width:100%;
+max-width:390px;
+width: 100%;
 height: 44px;
 z-index: 999;
 background: #fff;

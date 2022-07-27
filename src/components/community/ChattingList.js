@@ -32,6 +32,7 @@ function ChattingList() {
   const ClosedRoomList = useSelector(((state => state.community.closedChttingList)));
   const userInfo = useSelector((state)=>state.community.myInfo)
 
+
   return (
     <>
       <Wrap>
