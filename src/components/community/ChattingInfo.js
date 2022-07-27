@@ -6,7 +6,7 @@ import TimerFunction from "../public/Timer"
 import ProgressBar from "../public/ProgressBar"
 
 import styled from "styled-components";
-import { chattingVote } from "../../store/modules/community"
+import { chattingVote, deleteChattingRoom } from "../../store/modules/community"
 import { Timer, ChattingEnd } from "../../assets/icons"
 import Loading from "../public/Loading";
 
@@ -17,6 +17,7 @@ const ChattingInfo = (props) => {
   const [seconds, setSeconds] = useState();
   const [ready, setReady] = useState(true);
   const [vote, setVote] = useState(props.prosCons);
+  const [timeOutLimit , setTimeOutLimit] = useState(true);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -28,7 +29,11 @@ const ChattingInfo = (props) => {
       setReady(false)
     }, 100)
 
-  }, [])
+    if(!timeOutLimit){
+      dispatch(deleteChattingRoom(props.roomId));
+    }
+
+  }, [timeOutLimit])
 
   const userInfo = useSelector((state) => state.community.myInfo)
 
@@ -52,22 +57,24 @@ const ChattingInfo = (props) => {
         prosCons: true
       }
       dispatch(chattingVote(sendData))
+    }
+  }
 
-  }}
+  const getChttingData = (index) => {
+    const sendData = {
+      roomId: props.roomId,
+      sender: userInfo.nickname,
+      profileImg: userInfo.profileImg,
+      authorNickname: props.authorNickname,
+      authorProfileImg: props.authorProfileImg,
+      userCount: props.userCount,
+      comment: props.comment,
+      createdAt: props.createdAt,
+      timeLimit: props.timeLimit,
+      minutes: minutes,
+      seconds : seconds
 
-  const getChttingData =(index)=>{
-    const sendData ={
-        roomId:props.roomId,
-        sender : userInfo.nickname,
-        profileImg: userInfo.profileImg,
-        authorNickname : props.authorNickname,
-        authorProfileImg : props.authorProfileImg,
-        userCount : props.userCount,
-        comment : props.comment,
-        createdAt:props.createdAt,
-        minutes : minutes,
-        seconds : seconds
- }
+    }
 
     navigate(`/chat/roomdetail/${sendData.roomId}`, { state: sendData });
 
@@ -112,7 +119,8 @@ const ChattingInfo = (props) => {
                 <Timer />
                 <TimerFunction
                   min={minutes}
-                  sec={seconds} />
+                  sec={seconds}
+                  setTimeOutLimit={setTimeOutLimit} />
               </div>
             </div>
           </div>

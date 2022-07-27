@@ -7,6 +7,10 @@ export default function Timer(props) {
 
   useEffect(() => {
     const countdown = setInterval(() => {
+      if(parseInt(minutes)>10 
+        || (parseInt(minutes)===0)&&(parseInt(seconds)===0)){
+        props.setTimeOutLimit(false)
+      }
       if (parseInt(seconds) > 0) {
         setSeconds(parseInt(seconds) - 1);
       }
@@ -19,6 +23,7 @@ export default function Timer(props) {
         }
       }
     }, 1000);
+
     return () => clearInterval(countdown);
   }, [minutes, seconds]);
 

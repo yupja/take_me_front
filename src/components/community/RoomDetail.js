@@ -1,61 +1,56 @@
 import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
-import { Link, useParams, useLocation } from "react-router-dom";
+import { Link, useParams, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import SockJS from "sockjs-client";
 import Stomp from "stompjs";
-import { subMessage, delMessage } from "../../store/modules/community";
+import { subMessage, delMessage, deleteChattingRoom } from "../../store/modules/community";
 import Header from "../public/Header";
 import { BsSortNumericDown } from "react-icons/bs";
 // import ChattingInfo from "./ChattingInfo";
+// import Timer from "../public/Timer";
+
+import TimerFunction from "../public/Timer"
 
 
 function RoomDetail() {
   const { state } = useLocation();
   const { roomId } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate
+  const [timeOutLimit , setTimeOutLimit] = useState(true);
   const getMessages = useSelector((state) => state.community.messages);
-
-  useEffect(() => {
-    return (() => {
-      dispatch(delMessage());
-      disconnects();
-    })
-  }, []);
 
   console.log(state)
 
+  useEffect(() => {
+    scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
 
-  // const getChttingData =(index)=>{
-  //   sendData ={
-  //     roomId:RoomList[index].roomId,
-  //     sender : userInfo.nickname,
-  //     profileImg: userInfo.profileImg,
-  //     authorNickname : RoomList[index].authorNickname,
-  //     authorProfileImg : RoomList[index].authorProfileImg,
-  //     userCount : RoomList[index].userCount,
-  //     comment : RoomList[index].comment,
-  //     createdAt:RoomList[index].createdAt,
-  //     timeLimit:RoomList[index].timeLimit
-  //   }
+    if(state.minutes > 10 ||   state.minutes===0){
+      setTimeout(() => {
+        client.disconnect();
+        window.alert("채팅이 종료되었습니다. ")
+        dispatch(deleteChattingRoom(state.roomId));
+      }, 100)
+    }
+
+
+  }, [getMessages, timeOutLimit]);
+  
 
   const title = '쓸까?말까?'
   const chatRef = useRef();
   const scrollRef = useRef();
 
+  
 
 
-  const sock = new SockJS('http://43.200.4.1/chatting', null, { transports: ["websocket", "xhr-streaming", "xhr-polling"] });
-  // const sock = new SockJS('https://api.webprogramming-mj6119.shop/chatting', null, { transports: ["websocket", "xhr-streaming", "xhr-polling"] });
+  const sock = new SockJS('https://api.webprogramming-mj6119.shop/chatting', null, { transports: ["websocket", "xhr-streaming", "xhr-polling"] });
   let client = Stomp.over(sock);
 
   // 토큰
   let token = localStorage.getItem('accessToken');
 
-  useEffect(() => {
-    scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
-
-  }, [getMessages]);
 
 
 
@@ -80,6 +75,8 @@ function RoomDetail() {
     });
 
   }, [])
+
+
 
   //연결 해제
   function disconnects() {
@@ -126,6 +123,7 @@ function RoomDetail() {
   return (
     <ChatWrap>
       <Header title={title} />
+
       <Box>
         <ListInfo>
           <div className="userInfo">
@@ -138,7 +136,12 @@ function RoomDetail() {
               {state.comment}
             </InfoText>
           </div>
-          <strong>{state.timeLimit}:00</strong>
+          <strong>
+            <TimerFunction
+              min={state.minutes}
+              sec={state.seconds} 
+              setTimeOutLimit={setTimeOutLimit}/>
+          </strong>
         </ListInfo>
         <Vote>
           <button>쓰자!</button>

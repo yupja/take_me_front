@@ -13,25 +13,52 @@ const CreateRoom = (props) => {
   const navigate = useNavigate();
   const comment = useRef();
   const [count, setCount] = useState(1);
+  const [minutes, setMinutes] = useState();
+  const [seconds, setSeconds] = useState();
 
   const getChttingData = (index) => {
     if (comment.current.value === '') {
       comment.current.focus();
       return;
     }
-    const sendData = {
-      sender: props.nickname,
-      profileImg: props.profileImg,
-      authorNickname: props.nickname,
-      authorProfileImg: props.profileImg,
-      userCount: Number(0),
-      comment: comment.current.value,
-      timeLimit: count
-    }
 
-    dispatch(createChatRoom(sendData, navigate));
+
+    getTime();
+    if(minutes===""){
+    const sendData = {
+        sender: props.nickname,
+        profileImg: props.profileImg,
+        authorNickname: props.nickname,
+        authorProfileImg: props.profileImg,
+        userCount: Number(0),
+        comment: comment.current.value,
+        timeLimit: count,
+        minutes:minutes,
+        seconds:seconds
+  
+      }
+  
+      dispatch(createChatRoom(sendData, navigate));}
+
 
   }
+
+
+  const getTime = () => {
+    const createTime = new Date();
+    createTime.setMinutes(createTime.getMinutes() + count)
+    const currentTime = new Date();
+    let diff = (createTime - currentTime)
+    const diffHours = Math.floor(diff / (1000 * 60 * 60));
+    diff -= diffHours * (1000 * 60 * 60);
+    let diffMin = Math.floor(diff / (1000 * 60));
+    diff -= diffMin * (1000 * 60);
+    const diffSec = Math.floor(diff / 100000);
+
+    setMinutes(diffMin);
+    setSeconds(diffSec);
+  }
+
 
 
   return (
