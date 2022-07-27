@@ -1,9 +1,15 @@
 import React, {useState, useRef, useEffect, useLayoutEffect} from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
+
 import styled from "styled-components";
 
 import {ReactComponent as Timer} from "../../assets/icons/Timer.svg";
+import { chattingVote } from "../../store/modules/community"
 
-import ChattingInfo from "../community/ChattingInfo";
+
+import TimerFunction from "../public/Timer"
 
 function useInterval(callback, delay) {
   const savedCallback = useRef();
@@ -26,6 +32,49 @@ const SwipeForm = (props) =>{
     const swifeRef = useRef<HTMLDivElement>(null);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [loop, setLoop] = useState(null);
+    const [minutes, setMinutes] = useState();
+    const [seconds, setSeconds] = useState();
+    const [vote, setVote] = useState(props.prosCons);
+    const userInfo = useSelector((state)=>state.community.myInfo)
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const chageVote = () =>{
+      let sendData={}
+      if(vote){
+        setVote(false)
+        sendData={
+          roomId: props.roomId,
+          prosCons : false
+        }
+        dispatch(chattingVote(sendData))
+  
+      }else if(!vote){
+        setVote(true)
+        sendData={
+          roomId: props.roomId,
+          prosCons : true
+        }
+        dispatch(chattingVote(sendData))
+    }}
+
+    const getChttingData =(index)=>{
+      const sendData ={
+          roomId:props.roomId,
+          sender : userInfo.nickname,
+          profileImg: userInfo.profileImg,
+          authorNickname : props.authorNickname,
+          authorProfileImg : props.authorProfileImg,
+          userCount : props.userCount,
+          comment : props.comment,
+          createdAt:props.createdAt,
+          timeLimit:props.timeLimit
+      }
+    
+      navigate(`/chat/roomdetail/${sendData.roomId}`, {state:sendData});
+    
+      }
 
     const setInfiniteSlide = (datas, slideToAdd) => {
       const newSlides = [...datas];
@@ -50,36 +99,187 @@ const SwipeForm = (props) =>{
       setCurrentIndex(currentIndex => currentIndex + 1);
   }, 2000)
   
-    return (
-        <>
-        {props.topRoomList.map((item, idx)=>(
-        <Wrap key={idx}>
-            <ChattingList
-              style={{transform: `translateX(${(-100 / props.topRoomList.length+2) * (currentIndex)}%)`}}>
-                    <SwipeItem>
-                      <ChattingInfo/>
-                      </SwipeItem>
-            </ChattingList>
-            </Wrap>
-        ))} 
-        </>
-    )
+  
+  
+  
+  return (
+    <>
+      {props.topRoomList.map&&props.topRoomList?.map((item, idx)=>( 
+      <Wrap>
+        <ChattingList>
+             {/* style={{transform: `translateX(${(-100 / props.topRoomList.length+2) * (currentIndex)}%)`}}>  */}
+          <SwipeItem>
+            <div className="chatInfoArea"
+              onClick={() => {
+                getChttingData();
+              }}>
+              <div className="imgBox">
+                Live
+                <img src={item.authorProfileImg} />
+              </div>
+
+              <div className="contentsBox">
+                <span>
+                  <span className="innerSpan">
+                    {item.authorNickname}</span> {item.comment}</span>
+                <div className="timerArea">
+                  <Timer />
+                  <TimerFunction
+                    min={minutes}
+                    sec={seconds} />
+                </div>
+              </div>
+            </div>
+
+
+            <div className="bottomArea">
+              {vote ?
+                <button style={{
+                  background: "#26DFA6",
+                  color: "white"
+                }}
+                  disabled
+                >쓸까?</button>
+                :
+                <button
+                  onClick={() => { chageVote() }}>쓸까?</button>
+
+              }
+
+
+              {vote ?
+                <button
+                  onClick={() => { chageVote() }}>말까?</button>
+
+                :
+                <button style={{
+                  background: "#26DFA6",
+                  color: "white"
+                }}
+                  disabled
+                >말까?</button>
+
+              }
+
+            </div>
+
+          </SwipeItem>
+        </ChattingList>
+      </Wrap>
+      ))}  
+    </>
+  )
 } 
 
 const Wrap = styled.div`
+max-width: 390px;
 width: 100%;
+max-height: 140px;
 height: 100%;
-padding: 1rem;
-display: flex;
-justify-content: center;
+background: #333333;
+
+
 
 `;
 
 const SwipeItem = styled.div`
-flex-direction: column;
+
+width:350px;
+max-height: 108px;
+height: 100%;
 white-space: nowrap;
+border-radius: 5px;
+
+
+background: white;
+
+
+
+.chatInfoArea{
+display: flex;
+flex-direction: row;
+
+.imgBox{
+  display: flex;
+  padding: 0.5rem 0.5rem 0 0.5rem;
+
+    img{
+      width: 54px;
+      height: 54px;
+      border-radius:50%;
+    }
+  }
+}
+
+.contentsBox{
+  padding-top: 1rem;
+  width: 100%;
+  max-height: 60px;
+  display: flex;
+
+  span{
+    width: 80%;
+    display: flex;
+    overflow-y:scroll;
+
+    .innerSpan{
+      display: flex;
+      width: 25%;
+      font-weight: 500;
+      font-size: 1rem;
+      margin-right: 5px;
+    }
+  }
+  .timerArea{
+    display: flex;
+    padding: 0 0.5rem 0 0;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+  }
+
+}
+
+.bottomArea{
+display: flex;
+justify-content: space-evenly;
+align-items: center;
+padding: 0.3rem 0 0.3rem 0;
+
+  span{
+    font-size: 1.2rem;
+  }
+
+  button{
+  width: 40%;
+  padding: 0.4rem;
+  font-size: 1rem;
+  border-radius: 30px;
+  border: 1px solid #26DFA6;
+  color: #26DFA6;
+
+  }
+
+}
+
 
 `;
+
+
+
+const ChattingList = styled.div`
+
+
+padding: 0.6rem 0.8rem 0 0.8rem;
+border: 1px solid #333333;
+max-width: 390px;
+width: 100%;
+max-height: 140px;
+height: 100%;
+
+`;
+
 
 
 const SlideTrack = styled.ul`
@@ -111,38 +311,6 @@ const SlideTrack = styled.ul`
   }
 `;
 
-const ChattingList = styled.div`
-width: 100%;
-display: flex;
-background: white;
-border: none;
-box-shadow: 0px 4px 11px 0px rgb(0 0 0 / 15%);
-padding: 1.5rem;
 
-
-div{
-  gap: 5px;
-}
-
-.swipeItem{
-
-
-}
-.buttonArea{
-  margin-top: 5%;
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
-
-  button{
-  width: 50%;
-  padding: 0.5rem;
-  border-radius: 30px;
-  border: 1px solid #26DFA6;
-  color: #26DFA6;
-
-  }
-}
-`;
 
 export default SwipeForm;

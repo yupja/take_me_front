@@ -108,9 +108,9 @@ export default Header;
 const HeaderWrap = styled.div`
 position: fixed;
 top: 0;
-width:100%;
+max-width:390px;
+width: 100%;
 height: 44px;
-z-index: 999;
 background: #fff;
 `;
 
@@ -182,6 +182,7 @@ li:first-child{
 const NavWrap = styled.div`
 width:70%; //180px
 height: 100vh;
+z-index: 100;
 background-color: #fff;
 position: absolute;
 top: 0; right: 0;
