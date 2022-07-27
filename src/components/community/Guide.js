@@ -63,11 +63,6 @@ width:"390";
 `;
 
 const Div = styled.div`
-/* width: 100%; */
-/* height: 100%; */
-/* display: flex;
-justify-content: center;
-align-items: center; */
 background-color: black;
 
 `;
@@ -103,7 +98,6 @@ const StyledSlider = styled(Slider)`
  
 .slick-prev:before {
     content: '< 이전';
-    /* z-index: 99; */
 }
 
 .slick-prev:before, .slick-next:before {
@@ -143,11 +137,6 @@ const StyledSlider = styled(Slider)`
 
 const GoalImage = styled.img`
 width: 100%;
-/* height:100%; */
-/* display: flex;
-
-position: absolute;
-object-fit: cover; */
 `;
 
 const CloseBtn = styled.div`
@@ -155,16 +144,11 @@ width: 65px;
 height: 30px;
 color: #26dfa6;
 right: 30px;
-/* display: flex; */
-/* justify-content: end; */
 position: absolute;
 top: 90%;
 font-size: 23px;
 z-index: 99;
 font-weight: 100;
-/* background-color: blue; */
-/* border: 1px solid 
-red; */
 position: fixed;
 `;
 
