@@ -17,6 +17,7 @@ const ChattingInfo = (props) => {
   const [seconds, setSeconds] = useState();
   const [ready, setReady] = useState(true);
   const [vote, setVote] = useState(props.prosCons);
+  const [timeOutLimit , setTimeOutLimit] = useState(true);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -114,7 +115,8 @@ const ChattingInfo = (props) => {
                 <Timer />
                 <TimerFunction
                   min={minutes}
-                  sec={seconds} />
+                  sec={seconds}
+                  setTimeOutLimit={setTimeOutLimit} />
               </div>
             </div>
           </div>
