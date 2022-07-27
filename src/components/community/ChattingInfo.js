@@ -67,25 +67,7 @@ const ChattingInfo = (props) => {
         createdAt:props.createdAt,
         minutes : minutes,
         seconds : seconds
-
-
-    }
-  }
-
-  const getChttingData = (index) => {
-    const sendData = {
-      roomId: props.roomId,
-      sender: userInfo.nickname,
-      profileImg: userInfo.profileImg,
-      authorNickname: props.authorNickname,
-      authorProfileImg: props.authorProfileImg,
-      userCount: props.userCount,
-      comment: props.comment,
-      createdAt: props.createdAt,
-      timeLimit: props.timeLimit
-    }
-
-    console.log(sendData)
+ }
 
     navigate(`/chat/roomdetail/${sendData.roomId}`, { state: sendData });
 
