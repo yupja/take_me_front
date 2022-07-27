@@ -104,10 +104,10 @@ const SwipeForm = (props) =>{
   
   return (
     <>
-      {props.topRoomList.map&&props.topRoomList?.map((item, idx)=>( 
+     {/* {props.topRoomList.map&&props.topRoomList?.map((item, idx)=>(  */}
       <Wrap>
-        <ChattingList>
-             {/* style={{transform: `translateX(${(-100 / props.topRoomList.length+2) * (currentIndex)}%)`}}>  */}
+         {/*<ChattingList>
+           style={{transform: `translateX(${(-100 / props.topRoomList.length+2) * (currentIndex)}%)`}}> ∂
           <SwipeItem>
             <div className="chatInfoArea"
               onClick={() => {
@@ -164,9 +164,9 @@ const SwipeForm = (props) =>{
             </div>
 
           </SwipeItem>
-        </ChattingList>
+        </ChattingList> */}
       </Wrap>
-      ))}  
+      // ))}  
     </>
   )
 } 
