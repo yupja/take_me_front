@@ -7,7 +7,7 @@ import styled from "styled-components";
 
 import {ReactComponent as Timer} from "../../assets/icons/Timer.svg";
 import { chattingVote } from "../../store/modules/community"
-import ChattingInfo from "../community/ChattingInfo";
+
 
 import TimerFunction from "../public/Timer"
 
@@ -71,8 +71,6 @@ const SwipeForm = (props) =>{
           createdAt:props.createdAt,
           timeLimit:props.timeLimit
       }
-  
-      console.log(sendData)
     
       navigate(`/chat/roomdetail/${sendData.roomId}`, {state:sendData});
     
@@ -101,7 +99,7 @@ const SwipeForm = (props) =>{
       setCurrentIndex(currentIndex => currentIndex + 1);
   }, 2000)
   
-  console.log(props.topRoomList)
+  
   
   
   return (
