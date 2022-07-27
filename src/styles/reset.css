@@ -96,6 +96,8 @@ button {
   border: none;
   background: none
 }
-
+::-webkit-scrollbar {
+  display: none;
+  }
 a {color: #000; text-decoration: none; outline: none}
 a:hover, a:active {text-decoration: none; color:#000;}
