@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import styled from "styled-components";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -18,7 +18,9 @@ import DountChart from "../components/public/Goal";
 import { useLocation } from "react-router";
 import Header from "../components/public/Header"
 
-import {ArrowUp,  Dot} from "../assets/icons";
+import {ReactComponent as Dot} from "../assets/icons/Dot.svg";
+import {ReactComponent as ArrowUp} from "../assets/icons/ArrowUp.svg";
+
 
 function Detail() {
     const dispatch = useDispatch();

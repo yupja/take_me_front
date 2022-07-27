@@ -24,7 +24,6 @@ root.render(
       }}>
         <div style={{
           position: "relative",
-          top: "44px",
           border: "1px solid #cccccc",
           maxWidth: "390px",
           width: "100%",
