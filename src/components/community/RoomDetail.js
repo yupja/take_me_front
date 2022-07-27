@@ -15,9 +15,6 @@ function RoomDetail() {
   const dispatch = useDispatch();
   const getMessages = useSelector((state) => state.community.messages);
 
-  console.log(getMessages)
-
-
   useEffect(() => {
     return (() => {
       dispatch(delMessage());
@@ -26,12 +23,6 @@ function RoomDetail() {
   }, []);
 
 
-  // const list = [];
-  // const lists = () => {
-  //   list.push(getMessages)
-  //   console.log(list)
-
-  // }
 
   // const getChttingData =(index)=>{
   //   sendData ={
@@ -133,25 +124,25 @@ function RoomDetail() {
   return (
     <ChatWrap>
       <Header title={title} />
-      <Box className="boxx">
-        <div>
-          <ListInfo>
-            <div>
-              <span>LIVE</span>
-              <img src="" alt="" />
+      <Box>
+        <ListInfo>
+          <div className="userInfo">
+            <div className="profileBox">
+              <span className="live">LIVE</span>
+              <div className="profile"><img src={state.profileImg} alt="" /></div>
             </div>
             <InfoText>
-              <span>닉네임</span>
-              집 앞 뛰면 3분거리..비닐수산 산다 만다?..
+              <span>{state.sender} </span>
+              {state.commen}
             </InfoText>
-            <strong>00:00</strong>
-          </ListInfo>
-          <Vote>
-            <button>쓰자!</button>
-            <button>멈춰!</button>
-          </Vote>
-          <p>현재인원수<span>20</span></p>
-        </div>
+          </div>
+          <strong>{state.timeLimit}:00</strong>
+        </ListInfo>
+        <Vote>
+          <button>쓰자!</button>
+          <button>멈춰!</button>
+        </Vote>
+        <p className="count">조회수 <span>{state.userCount}</span></p>
       </Box>
       <ChatBox className="chatbox">
         <Chatting ref={scrollRef}>
@@ -195,26 +186,13 @@ export default RoomDetail;
 const ChatWrap = styled.div`
 
 `
-// 상단 투표 정보
-const ListInfo = styled.div`
-
-`
-const InfoText = styled.p`
-
-
-`
-const Vote = styled.p`
-
-
-`
-
 
 
 
 const ChatBox = styled.div`
-    width: 100%;
-    overflow: overlay;
-    height: 73vh;
+  width: 100%;
+  overflow: overlay;
+  height: 73vh;
 
 `
 const EnterMsg = styled.p`
@@ -323,9 +301,102 @@ font-weight:700;
 `;
 
 const Box = styled.div`
-
 width: 100%;
-height:140px;
 background:#333;
-
+padding: 1.25rem 1.5rem;
+color: #fff;
+p.count{
+  font-size:0.87rem;
+  span{
+    color: #999;
+  }
+}
 `;
+
+// 상단 투표 정보
+const ListInfo = styled.div`
+display: flex;
+justify-content: space-between;
+div.userInfo{
+  display: flex;
+}
+div.profileBox {
+  position: relative;
+  width:2.5rem;
+  height: 2.5rem;
+  margin-right: 0.625rem;
+  flex-shrink: 0;
+  
+  span {
+  position: absolute;
+  top:0; left: 0;
+  display: inline-block;
+  /* width: 1.37rem;
+  height:0.625rem; */
+  padding: 3px 5px;
+  background: #FF7272;
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.43rem;
+  text-align: center;
+  border-radius: 1.93rem;
+  z-index: 10;
+}
+}
+.profile {
+  position: relative;
+  width:2.5rem;
+  height: 2.5rem;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+}
+img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  width:100%;
+  height: 100%;
+}
+strong {
+  font-family: 'Cafe24Ohsquareair';
+  color: #26DFA6;
+  font-size:1.5rem;
+  font-weight: 700;
+  padding-top: 0.93rem;
+}
+
+`
+const InfoText = styled.p`
+  font-size: 0.875rem;
+  line-height: 1.06rem;
+  padding-right: 1.87rem;
+span{
+  font-weight: 700;
+}
+
+`
+const Vote = styled.div`
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin: 0.62rem 0;
+button {
+  width: 49%;
+  height: 1.87rem;
+  text-align: center;
+  border-radius: 1.93rem;
+  color: #26DFA6;
+  border: 1px solid #26DFA6;
+}
+button:nth-child(2) {
+  background: #26DFA6;
+  color: #fff;
+  border: none;
+}
+
+`
+
+
