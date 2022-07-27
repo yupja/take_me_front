@@ -106,12 +106,13 @@ function Header({ title, props }) {
 export default Header;
 
 const HeaderWrap = styled.div`
-position: fixed;
-top: 0;
-width:100%;
+position: relative;
+max-width:390px;
+width: 100%;
 height: 44px;
 z-index: 999;
 background: #fff;
+z-index:999;
 `;
 
 const LeftArea = styled.div`
@@ -173,6 +174,7 @@ li {
   font-size: 1.5rem;
   padding-bottom: 1.87rem;
   font-family: 'SEBANG_Gothic_Bold';
+  cursor: pointer;
 }
 li:first-child{
   color: #26DFB3;
@@ -221,7 +223,7 @@ div {
 
 const Footer = styled.div`
 position: absolute;
-bottom: 55px;
+top: 83%;
 left: 50%;
 transform : translateX(-50%);
 display: flex;

@@ -3,9 +3,9 @@ import { getCookie, setCookie, removeCookie } from "../store/modules/cookie";
 import { useCookies } from "react-cookie";
 
 export const instance = axios.create({
+  baseURL: "http://43.200.4.1"
   // baseURL: "https://api.webprogramming-mj6119.shop"
   // // baseURL: "http://13.209.13.168"
-  baseURL: "http://43.200.4.1"
 });
 
 instance.interceptors.request.use(
@@ -86,8 +86,8 @@ const refreshToken = () => {
       // }
       // deleteCookie('refreshToken');
       // localStorage.clear();
-      alert("세션 만료 다시 로그인 해주세요.");
-      
+      // alert("세션 만료 다시 로그인 해주세요.");
+
     });
 };
 

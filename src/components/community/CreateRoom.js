@@ -14,31 +14,25 @@ const CreateRoom = (props) => {
   const comment = useRef();
   const [count, setCount] = useState(1);
 
-  const getChttingData =(index)=>{
-    const sendData ={
-      sender : props.nickname,
+  const getChttingData = (index) => {
+    if (comment.current.value === '') {
+      comment.current.focus();
+      return;
+    }
+    const sendData = {
+      sender: props.nickname,
       profileImg: props.profileImg,
-      authorNickname : props.nickname,
-      authorProfileImg : props.profileImg,
-      userCount : Number(0),
-      comment : comment.current.value,
-      timeLimit:  count
+      authorNickname: props.nickname,
+      authorProfileImg: props.profileImg,
+      userCount: Number(0),
+      comment: comment.current.value,
+      timeLimit: count
     }
 
     dispatch(createChatRoom(sendData, navigate));
-  
-    }
 
+  }
 
-  // const createRoom = (e) => {
-  //   e.preventDefault();
-  //   const data = {
-  //     comment: comment.current.value,
-  //     timeLimit: Number(count)
-  //   }
-  //   dispatch(createChatRoom(data));
-  //   getChttingData();
-  // }
 
   return (
     <>

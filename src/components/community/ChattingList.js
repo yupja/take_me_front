@@ -30,67 +30,68 @@ function ChattingList() {
 
   const RoomList = useSelector(((state => state.community.chattingList)));
   const ClosedRoomList = useSelector(((state => state.community.closedChttingList)));
-  const userInfo = useSelector((state)=>state.community.myInfo)
+  const userInfo = useSelector((state) => state.community.myInfo)
+
 
   return (
     <>
       <Wrap>
 
         <AllchattingList>
-        <div>
-        {RoomList&&RoomList.map((item, itemIndex) => {
-          return (
-            <>
-            <div key={item.roomId}>
-            <ChattingListDiv>
-              <ChattingInfo 
-                roomId={item.roomId}
-                authorProfileImg={item.authorProfileImg}
-                authorNickname={item.authorNickname}
-                comment={item.comment}
-                userCount = {item.userCount}
-                createdAt={item.createdAt}
-                timeLimit={item.timeLimit}
-                prosCons={item.prosCons}
-                currentState={"Live"}/>
-            </ChattingListDiv>
-            </div>
-            </>
-          )
-        })}
-        </div>
-
-
-        {ClosedRoomList && ClosedRoomList?.map((item, itemIndex) => (
-          <div key={item.roomId}>
-          <ChattingList
-            onClick={() => {
-             navigate(`/chat/closedChttinglog/${item.roomId}`, {state: userInfo.nickname});
-            }}>
-            <ChattingInfo
-              roomId={item.roomId}
-              profileImg={item.authorProfileImg}
-              userName={item.authorNickname}
-              comment={item.comment}
-              currentState={"END"} />
-          </ChattingList>
+          <div>
+            {RoomList && RoomList.map((item, itemIndex) => {
+              return (
+                <>
+                  <div key={item.roomId}>
+                    <ChattingListDiv>
+                      <ChattingInfo
+                        roomId={item.roomId}
+                        authorProfileImg={item.authorProfileImg}
+                        authorNickname={item.authorNickname}
+                        comment={item.comment}
+                        userCount={item.userCount}
+                        createdAt={item.createdAt}
+                        timeLimit={item.timeLimit}
+                        prosCons={item.prosCons}
+                        currentState={"Live"} />
+                    </ChattingListDiv>
+                  </div>
+                </>
+              )
+            })}
           </div>
+
+
+          {ClosedRoomList && ClosedRoomList?.map((item, itemIndex) => (
+            <div key={item.roomId}>
+              <ChattingList
+                onClick={() => {
+                  navigate(`/chat/closedChttinglog/${item.roomId}`, { state: userInfo.nickname });
+                }}>
+                <ChattingInfo
+                  roomId={item.roomId}
+                  profileImg={item.authorProfileImg}
+                  userName={item.authorNickname}
+                  comment={item.comment}
+                  currentState={"END"} />
+              </ChattingList>
+            </div>
           ))}
 
 
-          </AllchattingList>
+        </AllchattingList>
 
-          <div className="buttonBox">
-            <button onClick={() => {
-              openModal();
-              setModalName("쓸까? 말까? 만들기");
-              setModalState(
-                <CreateRoom 
-                  close={closeModal}
-                  nickname={userInfo.nickname}
-                  profileImg={userInfo.profileImg} />)
-            }}><p>쓸까? 말까? 만들기</p></button>
-          </div>
+        <div className="buttonBox">
+          <button onClick={() => {
+            openModal();
+            setModalName("쓸까? 말까? 만들기");
+            setModalState(
+              <CreateRoom
+                close={closeModal}
+                nickname={userInfo.nickname}
+                profileImg={userInfo.profileImg} />)
+          }}><p>쓸까? 말까? 만들기</p></button>
+        </div>
       </Wrap>
 
       <Modal open={modalOpen}
@@ -116,14 +117,15 @@ align-items: center;
 
 
 .buttonBox{
-  display: flex;
   width: 90%;
-  border-radius: 30px;
-  padding:1rem;
-  position: fixed;
+  border-radius: 59px;
+  padding: 1rem;
+  position: absolute;
   bottom: 10%;
+  background: #26DFA6;
+  text-align: center;
+  z-index: 1;
   background: #6485EC;
-  justify-content: center;
   button{
     color: white;
     font-weight: 500;

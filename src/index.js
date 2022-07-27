@@ -17,17 +17,21 @@ root.render(
     <CookiesProvider>
       <div style={{
         display: "flex",
-        justifyContent:'center',
+        justifyContent: 'center',
         maxWidth: "1500px",
         width: "100%",
-        height:"100%"}}>
+        height: "100%",
+      }}>
         <div style={{
+          position: "relative",
           border: "1px solid #cccccc",
-          maxWidth:"390px", 
+          maxWidth: "390px",
           width: "100%",
-          maxHeight:"844px",
-          height:"100%"}}>
-           <App />
+          maxHeight: "844px",
+          height: "100%",
+          // overflow: "hidden"
+        }}>
+          <App />
         </div>
       </div>
     </CookiesProvider>
