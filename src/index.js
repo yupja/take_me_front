@@ -22,8 +22,6 @@ root.render(
         width: "100%",
         height:"100%"}}>
         <div style={{
-          top : "44px",
-          border: "1px solid #cccccc",
           maxWidth:"390px", 
           width: "100%",
           maxHeight:"844px",
