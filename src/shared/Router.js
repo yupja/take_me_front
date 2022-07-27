@@ -34,7 +34,7 @@ function Router() {
         {/* <Route path="/detail/:boardId" element={<Detail />} /> */}
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/community" element={<Community />} />
-        <Route path="/chattingList" element={< CommunityChatting/>} />
+        <Route path="/chattingList" element={<CommunityChatting/>} />
         <Route path="/community/:id" element={<Community />} />
         <Route path="/ranking" element={<Ranking />} />
         <Route path="/save" element={<Save />} />

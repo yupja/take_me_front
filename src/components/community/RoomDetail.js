@@ -28,7 +28,8 @@ function RoomDetail() {
     if(state.minutes > 10 ||   state.minutes===0){
       setTimeout(() => {
         client.disconnect();
-        dispatch(deleteChattingRoom(state.roomId, navigate))
+        window.alert("채팅이 종료되었습니다. ")
+        dispatch(deleteChattingRoom(state.roomId));
       }, 100)
     }
 
