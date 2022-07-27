@@ -37,11 +37,11 @@ function Save() {
   useEffect(() => {
     dispatch(myReadGoalRQ());
     dispatch(myFavoriteListRQ());
-    if (state.state.signupUrl.state && state.state.loginUrl) {
-      setShowModal(true)
-  }else{
-    setShowModal(false)
-  }
+  //   if (state.state.signupUrl.state && state.state.loginUrl) {
+  //     setShowModal(true)
+  // }else{
+  //   setShowModal(false)
+  // }
     // openGuide();
   }, []);
 
