@@ -142,14 +142,14 @@ const SwipeForm = (props) =>{
                 >쓸까?</button>
                 :
                 <button
-                  onClick={() => { chageVote() }}>말까?</button>
+                  onClick={() => { chageVote() }}>쓸까?</button>
 
               }
 
 
               {vote ?
                 <button
-                  onClick={() => { chageVote() }}>쓸까?</button>
+                  onClick={() => { chageVote() }}>말까?</button>
 
                 :
                 <button style={{
