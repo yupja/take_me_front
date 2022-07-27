@@ -21,6 +21,7 @@ function RoomDetail() {
   const [timeOutLimit , setTimeOutLimit] = useState(true);
   const getMessages = useSelector((state) => state.community.messages);
 
+  console.log(state)
 
   useEffect(() => {
     scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });

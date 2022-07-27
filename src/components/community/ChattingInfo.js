@@ -6,7 +6,7 @@ import TimerFunction from "../public/Timer"
 import ProgressBar from "../public/ProgressBar"
 
 import styled from "styled-components";
-import { chattingVote } from "../../store/modules/community"
+import { chattingVote, deleteChattingRoom } from "../../store/modules/community"
 import { Timer, ChattingEnd } from "../../assets/icons"
 import Loading from "../public/Loading";
 
@@ -29,7 +29,11 @@ const ChattingInfo = (props) => {
       setReady(false)
     }, 100)
 
-  }, [])
+    if(!timeOutLimit){
+      dispatch(deleteChattingRoom(props.roomId));
+    }
+
+  }, [timeOutLimit])
 
   const userInfo = useSelector((state) => state.community.myInfo)
 
