@@ -64,9 +64,9 @@ export const deleteChattingRoom = (roomId, navigate) => {
   console.log(roomId)
   return async function (dispatch) {
     try {
-      await instance.post(`/api/chat/room/${roomId}/vote`)
+      await instance.get(`/api/chat/room/${roomId}/save`)
       window.alert("채팅이 종료되었습니다. ")
-      navigate("/community");
+      navigate("/chattingList");
     } catch (error) {
       console.log(error)
     }
