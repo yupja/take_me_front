@@ -54,13 +54,13 @@ const CommunityList = () => {
                 <ImageBox>
 
                   <div className="goalDiv">
-                    <GoalChart color="#26DFA6" percent={postList.goalPercent} size="150" />
+                    <GoalChart color="#26DFA6" percent={postList.goalPercent} size="110" />
                   </div>
 
                   <div className="imgDiv">
                     <img
                       src={postList.image}
-                      style={{ width: "140px", height: "140px" }} />
+                      style={{ width: "100px", height: "100px" }} />
                   </div>
 
                 </ImageBox>
@@ -73,12 +73,15 @@ const CommunityList = () => {
                         { state: { name: postList } }
                       )
                   }}>
-                    <p style={{ fontSize: "1.5rem" }}>{postList.goalItemName}</p>
+                    
                     <div className="textArea">
-                      <p style={{ fontSize: "1.2rem" }}>{postList.nickname}</p>
-                      {postList.contents}
-                    </div>
+                      <span style={{ fontSize: "1.2rem" }}>{postList.goalItemName}<br/>
+                      <span style={{ fontSize: "1rem" , fontWeight:"500"}}>{postList.nickname}</span>
+                      <span>{postList.contents}</span>
+                      </span>
+                      </div>
                   </div>
+                  
                   <div className="boardInfo">
                     <div>
                       <Binheart /> {postList.likeCount}
@@ -124,11 +127,17 @@ const CommunityList = () => {
 
 const Wrap = styled.div`
 width: 100%;
+max-height: 565px;
 height: 100%;
 background: #EDEDED;
 display: flex;
 align-items: center;
 flex-direction: column;
+overflow-y: scroll;
+&::-webkit-scrollbar {
+    display: none;
+  }
+
 
 .buttonBox{
   width: 90%;
@@ -161,7 +170,8 @@ li{
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 5px 15px;
+  padding: 4% 0 4% 4%;
+
 }
 
 .contentForm{
@@ -183,9 +193,12 @@ li{
 }
 .textArea{
   display: flex;
+  flex-direction: column;
+  height: 50px;
   flex-direction: row;
   align-items: flex-end;
   gap: 10%;
+  overflow-y:scroll;
 }
 
 `;

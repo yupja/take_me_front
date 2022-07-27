@@ -30,8 +30,9 @@ const Community = () => {
 
   return (
   <> 
+  <Wap >
     <Header title={title} color={state}/>
-      <div style={{width:"100%"}}>
+
         <MenuBar>
           <div onClick={()=>{
             setPage(<CommunityList />)
@@ -46,20 +47,25 @@ const Community = () => {
           <SwipeRooms topRoomList={topRoomList}/>
         </TimeList>
 
-        <div style={{ width: "100%" }}>
+        <div style={{ width: "100%", height:"100%" }}>
           <CommunityContents>
             {page}
           </CommunityContents>
         </div>
 
 
-      </div>
+      </Wap>
   </>
   )
 };
 
 
 
+
+const Wap = styled.div`
+max-width: 390px;
+max-height: 844px;
+`;
 
 const MenuBar = styled.div`
 display: flex;

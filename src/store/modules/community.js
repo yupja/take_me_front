@@ -59,6 +59,23 @@ export const closedChttingLogRS = createAsyncThunk(
     }
   })
 
+
+export const deleteChattingRoom = (roomId, navigate) => {
+  console.log(roomId)
+  return async function (dispatch) {
+    try {
+      await instance.post(`/api/chat/room/${roomId}/vote`)
+      window.alert("채팅이 종료되었습니다. ")
+      navigate("/community");
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+
+
+
 // 찬반투표
 export const chattingVote = (voteData) => {
   console.log(voteData)

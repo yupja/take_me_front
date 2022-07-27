@@ -17,6 +17,7 @@ const ChattingInfo = (props) => {
   const [seconds, setSeconds] = useState();
   const [ready, setReady] = useState(true);
   const [vote, setVote] = useState(props.prosCons);
+  const [timeOutLimit , setTimeOutLimit] = useState(true);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -65,10 +66,11 @@ const ChattingInfo = (props) => {
       userCount: props.userCount,
       comment: props.comment,
       createdAt: props.createdAt,
-      timeLimit: props.timeLimit
-    }
+      timeLimit: props.timeLimit,
+      minutes: minutes,
+      seconds : seconds
 
-    console.log(sendData)
+    }
 
     navigate(`/chat/roomdetail/${sendData.roomId}`, { state: sendData });
 
@@ -113,7 +115,8 @@ const ChattingInfo = (props) => {
                 <Timer />
                 <TimerFunction
                   min={minutes}
-                  sec={seconds} />
+                  sec={seconds}
+                  setTimeOutLimit={setTimeOutLimit} />
               </div>
             </div>
           </div>

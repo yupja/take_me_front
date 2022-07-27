@@ -33,6 +33,7 @@ function ChattingList() {
   const userInfo = useSelector((state) => state.community.myInfo)
 
 
+
   return (
     <>
       <Wrap>
@@ -61,7 +62,7 @@ function ChattingList() {
             })}
           </div>
 
-
+{/* 
           {ClosedRoomList && ClosedRoomList?.map((item, itemIndex) => (
             <div key={item.roomId}>
               <ChattingList
@@ -76,7 +77,7 @@ function ChattingList() {
                   currentState={"END"} />
               </ChattingList>
             </div>
-          ))}
+          ))} */}
 
 
         </AllchattingList>
@@ -109,11 +110,18 @@ export default ChattingList;
 const Wrap = styled.div`
 display: flex;
 justify-content: center;
+max-width: 390px;
 width: 100%;
+max-height:565px;
 height: 100%;
 padding: 1rem;
 flex-direction: column;
 align-items: center;
+overflow-y: scroll;
+
+&::-webkit-scrollbar {
+    display: none;
+  }
 
 
 .buttonBox{

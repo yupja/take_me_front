@@ -4,7 +4,7 @@ import { Link, useParams, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import SockJS from "sockjs-client";
 import Stomp from "stompjs";
-import { subMessage, delMessage } from "../../store/modules/community";
+import { subMessage, delMessage, deleteChattingRoom } from "../../store/modules/community";
 import Header from "../public/Header";
 import { BsSortNumericDown } from "react-icons/bs";
 // import ChattingInfo from "./ChattingInfo";
@@ -17,6 +17,7 @@ function RoomDetail() {
   const { state } = useLocation();
   const { roomId } = useParams();
   const dispatch = useDispatch();
+  const [timeOutLimit , setTimeOutLimit] = useState(true);
   const getMessages = useSelector((state) => state.community.messages);
 
   useEffect(() => {
@@ -24,7 +25,7 @@ function RoomDetail() {
       dispatch(delMessage());
       disconnects();
     })
-  }, []);
+  },);
 
   console.log(state)
   // const getChttingData =(index)=>{
@@ -44,9 +45,10 @@ function RoomDetail() {
   const chatRef = useRef();
   const scrollRef = useRef();
 
+  
 
 
-  const sock = new SockJS('http://43.200.4.1/chatting', null, { transports: ["websocket", "xhr-streaming", "xhr-polling"] });
+  const sock = new SockJS('https://api.webprogramming-mj6119.shop/chatting', null, { transports: ["websocket", "xhr-streaming", "xhr-polling"] });
   // const sock = new SockJS('https://api.webprogramming-mj6119.shop/chatting', null, { transports: ["websocket", "xhr-streaming", "xhr-polling"] });
   let client = Stomp.over(sock);
 
@@ -55,10 +57,12 @@ function RoomDetail() {
 
   useEffect(() => {
     scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
-
-  }, [getMessages]);
-
-
+    if(state.minutes > 10){
+      client.disconnect();
+      dispatch(deleteChattingRoom(state.roomId, dispatch))
+    }
+  }, [getMessages, timeOutLimit]);
+  
 
   useEffect(() => {
     // 소켓 연결
@@ -143,7 +147,8 @@ function RoomDetail() {
           <strong>
             <TimerFunction
               min={state.minutes}
-              sec={state.seconds} />
+              sec={state.seconds} 
+              setTimeOutLimit={setTimeOutLimit}/>
           </strong>
         </ListInfo>
         <Vote>
