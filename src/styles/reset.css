@@ -96,6 +96,7 @@ button {
   border: none;
   background: none
 }
+/* 스크롤바 숨기기 */
 ::-webkit-scrollbar {
   display: none;
   }

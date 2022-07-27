@@ -107,11 +107,11 @@ function Header({ title, props }) {
 export default Header;
 
 const HeaderWrap = styled.div`
-position: relative;
+position: sticky;
+top: 0;
 max-width:390px;
 width: 100%;
 height: 44px;
-z-index: 999;
 background: #fff;
 z-index:999;
 `;
