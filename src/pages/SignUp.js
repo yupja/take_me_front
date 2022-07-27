@@ -1,5 +1,5 @@
-import React, {useState, useRef } from "react";
-import { useDispatch} from "react-redux";
+import React, { useState, useRef } from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 
 import { useLocation, useNavigate, useParams } from "react-router-dom";
@@ -119,9 +119,6 @@ function SignUp(e) {
     dispatch(nickCheckDB(nick, setUserNickAlert))
   }
 
-  const signprevUrl = document.referrer;
-  console.log(signprevUrl,"회원가입했습니다만?")
-  console.log(window.location.href,"location")
   const signupUrl = window.location.href
 
   // 회원가입
@@ -166,13 +163,13 @@ function SignUp(e) {
       Checkpassword: userPwCheck,
     }
 
-    dispatch(addUserDB(userInfo));
-    navigate("/login",{state:signupUrl})
+    dispatch(addUserDB(userInfo, signupUrl, navigate));
+
   }
 
 
 
-  
+
 
 
   return (

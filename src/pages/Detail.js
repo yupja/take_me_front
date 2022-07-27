@@ -18,79 +18,79 @@ import DountChart from "../components/public/Goal";
 import { useLocation } from "react-router";
 import Header from "../components/public/Header"
 
-import {ReactComponent as Dot} from "../assets/icons/Dot.svg";
-import {ReactComponent as ArrowUp} from "../assets/icons/ArrowUp.svg";
+import { ReactComponent as Dot } from "../assets/icons/Dot.svg";
+import { ReactComponent as ArrowUp } from "../assets/icons/ArrowUp.svg";
 
 
 function Detail() {
-    const dispatch = useDispatch();
-    const params = useParams();
-    const comment_ref = React.useRef();
+  const dispatch = useDispatch();
+  const params = useParams();
+  const comment_ref = React.useRef();
 
-    const boardIdex = params.boardId;
+  const boardIdex = params.boardId;
 
-    React.useEffect(() => {
-        dispatch(loadCommentAc(boardIdex))
-        dispatch(loadpostsAc())
-        dispatch(loadDetailAc(boardIdex))
-        dispatch(getUserInfoDB())
-    }, []);
+  React.useEffect(() => {
+    dispatch(loadCommentAc(boardIdex))
+    dispatch(loadpostsAc())
+    dispatch(loadDetailAc(boardIdex))
+    dispatch(getUserInfoDB())
+  }, []);
 
-    const commentData = useSelector((state) => state.community.commentList);
-    const Postdata = useSelector((state) => state.community.postList);
-    const userinfo = useSelector((state) => state.user.infoList)
-    const myGoalList = useSelector((state=> state.goal.myGoalList));
-    const goal = {
-      goalImage : myGoalList?.image,
-      goalItemId : myGoalList?.goalItemId,
-      goalPercent : (myGoalList?.goalPercent)*0.01,
-      goalitemName: myGoalList?.itemName
+  const commentData = useSelector((state) => state.community.commentList);
+  const Postdata = useSelector((state) => state.community.postList);
+  const userinfo = useSelector((state) => state.user.infoList)
+  const myGoalList = useSelector((state => state.goal.myGoalList));
+  const goal = {
+    goalImage: myGoalList?.image,
+    goalItemId: myGoalList?.goalItemId,
+    goalPercent: (myGoalList?.goalPercent) * 0.01,
+    goalitemName: myGoalList?.itemName
+  }
+
+  const createComment = (boardId) => {
+    const data = {
+      comment: comment_ref.current.value,
     }
-   
-    const createComment = (boardId) => {
-        const data = {
-            comment: comment_ref.current.value,
-        }
-        dispatch(createCommentAc(data, postlistdata.boardId))
-        window.location.reload();
-    };
+    dispatch(createCommentAc(data, postlistdata.boardId))
+    window.location.reload();
+  };
 
-    const [user_nav, setUserNav] = useState(false)
-    const onClickNav = (e) => {
-        setUserNav(user_nav => user_nav ? false : true)
-    }
+  const [user_nav, setUserNav] = useState(false)
+  const onClickNav = (e) => {
+    setUserNav(user_nav => user_nav ? false : true)
+  }
 
 
-    const [showModall, setShowModall] = useState(false);
-    const openModall = () => {
-        setShowModall(true)
-    }
-    const closeModall = () => {
-        setShowModall(false);
-    }
-    
-    const  state  = useLocation();
-    const postlistdata = state.state.name
-    const boardId = postlistdata.boardId
+  const [showModall, setShowModall] = useState(false);
+  const openModall = () => {
+    setShowModall(true)
+  }
+  const closeModall = () => {
+    setShowModall(false);
+  }
 
-    //슬릭
-    const settings = {
-        dots: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 1,
-        slidesToScroll: 1
-      };
+  const state = useLocation();
+  const postlistdata = state.state.name
+  const boardId = postlistdata.boardId
 
-    const [limit, setLimit] = useState(51); 
-    const toggleEllipsis = (str, limit) => {
+  //슬릭
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1
+  };
+
+  const [limit, setLimit] = useState(51);
+  const toggleEllipsis = (str, limit) => {
     return {
-    	string: str.slice(0, limit),
-      	isShowMore: str.length > limit
+      string: str.slice(0, limit),
+      isShowMore: str.length > limit
     }
-    };
+  };
 
-    const onClickMore = (str) => () => {
+  const onClickMore = (str) => () => {
     setLimit(str.length);
   };
 
@@ -99,98 +99,97 @@ function Detail() {
     setLimit(51)
   }
 
-    return (
-        <>
-        <Header title={"커뮤니티"} />
-            <Box>
-            <BImg src={postlistdata.image}></BImg>
-            <StyledSlider {...settings}>
-                <div style={{backgroundColor:"transparent"}}></div>
-                    <ContentsBox>
-                        <DountBox>
-                        <DountChart color="#26DFA6" size="300" position="relative" percent={goal.goalPercent}/>
-                        <Text>
-                        <Commu>
-                            <GoalName><p className="goalTitle">{goal.goalitemName} {Math.floor(goal.goalPercent * 100)}%</p></GoalName>
-                            <GoalName>{postlistdata.goalItemName}</GoalName>
-                        </Commu>
-                        <Bottom>
-                            <Like 
-                            isLike={postlistdata.checkLike}
-                            forLikeId = {postlistdata.boardId}
-                            likeCount = {postlistdata.likeCount}
-                            />&nbsp;<Count>조회수&nbsp;{postlistdata.viewCount}</Count>
-                        </Bottom>
-                         <Day>{postlistdata.createdAt.substr(0, 10).split('-','3').join(".")}</Day>
-                         </Text>
-                         </DountBox>
-                    </ContentsBox>
-            </StyledSlider>  
-            </Box>
-            <Con>
-                <Left>
-                    <WriterImg src={postlistdata.profileImg}></WriterImg>
-                </Left>
-                <Right>
-                    <Content>
-                    <Nick>{postlistdata.nickname}</Nick>&nbsp;&nbsp;
-                    {/* {postlistdata.contents} */}
-                    {toggleEllipsis(postlistdata.contents, limit).string}
-                    {toggleEllipsis(postlistdata.contents, limit)
-                    .isShowMore ? <MoreBtn onClick={onClickMore(postlistdata.contents)}>
-                        ...더보기</MoreBtn> : <Arr onClick={onClickClose}><ArrowUp /></Arr>}
-                    </Content>
-                </Right>
-                {userinfo.username === postlistdata.userId ?
-                    <>
-                        <Toggle onClick={onClickNav}><Dot /></Toggle>
-                        {user_nav && (
-                            <UserInfoNav>
-                                <div>
-                                    <div onClick={() => { openModall() }}>수정하기</div>
-                                    <div style={{color:"#FF5E5E"}} onClick={() => {
-                                        dispatch(
-                                            deletePostAc(postlistdata.boardId))
-                                    }}>삭제하기</div>
-                                </div>
-                            </UserInfoNav>
-                        )}
-                    </>
-                    : null
-                }
-            </Con>
-            {commentData.data && commentData.data?.map((comment_list, index) => (
-                <CommentList key={index}
-                    username={comment_list.username}
-                    createdAt={comment_list.createdAt}
-                    comment={comment_list.comment}
-                    user={userinfo.username}
-                    idUser={postlistdata.userId}
-                    commId={comment_list}
-                    postAll={postlistdata}
-                />
-            ))}
-            <Blank></Blank>
-            <Enter>
-                <Input ref={comment_ref}></Input>
-                <PostBtn onClick={createComment}>게시</PostBtn>
-            </Enter>
+  return (
+    <>
+      <Header title={"커뮤니티"} />
+      <Box className="box">
+        <BImg src={postlistdata.image}></BImg>
+        <StyledSlider {...settings}>
+          <div style={{ backgroundColor: "transparent" }}></div>
+          <ContentsBox>
+            <DountBox>
+              <DountChart color="#26DFA6" size="280" percent={goal.goalPercent} />
+              <Text>
+                <Commu>
+                  <GoalName><p className="goalTitle">{goal.goalitemName} {Math.floor(goal.goalPercent * 100)}%</p></GoalName>
+                  <GoalName>{postlistdata.goalItemName}</GoalName>
+                </Commu>
+                <Bottom className="bottom">
+                  <Like
+                    isLike={postlistdata.checkLike}
+                    forLikeId={postlistdata.boardId}
+                    likeCount={postlistdata.likeCount}
+                  />&nbsp;<Count>조회수&nbsp;{postlistdata.viewCount}</Count>
+                </Bottom>
+                <Day>{postlistdata.createdAt.substr(0, 10).split('-', '3').join(".")}</Day>
+              </Text>
+            </DountBox>
+          </ContentsBox>
+        </StyledSlider>
+      </Box>
+      <Con>
+        <Left>
+          <WriterImg src={postlistdata.profileImg}></WriterImg>
+        </Left>
+        <Right>
+          <Content>
+            <Nick>{postlistdata.nickname}</Nick>&nbsp;&nbsp;
+            {/* {postlistdata.contents} */}
+            {toggleEllipsis(postlistdata.contents, limit).string}
+            {toggleEllipsis(postlistdata.contents, limit)
+              .isShowMore ? <MoreBtn onClick={onClickMore(postlistdata.contents)}>
+              ...더보기</MoreBtn> : <Arr onClick={onClickClose}><ArrowUp /></Arr>}
+          </Content>
+        </Right>
+        {userinfo.username === postlistdata.userId ?
+          <>
+            <Toggle onClick={onClickNav}><Dot /></Toggle>
+            {user_nav && (
+              <UserInfoNav>
+                <div>
+                  <div onClick={() => { openModall() }}>수정하기</div>
+                  <div style={{ color: "#FF5E5E" }} onClick={() => {
+                    dispatch(
+                      deletePostAc(postlistdata.boardId))
+                  }}>삭제하기</div>
+                </div>
+              </UserInfoNav>
+            )}
+          </>
+          : null
+        }
+      </Con>
+      {commentData.data && commentData.data?.map((comment_list, index) => (
+        <CommentList key={index}
+          username={comment_list.username}
+          createdAt={comment_list.createdAt}
+          comment={comment_list.comment}
+          user={userinfo.username}
+          idUser={postlistdata.userId}
+          commId={comment_list}
+          postAll={postlistdata}
+        />
+      ))}
+      <Blank></Blank>
+      <Enter>
+        <Input ref={comment_ref}></Input>
+        <PostBtn onClick={createComment}>게시</PostBtn>
+      </Enter>
 
-            {/* 게시글 수정모달 */}
-            {showModall ?
-                <ModifyModal showModall={showModall} closeModall={closeModall}
-                    formodiId={postlistdata.boardId}
-                />
-                : null}
-        </>
-    )
+      {/* 게시글 수정모달 */}
+      {showModall ?
+        <ModifyModal showModall={showModall} closeModall={closeModall}
+          formodiId={postlistdata.boardId}
+        />
+        : null}
+    </>
+  )
 };
 
 const StyledSlider = styled(Slider)`
     .slick-list {
         width: 100%;
         height: 80vw;
-        /* display: flex; */
     }
     .slick-dots {
         bottom: 2px;
@@ -336,7 +335,7 @@ height: 15vw;
 /* border: 1px solid pink; */
 `;
 
-const WriterImg =styled.img`
+const WriterImg = styled.img`
 width: 100%;
 height: 100%;
 border-radius: 50vw;
@@ -356,9 +355,14 @@ justify-content: center;
 margin-top: 3vw;
 `;
 
+
+
+
+// ----------------------------
 const ContentsBox = styled.div`
 width: 100%;
-height: 80vw;
+height: 77vw;
+padding: 20px 0;
 /* border: 5px solid purple; */
 display: flex;
 flex-direction: column;
@@ -368,17 +372,16 @@ text-align: center;
 /* position: absolute; */
 z-index: 2;
 background-color: rgb(0,0,0,0.5);
-justify-content: center;
-align-items: center;
+position: relative;
 `;
 
 const DountBox = styled.div`
-width: 300px;
-height: 300px;
-/* background-color: gray; */
 position: relative;
+width: 280px;
+height: 280px;
 top: 50%; left: 50%;
 transform: translate(-50%, -50%);
+
 `;
 
 const Text = styled.div`
