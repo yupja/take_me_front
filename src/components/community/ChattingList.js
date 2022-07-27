@@ -61,7 +61,7 @@ function ChattingList() {
             })}
           </div>
 
-
+{/* 
           {ClosedRoomList && ClosedRoomList?.map((item, itemIndex) => (
             <div key={item.roomId}>
               <ChattingList
@@ -76,7 +76,7 @@ function ChattingList() {
                   currentState={"END"} />
               </ChattingList>
             </div>
-          ))}
+          ))} */}
 
 
         </AllchattingList>
