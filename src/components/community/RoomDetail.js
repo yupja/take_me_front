@@ -17,14 +17,16 @@ function RoomDetail() {
   const { state } = useLocation();
   const { roomId } = useParams();
   const dispatch = useDispatch();
+  const [timeOut , setTimeOut] = useState(true);
   const getMessages = useSelector((state) => state.community.messages);
+  console.log(timeOut)
 
   useEffect(() => {
     return (() => {
       dispatch(delMessage());
       disconnects();
     })
-  }, []);
+  }, [timeOut]);
 
   console.log(state)
   // const getChttingData =(index)=>{
@@ -57,6 +59,8 @@ function RoomDetail() {
     scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
 
   }, [getMessages]);
+
+  console.log()
 
 
 
@@ -143,7 +147,8 @@ function RoomDetail() {
           <strong>
             <TimerFunction
               min={state.minutes}
-              sec={state.seconds} />
+              sec={state.seconds} 
+              setTimeOut={setTimeOut}/>
           </strong>
         </ListInfo>
         <Vote>

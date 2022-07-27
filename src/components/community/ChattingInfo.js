@@ -65,10 +65,11 @@ const ChattingInfo = (props) => {
       userCount: props.userCount,
       comment: props.comment,
       createdAt: props.createdAt,
-      timeLimit: props.timeLimit
-    }
+      timeLimit: props.timeLimit,
+      minutes: minutes,
+      seconds : seconds
 
-    console.log(sendData)
+    }
 
     navigate(`/chat/roomdetail/${sendData.roomId}`, { state: sendData });
 

@@ -3,7 +3,7 @@ import { getCookie, setCookie, removeCookie } from "../store/modules/cookie";
 import { useCookies } from "react-cookie";
 
 export const instance = axios.create({
-  baseURL: "http://43.200.4.1"
+  baseURL: "https://api.webprogramming-mj6119.shop/"
   // baseURL: "https://api.webprogramming-mj6119.shop"
   // // baseURL: "http://13.209.13.168"
 });
