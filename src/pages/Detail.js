@@ -29,10 +29,15 @@ function Detail() {
 
     const boardIdex = params.boardId;
 
+    const  state  = useLocation();
+    const postlistdata = state.state.name
+    const boardId = postlistdata.boardId
+    // console.log(boardId,"id")
+
     React.useEffect(() => {
         dispatch(loadCommentAc(boardIdex))
         dispatch(loadpostsAc())
-        dispatch(loadDetailAc(boardIdex))
+        dispatch(loadDetailAc(boardId))
         dispatch(getUserInfoDB())
     }, []);
 
@@ -69,9 +74,7 @@ function Detail() {
         setShowModall(false);
     }
     
-    const  state  = useLocation();
-    const postlistdata = state.state.name
-    const boardId = postlistdata.boardId
+
 
     //슬릭
     const settings = {
@@ -108,7 +111,7 @@ function Detail() {
                 <div style={{backgroundColor:"transparent"}}></div>
                     <ContentsBox>
                         <DountBox>
-                        <DountChart color="#26DFA6" size="300" position="relative" percent={goal.goalPercent}/>
+                        <DountChart color="#26DFA6" size="250" position="relative" percent={goal.goalPercent}/>
                         <Text>
                         <Commu>
                             <GoalName><p className="goalTitle">{goal.goalitemName} {Math.floor(goal.goalPercent * 100)}%</p></GoalName>
@@ -168,6 +171,7 @@ function Detail() {
                     idUser={postlistdata.userId}
                     commId={comment_list}
                     postAll={postlistdata}
+                    profileImg={comment_list.profileImg}
                 />
             ))}
             <Blank></Blank>
@@ -189,7 +193,7 @@ function Detail() {
 const StyledSlider = styled(Slider)`
     .slick-list {
         width: 100%;
-        height: 80vw;
+        height: 286px;
         /* display: flex; */
     }
     .slick-dots {
@@ -205,7 +209,7 @@ const StyledSlider = styled(Slider)`
 `;
 const Box = styled.div`
 width: 100%;
-height: 80vw;
+height: 284px;
 /* border: 3px solid red; */
 /* display: flex; */
 align-items: center;
@@ -218,7 +222,7 @@ position: relative;
 
 const BImg = styled.img`
 width: 100%;
-height: 80vw;
+height: 286px;
 background-color: #F5F5F5;
 display: flex;
 position: absolute;
@@ -288,13 +292,14 @@ margin: auto 0;
 
 const Content = styled.div`
 width: 100%;
-min-height: 20%;
+min-height: 83px;
 font-size: 0.8rem;
-padding: 3vw;
+padding: 10px;
 /* border: 2px solid orange; */
 color: white;
 /* position: absolute;
 z-index: 2; */
+margin-top: 8px;
 line-height: 1rem;
 `;
 
@@ -324,16 +329,18 @@ color: #999999;
 
 const Con = styled.div`
 width: 100%;
+min-height: 83px;
 background-color: #333333;
 /* border: 5px solid blue; */
 display: flex;
-padding: 5vw 0 1vw 5vw;
+padding: 0 0 0 25px;
 `;
 
 const Left = styled.div`
-width: 15vw;
-height: 15vw;
+width: 45px;
+height: 45px;
 /* border: 1px solid pink; */
+margin-top: 20px;
 `;
 
 const WriterImg =styled.img`
@@ -344,8 +351,8 @@ border-radius: 50vw;
 `
 
 const Right = styled.div`
-width: 70%;
-min-height: 15vw;
+width: 75%;
+min-height: 83px;
 /* border: 1px solid greenyellow; */
 `;
 
@@ -358,7 +365,7 @@ margin-top: 3vw;
 
 const ContentsBox = styled.div`
 width: 100%;
-height: 80vw;
+height: 286px;
 /* border: 5px solid purple; */
 display: flex;
 flex-direction: column;
@@ -375,7 +382,7 @@ align-items: center;
 const DountBox = styled.div`
 width: 300px;
 height: 300px;
-/* background-color: gray; */
+background-color: gray;
 position: relative;
 top: 50%; left: 50%;
 transform: translate(-50%, -50%);
