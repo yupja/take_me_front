@@ -32,7 +32,6 @@ const CreateRoom = (props) => {
     dispatch(createChatRoom(sendData, navigate));
 
   }
-  console.log(count)
 
   return (
     <>
