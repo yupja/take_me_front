@@ -11,6 +11,9 @@ import community from "./modules/community"
 
 const store = configureStore({
   reducer: { goal, favorite,  community, user, saved, info, item, statistics},
+  middleware: getDefaultMiddleware({
+    serializableCheck: false,
+  })
 });
 
 export default store;

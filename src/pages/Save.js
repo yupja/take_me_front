@@ -37,12 +37,12 @@ function Save() {
   useEffect(() => {
     dispatch(myReadGoalRQ());
     dispatch(myFavoriteListRQ());
-  //   if (state.state.signupUrl.state && state.state.loginUrl) {
-  //     setShowModal(true)
-  // }else{
-  //   setShowModal(false)
-  // }
-    // openGuide();
+    if (state.state?.signupUrl.state && state.state?.loginUrl) {
+      setShowModal(true)
+  }else{
+    setShowModal(false)
+  }
+    openGuide();
   }, []);
 
   const [modalOpen, setModalOpen] = useState(false);
