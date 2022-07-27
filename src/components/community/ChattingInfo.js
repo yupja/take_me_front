@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -7,11 +7,11 @@ import ProgressBar from "../public/ProgressBar"
 
 import styled from "styled-components";
 import { chattingVote } from "../../store/modules/community"
-import {Timer, ChattingEnd} from "../../assets/icons"
+import { Timer, ChattingEnd } from "../../assets/icons"
 import Loading from "../public/Loading";
 
 
-const ChattingInfo = (props) =>{
+const ChattingInfo = (props) => {
 
   const [minutes, setMinutes] = useState();
   const [seconds, setSeconds] = useState();
@@ -24,34 +24,35 @@ const ChattingInfo = (props) =>{
 
   useEffect(() => {
     getTime();
-    setTimeout(()=>{
+    setTimeout(() => {
       setReady(false)
     }, 100)
- 
-  },[])
-  
-  const userInfo = useSelector((state)=>state.community.myInfo)
+
+  }, [])
+
+  const userInfo = useSelector((state) => state.community.myInfo)
 
 
 
 
-  const chageVote = () =>{
-    let sendData={}
-    if(vote){
+  const chageVote = () => {
+    let sendData = {}
+    if (vote) {
       setVote(false)
-      sendData={
+      sendData = {
         roomId: props.roomId,
-        prosCons : false
+        prosCons: false
       }
       dispatch(chattingVote(sendData))
 
-    }else if(!vote){
+    } else if (!vote) {
       setVote(true)
-      sendData={
+      sendData = {
         roomId: props.roomId,
-        prosCons : true
+        prosCons: true
       }
       dispatch(chattingVote(sendData))
+
   }}
 
   const getChttingData =(index)=>{
@@ -67,31 +68,46 @@ const ChattingInfo = (props) =>{
         minutes : minutes,
         seconds : seconds
 
+
+    }
+  }
+
+  const getChttingData = (index) => {
+    const sendData = {
+      roomId: props.roomId,
+      sender: userInfo.nickname,
+      profileImg: userInfo.profileImg,
+      authorNickname: props.authorNickname,
+      authorProfileImg: props.authorProfileImg,
+      userCount: props.userCount,
+      comment: props.comment,
+      createdAt: props.createdAt,
+      timeLimit: props.timeLimit
     }
 
     console.log(sendData)
-  
-    navigate(`/chat/roomdetail/${sendData.roomId}`, {state:sendData});
-  
-    }
-  
 
-  const getTime=()=>{
+    navigate(`/chat/roomdetail/${sendData.roomId}`, { state: sendData });
+
+  }
+
+
+  const getTime = () => {
     const createTime = new Date(props.createdAt);
-    createTime.setMinutes(createTime.getMinutes()+props.timeLimit)
+    createTime.setMinutes(createTime.getMinutes() + props.timeLimit)
     const currentTime = new Date();
-    let diff = (createTime-currentTime)
+    let diff = (createTime - currentTime)
     const diffHours = Math.floor(diff / (1000 * 60 * 60));
     diff -= diffHours * (1000 * 60 * 60);
     let diffMin = Math.floor(diff / (1000 * 60));
     diff -= diffMin * (1000 * 60);
     const diffSec = Math.floor(diff / 100000);
-    
+
     setMinutes(diffMin);
     setSeconds(diffSec);
   }
 
-  
+
   return ready ? <Loading /> : (
     <>
       {props.currentState === "Live" ?
@@ -157,41 +173,43 @@ const ChattingInfo = (props) =>{
         ""
       }
 
-  { props.currentState==="END"? 
-      <ChattingList>
-      <div className="chatInfoArea">
-        <div className="imgBox">
-        <img src={props.profileImg} />
-        </div>
-        
-        <div className="contentsBox">
-          <span>
-            <span className="innerSpan">
-              {props.userName}</span> {props.comment}</span>
-          <div className="stateArea"><ChattingEnd/></div>
-        </div>
-      </div>
-  
-      <div className="bottomArea">
-        <span>쓰자!</span>
-        <div style={{ 
-          width: "65%",
-          marginTop:"0.5rem"}}>
-          <ProgressBar
-            true={40}
-            false={60} />
-        </div>
-  
-        <span>멈춰!</span>
-  
-      </div>
-    </ChattingList>
-    :""}
+
+      {props.currentState === "END" ?
+        <ChattingList>
+          <div className="chatInfoArea">
+            <div className="imgBox">
+              <img src={props.profileImg} />
+            </div>
+
+            <div className="contentsBox">
+              <span>
+                <span className="innerSpan">
+                  {props.userName}</span> {props.comment}</span>
+              <div className="stateArea"><ChattingEnd /></div>
+            </div>
+          </div>
+
+          <div className="bottomArea">
+            <span>쓰자!</span>
+            <div style={{
+              width: "65%",
+              marginTop: "0.5rem"
+            }}>
+              <ProgressBar
+                true={40}
+                false={60} />
+            </div>
+
+            <span>멈춰!</span>
+
+          </div>
+        </ChattingList>
+        : ""}
 
 
 
-  </>
-    )
+    </>
+  )
 
 }
 

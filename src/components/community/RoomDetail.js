@@ -4,14 +4,25 @@ import { Link, useParams, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import SockJS from "sockjs-client";
 import Stomp from "stompjs";
-import { subMessage, myInfoData } from "../../store/modules/community";
+import { subMessage, delMessage } from "../../store/modules/community";
 import Header from "../public/Header";
+// import ChattingInfo from "./ChattingInfo";
+
 
 function RoomDetail() {
   const { state } = useLocation();
   const { roomId } = useParams();
   const dispatch = useDispatch();
   const getMessages = useSelector((state) => state.community.messages);
+
+  useEffect(() => {
+    return (() => {
+      dispatch(delMessage());
+      disconnects();
+    })
+  }, []);
+
+
 
   // const getChttingData =(index)=>{
   //   sendData ={
@@ -31,11 +42,9 @@ function RoomDetail() {
   const scrollRef = useRef();
 
 
-  // const sock = new SockJS('https://api.webprogramming-mj6119.shop/chatting', null, { transports: ["websocket", "xhr-streaming", "xhr-polling"] });
 
   const sock = new SockJS('http://43.200.4.1/chatting', null, { transports: ["websocket", "xhr-streaming", "xhr-polling"] });
-
-  
+  // const sock = new SockJS('https://api.webprogramming-mj6119.shop/chatting', null, { transports: ["websocket", "xhr-streaming", "xhr-polling"] });
   let client = Stomp.over(sock);
 
   // 토큰
@@ -43,7 +52,10 @@ function RoomDetail() {
 
   useEffect(() => {
     scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
+
   }, [getMessages]);
+
+
 
   useEffect(() => {
     // 소켓 연결
@@ -64,8 +76,6 @@ function RoomDetail() {
       // 유저 정보 전송(입장메시지용)
       client.send(`/pub/chat/message`, {}, JSON.stringify(info));
     });
-
-
 
   }, [])
 
@@ -111,19 +121,29 @@ function RoomDetail() {
   const userInput = `${state.sender}(으)로 댓글 달기 ...`
 
 
-  //은진님 이거 집어넣으시면 돼요 ㅋㅋ 제가 레이아웃 확인해서 보내드리려고 했는데 어디가 어딘지 모르겠네여어... 
-  //   <ChattingInfo
-  //   profileImg={state.authorProfileImg}
-  //   userName={state.authorNickname}
-  //   comment={state.comment}
-  //   time={state.timeLimit} 
-  //   />
-  // </Box>
-
   return (
     <ChatWrap>
       <Header title={title} />
-      <Box />
+      <Box>
+        <ListInfo>
+          <div className="userInfo">
+            <div className="profileBox">
+              <span className="live">LIVE</span>
+              <div className="profile"><img src={state.authorProfileImg} alt="" /></div>
+            </div>
+            <InfoText>
+              <span>{state.authorNickname} </span>
+              {state.comment}
+            </InfoText>
+          </div>
+          <strong>{state.timeLimit}:00</strong>
+        </ListInfo>
+        <Vote>
+          <button>쓰자!</button>
+          <button>멈춰!</button>
+        </Vote>
+        <p className="count">조회수 <span>{state.userCount}</span></p>
+      </Box>
       <ChatBox className="chatbox">
         <Chatting ref={scrollRef}>
           {state.sender &&
@@ -133,7 +153,7 @@ function RoomDetail() {
                   <div key={i} className={el.sender === state.sender ? "right" : "left"}>
                     <div className="img"><img src={el.profileImg} alt="프로필" /></div>
                     <div className="info">
-                      <span>닉네임</span>
+                      <span>{el.sender}</span>
                       <p>{el.message}</p>
                     </div>
                   </div>) :
@@ -166,10 +186,13 @@ export default RoomDetail;
 const ChatWrap = styled.div`
 
 `
+
+
+
 const ChatBox = styled.div`
-    width: 100%;
-    overflow: overlay;
-    height: 73vh;
+  width: 100%;
+  overflow: overlay;
+  height: 73vh;
 
 `
 const EnterMsg = styled.p`
@@ -236,13 +259,11 @@ const MyChat = styled.div`
 const Enter = styled.div`
 width: 100%;
 padding: 5px 25px;
-height: 12vw;
 border: none;
 background-color: #333333;
 display: flex;
-/* justify-content: center; */
 align-items: center; 
-position: fixed;
+position: absolute;
 bottom: 0;
 
 input:placeholder{
@@ -252,13 +273,12 @@ input:placeholder{
 
 const Input = styled.input`
 width: 100%;
-height: 2.5rem;
 border: 1px solid #A9FFE4;
-border-radius: 20px;
+border-radius: 40px;
 background-color: transparent;
 color: white;
 margin: 0 auto;
-padding: 4vw;
+padding: 0.81rem;
 :focus{
     outline: none;
 }
@@ -267,9 +287,8 @@ padding: 4vw;
 
 const PostBtn = styled.button`
 position: absolute;
-right:0;
+right: 2.25rem;
 height: 10vw;
-padding-right: 35px;
 border: none;
 background-color: transparent;
 color: white;
@@ -277,10 +296,103 @@ font-size: 0.75rem;
 font-weight:700;
 `;
 
-const Box = styled.button`
-
+const Box = styled.div`
 width: 100%;
-height:140px;
 background:#333;
-
+padding: 1.25rem 1.5rem;
+color: #fff;
+p.count{
+  font-size:0.87rem;
+  span{
+    color: #999;
+  }
+}
 `;
+
+// 상단 투표 정보
+const ListInfo = styled.div`
+display: flex;
+justify-content: space-between;
+div.userInfo{
+  display: flex;
+}
+div.profileBox {
+  position: relative;
+  width:2.5rem;
+  height: 2.5rem;
+  margin-right: 0.625rem;
+  flex-shrink: 0;
+  
+  span {
+  position: absolute;
+  top:0; left: 0;
+  display: inline-block;
+  /* width: 1.37rem;
+  height:0.625rem; */
+  padding: 3px 5px;
+  background: #FF7272;
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.43rem;
+  text-align: center;
+  border-radius: 1.93rem;
+  z-index: 10;
+}
+}
+.profile {
+  position: relative;
+  width:2.5rem;
+  height: 2.5rem;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+}
+img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  width:100%;
+  height: 100%;
+}
+strong {
+  font-family: 'Cafe24Ohsquareair';
+  color: #26DFA6;
+  font-size:1.5rem;
+  font-weight: 700;
+  padding-top: 0.93rem;
+}
+
+`
+const InfoText = styled.p`
+  font-size: 0.875rem;
+  line-height: 1.06rem;
+  padding-right: 1.87rem;
+span{
+  font-weight: 700;
+}
+
+`
+const Vote = styled.div`
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin: 0.62rem 0;
+button {
+  width: 49%;
+  height: 1.87rem;
+  text-align: center;
+  border-radius: 1.93rem;
+  color: #26DFA6;
+  border: 1px solid #26DFA6;
+}
+button:nth-child(2) {
+  background: #26DFA6;
+  color: #fff;
+  border: none;
+}
+
+`
+
+

@@ -53,7 +53,6 @@ export const getUserInfoDB = () => {
           email: email
         }
         console.log(userInfo)
-
         dispatch(infoList(userInfo))
 
       })
@@ -74,7 +73,8 @@ export const addUserDB = (userInfo) => {
     })
       .then((response) => {
         console.log("유저 등록 성공");
-        window.location.reload('/')
+        window.location.reload('/');
+
       })
       .catch((error) => {
         window.alert(error.response.data.message);

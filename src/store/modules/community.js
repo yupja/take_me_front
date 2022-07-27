@@ -18,19 +18,19 @@ export const loadChattingListRS = createAsyncThunk(
     }
   })
 
-  //Top5 오픈룸 조회 
+//Top5 오픈룸 조회 
 
-  export const topListRS = createAsyncThunk(
-    'read/topList',
-    async (thunkAPI) => {
-      try {
-        const { data } = await instance.get('/api/chat/room/top')
-        console.log(data)
-        return data.data;
-      } catch (error) {
-        console.log(error);
-      }
-    })
+export const topListRS = createAsyncThunk(
+  'read/topList',
+  async (thunkAPI) => {
+    try {
+      const { data } = await instance.get('/api/chat/room/top')
+      console.log(data)
+      return data.data;
+    } catch (error) {
+      console.log(error);
+    }
+  })
 
 
 
@@ -49,28 +49,29 @@ export const closedChttingListRS = createAsyncThunk(
 
 //종료된 채팅 조회 상세로그
 export const closedChttingLogRS = createAsyncThunk(
-    'read/closedChattingLog',
-    async (roomId, thunkAPI) => {
-      try {
-        const { data } = await instance.get(`/api/closedChat/room/${roomId}`)
-        return data.data;
-      } catch (error) {
-        console.log(error);
-      }
-    })
+  'read/closedChattingLog',
+  async (roomId, thunkAPI) => {
+    try {
+      const { data } = await instance.get(`/api/closedChat/room/${roomId}`)
+      return data.data;
+    } catch (error) {
+      console.log(error);
+    }
+  })
 
 // 찬반투표
-  export const chattingVote = (voteData)=> {
-      console.log(voteData)
-      return async function(dispatch){
-        try{
-          await instance.post(`/api/chat/room/${voteData.roomId}/vote`, {
-            prosCons : voteData.prosCons
-          })
-        }catch(error){
-          console.log(error)          
-        }
-    }}
+export const chattingVote = (voteData) => {
+  console.log(voteData)
+  return async function (dispatch) {
+    try {
+      await instance.post(`/api/chat/room/${voteData.roomId}/vote`, {
+        prosCons: voteData.prosCons
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
 
 // [커뮤니티 채팅 API / 은진] -------------------------------------------------
 
@@ -81,13 +82,13 @@ export const createChatRoom = (sendData, navigate) => {
       comment: sendData.comment,
       timeLimit: sendData.timeLimit
     })
-    .then((res) => {
-      const roodId = res.data.data.roomId
-      navigate(`/chat/roomdetail/${roodId}`, {state:sendData});
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+      .then((res) => {
+        const roodId = res.data.data.roomId
+        navigate(`/chat/roomdetail/${roodId}`, { state: sendData });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 };
 
@@ -338,9 +339,9 @@ const communitySlice = createSlice({
   initialState: {
     // 채팅
     chattingList: [],
-    topChttingList:[],
+    topChttingList: [],
     closedChttingList: [],
-    closedChttingLog : [], 
+    closedChttingLog: [],
     getDayCountList: [],
     messages: [],
     myInfo: [],
@@ -393,12 +394,20 @@ const communitySlice = createSlice({
       console.log(action.payload);
       state.getDayCountList = action.payload;
     },
+
+    // 채팅 메시지
     subMessage(state, action) {
       state.messages.push(action.payload);
       // state.messages = action.payload;
     },
+    // 채팅 메시지 삭제
+    delMessage(state, action) {
+      console.log("dho")
+      state.messages = [];
+      // state.messages = action.payload;
+    },
   },
-  
+
   extraReducers: {
     [loadChattingListRS.fulfilled]: (state, action) => {
       state.chattingList = action.payload
@@ -423,5 +432,5 @@ const communitySlice = createSlice({
 
 });
 
-export const { loadComment, createComment, roadPosts, loadDetail, subMessage, getDayCountList, myInfo } = communitySlice.actions;
+export const { loadComment, createComment, roadPosts, loadDetail, subMessage, getDayCountList, myInfo, delMessage } = communitySlice.actions;
 export default communitySlice.reducer;

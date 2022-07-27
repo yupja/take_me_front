@@ -166,7 +166,7 @@ const SwipeForm = (props) =>{
           </SwipeItem>
         </ChattingList> */}
       </Wrap>
-      {/* // ))}   */}
+      // ))}  
     </>
   )
 } 
