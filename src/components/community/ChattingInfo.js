@@ -242,7 +242,7 @@ margin-bottom: 1rem; */
       margin-right: 5px;
     }
   }
-  .stateArea{
+  .timerArea{
     display: flex;
     flex-direction: column;
     align-items: center;

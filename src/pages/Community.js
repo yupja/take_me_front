@@ -20,13 +20,11 @@ const Community = () => {
   const [page, setPage] = useState(<CommunityList />);
 
   useEffect(()=>{
-    if(isLoad){
-      dispatch(topListRS());
-      setLoad(false)
-    }
 
-  },[isLoad])
+      dispatch(topListRS());
+    },[isLoad])
   const topRoomList = useSelector(((state => state.community.topChttingList)));
+  console.log(topRoomList)
 
 
 
@@ -91,13 +89,10 @@ height: 100%;
 display: flex;
 align-items: center;
 justify-content: center;
-background: #000000;
+/* background: #000000; */
 box-shadow:initial;
 overflow-x:scroll;
 
-div{
-  border-radius: 10px;
-}
 
 &::-webkit-scrollbar {
     display: none;
