@@ -88,7 +88,7 @@ max-height: 140px;
 height: 100%;
 display: flex;
 align-items: center;
-justify-content: center;
+
 /* background: #000000; */
 box-shadow:initial;
 overflow-x:scroll;

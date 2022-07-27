@@ -106,8 +106,8 @@ const SwipeForm = (props) =>{
     <>
       {props.topRoomList.map((item, idx)=>( 
       <Wrap>
-        <ChattingList
-            style={{transform: `translateX(${(-100 / props.topRoomList.length+2) * (currentIndex)}%)`}}> 
+        <ChattingList>
+             {/* style={{transform: `translateX(${(-100 / props.topRoomList.length+2) * (currentIndex)}%)`}}>  */}
           <SwipeItem>
             <div className="chatInfoArea"
               onClick={() => {
@@ -270,9 +270,7 @@ padding: 0.3rem 0 0.3rem 0;
 
 const ChattingList = styled.div`
 
-/* display: flex;
-align-items: center;
-justify-content: center; */
+
 padding: 0.6rem 0.8rem 0 0.8rem;
 border: 1px solid #333333;
 max-width: 390px;
