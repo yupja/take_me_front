@@ -104,7 +104,7 @@ const SwipeForm = (props) =>{
   
   return (
     <>
-      {props.topRoomList.map((item, idx)=>( 
+      {props.topRoomList.map&&props.topRoomList?.map((item, idx)=>( 
       <Wrap>
         <ChattingList>
              {/* style={{transform: `translateX(${(-100 / props.topRoomList.length+2) * (currentIndex)}%)`}}>  */}
