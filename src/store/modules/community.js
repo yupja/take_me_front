@@ -221,7 +221,7 @@ export const loadDetailAc = (boardId) => {
   return function (dispatch) {
     instance.get(`/api/board/detail/${boardId}`)
       .then(response => {
-        console.log(response, "redux_data");
+        // console.log(response, "redux_data");
         dispatch(loadDetail(response));
       })
       .catch(error => {
@@ -324,7 +324,7 @@ export const loadCommentAc = (boardId) => {
   return function (dispatch) {
     instance.get(`/api/board/${boardId}/comment`)
       .then(response => {
-        console.log(response.data, "console load")
+        // console.log(response.data, "console load")
         dispatch(loadComment(response.data));
       })
       .catch(error => {

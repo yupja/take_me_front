@@ -56,7 +56,7 @@ export const getUserInfoDB = () => {
           nickname: nickname,
           email: email
         }
-        console.log(userInfo)
+        // console.log(userInfo)
         dispatch(infoList(userInfo))
 
       })
