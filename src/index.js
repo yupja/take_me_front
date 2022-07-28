@@ -29,7 +29,7 @@ root.render(
           width: "100%",
           maxHeight: "844px",
           height: "100%",
-          // overflow: "hidden"
+          overflowY: "scroll",
         }}>
           <App />
         </div>

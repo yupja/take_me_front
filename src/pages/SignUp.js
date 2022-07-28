@@ -11,6 +11,8 @@ function SignUp(e) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const title = "회원가입";
+
 
   // 회원가입 정보 가져오기
   const emailRef = useRef();
@@ -175,15 +177,21 @@ function SignUp(e) {
   return (
     <>
       <div className="topWrap">
-        <Header />
+        <Header title={title} />
       </div>
       <SignWrap>
         <Title><span>티끌</span>회원가입을 위해<br />정보를 입력해 주세요.</Title>
         <Form>
           <label htmlFor="userId">
-            <input type="text" id="userId" placeholder="아이디" ref={idRef} onChange={onIdChange} />
+            <input
+              type="text"
+              id="userId"
+              placeholder="아이디"
+              ref={idRef}
+              onChange={onIdChange}
+            />
             <p>{userIdAlert}</p>
-            <button className="checkBtn" onClick={idCheck}>중복체크</button>
+            <CheckBtn onClick={idCheck}>중복체크</CheckBtn>
           </label>
           <label htmlFor="userPw">
             <input type="password" id="userPw" placeholder="비밀번호" ref={pwRef} onChange={onPwChange} />
@@ -196,20 +204,26 @@ function SignUp(e) {
           <label htmlFor="userEmail">
             <input type="text" id="userEmail" placeholder="이메일" ref={emailRef} onChange={onEmailChange} />
             <p>{userEmailAlert}</p>
-            <button className="checkBtn" onClick={emailCheck}>중복체크</button>
+            <CheckBtn onClick={emailCheck}>중복체크</CheckBtn>
           </label>
           <label htmlFor="userNick">
             <input type="text" id="userNick" placeholder="닉네임" ref={nickRef} onChange={onNickChange} />
             <p>{userNickAlert}</p>
-            <button className="checkBtn" onClick={nickCheck}>중복체크</button>
+            <CheckBtn onClick={nickCheck}>중복체크</CheckBtn>
           </label>
           <InfoCheck>
             <label>
-              <input type="checkbox" name="info" value="서비스 약관" />이용약관 동의
+              <div>
+                <input type="checkbox" name="info" value="서비스 약관" />
+                <span>이용약관 동의</span>
+              </div>
               <button>내용보기</button>
             </label>
             <label>
-              <input type="checkbox" name="info" value="개인정보" />개인정보 수집 및 활용 동의
+              <div>
+                <input type="checkbox" name="info" value="개인정보" />
+                <span>개인정보 수집 및 활용 동의</span>
+              </div>
               <button>내용보기</button>
             </label>
           </InfoCheck>
@@ -229,13 +243,15 @@ padding: 0 25px;
 `
 
 const Title = styled.h1`
-margin-top: 33px;
+margin: 30px 0 25px;
 font-size: 1.75rem;
 line-height: 2.31rem;
 font-weight:500;
+letter-spacing: -0.05em;
 span{
-  font-family: 'HS-Regular';
-  font-size: 2.31rem;
+  font-family: 'Cafe24Ohsquare';
+  font-weight: 700;
+  font-size: 2rem;
   color: #26DFA6;
   padding-right: 5px;
 }
@@ -250,7 +266,7 @@ label{
   text-align: left;
 }
 p{
-  margin-top:5px;
+  /* margin-top:5px; */
   font-size: 0.87rem;
   color: #FF7272;
 }
@@ -261,8 +277,7 @@ input {
   border: none;
   padding: 16px 10px;
   font-size: 1.25rem;
-  margin-top: 10px;
-  border-bottom: 1px solid #EAEEEF;
+  border-bottom: 1px solid #ddd;
   box-sizing: border-box;
   border-radius: 2px;
 }
@@ -274,27 +289,43 @@ input#user_id {
 input::placeholder {
   color: #ccc;
 }
-button.checkBtn {
+/* button.checkBtn {
   position: absolute;
   top: 50%; right: 3%;
   transform: translateY(-50%);
   border: 1px solid #D8D8D8;
-  padding: 5px;
+  padding: 5px 10px;
   background: #fff;
   color: #999999;
   font-size: 0.87rem;
   border-radius: 60px;
-}
+} */
 `;
 
 const InfoCheck = styled.div`
 margin: 20px 10px;
+div {
+  display: flex;
+  align-items: center;
+}
  input {
-  width: auto;
+  width: 16px;
+  height: 16px;
+  margin-right: 5px;
  }
  label {
-  font-size: 0.87rem;
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.875rem;
   color: #666;
+  margin-bottom : 14px;
+ }
+ span {
+  padding: 0 0 3px; 
+ }
+ button {
+  color:#26DFB3;
  }
   
 `;
@@ -309,5 +340,17 @@ const InputBtn = styled.button`
   color:#fff;
   font-size: 18px;
   cursor: pointer;
+  
+`;
+const CheckBtn = styled.button`
+  position: absolute;
+  top: 50%; right: 3%;
+  transform: translateY(-50%);
+  border: 1px solid #D8D8D8;
+  padding: 5px 10px;
+  background: #fff;
+  color: #999999;
+  font-size: 0.87rem;
+  border-radius: 60px;
   
 `;

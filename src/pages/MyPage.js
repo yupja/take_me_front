@@ -15,6 +15,7 @@ import { ReactComponent as Withdrawal } from "../assets/icons/Withdrawal.svg";
 import { ReactComponent as Invi } from "../assets/icons/Invi.svg";
 import { ReactComponent as InfoIcon } from "../assets/icons/Info.svg";
 import { ReactComponent as Consu } from "../assets/icons/Consu.svg";
+import { ReactComponent as Close } from "../assets/icons/Close.svg";
 
 function MyPage() {
   const title = "MY"
@@ -25,6 +26,7 @@ function MyPage() {
   const state = useSelector((state) => state.info.infoList);
   const [openModal, setOpenModal] = useState(false);
   const [pwAlertStr, setPwAlertStr] = useState('');
+  const [pwStr, setPwStr] = useState('비밀번호를 입력해 주세요.');
 
 
   useEffect(() => {
@@ -40,9 +42,10 @@ function MyPage() {
   const closePopup = (e) => {
     setOpenModal(false)
   };
-
+  console.log(pwStr)
   // 탈퇴하기
-  const secession = async () => {
+  const secession = async (e) => {
+    e.preventDefault();
     const pw = pwRef.current.value;
     const username = state.username;
 
@@ -51,7 +54,12 @@ function MyPage() {
       pwRef.current.focus();
       return;
     }
-    await dispatch(userSecDB(pw, username, setOpenModal, setPwAlertStr))
+    const data = {
+      username: username,
+      password: pw
+    }
+    await dispatch(userSecDB(data, setPwStr, setPwAlertStr))
+    pwRef.current.value = null;
     console.log("디스패치 끝!")
   };
 
@@ -130,17 +138,18 @@ function MyPage() {
               </div>
               <div>
                 <span>비밀번호</span>
-                <input type="password" placeholder="비밀번호를 입력해 주세요." ref={pwRef} />
-                <p>{pwAlertStr}</p>
+                <div>
+                  <input type="password" placeholder={pwStr} ref={pwRef} />
+                  {/* <p>{pwAlertStr}df</p> */}
+                </div>
               </div>
             </Info>
-            <div>
+            <Btn>
               <button onClick={secession}>탈퇴하기</button>
-              <button onClick={closePopup}>아니오</button>
-            </div>
+              <button className="closeBtn" onClick={closePopup}>아니오</button>
+            </Btn>
             <CloseBtn onClick={closePopup}>
-              <span></span>
-              <span></span>
+              <Close />
             </CloseBtn>
           </PopupWrap>
         </PopupBack> : null
@@ -154,30 +163,87 @@ export default MyPage;
 
 // 탈퇴 팝업
 const PopupBack = styled.div`
-position: fixed;
+position: absolute;
 top: 0; left: 0;
 width: 100%;
 height: 100vh;
-background: #333;
 padding: 0 25px;
+background: rgba(0, 0, 0, 0.7);
+padding: 0 25px;
+z-index: 999;
 `
 
 const PopupWrap = styled.div`
-position: absolute;
+position: relative;
 top: 50%; left: 50%;
 transform: translate(-50%,-50%);
 width: 100%;
-height: 200px;
 background: #fff;
+border-radius: 5px;
+text-align: center;
+overflow: hidden;
+
+p {
+  font-weight: 400;
+  font-size: 1.5rem;
+  line-height: 2rem;
+  margin: 10px 0;
+}
 `
 
 const Title = styled.h1`
+  font-weight: 700;
+  font-size: 1.25rem;
+  line-height: 1.25rem;
+  line-height:60px;
+`
+
+const Info = styled.div`
+div {
+  display: flex;
+  padding: 5px 10px;
+  text-align: center;
+  justify-content: space-between;
+  align-items: center;
+}
+div>div {
+  padding:0;
+  display: block;
+}
+span {
+  width: 30%;
+  font-weight: 400;
+  color: #333;
+}
+input {
+  text-align: center;
+  /* padding: */
+  line-height: 40px;
+  height: 40px;
+  border: 1px solid #ccc;
+  border-radius : 39px;
+  color: #333;
+}
+input::placeholder{
+  color:#ccc;
+}
+`
+
+const Btn = styled.div`
+margin-top: 1.875rem;
+button {
+  width: 50%;
+  color: #fff;
+  font-size:1.125rem;
+  font-weight: 700;
+  background: #ccc;
+  padding:1rem 0;
+}
+.closeBtn{
+  background: #26dfa6;
+}
 
 `
-const Info = styled.h1`
-
-`
-
 
 
 
