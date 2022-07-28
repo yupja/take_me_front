@@ -31,6 +31,8 @@ const CommunityTab = () => {
   const Postdata = useSelector((state) => state.community.postList.data);
   const Savedata = useSelector((state) => state.saved.savedItem);
 
+  // console.log(Postdata[0].boardId,"post")
+
 
 
   const [showModall, setShowModall] = useState(false);
@@ -139,7 +141,8 @@ const CommunityTab = () => {
                         )
                     }}>
                       <Count onClick={() => {
-                        Navigate(`/detail/${postList.boardId}`)
+                        Navigate(`/detail/${postList.boardId}`,
+                        { state: { name: postList } })
                       }}>
                         <Comment />&nbsp;&nbsp;{postList.commentCount} 개
                       </Count>
@@ -347,6 +350,7 @@ font-weight: 500;
 background-color: #26DFA6;
 box-shadow: 5px 5px 5px rgb(110, 110, 110, 0.4);
 opacity: 95%;
+margin-left: 10px;
 `;
 
 const Right = styled.div`
@@ -372,9 +376,9 @@ font-weight: 700;
 `;
 
 const NewNick = styled.div`
-/* border: 3px solid purple; */
+/* border: 0.5px solid purple; */
 width: 100%;
-height: 72px;
+height: 70px;
 font-size: 1rem;
       /* width:100%; */
       overflow: hidden;
