@@ -9,6 +9,8 @@ import Header from "../components/public/Header";
 
 const FindPw = () => {
 
+  const title = "비밀번호 찾기"
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const state = useSelector((state) => state.user);
@@ -65,7 +67,7 @@ const FindPw = () => {
 
   return (
     <>
-      <Header />
+      <Header title={title} />
       <FindWrap>
         <h2>비밀번호를 찾기 위해<br />정보를 입력해주세요</h2>
         <input type="text" placeholder="아이디" ref={idRef} onChange={idCheck} />
