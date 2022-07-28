@@ -1,11 +1,12 @@
-import React from "react";
+import React,{useState} from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux/es/exports";
 import { useParams } from "react-router-dom";
 import { loadsavedAc } from "../../store/modules/saved";
-import {ReactComponent as ReceiptB} from "../../assets/icons/ReceiptB.svg";
-import {ReactComponent as SavePaper} from "../../assets/icons/SavePaper.svg";
-import {ReactComponent as Close} from "../../assets/icons/Close.svg";
+import { ReactComponent as SavePaper } from "../../assets/icons/SavePaper.svg";
+import { ReactComponent as Close } from "../../assets/icons/Close.svg";
+import { ReactComponent as CheckedStart } from "../../assets/icons/CheckedStart.svg";
+import { AiOutlineStar } from 'react-icons/ai'
 
 
 const ListModal = (props) => {
@@ -17,98 +18,101 @@ const ListModal = (props) => {
   const saveDataa = useSelector((state) => state.saved.savedItem.data);
   const boardId = (props.forsaveId)
 
-  console.log(boardId);
-  
+  const [star, setStar] = useState(false);
+
+  const changeStar = () => {
+    if (star) {
+      setStar(false);
+    } else {
+      setStar(true);
+    }
+  }
 
   React.useEffect(() => {
     dispatch(loadsavedAc(boardId))
-    // dispatch(loadCommentAc())
-},[])
+  }, [])
 
-    return (
-      <>
+  return (
+    <>
       {props.showModall ?
 
         <Background>
-            {/* <ModalBox onClick={e => e.stopPropagation()}> */}
-            <YoungBox>
-              <SavePaper className="paper" position="relative"/>
-              </YoungBox>
-                {/* <CommentBox> */}
-                <BigBox>
-                  <Stopplz>
-                    <Top>
-                      <Icon>
-                        {/* <ReceiptB className="bigger"/> */}
-                      </Icon>   
-                    <Closeb onClick={props.closeModall}><Close /></Closeb>
-                    </Top>
-                    <Middle>
-                        <p><Spann>{saveDataa.userId}</Spann>님의 {saveDataa.goalItemName} <Spann>KEEP</Spann></p>
-                        <p style={{fontWeight:"700", marginTop:"2vw"}}>{saveDataa.savedItemTotalPrice} 원</p>
-                    </Middle>
-                    </Stopplz>
-<Boxer>
-  <>
-                    {saveData?.map((savedItem, index) => (
-                    // <ListBox>
-                    <>
+          {/* <ModalBox onClick={e => e.stopPropagation()}> */}
+          <PaperBox>
+            <SavePaper className="paper" position="relative"></SavePaper>
+          </PaperBox>
+          <BigBox>
+            <Top>
+              <Closeb onClick={props.closeModall}><Close /></Closeb>
+            </Top>
+            <Middle>
+              <p><Spann>{saveDataa.userId}</Spann>님의
+              {saveDataa.goalItemName} <Spann>KEEP</Spann></p>
+              <p style={{ fontWeight: "700", marginTop: "2vw" }}>
+                {saveDataa.savedItemTotalPrice} 원</p>
+            </Middle>
+            <ListBox>
+              <>
+                {saveData?.map((savedItem, index) => (
+                  <>
                     <List key={index}>
                       <Left>
-                      <CreateAt>{savedItem.createdDate.substr(0, 10).split('-','3').join(".")}</CreateAt>
-                      <SavedName>{savedItem.saveItemName}</SavedName>
+                        <CreateAt>
+                          {savedItem.createdDate.substr(0, 10).split('-', '3').join(".")}
+                        </CreateAt>
+                        <SavedName>{savedItem.saveItemName}</SavedName>
                       </Left>
                       <Right>
-                      <Price>{savedItem.price} 원</Price>
-                      <Star>⭐</Star>
+                        <Price>{savedItem.price} 원</Price>
+                        {/* <Star>⭐</Star> */}
+                        <StarArea onClick={() => { changeStar(); }}>
+                    {star ?
+                      <CheckedStart />
+                      :
+                      <AiOutlineStar />
+                    }
+                  </StarArea>
                       </Right>
                     </List>
-                    {/* </ListBox> */}
-                   </>
-                    ))}
-                    </>
- </Boxer>
- </BigBox>
-                {/* </CommentBox> */}
-            {/* </ModalBox> */}
-             <CloseBtn onClick={props.closeModall}>닫기</CloseBtn>
+                  </>
+                ))}
+              </>
+            </ListBox>
+          </BigBox>
+          {/* </ModalBox> */}
+          <CloseBtn onClick={props.closeModall}>닫기</CloseBtn>
         </Background> : null}
-</>
+    </>
 
-    );
-  };
+  );
+};
 
-  const Stopplz = styled.div`
-  /* border: 3px solid purple; */
-  display: flex;
-  /* flex-direction: column; */
-  justify-content: center;
-  width: 80%;
-  height: 20vw;
-  top: 14%;
-  position: absolute;
 
-  `;
+const StarArea = styled.span`
+/* display: flex; */
+width: 15px;
+`;
 
-  const BigBox = styled.div`
+const BigBox = styled.div`
   /* border: 1px solid gold; */
-  width: 80vw;
+  width: 100%;
+  height: 100%;
   `;
 
-  const YoungBox = styled.div`
+const PaperBox = styled.div`
   text-align: center;
 align-items: center;
 /* float: right; */
 position: absolute;
-margin-right: 1vw;
+/* margin-right: 1vw; */
 border: none;
 top: 50%; 
 left: 50%;
 transform: translate(-50%, -50%);
   `;
 
-  const Boxer = styled.div`
-  border: 1px solid red;
+const ListBox = styled.div`
+  /* border: 1px solid red; */
   width: 330px;
   height: 400px;
   overflow: auto;
@@ -118,25 +122,13 @@ margin: auto;
 align-items: center;
 position: absolute;
 z-index: 90;
-top: 55%; 
+top: 470px; 
 left: 50%;
 transform: translate(-50%, -50%);
 `;
 
-  const ListBox = styled.div`
-  border: 1px solid goldenrod;
-  width: 90vw;
-  height: 105vw;
-  /* position: absolute; */
-    /* z-index: 80; */
-    /* top: 55%;  */
-    /* left: 50%; */
-    /* transform: translate(-50%, -50%); */
-    /* overflow: auto; */
-  `;
-
-  const Background = styled.div`
-  position: fixed;
+const Background = styled.div`
+  position: absolute;
   top: 0;
   left: 0;
   bottom: 0;
@@ -149,8 +141,8 @@ transform: translate(-50%, -50%);
     position: relative;
   }
   `;
-  
-  const ModalBox = styled.div`
+
+const ModalBox = styled.div`
   position: fixed;
   left: 50%;
   top: 50%;
@@ -167,86 +159,46 @@ transform: translate(-50%, -50%);
       padding: 20px;
   }
   `;
-  
+
 const Closeb = styled.div`
 /* border: 2px solid violet; */
-width: 100%;
-height: 5vw;
+width: 300px;
+height: 20px;
 align-items: center;
-/* float: right; */
 position: absolute;
-top: 10;
-/* right: 0%; */
-margin-right: 1vw;
+top: 135px;
 display: flex;
 justify-content: end;
-/* background-color: white; */
-/* border: none; */
-`;
-
-const CommentBox = styled.div`
-width: 100%;
-height: 50vh;
-margin: auto 0;
-background-color: white;
-/* justify-content: center; */
-display: flex;
-flex-direction: column;
-/* border: 3px solid yellow; */
-border-radius: 3vw;
-align-items: center;
-position: relative;
 `;
 
 const Top = styled.div`
-width: 80vw;
+width: 150px;
 /* width: 100%; */
-/* border: 1px solid blue; */
+border: 1px solid blue;
 display: flex;
-margin:1vw 0 3vw 0;
+margin:10px 0 15px 0;
 position: absolute;
 display: flex;
 justify-content: center;
 z-index: 90;
-/* top: 13.5%;  */
 left: 50%;
 transform: translate(-50%, -50%);
 `;
 
-const Icon = styled.div`
-width: 100%;
-/* border: 1px solid red; */
-height: 3vh;
-font-size: 100rem;
-font-weight: 700;
-/* display: flex; */
-justify-content: center;
-margin-top: 3vw;
-display: flex;
-
-`;
-
 const Middle = styled.div`
 width: 100%;
-height: 20px;
+height: 50px;
 /* border: 1px solid red; */
-font-size: 1.5rem;
 font-size: 25px;
-/* font-weight: 700; */
 text-align: center;
 display: flex;
 justify-content: center;
 flex-direction: column;
-/* margin-top: 3vw; */
-/* margin-bottom: 5vw; */
-top: 75px;
-left: 175px;
+top: 230px;
+left: 50%;
 transform: translate(-50%, -50%);
 z-index: 80;
 position: fixed;
-top: 465px; 
-left: 700px;
-transform: translate(-50%, -50%);
 `;
 
 const Spann = styled.span`
@@ -257,19 +209,9 @@ font-weight: 700;
 const List = styled.div`
 width: 80%;
 height: 40px;
-border: 1px solid blue;
-/* display: flex; */
-/* justify-content: space-between; */
 align-items: center;
 justify-content: center;
-/* overflow: hidden; //float 랑 같이 부모 요소에! */
-/* border-bottom: 1px solid gray; */
 line-height: 10vw; //폰트의 높이!
-/* top: 2%; */
-/* left: 50%; */
-/* transform: translate(-50%, -50%); */
-/* z-index: 80; */
-/* position: absolute; */
 `;
 
 const Left = styled.div`
@@ -284,25 +226,28 @@ color: #999999;
 const SavedName = styled.span`
 font-size: 1rem;
 color: #333333;
-margin-left: 3vw;
+margin-left: 15px;
 `;
 
 const Right = styled.div`
 float: right;
+display: flex;
+align-items: center;
+/* border: 1px solid black; */
 `;
 
 const Price = styled.span`
 font-size: 1rem;
 color: #333333;
-margin-right: 3vw;
+margin-right: 15px;
 `;
 
 const Star = styled.span`
 font-size: 1rem;
 `;
 const CloseBtn = styled.button`
-width: 40vw;
-height: 8vh;
+width: 163px;
+height: 60px;
 border-radius: 15vw;
 border: none;
 background-color: #26DFA6;
@@ -314,13 +259,6 @@ display: flex;
 justify-content: center;
 align-items: center;
 bottom: 5%;
-left: 30%;
 `;
 
-
-//   /* 팝업이 열릴때 스르륵 열리는 효과 */
-//   animation: modal-show 0.3s;
-//   overflow: hidden;
-// `;
-
-  export default ListModal;
+export default ListModal;
