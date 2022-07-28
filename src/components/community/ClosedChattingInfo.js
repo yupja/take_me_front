@@ -1,5 +1,6 @@
 import React, {useEffect} from "react";
 import {useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import ProgressBar from "../public/ProgressBar"
 
 import styled from "styled-components";
@@ -7,14 +8,11 @@ import { ChattingEnd } from "../../assets/icons"
 import { myInfoData } from "../../store/modules/community"
 
 
-
-
 const ClosedChattingInfo = (props) => {
-
-
   useEffect(() => {
     dispatch(myInfoData())
   }, [])
+  const navigate = useNavigate();
 
   const userInfo = useSelector((state) => state.community.myInfo)
   const dispatch = useDispatch();
@@ -27,7 +25,11 @@ const ClosedChattingInfo = (props) => {
               <img src={props.profileImg} />
             </div>
 
-            <div className="contentsBox">
+            <div 
+              className="contentsBox"
+              onClick={()=>{
+                navigate(`/chat/closedChttinglog/${props.roomId}`);
+              }}>
               <span>
                 <span className="innerSpan">
                   {props.userName}</span> {props.comment}</span>

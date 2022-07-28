@@ -6,8 +6,9 @@ import Header from "../public/Header";
 
 import {closedChttingLogRS} from "../../store/modules/community"
 import ChattingInfo from "./ChattingInfo";
+import ClosedChattingInfo from "./ClosedChattingInfo";
 
-function RoomDetail(props) {
+function ClosedChttinglog(props) {
   const  roomId  = useParams();
   const {state} = useLocation();
   const dispatch = useDispatch();
@@ -30,35 +31,42 @@ function RoomDetail(props) {
     <ChatWrap>
       <Header title={title} />
       <Box>
-        <ChattingInfo
+        <ClosedChattingInfo
           profileImg={getData.authorProfileImg}
           userName={getData.authorNickname}
           comment={getData.comment}
           currentState={"END"} />
       </Box>
 
-      
+      {getData.lenght===0?
+      "기록된 대화내용이 없어요"
+      :
       <ChatBox className="chatbox">
-        <Chatting>
-          { chattingLog&&chattingLog?.map((list, index)=>(
-            <div>
-              <div key={index} className={list.sender === state ? "right" : "left"}>
-              <div className="img"><img src={list.profileImg}/></div>
-                    <div className="info">
-                      <span>{list.nickname}</span>
-                      <p>{list.message}</p>
-                    </div>
-              </div> 
-            </div>
-          ))}
-        </Chatting>
-      </ChatBox>
-    </ChatWrap>
+      <Chatting>
+        { chattingLog&&chattingLog?.map((list, index)=>(
+          <div>
+            <div key={index} className={list.sender === state ? "right" : "left"}>
+            <div className="img"><img src={list.profileImg}/></div>
+                  <div className="info">
+                    <span>{list.nickname}</span>
+                    <p>{list.message}</p>
+                  </div>
+            </div> 
+          </div>
+        ))}
+      </Chatting>
+    </ChatBox>
+  }
+  </ChatWrap>
   )
+
+      
+    
+
 };
 
 
-export default RoomDetail;
+export default ClosedChttinglog;
 
 const ChatWrap = styled.div`
 `

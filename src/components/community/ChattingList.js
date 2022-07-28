@@ -33,6 +33,8 @@ function ChattingList() {
   const closedRoomList = useSelector(((state => state.community.closedChttingList)));
   const userInfo = useSelector((state) => state.community.myInfo)
 
+  console.log(roomList)
+
 
 
   return (
@@ -77,6 +79,7 @@ function ChattingList() {
                   profileImg = {list.authorProfileImg}
                   userName = {list.authorNickname}
                   comment = {list.comment}
+                  roomId = {list.roomId}
                   true = {list.voteTruePercent}
                   false={list.voteFalsePercent}
                                   
