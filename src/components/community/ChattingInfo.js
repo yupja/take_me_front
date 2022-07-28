@@ -18,6 +18,7 @@ const ChattingInfo = (props) => {
   const [ready, setReady] = useState(true);
   const [vote, setVote] = useState(props.prosCons);
   const [timeOutLimit , setTimeOutLimit] = useState(true);
+  const [currentTime, setCurrentTime] =useState()
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -29,11 +30,14 @@ const ChattingInfo = (props) => {
       setReady(false)
     }, 100)
 
-    if(!timeOutLimit){
-      dispatch(deleteChattingRoom(props.roomId));
+    if(minutes > 10 || !timeOutLimit){
+      setTimeout(() => {
+        dispatch(deleteChattingRoom(props.roomId));
+      }, 100)
     }
 
   }, [timeOutLimit])
+  
 
   const userInfo = useSelector((state) => state.community.myInfo)
 
@@ -75,17 +79,18 @@ const ChattingInfo = (props) => {
       seconds : seconds
 
     }
-
     navigate(`/chat/roomdetail/${sendData.roomId}`, { state: sendData });
-
   }
 
 
   const getTime = () => {
     const createTime = new Date(props.createdAt);
+    const Time = new Date();
+    setCurrentTime(Time)
+    console.log(Time)
     createTime.setMinutes(createTime.getMinutes() + props.timeLimit)
-    const currentTime = new Date();
-    let diff = (createTime - currentTime)
+  
+    let diff = (createTime - Time)
     const diffHours = Math.floor(diff / (1000 * 60 * 60));
     diff -= diffHours * (1000 * 60 * 60);
     let diffMin = Math.floor(diff / (1000 * 60));
@@ -94,6 +99,7 @@ const ChattingInfo = (props) => {
 
     setMinutes(diffMin);
     setSeconds(diffSec);
+    console.log(diffMin, diffSec)
   }
 
 
@@ -118,9 +124,10 @@ const ChattingInfo = (props) => {
               <div className="timerArea">
                 <Timer />
                 <TimerFunction
-                  min={minutes}
+                  min={minutes+1}
                   sec={seconds}
-                  setTimeOutLimit={setTimeOutLimit} />
+                  setTimeOutLimit={"setTimeOutLimit"}
+                  station = "chattingInfo"/>
               </div>
             </div>
           </div>
@@ -162,41 +169,6 @@ const ChattingInfo = (props) => {
         :
         ""
       }
-
-
-      {props.currentState === "END" ?
-        <ChattingList>
-          <div className="chatInfoArea">
-            <div className="imgBox">
-              <img src={props.profileImg} />
-            </div>
-
-            <div className="contentsBox">
-              <span>
-                <span className="innerSpan">
-                  {props.userName}</span> {props.comment}</span>
-              <div className="stateArea"><ChattingEnd /></div>
-            </div>
-          </div>
-
-          <div className="bottomArea">
-            <span>쓰자!</span>
-            <div style={{
-              width: "65%",
-              marginTop: "0.5rem"
-            }}>
-              <ProgressBar
-                true={40}
-                false={60} />
-            </div>
-
-            <span>멈춰!</span>
-
-          </div>
-        </ChattingList>
-        : ""}
-
-
 
     </>
   )
@@ -242,14 +214,14 @@ margin-bottom: 1rem; */
   span{
     width: 80%;
     display: flex;
-    overflow-y:scroll;
+
 
     .innerSpan{
       display: flex;
       width: 25%;
-      font-weight: 500;
+      font-weight: 600;
       font-size: 1rem;
-      margin-right: 5px;
+      margin-right: 15px;
     }
   }
   .timerArea{

@@ -4,61 +4,69 @@ import { Link, useLocation, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Header from "../public/Header";
 
-import {closedChttingLogRS} from "../../store/modules/community"
+import {closedChttingLogRS, myInfoData} from "../../store/modules/community"
 import ChattingInfo from "./ChattingInfo";
+import ClosedChattingInfo from "./ClosedChattingInfo";
 
-function RoomDetail(props) {
+function ClosedChttinglog(props) {
   const  roomId  = useParams();
-  const {state} = useLocation();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    //dispatch(loadChattingListRS());
+  dispatch(myInfoData())
    dispatch(closedChttingLogRS(roomId.closedRoomId));
   }, [])
 
   const title = '쓸까?말까?'
 
-  //const chatRef = useRef();
+  const userInfo = useSelector((state) => state.community.myInfo)
   const getData = useSelector((state) => state.community.closedChttingLog);
   const chattingLog = getData.chatLogList;
-  console.log(chattingLog)
-  console.log(state)
 
+  console.log(getData)
 
   return (
     <ChatWrap>
       <Header title={title} />
       <Box>
-        <ChattingInfo
+        <ClosedChattingInfo
           profileImg={getData.authorProfileImg}
           userName={getData.authorNickname}
           comment={getData.comment}
+          true = {getData.voteTruePercent}
+          false={getData.voteFalsePercent}
           currentState={"END"} />
       </Box>
 
-      
+      {getData.lenght===0?
+      "기록된 대화내용이 없어요"
+      :
       <ChatBox className="chatbox">
-        <Chatting>
-          { chattingLog&&chattingLog?.map((list, index)=>(
-            <div>
-              <div key={index} className={list.sender === state ? "right" : "left"}>
-              <div className="img"><img src={list.profileImg}/></div>
-                    <div className="info">
-                      <span>{list.nickname}</span>
-                      <p>{list.message}</p>
-                    </div>
-              </div> 
-            </div>
-          ))}
-        </Chatting>
-      </ChatBox>
-    </ChatWrap>
+      <Chatting>
+        { chattingLog&&chattingLog?.map((list, index)=>(
+          <div>
+            <div key={index} className={list.nickname === userInfo.nickname ? "right" : "left"}>
+            <div className="img"><img src={list.profileImg}/></div>
+                  <div className="info">
+                    <span>{list.nickname}</span>
+                    <p>{list.message}</p>
+                  </div>
+            </div> 
+          </div>
+        ))}
+      </Chatting>
+    </ChatBox>
+  }
+  </ChatWrap>
   )
+
+      
+    
+
 };
 
 
-export default RoomDetail;
+export default ClosedChttinglog;
 
 const ChatWrap = styled.div`
 `

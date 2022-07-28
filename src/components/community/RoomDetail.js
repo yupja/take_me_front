@@ -21,16 +21,13 @@ function RoomDetail() {
   const [timeOutLimit , setTimeOutLimit] = useState(true);
   const getMessages = useSelector((state) => state.community.messages);
 
-  console.log(state)
-
   useEffect(() => {
     scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
 
-    if(state.minutes > 10 ||   state.minutes===0){
+    if(state.minutes > 10 || !timeOutLimit){
       setTimeout(() => {
         client.disconnect();
-        window.alert("채팅이 종료되었습니다. ")
-        dispatch(deleteChattingRoom(state.roomId));
+        dispatch(deleteChattingRoom(roomId));
       }, 100)
     }
 

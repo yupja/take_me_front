@@ -22,10 +22,7 @@ const CreateRoom = (props) => {
       return;
     }
 
-
-    getTime();
-    if(minutes===""){
-    const sendData = {
+      const sendData = {
         sender: props.nickname,
         profileImg: props.profileImg,
         authorNickname: props.nickname,
@@ -33,31 +30,15 @@ const CreateRoom = (props) => {
         userCount: Number(0),
         comment: comment.current.value,
         timeLimit: count,
-        minutes:minutes,
-        seconds:seconds
-  
+        minutes:count,
+        seconds:Number(0)
       }
-  
-      dispatch(createChatRoom(sendData, navigate));}
 
+ 
+      dispatch(createChatRoom(sendData, navigate));
 
   }
 
-
-  const getTime = () => {
-    const createTime = new Date();
-    createTime.setMinutes(createTime.getMinutes() + count)
-    const currentTime = new Date();
-    let diff = (createTime - currentTime)
-    const diffHours = Math.floor(diff / (1000 * 60 * 60));
-    diff -= diffHours * (1000 * 60 * 60);
-    let diffMin = Math.floor(diff / (1000 * 60));
-    diff -= diffMin * (1000 * 60);
-    const diffSec = Math.floor(diff / 100000);
-
-    setMinutes(diffMin);
-    setSeconds(diffSec);
-  }
 
 
 

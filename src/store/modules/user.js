@@ -197,22 +197,17 @@ export const changePw = (data, token) => {
 };
 
 // 탈퇴
-export const userSecDB = (pw, id, modal, pwAlert) => {
+export const userSecDB = (data, setPwStr, pwAlert) => {
   return async function (dispatch) {
-    console.log(pw, id);
-    await instance.post("/api/user/resign", {
-      username: id,
-      password: pw
-    }, {
-      "Content-Type": "application/json",
-      withCredentials: true,
-    })
+    console.log(data);
+    await instance.post("/api/user/resign", data)
       .then((response) => {
         console.log(response)
         dispatch(result(true));
       })
       .catch((error) => {
         console.log(error);
+        setPwStr('잘못된 비밀번호입니다.')
       });
   };
 };

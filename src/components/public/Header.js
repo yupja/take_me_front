@@ -85,15 +85,16 @@ function Header({ title, props }) {
                 {localStorage.getItem('accessToken') ?
                   <p onClick={logout}>로그아웃</p>
                   :
-                  <>
+                  <div>
                     <p onClick={() => {
                       navigate("/signup");
                     }}>회원가입</p>
                     <p onClick={() => {
                       navigate("/login");
                     }}>로그인</p>
-                  </>
+                  </div>
                 }
+                <Copyright>ⓒ 항해 7기 나를가조</Copyright>
               </Footer>
             </NavWrap>
           </Popup>
@@ -107,13 +108,13 @@ function Header({ title, props }) {
 export default Header;
 
 const HeaderWrap = styled.div`
-position: relative;
+position: sticky;
+top: 0;
 max-width:390px;
 width: 100%;
 height: 44px;
-z-index: 999;
 background: #fff;
-z-index:999;
+z-index:888;
 `;
 
 const LeftArea = styled.div`
@@ -224,12 +225,15 @@ div {
 
 const Footer = styled.div`
 position: absolute;
-top: 83%;
+bottom: 10%;
 left: 50%;
 transform : translateX(-50%);
-display: flex;
 width: 55%;
-justify-content: space-around;
+text-align: center;
+div{
+  display: flex;
+  justify-content: space-around;
+}
 
 p{
   font-size: 1.125rem;
@@ -238,6 +242,8 @@ p{
   letter-spacing: -0.5px;
   border-bottom : 1px solid #999;
   line-height: 1.23rem;
+  display: inline-block;
+  padding-bottom:2px;
 }
 p:nth-child(2) {
   color: #26DFA6;
@@ -251,5 +257,12 @@ position: absolute;
 background-color: rgba(0,0,0,0.7);
 width: 100%;
 height: 100vh;
+`;
 
+const Copyright = styled.div`
+margin-top: 17px;
+font-weight: 400;
+font-size: 0.875rem;
+line-height: 1.125rem;
+color: #CCCCCC;
 `;
