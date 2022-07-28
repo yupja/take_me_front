@@ -44,10 +44,10 @@ const Community = () => {
           }}>쓸까말까</div>
         </MenuBar>
 
-{/* 
+
         <TimeList>
           <SwipeRooms topRoomList={topRoomList}/>
-        </TimeList> */}
+        </TimeList>
 
         <div style={{ width: "100%", height:"100%" }}>
           <CommunityContents>
