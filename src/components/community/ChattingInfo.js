@@ -6,7 +6,7 @@ import TimerFunction from "../public/Timer"
 import ProgressBar from "../public/ProgressBar"
 
 import styled from "styled-components";
-import { chattingVote, deleteChattingRoom } from "../../store/modules/community"
+import { chattingVote, deleteLobyChat } from "../../store/modules/community"
 import { Timer, ChattingEnd } from "../../assets/icons"
 import Loading from "../public/Loading";
 
@@ -29,10 +29,9 @@ const ChattingInfo = (props) => {
       setReady(false)
     }, 100)
 
-    if(!timeOutLimit){
-      dispatch(deleteChattingRoom(props.roomId));
+    if(minutes ===0 && seconds===0){
+      dispatch(deleteLobyChat(props.roomId))
     }
-
   }, [timeOutLimit])
 
   const userInfo = useSelector((state) => state.community.myInfo)
@@ -75,9 +74,7 @@ const ChattingInfo = (props) => {
       seconds : seconds
 
     }
-
     navigate(`/chat/roomdetail/${sendData.roomId}`, { state: sendData });
-
   }
 
 
@@ -85,6 +82,7 @@ const ChattingInfo = (props) => {
     const createTime = new Date(props.createdAt);
     createTime.setMinutes(createTime.getMinutes() + props.timeLimit)
     const currentTime = new Date();
+
     let diff = (createTime - currentTime)
     const diffHours = Math.floor(diff / (1000 * 60 * 60));
     diff -= diffHours * (1000 * 60 * 60);
@@ -118,9 +116,9 @@ const ChattingInfo = (props) => {
               <div className="timerArea">
                 <Timer />
                 <TimerFunction
-                  min={minutes}
+                  min={minutes+1}
                   sec={seconds}
-                  setTimeOutLimit={setTimeOutLimit} />
+                  chattingInfo={"chattingInfo"} />
               </div>
             </div>
           </div>
@@ -242,14 +240,14 @@ margin-bottom: 1rem; */
   span{
     width: 80%;
     display: flex;
-    overflow-y:scroll;
+
 
     .innerSpan{
       display: flex;
       width: 25%;
-      font-weight: 500;
+      font-weight: 600;
       font-size: 1rem;
-      margin-right: 5px;
+      margin-right: 15px;
     }
   }
   .timerArea{

@@ -65,12 +65,25 @@ export const deleteChattingRoom = (roomId, navigate) => {
   return async function (dispatch) {
     try {
       await instance.get(`/api/chat/room/${roomId}/save`)
-      window.location.href="/chattingList";
+      window.location.href="/";
     } catch (error) {
       console.log(error)
     }
   }
 }
+
+export const deleteLobyChat = (roomId, navigate) => {
+  console.log(roomId)
+  return async function (dispatch) {
+    try {
+      await instance.get(`/api/chat/room/${roomId}/save`)
+      dispatch(loadChattingListRS());
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
 
 
 
@@ -422,6 +435,7 @@ const communitySlice = createSlice({
       state.messages = [];
       // state.messages = action.payload;
     },
+    
   },
 
   extraReducers: {
