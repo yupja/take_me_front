@@ -7,11 +7,11 @@ import { useDispatch, useSelector } from "react-redux";
 
 
 const FavoriteCheckedStar =(props) =>{
-    const [star, setStar] = useState();
+    const [star, setStar] = useState(props.favorite);
     const [favoriteId, setFavoriteId] = useState();
     const dispatch = useDispatch();
 
-    const currentId = useSelector(((state => state.favorite.currentFavoriteId.data.favoriteItemId)));
+    const currentId = useSelector(((state => state.favorite.currentFavoriteId.data?.favoriteItemId)));
 
     const clickStar =()=>{
         let sendData={};
@@ -20,6 +20,7 @@ const FavoriteCheckedStar =(props) =>{
         if(star){
             setStar(false)
             dispatch(favoriteDel(currentId))
+
         }else if(!star){
             setStar(true)
             sendData = {
