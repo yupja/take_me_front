@@ -35,7 +35,6 @@ export const addFavoriteRQ = createAsyncThunk( // 내 즐겨찾기 등록
   }
 )
 
-
 //-------------------- UPDATE ---------------------------
 export const favoriteUpdate = (price, itemId) => {
   return async function (dispatch) {
@@ -71,7 +70,7 @@ const goalSlice = createSlice({
   name: "favoriteItem",
   initialState: {
     myFavoriteList: [],
-    currentFavoriteId: "",
+    currentFavoriteId: [],
 
   },
   reducers: {
