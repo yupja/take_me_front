@@ -33,37 +33,41 @@ function ChattingList() {
   const closedRoomList = useSelector(((state => state.community.closedChttingList)));
   const userInfo = useSelector((state) => state.community.myInfo)
 
-  console.log(closedRoomList)
-
 
 
   return (
     <>
       <Wrap>
+      <AllchattingList>
 
-        <AllchattingList>
-          <div>
-            {roomList && roomList.map((item, itemIndex) => {
-              return (
-                <>
-                  <div key={item.roomId}>
-                    <ChattingListDiv>
-                      <ChattingInfo
-                        roomId={item.roomId}
-                        authorProfileImg={item.authorProfileImg}
-                        authorNickname={item.authorNickname}
-                        comment={item.comment}
-                        userCount={item.userCount}
-                        createdAt={item.createdAt}
-                        timeLimit={item.timeLimit}
-                        prosCons={item.prosCons}
-                        currentState={"Live"} />
-                    </ChattingListDiv>
-                  </div>
-                </>
-              )
-            })}
-          </div>
+        {roomList.lenght===0?
+        "진행중인 채팅방이 없습니다. ":
+
+        <div>
+        {roomList && roomList.map((item, itemIndex) => {
+          return (
+            <>
+              <div key={item.roomId}>
+                <ChattingListDiv>
+                  <ChattingInfo
+                    roomId={item.roomId}
+                    authorProfileImg={item.authorProfileImg}
+                    authorNickname={item.authorNickname}
+                    comment={item.comment}
+                    userCount={item.userCount}
+                    createdAt={item.createdAt}
+                    timeLimit={item.timeLimit}
+                    prosCons={item.prosCons}
+                    currentState={"Live"} />
+                </ChattingListDiv>
+              </div>
+            </>
+          )
+        })}
+      </div>
+      }
+ 
+
 
           <div>
             {closedRoomList&&closedRoomList.map((list, itemIndex)=>{

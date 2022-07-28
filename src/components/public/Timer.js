@@ -24,13 +24,13 @@ export default function Timer(props) {
       }
     }, 1000);
     
-    if(props.station === "chattingInfo"){
-      if((parseInt(minutes)==0)&&(parseInt(seconds)==0)|| parseInt(minutes)>10){
-        //dispatch(deleteChattingRoom(props.roomId))
-        props.setTimeOutLimit(false)
-      }
+    // if(props.station === "chattingInfo"){
+    //   if((parseInt(minutes)==0)&&(parseInt(seconds)==0)|| parseInt(minutes)>10){
+    //     //dispatch(deleteChattingRoom(props.roomId))
+    //     props.setTimeOutLimit(false)
+    //   }
 
-    }
+    // }
 
 
     return () => clearInterval(countdown);

@@ -62,15 +62,15 @@ const SwipeForm = (props) =>{
 
     const getChttingData =(index)=>{
       const sendData ={
-          roomId:props.roomId,
+          roomId:props.topRoomList[index].roomId,
           sender : userInfo.nickname,
           profileImg: userInfo.profileImg,
-          authorNickname : props.authorNickname,
-          authorProfileImg : props.authorProfileImg,
-          userCount : props.userCount,
-          comment : props.comment,
-          createdAt:props.createdAt,
-          timeLimit:props.timeLimit
+          authorNickname : props.topRoomList[index].authorNickname,
+          authorProfileImg : props.topRoomList[index].authorProfileImg,
+          userCount : props.topRoomList.userCount,
+          comment : props.topRoomList[index].comment,
+          createdAt:props.topRoomList[index].createdAt,
+          timeLimit:props.topRoomList[index].timeLimit
       }
     
       navigate(`/chat/roomdetail/${sendData.roomId}`, {state:sendData});
@@ -126,7 +126,7 @@ const SwipeForm = (props) =>{
        <SwipeItem>
          <div className="chatInfoArea"
            onClick={() => {
-             getChttingData();
+             getChttingData(idx);
            }}>
            <div className="imgBox">
              Live
@@ -237,15 +237,15 @@ flex-direction: row;
   width: 100%;
   max-height: 60px;
   display: flex;
+  justify-content: space-between;;
 
   span{
-    width: 80%;
+
     display: flex;
     overflow-y:scroll;
 
     .innerSpan{
       display: flex;
-      width: 25%;
       font-weight: 500;
       font-size: 1rem;
       margin-right: 5px;
