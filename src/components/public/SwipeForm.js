@@ -35,6 +35,7 @@ const SwipeForm = (props) =>{
     const [minutes, setMinutes] = useState();
     const [seconds, setSeconds] = useState();
     const [vote, setVote] = useState(props.prosCons);
+
     const userInfo = useSelector((state)=>state.community.myInfo)
 
     const dispatch = useDispatch();
@@ -103,70 +104,90 @@ const SwipeForm = (props) =>{
   
   
   return (
+    
     <>
-     {/* {props.topRoomList.map&&props.topRoomList?.map((item, idx)=>(  */}
-      <Wrap>
-         {/*<ChattingList>
-           style={{transform: `translateX(${(-100 / props.topRoomList.length+2) * (currentIndex)}%)`}}> ∂
-          <SwipeItem>
-            <div className="chatInfoArea"
-              onClick={() => {
-                getChttingData();
-              }}>
-              <div className="imgBox">
-                Live
-                <img src={item.authorProfileImg} />
-              </div>
+    {props.topRoomList.length===0? 
+    <Wrap>
+      <div style={{display:"flex", height:"100%", color:"white",  justifyContent :"center", alignItems:"center"}}>
+        <div>
+          <h1>준비된 채팅방이 없어요</h1>
+        </div>
+      </div>
+    </Wrap>
+    
+    :
+    <>
+    <Wrap>
+    {props.topRoomList.map&&props.topRoomList?.map((item, idx)=>( 
+    
 
-              <div className="contentsBox">
-                <span>
-                  <span className="innerSpan">
-                    {item.authorNickname}</span> {item.comment}</span>
-                <div className="timerArea">
-                  <Timer />
-                  <TimerFunction
-                    min={minutes}
-                    sec={seconds} />
-                </div>
-              </div>
-            </div>
+      <ChattingList>
+        {/* style={{transform: `translateX(${(-100 / props.topRoomList.length+2) * (currentIndex)}%)`}}>  */}
+       <SwipeItem>
+         <div className="chatInfoArea"
+           onClick={() => {
+             getChttingData();
+           }}>
+           <div className="imgBox">
+             Live
+             <img src={item.authorProfileImg} />
+           </div>
 
-
-            <div className="bottomArea">
-              {vote ?
-                <button style={{
-                  background: "#26DFA6",
-                  color: "white"
-                }}
-                  disabled
-                >쓸까?</button>
-                :
-                <button
-                  onClick={() => { chageVote() }}>쓸까?</button>
-
-              }
+           <div className="contentsBox">
+             <span>
+               <span className="innerSpan">
+                 {item.authorNickname}</span> {item.comment}</span>
+             <div className="timerArea">
+               <Timer />
+               <TimerFunction
+                 min={minutes}
+                 sec={seconds} />
+             </div>
+           </div>
+         </div>
 
 
-              {vote ?
-                <button
-                  onClick={() => { chageVote() }}>말까?</button>
+         <div className="bottomArea">
+           {vote ?
+             <button style={{
+               background: "#26DFA6",
+               color: "white"
+             }}
+               disabled
+             >쓸까?</button>
+             :
+             <button
+               onClick={() => { chageVote() }}>쓸까?</button>
 
-                :
-                <button style={{
-                  background: "#26DFA6",
-                  color: "white"
-                }}
-                  disabled
-                >말까?</button>
+           }
 
-              }
 
-            </div>
+           {vote ?
+             <button
+               onClick={() => { chageVote() }}>말까?</button>
 
-          </SwipeItem>
-        </ChattingList> */}
-      </Wrap>
-      {/* // ))}   */}
+             :
+             <button style={{
+               background: "#26DFA6",
+               color: "white"
+             }}
+               disabled
+             >말까?</button>
+
+           }
+
+         </div>
+
+       </SwipeItem>
+     </ChattingList>
+
+
+    ))}  
+    </Wrap>
+    </>
+    }
+
+
     </>
   )
 } 

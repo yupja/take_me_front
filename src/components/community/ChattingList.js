@@ -114,10 +114,10 @@ export default ChattingList;
 
 const Wrap = styled.div`
 display: flex;
-justify-content: center;
+justify-content: flex-start;;
 max-width: 390px;
 width: 100%;
-max-height:565px;
+max-height:570px;
 height: 100%;
 padding: 1rem;
 flex-direction: column;
