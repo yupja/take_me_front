@@ -13,9 +13,9 @@ const ClosedChattingInfo = (props) => {
     dispatch(myInfoData())
   }, [])
   const navigate = useNavigate();
-
-  const userInfo = useSelector((state) => state.community.myInfo)
   const dispatch = useDispatch();
+
+  
 
   return (
     <>
