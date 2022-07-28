@@ -24,7 +24,7 @@ function RoomDetail() {
   useEffect(() => {
     scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
 
-    if(state.minutes > 10 || !timeOutLimit){
+    if(state.minutes > 10 ||  state.minutes<0 || !timeOutLimit){
       setTimeout(() => {
         client.disconnect();
         dispatch(deleteChattingRoom(roomId));
