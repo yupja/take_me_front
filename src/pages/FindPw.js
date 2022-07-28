@@ -59,7 +59,7 @@ const FindPw = () => {
     if (userEmailAlert === '통과:)' || userIdAlert === '통과') {
       console.log("다음!")
       dispatch(findPwDB(findInfo, setfindPwPop))
-      setfindPwPop(true) // 디스패치 먼저 실행 후 결과 팝업 생성
+      // setfindPwPop(true) // 디스패치 먼저 실행 후 결과 팝업 생성
     } else {
       alert("이메일을 입력해주세요!")
     }
@@ -82,12 +82,12 @@ const FindPw = () => {
           <ModalWrap>
             <ModalBox>
               <div className="icon"></div>
-              <CloseBtn onClick={() => navigate('/')}>
+              <CloseBtn onClick={() => navigate('/login')}>
                 <span></span>
                 <span></span>
               </CloseBtn>
               <h3>{state.findPwResult}</h3>
-              <button onClick={() => navigate('/')}>확인</button>
+              <button onClick={() => navigate('/login')}>확인</button>
             </ModalBox>
           </ModalWrap>
         </>
@@ -145,9 +145,10 @@ const ModalWrap = styled.div`
 width: 100%;
 height: 100vh;
 padding: 0 25px;
-position: fixed;
+position: absolute;
 top: 0; left: 0;
 background: rgba(0,0,0,0.7);
+z-index: 999;
 `
 const ModalBox = styled.div`
 position: absolute;
