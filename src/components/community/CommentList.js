@@ -105,15 +105,15 @@ function CommentList(props) {
 };
 const CommentBox = styled.div`
 width: 100%;
-height: 25vw;
+height: 70px;
 /* border: 1px solid green; */
 display: flex;
-margin-top: 4vw;
-padding: 0 5vw;
+margin-top: 10px;
+padding: 0 25px;
 `;
 const ProBox = styled.div`
-width: 11vw;
-height: 9vw;
+width: 45px;
+height: 40px;
 `;
 const CoProfile = styled.img`
 width: 100%;

@@ -9,6 +9,7 @@ import SwipeRooms from "../components/public/SwipeForm"
 
 import styled from "styled-components";
 import CommunityList from "../components/community/CommunityList";
+import CommunityTab from "../components/community/CommunityTab";
 
 
 const Community = () => {
@@ -17,7 +18,8 @@ const Community = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isLoad, setLoad] = useState(false);
-  const [page, setPage] = useState(<CommunityList />);
+  // const [page, setPage] = useState(<CommunityList />);
+  const [page, setPage] = useState(<CommunityTab />);
 
   useEffect(()=>{
 
