@@ -5,6 +5,7 @@ import ListModal from "./ListModal";
 import Modal from "../public/BasicModalForm";
 import PostModal from "./PostModal";
 
+
 import { useNavigate } from "react-router-dom";
 import {getUserInfoDB} from "../../store/modules/user";
 import Like from "./Like";
@@ -30,6 +31,8 @@ const CommunityTab = () => {
   const Postdata = useSelector((state) => state.community.postList.data);
   const Savedata = useSelector((state) => state.saved.savedItem);
 
+ 
+
   const [showModall, setShowModall] = useState(false);
   const openModall = (index) => {
     setSavedListIndex(index);   
@@ -46,6 +49,8 @@ const CommunityTab = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const openModal = () => { setModalOpen(true); };
   const closeModal = () => { setModalOpen(false); };
+  const [modalState, setModalState] = useState();
+  const [modalName, setModalName] = useState("");
 
   const [isEdit, setIsEdit] = useState(false);
   const openEdit = () => {
@@ -92,7 +97,7 @@ const CommunityTab = () => {
                   {/* <Day>{postList.createAt}</Day> */}
                   <ItemImgBox>
                     <ItemImage src={postList.image}></ItemImage>
-                    <GoalForCum  className="dounut" color="#26DFA6" size="34" position="relative" percent={postList.goalPercent}/>
+                    <GoalForCum  className="dounut" color="#26DFA6" size="140" position="relative" percent={postList.goalPercent}/>
                   </ItemImgBox>
                   <ProfileBox>
                     <Profile src={postList.profileImg}></Profile>
@@ -145,7 +150,11 @@ const CommunityTab = () => {
       )}
       <BlankBox></BlankBox>
          <BtnBox>
-        <FootBtn onClick={openModal}>내 태산 % 공유</FootBtn>
+        <FootBtn onClick={() => {
+          openModal();
+          setModalName("내 태산 % 공유");
+          setModalState(<PostModal close={closeModal} />)}}>
+              내 태산 % 공유</FootBtn>
 
         {/* 세이브리스트모달 */}
         {showModall ?
@@ -155,12 +164,19 @@ const CommunityTab = () => {
             : null}
         {/* 게시글등록모달     */}
 
-        <Modal 
+        <Modal
+        open={modalOpen}
+        close={closeModal}
+        header={modalName}>
+        {modalState}
+      </Modal>
+
+        {/* <Modal 
           open={modalOpen}
           close={closeModal}
           header={"내 태산 % 공유"}>
           {<PostModal close={closeModal}/>}
-        </Modal>
+        </Modal> */}
 
         </BtnBox>
     </Box>
@@ -190,7 +206,6 @@ float: right;
 /* border: 3px solid orange; */
 position: absolute;
 z-index: 3;
-margin-right: 5vw;
 right: 0;
 top: 0;
 .dot{
@@ -218,7 +233,7 @@ right: 6%;
 const LikeBox = styled.div`
 display: flex;
 width: 25%;
-margin-right: 3vw;
+margin-right: 2px;
 `;
 
 const CreatAt = styled.div`
@@ -233,21 +248,25 @@ margin-top: 69%;
 
 const Box = styled.div`
 width: 100%;
-height: 1389px;
 /* border: 1px solid black; */
 border: none;
 margin: auto;
 display: flex;
 flex-direction: column;
+/* max-height: 565px; */
+height: 100%;
+background: #EDEDED;
 `;
 
 const ContentBox = styled.div`
 width: 100%;
-height: 100%;
+height: 170px;
 padding: 1rem;
 /* border: 3px solid blue; */
 display: flex;
 flex-direction: row;
+margin-bottom: 10px;
+background-color: white;
 `;
 
 const Left = styled.div`
@@ -257,8 +276,8 @@ position: relative;
 `;
 
 const ProfileBox = styled.div`
-width: 12vw;
-height: 12vw;
+width: 40px;
+height: 40px;
 /* border: 1px solid red; */
 position: absolute;
 top: 0
@@ -304,8 +323,8 @@ position: absolute;
 
 const ItemImgBox = styled.div`
 /* border: 1px solid red; */
-width: 31vw;
-height: 31vw;
+width: 130px;
+height: 130px;
 /* align-items: center; */
 margin: auto;
 position: relative;
@@ -324,19 +343,19 @@ padding: 1rem;
 
 const BtnBox = styled.div`
 width: 100%;
-height: 8vh;
+height: 60px;
 margin: 0 auto;
 display: flex;
 justify-content: center;
 align-items: center;
 bottom: 5%;
 position: fixed;
-/* left: 39% */
+left: 0
 `;
 
 const FootBtn = styled.button`
 width: 90%;
-height: 7vh;
+height: 60px;
 border-radius: 2rem;
 border: none;
 font-size: 1.3rem;
@@ -348,19 +367,20 @@ opacity: 95%;
 `;
 
 const Right = styled.div`
-width: 65%;
-height: 31vw;
+width: 70%;
+height: 130px;
 display: flex;
 flex-direction: column;
-padding: 0 5vw;
+padding: 0 12px;
 /* border: 1px solid violet; */
 position: relative;
+margin-left: 5px;
 `;
 
 const NewTop = styled.div`
 /* border: 3px solid red; */
-width: 95%;
-height: 6vw;
+width: 100%;
+height: 25px;
 font-size: 1.2rem;
 font-weight: 700;
 .dot{
@@ -371,12 +391,12 @@ font-weight: 700;
 const NewNick = styled.div`
 /* border: 3px solid purple; */
 width: 100%;
-height: 14vw;
+height: 72px;
 font-size: 1rem;
       /* width:100%; */
       overflow: hidden;
     display: -webkit-box;
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
       /* white-space:nowrap; */
       line-height: 1.1rem;
@@ -388,8 +408,8 @@ font-size: 1rem;
 const NewFoot = styled.div`
 /* border: 1px solid gold; */
 display: flex;
-width: 85%;
-height: 7vw;
+width: 90%;
+height: 25px;
 align-items: center;
 /* justify-content: space-between; */
 position: absolute;

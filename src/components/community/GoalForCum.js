@@ -2,7 +2,7 @@ import styled, { keyframes } from "styled-components";
 
 function GoalForCum({ color, percent, size, image }) {
   return (
-    <Chart size={size+'vw'}>
+    <Chart size={size+'px'}>
       <AniSvg viewBox="0 0 200 200">
         <circle
           cx="100"
