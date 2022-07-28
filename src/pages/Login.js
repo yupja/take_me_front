@@ -53,19 +53,14 @@ function Login() {
     }
 
     const urlData = {
-      signupUrl : state,
-      loginUrl : window.location.href
+      signupUrl: state,
+      loginUrl: window.location.href
     }
 
     dispatch(LoginDB(loginInfo, setModalStr, setNavToggles, navigate, urlData));
   }
-  const loginprevUrl = document.referrer;
-  console.log(loginprevUrl,"가입하고왔습니다만")
-  console.log(window.location.href,"location")
+  const state = useLocation();
 
-  const  state  = useLocation();
-  console.log(state,"state")
- 
   return (
     <>
       <div className="topWrap">
@@ -239,7 +234,7 @@ const ModalWrap = styled.div`
 width: 100%;
 height: 100vh;
 padding: 0 25px;
-position: fixed;
+position: absolute;
 top: 0; left: 0;
 background: rgba(0,0,0,0.7);
 z-index: 999;

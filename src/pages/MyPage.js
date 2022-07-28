@@ -42,7 +42,7 @@ function MyPage() {
   const closePopup = (e) => {
     setOpenModal(false)
   };
-  console.log(pwStr)
+
   // 탈퇴하기
   const secession = async (e) => {
     e.preventDefault();
