@@ -24,11 +24,10 @@ function RoomDetail() {
   useEffect(() => {
     scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
 
-    if(state.minutes > 10 ||   state.minutes===0){
+    if(state.minutes > 10 ||  state.minutes<0 || !timeOutLimit){
       setTimeout(() => {
         client.disconnect();
-        window.alert("채팅이 종료되었습니다. ")
-        dispatch(deleteChattingRoom(state.roomId));
+        dispatch(deleteChattingRoom(roomId));
       }, 100)
     }
 
@@ -138,7 +137,7 @@ function RoomDetail() {
             <TimerFunction
               min={state.minutes}
               sec={state.seconds} 
-              roomId={roomId}/>
+              setTimeOutLimit={setTimeOutLimit}/>
           </strong>
         </ListInfo>
         <Vote>

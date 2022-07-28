@@ -6,6 +6,7 @@ import styled from "styled-components";
 import Modal from "../public/BasicModalForm";
 import CreateRoom from "./CreateRoom";
 import ChattingInfo from "./ChattingInfo";
+import ClosedChattingInfo from "./ClosedChattingInfo"
 import { loadChattingListRS, closedChttingListRS, myInfoData } from "../../store/modules/community"
 
 
@@ -20,7 +21,6 @@ function ChattingList() {
   const RoomId = "";
   const name = React.useRef();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const [modalOpen, setModalOpen] = React.useState(false);
   const [modalState, setModalState] = React.useState();
@@ -28,56 +28,64 @@ function ChattingList() {
   const openModal = () => { setModalOpen(true); };
   const closeModal = () => { setModalOpen(false); };
 
-  const RoomList = useSelector(((state => state.community.chattingList)));
-  const ClosedRoomList = useSelector(((state => state.community.closedChttingList)));
+  const roomList = useSelector(((state => state.community.chattingList)));
+  const closedRoomList = useSelector(((state => state.community.closedChttingList)));
   const userInfo = useSelector((state) => state.community.myInfo)
 
-
-
+  console.log(roomList);
+  
   return (
     <>
       <Wrap>
+      <AllchattingList>
 
-        <AllchattingList>
+        {roomList.lenght===0?
+        "진행중인 채팅방이 없습니다. ":
+
+        <div>
+        {roomList && roomList.map((item, itemIndex) => {
+          return (
+            <>
+              <div key={item.roomId}>
+                <ChattingListDiv>
+                  <ChattingInfo
+                    roomId={item.roomId}
+                    authorProfileImg={item.authorProfileImg}
+                    authorNickname={item.authorNickname}
+                    comment={item.comment}
+                    userCount={item.userCount}
+                    leftTiime={item.leftTiime}
+                    prosCons={item.prosCons}
+                    currentState={"Live"} />
+                </ChattingListDiv>
+              </div>
+            </>
+          )
+        })}
+      </div>
+      }
+ 
+
+
           <div>
-            {RoomList && RoomList.map((item, itemIndex) => {
+            {closedRoomList&&closedRoomList.map((list, itemIndex)=>{
               return (
-                <>
-                  <div key={item.roomId}>
-                    <ChattingListDiv>
-                      <ChattingInfo
-                        roomId={item.roomId}
-                        authorProfileImg={item.authorProfileImg}
-                        authorNickname={item.authorNickname}
-                        comment={item.comment}
-                        userCount={item.userCount}
-                        createdAt={item.createdAt}
-                        timeLimit={item.timeLimit}
-                        prosCons={item.prosCons}
-                        currentState={"Live"} />
-                    </ChattingListDiv>
-                  </div>
-                </>
+                <ChattingListDiv>
+                  <ClosedChattingInfo
+                  profileImg = {list.authorProfileImg}
+                  userName = {list.authorNickname}
+                  comment = {list.comment}
+                  roomId = {list.roomId}
+                  true = {list.voteTruePercent}
+                  false={list.voteFalsePercent}
+                                  
+                  />
+                </ChattingListDiv>
               )
             })}
           </div>
 
-{/* 
-          {ClosedRoomList && ClosedRoomList?.map((item, itemIndex) => (
-            <div key={item.roomId}>
-              <ChattingList
-                onClick={() => {
-                  navigate(`/chat/closedChttinglog/${item.roomId}`, { state: userInfo.nickname });
-                }}>
-                <ChattingInfo
-                  roomId={item.roomId}
-                  profileImg={item.authorProfileImg}
-                  userName={item.authorNickname}
-                  comment={item.comment}
-                  currentState={"END"} />
-              </ChattingList>
-            </div>
-          ))} */}
+
 
 
         </AllchattingList>
@@ -109,10 +117,10 @@ export default ChattingList;
 
 const Wrap = styled.div`
 display: flex;
-justify-content: center;
+justify-content: flex-start;;
 max-width: 390px;
 width: 100%;
-max-height:565px;
+max-height:570px;
 height: 100%;
 padding: 1rem;
 flex-direction: column;

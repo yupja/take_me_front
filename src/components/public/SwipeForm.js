@@ -61,15 +61,15 @@ const SwipeForm = (props) =>{
 
     const getChttingData =(index)=>{
       const sendData ={
-          roomId:props.roomId,
+          roomId:props.topRoomList[index].roomId,
           sender : userInfo.nickname,
           profileImg: userInfo.profileImg,
-          authorNickname : props.authorNickname,
-          authorProfileImg : props.authorProfileImg,
-          userCount : props.userCount,
-          comment : props.comment,
-          createdAt:props.createdAt,
-          timeLimit:props.timeLimit
+          authorNickname : props.topRoomList[index].authorNickname,
+          authorProfileImg : props.topRoomList[index].authorProfileImg,
+          userCount : props.topRoomList.userCount,
+          comment : props.topRoomList[index].comment,
+          createdAt:props.topRoomList[index].createdAt,
+          timeLimit:props.topRoomList[index].timeLimit
       }
     
       navigate(`/chat/roomdetail/${sendData.roomId}`, {state:sendData});
@@ -95,7 +95,7 @@ const SwipeForm = (props) =>{
     };
 
 
-    useInterval(() => {
+  useInterval(() => {
       setCurrentIndex(currentIndex => currentIndex + 1);
   }, 2000)
   
@@ -103,70 +103,90 @@ const SwipeForm = (props) =>{
   
   
   return (
+    
     <>
-     {/* {props.topRoomList.map&&props.topRoomList?.map((item, idx)=>(  */}
-      <Wrap>
-         {/*<ChattingList>
-           style={{transform: `translateX(${(-100 / props.topRoomList.length+2) * (currentIndex)}%)`}}> ∂
-          <SwipeItem>
-            <div className="chatInfoArea"
-              onClick={() => {
-                getChttingData();
-              }}>
-              <div className="imgBox">
-                Live
-                <img src={item.authorProfileImg} />
-              </div>
+    {props.topRoomList.length===0? 
+    <Wrap>
+      <div style={{display:"flex", height:"100%", color:"white",  justifyContent :"center", alignItems:"center"}}>
+        <div>
+          <h1>준비된 채팅방이 없어요</h1>
+        </div>
+      </div>
+    </Wrap>
+    
+    :
+    <>
+    <Wrap>
+    {props.topRoomList.map&&props.topRoomList?.map((item, idx)=>( 
+    
 
-              <div className="contentsBox">
-                <span>
-                  <span className="innerSpan">
-                    {item.authorNickname}</span> {item.comment}</span>
-                <div className="timerArea">
-                  <Timer />
-                  <TimerFunction
-                    min={minutes}
-                    sec={seconds} />
-                </div>
-              </div>
-            </div>
+      <ChattingList>
+        {/* style={{transform: `translateX(${(-100 / props.topRoomList.length+2) * (currentIndex)}%)`}}>  */}
+       <SwipeItem>
+         <div className="chatInfoArea"
+           onClick={() => {
+             getChttingData(idx);
+           }}>
+           <div className="imgBox">
+             Live
+             <img src={item.authorProfileImg} />
+           </div>
 
-
-            <div className="bottomArea">
-              {vote ?
-                <button style={{
-                  background: "#26DFA6",
-                  color: "white"
-                }}
-                  disabled
-                >쓸까?</button>
-                :
-                <button
-                  onClick={() => { chageVote() }}>쓸까?</button>
-
-              }
+           <div className="contentsBox">
+             <span>
+               <span className="innerSpan">
+                 {item.authorNickname}</span> {item.comment}</span>
+             <div className="timerArea">
+               <Timer />
+               <TimerFunction
+                 min={minutes}
+                 sec={seconds} />
+             </div>
+           </div>
+         </div>
 
 
-              {vote ?
-                <button
-                  onClick={() => { chageVote() }}>말까?</button>
+         <div className="bottomArea">
+           {vote ?
+             <button style={{
+               background: "#26DFA6",
+               color: "white"
+             }}
+               disabled
+             >쓸까?</button>
+             :
+             <button
+               onClick={() => { chageVote() }}>쓸까?</button>
 
-                :
-                <button style={{
-                  background: "#26DFA6",
-                  color: "white"
-                }}
-                  disabled
-                >말까?</button>
+           }
 
-              }
 
-            </div>
+           {vote ?
+             <button
+               onClick={() => { chageVote() }}>말까?</button>
 
-          </SwipeItem>
-        </ChattingList> */}
-      </Wrap>
-      {/* // ))}   */}
+             :
+             <button style={{
+               background: "#26DFA6",
+               color: "white"
+             }}
+               disabled
+             >말까?</button>
+
+           }
+
+         </div>
+
+       </SwipeItem>
+     </ChattingList>
+
+
+    ))}  
+    </Wrap>
+    </>
+    }
+
+
     </>
   )
 } 
@@ -216,15 +236,15 @@ flex-direction: row;
   width: 100%;
   max-height: 60px;
   display: flex;
+  justify-content: space-between;;
 
   span{
-    width: 80%;
+
     display: flex;
     overflow-y:scroll;
 
     .innerSpan{
       display: flex;
-      width: 25%;
       font-weight: 500;
       font-size: 1rem;
       margin-right: 5px;

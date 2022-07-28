@@ -13,7 +13,6 @@ import { useNavigate } from "react-router-dom";
 
 const Guide = (props) => {
 
-  const Navigate = useNavigate();
 
   const settings = {
     dots: true,

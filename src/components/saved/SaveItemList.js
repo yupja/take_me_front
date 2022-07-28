@@ -44,7 +44,12 @@ function SaveItemList(props) {
               {items && items.map((list, idx) => (
                 <li key={list.savedItemId}>
                   <div className="leftBox">
-                    <Star className="star" />
+                    <FavoriteCheckedStar
+                        favorite={list.favorite}
+                        categoryId={list.categoryId}
+                        itemName={list.itemName}
+                        price={list.price}
+                        itemId={list.itemId}/>
                     <p>{list.modifiedDate.substring(0, 4)}<br />
                       {list.modifiedDate.substring(5, 7)}.{list.modifiedDate.substring(8, 10)}</p>
                     <h2>{list.itemName}</h2>

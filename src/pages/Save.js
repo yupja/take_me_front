@@ -32,7 +32,6 @@ import { useNavigate } from "react-router-dom";
 
 
 function Save() {
-  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(myReadGoalRQ());

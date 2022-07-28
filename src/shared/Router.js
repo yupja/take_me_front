@@ -52,7 +52,7 @@ function Router() {
         <Route path="/oauth2/redirect" element={<SociallLogin />} />
         <Route path="/chat/roomdetail/:roomId" element={<RoomDetail />} />        
         <Route path="/guide" element={<Guide />} />
-        <Route path="/chat/closedChttinglog/:closedRoomId" element={< closedChttinglog />} />
+        <Route path="/chat/closedChttinglog/:closedRoomId" element={< ClosedChattingLog />} />
 
 
       </Routes >

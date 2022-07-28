@@ -188,6 +188,7 @@ white-space: nowrap;
 overflow: scroll;
 height: 100%;
 gap: 3%;
+width: 100%;
 
 
 
@@ -306,10 +307,12 @@ margin-top: 10%;
 
 const ButtonArea = styled.div`
 display: flex;
-justify-content: space-evenly;
-position: sticky;
-bottom: 40px;
-width: 100%;
+justify-content: space-around;
+position: fixed;
+bottom:10%;
+width: 390px;
+
+
 
 button{
   display: flex;

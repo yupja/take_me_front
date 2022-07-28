@@ -6,7 +6,7 @@ import TimerFunction from "../public/Timer"
 import ProgressBar from "../public/ProgressBar"
 
 import styled from "styled-components";
-import { chattingVote, deleteLobyChat } from "../../store/modules/community"
+import { chattingVote, deleteChattingRoom } from "../../store/modules/community"
 import { Timer, ChattingEnd } from "../../assets/icons"
 import Loading from "../public/Loading";
 
@@ -18,6 +18,7 @@ const ChattingInfo = (props) => {
   const [ready, setReady] = useState(true);
   const [vote, setVote] = useState(props.prosCons);
   const [timeOutLimit , setTimeOutLimit] = useState(true);
+  const [currentTime, setCurrentTime] =useState()
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -29,10 +30,14 @@ const ChattingInfo = (props) => {
       setReady(false)
     }, 100)
 
-    if(minutes ===0 && seconds===0){
-      dispatch(deleteLobyChat(props.roomId))
+    if(minutes > 10 || minutes < 0 ||!timeOutLimit){
+      setTimeout(() => {
+        dispatch(deleteChattingRoom(props.roomId));
+      }, 100)
     }
+
   }, [timeOutLimit])
+  
 
   const userInfo = useSelector((state) => state.community.myInfo)
 
@@ -79,19 +84,11 @@ const ChattingInfo = (props) => {
 
 
   const getTime = () => {
-    const createTime = new Date(props.createdAt);
-    createTime.setMinutes(createTime.getMinutes() + props.timeLimit)
-    const currentTime = new Date();
+    const min = (Math.floor(props.leftTiime/60))
+    const sec = (Math.floor(props.leftTiime%60))
+   setMinutes(min);
+   setSeconds(sec);
 
-    let diff = (createTime - currentTime)
-    const diffHours = Math.floor(diff / (1000 * 60 * 60));
-    diff -= diffHours * (1000 * 60 * 60);
-    let diffMin = Math.floor(diff / (1000 * 60));
-    diff -= diffMin * (1000 * 60);
-    const diffSec = Math.floor(diff / 100000);
-
-    setMinutes(diffMin);
-    setSeconds(diffSec);
   }
 
 
@@ -116,9 +113,10 @@ const ChattingInfo = (props) => {
               <div className="timerArea">
                 <Timer />
                 <TimerFunction
-                  min={minutes+1}
+                  min={minutes}
                   sec={seconds}
-                  chattingInfo={"chattingInfo"} />
+                  setTimeOutLimit={"setTimeOutLimit"}
+                  station = "chattingInfo"/>
               </div>
             </div>
           </div>
@@ -160,41 +158,6 @@ const ChattingInfo = (props) => {
         :
         ""
       }
-
-
-      {props.currentState === "END" ?
-        <ChattingList>
-          <div className="chatInfoArea">
-            <div className="imgBox">
-              <img src={props.profileImg} />
-            </div>
-
-            <div className="contentsBox">
-              <span>
-                <span className="innerSpan">
-                  {props.userName}</span> {props.comment}</span>
-              <div className="stateArea"><ChattingEnd /></div>
-            </div>
-          </div>
-
-          <div className="bottomArea">
-            <span>쓰자!</span>
-            <div style={{
-              width: "65%",
-              marginTop: "0.5rem"
-            }}>
-              <ProgressBar
-                true={40}
-                false={60} />
-            </div>
-
-            <span>멈춰!</span>
-
-          </div>
-        </ChattingList>
-        : ""}
-
-
 
     </>
   )

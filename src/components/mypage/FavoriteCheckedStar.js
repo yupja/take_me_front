@@ -1,24 +1,26 @@
-import React, { useState } from "react";
-import {addFavoriteRQ} from "../../store/modules/favorite"
+import React, { useEffect, useState } from "react";
+import {addFavoriteRQ, favoriteDel} from "../../store/modules/favorite"
 
 import {ReactComponent as EmptyStar} from "../../assets/icons/EmptyStar.svg"
 import {ReactComponent as CheckedStart} from "../../assets/icons/CheckedStart.svg"
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 
 const FavoriteCheckedStar =(props) =>{
-    const [star, setStar] = useState();
+    const [star, setStar] = useState(props.favorite);
     const [favoriteId, setFavoriteId] = useState();
     const dispatch = useDispatch();
 
-    
+    const currentId = useSelector(((state => state.favorite.currentFavoriteId.data?.favoriteItemId)));
+
     const clickStar =()=>{
         let sendData={};
 
-        console.log(star)
 
         if(star){
             setStar(false)
+            dispatch(favoriteDel(currentId))
+
         }else if(!star){
             setStar(true)
             sendData = {

@@ -5,19 +5,63 @@ const PercentProgressBar =(props)=>{
     return (
         <>
         <div style={{width:"100%", height:"2rem"}}>
+
+        {props.true ===100?
+            <TrueBarDiv>
+                <True  
+                    className="true"
+                    percent={props.true}
+                    radius={"30px"}> 
+                    {props.true}%</True>
+            </TrueBarDiv>
+            : 
+            ""
+        }
+
+        {props.false ===100? 
+        <FalseBarDiv>
+            <False 
+                className="false"
+                percent={props.false}
+                radius={"30px"}> 
+                {props.false}%</False>
+            </FalseBarDiv>
+        :""
+        }
+
+        {!(props.true=== 0)&&!(props.false===0) ?
+  
+        <>
         <TrueBarDiv>
             <True 
                 className="true"
-                percent={props.true}> {props.true}%</True>
-       </TrueBarDiv>
-
-       <FalseBarDiv>
+                percent={props.true}
+                radius={"30px 0 0 30px"}> {props.true}%</True>
+        </TrueBarDiv>
+        <FalseBarDiv>
             <False 
                 className="false"
-                percent={props.false}>{props.false}%</False>
-       </FalseBarDiv>
-       </div>
-    </>
+                percent={props.false}
+                radius={"0 30px 30px 0"}> 
+                {props.false}%</False>
+        </FalseBarDiv>
+        </>
+        :
+        ""
+        }
+
+        {(props.true=== 0)&&(props.false===0)? 
+             
+             <FalseBarDiv style={{justifyContent:"center"}}>
+             아무도 투표하지 않았어요
+         </FalseBarDiv>
+         :
+         ""
+        }
+       
+                
+        </div>
+        </>
     )
 }
 
@@ -26,7 +70,7 @@ position: relative;
 `;
 
 const True = styled.div`
-border-radius: 30px 0 0 30px;
+border-radius: ${(props)=>(props.radius)};
 border: 1px solid #666666;
 position: absolute;
 background: #666666;
@@ -52,7 +96,7 @@ justify-content: center;
 position: absolute;
 background:white;
 border: 1px solid #666666;
-border-radius: 0 30px 30px 0;
+border-radius: ${(props)=>(props.radius)};
 font-size: 1.5rem;
 
 
