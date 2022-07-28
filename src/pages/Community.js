@@ -20,6 +20,7 @@ const Community = () => {
   const [isLoad, setLoad] = useState(false);
   // const [page, setPage] = useState(<CommunityList />);
   const [page, setPage] = useState(<CommunityTab />);
+  const [chooseMenu,  setChooseMenu] = useState(true);
 
   useEffect(()=>{
 
@@ -28,7 +29,7 @@ const Community = () => {
   const topRoomList = useSelector(((state => state.community.topChttingList)));
   console.log(topRoomList)
 
-
+  console.log(chooseMenu)
 
   return (
   <> 
@@ -36,12 +37,35 @@ const Community = () => {
     <Header title={title} color={state}/>
 
         <MenuBar>
-          <div onClick={()=>{
+          {chooseMenu?
+          <>
+            <div className="Choice"
+            onClick={()=>{
             setPage(<CommunityList />)
+            setChooseMenu(true)
           }}>티끌자랑</div>
-          <div onClick={()=>{
+          <div className="nonChice"
+            onClick={()=>{
             setPage(<ChattingList/>)
+            setChooseMenu(false)
           }}>쓸까말까</div>
+          </>
+          :
+          <>
+          <div className="nonChice"
+            onClick={()=>{
+            setPage(<CommunityList />)
+            setChooseMenu(true)
+          }}>티끌자랑</div>
+          <div className="Choice"
+              onClick={()=>{
+            setPage(<ChattingList/>)
+            setChooseMenu(false)
+          }}>쓸까말까</div>
+          
+          
+          </>}
+
         </MenuBar>
 
 
@@ -79,9 +103,20 @@ width : 100%;
 
 
 
-div{
+.choice{
+    width: 45%;
+    border: 1px solid #26DFA6;
+    background: white ;
+    text-align: center;
+    padding: 10px;
+    border-bottom: none;
+    border-radius: 10px 10px 0px 0px;
+}
+.nonChice{
     width: 45%;
     border: 1px solid #CCCCCC;
+    color : #666666;
+    background: #EFEFEF;
     text-align: center;
     padding: 10px;
     border-bottom: none;
