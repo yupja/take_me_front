@@ -20,10 +20,10 @@ export const LoginDB = (loginInfo, setModalStr, setNavToggles, navigate, urlData
           secure: true,
           sameSite: 'none',
         })
-        console.log(urlData,"??")
+        console.log(urlData, "??")
 
         // window.location.href = "/save"
-        navigate('/save', {state:urlData})
+        navigate('/save', { state: urlData })
         dispatch(isLogin(true))
 
       })
@@ -68,19 +68,15 @@ export const getUserInfoDB = () => {
 
 
 // 회원가입 (유저 등록)
-export const addUserDB = (userInfo) => {
+export const addUserDB = (userInfo, signupUrl, navigate) => {
   return async function (dispatch) {
     console.log(userInfo);
-    await instance.post("/api/user/register", userInfo, {
-      "Content-Type": "application/json",
-      withCredentials: true,
-    })
+    await instance.post("/api/user/register", userInfo)
       .then((response) => {
-        console.log("유저 등록 성공");
-        window.location.reload('/login')
+        navigate("/login", { state: signupUrl })
       })
       .catch((error) => {
-        window.alert(error.response.data.message);
+        console.log(error);
       });
   };
 };
@@ -88,10 +84,7 @@ export const addUserDB = (userInfo) => {
 // 아이디 중복 체크
 export const idCheckDB = (id, setUserIdAlert) => {
   return async function (dispatch) {
-    await instance.post("/api/user/register/checkUsername", { username: id }, {
-      "Content-Type": "application/json",
-      withCredentials: true,
-    })
+    await instance.post("/api/user/register/checkUsername", { username: id })
       .then((res) => {
         if (res.data.result === true) {
           setUserIdAlert("사용 가능한 아이디입니다")
@@ -109,10 +102,7 @@ export const idCheckDB = (id, setUserIdAlert) => {
 export const emailCheckDB = (email, setUserEmailAlert) => {
   return async function (dispatch) {
     console.log(email);
-    await instance.post("/api/user/register/checkEmail", { email: email }, {
-      "Content-Type": "application/json",
-      withCredentials: true,
-    })
+    await instance.post("/api/user/register/checkEmail", { email: email })
       .then((res) => {
         if (res.data.result === true) {
           setUserEmailAlert("사용 가능한 이메일입니다")
@@ -130,10 +120,7 @@ export const emailCheckDB = (email, setUserEmailAlert) => {
 export const nickCheckDB = (nick, setUserNickAlert) => {
   return async function (dispatch) {
     console.log(nick);
-    await instance.post("/api/user/register/checkNickname", { nickname: nick }, {
-      "Content-Type": "application/json",
-      withCredentials: true,
-    })
+    await instance.post("/api/user/register/checkNickname", { nickname: nick })
       .then((res) => {
         console.log(res)
         if (res.data.result === true) {
@@ -152,11 +139,7 @@ export const nickCheckDB = (nick, setUserNickAlert) => {
 export const findIdDB = (email) => {
   return async function (dispatch) {
     console.log(email);
-    await instance.post("/api/user/findId", { email: email }, {
-
-      "Content-Type": "application/json",
-      withCredentials: true,
-    })
+    await instance.post("/api/user/findId", { email: email })
       .then((res) => {
         console.log(res);
         if (res.data.result === false) {
@@ -181,10 +164,7 @@ export const findIdDB = (email) => {
 export const findPwDB = (info, setfindPwPop) => {
   return async function (dispatch) {
     console.log(info);
-    await instance.post("/api/user/findPassword", info, {
-      "Content-Type": "application/json",
-      withCredentials: true,
-    })
+    await instance.post("/api/user/findPassword", info)
       .then((res) => {
         console.log(res)
         dispatch(findPwResult(res.data.respMsg));

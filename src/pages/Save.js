@@ -37,11 +37,11 @@ function Save() {
   useEffect(() => {
     dispatch(myReadGoalRQ());
     dispatch(myFavoriteListRQ());
-  //   if (state.state.signupUrl.state && state.state.loginUrl) {
-  //     setShowModal(true)
-  // }else{
-  //   setShowModal(false)
-  // }
+    if (state.state?.signupUrl.state && state.state?.loginUrl) {
+      setShowModal(true)
+    } else {
+      setShowModal(false)
+    }
     // openGuide();
   }, []);
 
@@ -62,16 +62,16 @@ function Save() {
   const [showModal, setShowModal] = useState(false);
   const openGuide = () => {
     // if (state.state.signupUrl.state && state.state.loginUrl) {
-      setShowModal(true)
-  // }else{
-  //   setShowModal(false)
-  // }
-}
+    setShowModal(true)
+    // }else{
+    //   setShowModal(false)
+    // }
+  }
   const closeGuide = () => {
-      setShowModal(false);
+    setShowModal(false);
   }
 
-  const  state  = useLocation();
+  const state = useLocation();
 
   const [star, setStar] = useState(false);
 
@@ -326,15 +326,15 @@ function Save() {
         {modalState}
       </Modal>
       {/* 가이드 모달 */}
-{showModal ?
-      <Guide 
-      open={showModal}
-      close={closeGuide}
-      /> 
-     : null}
+      {showModal ?
+        <Guide
+          open={showModal}
+          close={closeGuide}
+        />
+        : null}
     </Wrap>
   );
-    }     
+}
 export default Save;
 
 
