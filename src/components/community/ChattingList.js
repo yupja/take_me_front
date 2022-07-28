@@ -6,6 +6,7 @@ import styled from "styled-components";
 import Modal from "../public/BasicModalForm";
 import CreateRoom from "./CreateRoom";
 import ChattingInfo from "./ChattingInfo";
+import ClosedChattingInfo from "./ClosedChattingInfo"
 import { loadChattingListRS, closedChttingListRS, myInfoData } from "../../store/modules/community"
 
 
@@ -28,9 +29,11 @@ function ChattingList() {
   const openModal = () => { setModalOpen(true); };
   const closeModal = () => { setModalOpen(false); };
 
-  const RoomList = useSelector(((state => state.community.chattingList)));
-  const ClosedRoomList = useSelector(((state => state.community.closedChttingList)));
+  const roomList = useSelector(((state => state.community.chattingList)));
+  const closedRoomList = useSelector(((state => state.community.closedChttingList)));
   const userInfo = useSelector((state) => state.community.myInfo)
+
+  console.log(closedRoomList)
 
 
 
@@ -40,7 +43,7 @@ function ChattingList() {
 
         <AllchattingList>
           <div>
-            {RoomList && RoomList.map((item, itemIndex) => {
+            {roomList && roomList.map((item, itemIndex) => {
               return (
                 <>
                   <div key={item.roomId}>
@@ -62,22 +65,24 @@ function ChattingList() {
             })}
           </div>
 
-{/* 
-          {ClosedRoomList && ClosedRoomList?.map((item, itemIndex) => (
-            <div key={item.roomId}>
-              <ChattingList
-                onClick={() => {
-                  navigate(`/chat/closedChttinglog/${item.roomId}`, { state: userInfo.nickname });
-                }}>
-                <ChattingInfo
-                  roomId={item.roomId}
-                  profileImg={item.authorProfileImg}
-                  userName={item.authorNickname}
-                  comment={item.comment}
-                  currentState={"END"} />
-              </ChattingList>
-            </div>
-          ))} */}
+          <div>
+            {closedRoomList&&closedRoomList.map((list, itemIndex)=>{
+              return (
+                <ChattingListDiv>
+                  <ClosedChattingInfo
+                  profileImg = {list.authorProfileImg}
+                  userName = {list.authorNickname}
+                  comment = {list.comment}
+                  true = {list.voteTruePercent}
+                  false={list.voteFalsePercent}
+                                  
+                  />
+                </ChattingListDiv>
+              )
+            })}
+          </div>
+
+
 
 
         </AllchattingList>

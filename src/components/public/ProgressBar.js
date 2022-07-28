@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const PercentProgressBar =(props)=>{
+    console.log(props.true, props.False)
     return (
         <>
         <div style={{width:"100%", height:"2rem"}}>
@@ -12,9 +13,13 @@ const PercentProgressBar =(props)=>{
        </TrueBarDiv>
 
        <FalseBarDiv>
-            <False 
-                className="false"
-                percent={props.false}>{props.false}%</False>
+        {props.false===0? ""
+        :
+        <False 
+        className="false"
+        percent={props.false}>{props.false}%</False>
+        }
+
        </FalseBarDiv>
        </div>
     </>
