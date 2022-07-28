@@ -142,7 +142,8 @@ function MyStatistics() {
         </BottomCircleArea>
 
       </div>
-    </Wrap>
+
+
     <ButtonArea>
       {dayMonth? 
         <button 
@@ -169,6 +170,7 @@ function MyStatistics() {
       }
       
     </ButtonArea>
+    </Wrap>
     </>
   )
 
@@ -184,6 +186,7 @@ white-space: nowrap;
 overflow: scroll;
 height: 100%;
 gap: 3%;
+width: 100%;
 
 
 
@@ -244,7 +247,7 @@ display: flex;
 `;
 
 const Wrap = styled.div`
-width: 100%;
+width: 390px;
 height: 25vh;
 padding: 1rem;
 
@@ -306,11 +309,12 @@ margin-top: 10%;
 
 const ButtonArea = styled.div`
 display: flex;
-justify-content: space-evenly;
-
+justify-content: space-around;
 position: fixed;
 bottom:10%;
-width: 100%;
+width: 390px;
+
+
 
 button{
   display: flex;
