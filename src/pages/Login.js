@@ -15,6 +15,8 @@ function Login() {
   const userState = useSelector((state) => state.user)
   console.log(userState)
 
+  const title = "로그인"
+
   const [modalOpen, setModalOpen] = useState(false);
   const [modalState, setModalState] = useState();
   const [modalName, setModalName] = useState("");
@@ -53,26 +55,21 @@ function Login() {
     }
 
     const urlData = {
-      signupUrl : state,
-      loginUrl : window.location.href
+      signupUrl: state,
+      loginUrl: window.location.href
     }
 
     dispatch(LoginDB(loginInfo, setModalStr, setNavToggles, navigate, urlData));
   }
-  const loginprevUrl = document.referrer;
-  console.log(loginprevUrl,"가입하고왔습니다만")
-  console.log(window.location.href,"location")
+  const state = useLocation();
 
-  const  state  = useLocation();
-  console.log(state,"state")
- 
   return (
     <>
       <div className="topWrap">
-        <Header />
+        <Header title={title} />
       </div>
       <LoginWrap>
-        <Title>안녕하세요.<br /><span>티끌</span>입니다.</Title>
+        <Title>안녕하세요.<br /><span className="logo">티끌</span><span>입니다.</span></Title>
         <p>서비스 이용을 위해 로그인해주세요.</p>
         <Form>
           <label htmlFor="userId">
@@ -149,12 +146,16 @@ margin-top: 33px;
 font-size: 1.75rem;
 line-height: 2.43rem;
 font-weight: 500;
-span{
-  font-family: 'HS-Regular';
+span {
+  font-weight: 700;
+  letter-spacing: -0.05em;
+}
+span.logo{
+  font-family: 'Cafe24Ohsquare';
   color:#26DFA6;
   font-size: 2.31rem;
-  letter-spacing: -0.5px;
   padding-right: 5px;
+  font-weight:500;
 }
 `
 
@@ -175,9 +176,8 @@ input {
   width:100%;
   background:#fff;
   border: none;
-  padding: 16px 10px;
+  padding: 20px 10px;
   font-size: 16px;
-  margin-top: 10px;
   border-bottom: 1px solid #EAEEEF;
   box-sizing: border-box;
   border-radius: 2px;
@@ -198,10 +198,13 @@ span {
   margin-left: 10px;
 }
 a{
+  display: inline-block;
   color:#999;
   font-size:0.87rem;
   font-weight:500;
+  letter-spacing: -0.03em;
   text-decoration: underline;
+  text-underline-position: under;
 }
 `
 
@@ -209,13 +212,14 @@ const InputBtn = styled.button`
   display: block;
   width: 100%;
   padding: 16px 10px;
-  margin-top: 20px;
+  margin-top: 40px;
   background: #26DFA6;
   border: none;
   color:#fff;
   font-size: 18px;
   cursor: pointer;
   border-radius: 32px;
+  font-weight: 700;
 `;
 
 
@@ -239,7 +243,7 @@ const ModalWrap = styled.div`
 width: 100%;
 height: 100vh;
 padding: 0 25px;
-position: fixed;
+position: absolute;
 top: 0; left: 0;
 background: rgba(0,0,0,0.7);
 z-index: 999;

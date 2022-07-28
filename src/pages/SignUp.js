@@ -1,8 +1,7 @@
 import React, { useState, useRef } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import Header from "../components/public/Header";
 import { emailCheckDB, idCheckDB, nickCheckDB, addUserDB } from "../store/modules/user";
@@ -12,6 +11,7 @@ function SignUp(e) {
   const navigate = useNavigate();
 
   const title = "회원가입";
+  const signupUrl = window.location.href
 
 
   // 회원가입 정보 가져오기
@@ -34,10 +34,30 @@ function SignUp(e) {
   const [userEmailAlert, setUserEmailAlert] = useState('');
   const [userNickAlert, setUserNickAlert] = useState('');
 
+  // 유효성 알림
+  const [idColor, setIdColor] = useState(null);
+  const [pwColor, setPwColor] = useState('');
+  const [pwCheckColor, setPwCheckColor] = useState('');
+  const [emailColor, setEmailColor] = useState('');
+  const [nickColor, setNickColor] = useState('');
+
   // // 중복체크 전 유효성 확인
-  // const [emailStrCheck, setemailStrCheck] = useState(false);
-  // const [idStrCheck, setidStrCheck] = useState(false);
-  // const [nickStrCheck, setnickStrCheck] = useState(false);
+  const [emailStrCheck, setemailStrCheck] = useState(true);
+  const [idStrCheck, setidStrCheck] = useState(true);
+  const [nickStrCheck, setnickStrCheck] = useState(true);
+
+  // 이용약관 동의
+  const [oneChecked, setOneChecked] = useState(false);
+  const [twoChecked, setTwoChecked] = useState(false);
+
+  const oneCheck = (e) => {
+    setOneChecked(current => !current);
+  }
+  const twoCheck = (e) => {
+    setTwoChecked(current => !current);
+  }
+
+
 
 
   //************** 형식 체크 **************//
@@ -45,9 +65,17 @@ function SignUp(e) {
   const onEmailChange = () => {
     const email = emailRef.current.value;
     if (emailCheckStr.test(email)) {
-      setUserEmailAlert("")
+      setUserEmailAlert("");
+      setemailStrCheck(false);
+      setEmailColor(null);
     } else {
       setUserEmailAlert("🚨 이메일 형식으로 작성해주세요.")
+      setemailStrCheck(true);
+      setEmailColor('red');
+      if (email === '') {
+        setUserEmailAlert('')
+        setEmailColor(null);
+      }
     }
   }
 
@@ -55,9 +83,17 @@ function SignUp(e) {
   const onIdChange = () => {
     const id = idRef.current.value;
     if (idCheckStr.test(id)) {
-      setUserIdAlert("")
+      setUserIdAlert("");
+      setidStrCheck(false);
+      setIdColor(null);
     } else {
       setUserIdAlert("🚨 3~10글자,영문,숫자로 작성해주세요.")
+      setidStrCheck(true);
+      setIdColor('red');
+      if (id === '') {
+        setUserIdAlert('')
+        setIdColor(null);
+      }
     }
   }
 
@@ -66,12 +102,20 @@ function SignUp(e) {
   const onNickChange = () => {
     const nick = nickRef.current.value;
     if (nickCheckStr.test(nick)) {
-      setUserNickAlert("")
+      setUserNickAlert("");
+      setnickStrCheck(false);
+      setNickColor(null)
     } else {
       setUserNickAlert("🚨 2~12글자, 특수문자를 제외하고 작성해주세요.")
-      // 한글, 영문, 특수문자 (- _ .) 포함한 2 ~ 12글자 닉네임
+      setnickStrCheck(true);
+      setNickColor('red')
+      if (nick === '') {
+        setUserNickAlert('')
+        setNickColor(null);
+      }
     }
   }
+
 
   // 비밀번호
   const onPwChange = () => {
@@ -79,22 +123,37 @@ function SignUp(e) {
     console.log(pw);
     if (pwCheckStr.test(pw)) {
       if (pw.search(/\s/) != -1) {
-        setUserPwAlert("공백 없이 입력해주세요.")
+        setUserPwAlert("공백 없이 입력해주세요.");
+        setPwColor('red');
       } else {
-        setUserPwAlert("")
+        setUserPwAlert("");
+        setPwColor(null);
       }
     } else {
-      setUserPwAlert("🚨 비밀번호는 영대문자, 소문자, 숫자, 특수문자를 포함해 총 8글자 이상이어야 합니다.")
+      setUserPwAlert("🚨 비밀번호는 영대문자, 소문자, 숫자, 특수문자를 포함해 총 8글자 이상이어야 합니다.");
+      setPwColor('red');
+      if (pw === '') {
+        setUserPwAlert('')
+        setPwColor(null);
+      }
     }
   }
+
+
   // 비밀번호 확인
   const onPwCheckChange = () => {
     const pw = pwRef.current.value;
     const pwCheck = pwCheckRef.current.value;
     if (pwCheck === pw) {
-      setUserPwCheckAlert("")
+      setUserPwCheckAlert("");
+      setPwCheckColor(null);
     } else {
       setUserPwCheckAlert("🚨두 비밀번호가 일치하지 않습니다.")
+      setPwCheckColor('red');
+      if (pwCheck === '') {
+        setUserPwCheckAlert('')
+        setPwCheckColor(null);
+      }
     }
   }
 
@@ -104,24 +163,22 @@ function SignUp(e) {
   const idCheck = (e) => {
     e.preventDefault();
     const id = idRef.current.value;
-    dispatch(idCheckDB(id, setUserIdAlert))
+    if (userIdAlert.includes(""))
+      dispatch(idCheckDB(id, setUserIdAlert, setIdColor))
   }
-
   // 이메일
   const emailCheck = (e) => {
     e.preventDefault();
     const email = emailRef.current.value;
-    dispatch(emailCheckDB(email, setUserEmailAlert))
+    dispatch(emailCheckDB(email, setUserEmailAlert, setEmailColor))
   }
-
   // 닉네임
   const nickCheck = (e) => {
     e.preventDefault();
     const nick = nickRef.current.value;
-    dispatch(nickCheckDB(nick, setUserNickAlert))
+    dispatch(nickCheckDB(nick, setUserNickAlert, setNickColor))
   }
 
-  const signupUrl = window.location.href
 
   // 회원가입
   const signup = async () => {
@@ -130,30 +187,39 @@ function SignUp(e) {
     const userNick = nickRef.current.value;
     const userPw = pwRef.current.value;
     const userPwCheck = pwCheckRef.current.value;
+    console.log(userPw, userPwCheck)
 
     // 유효성 검사
+    if (userPw !== userPwCheck || userPwAlert.includes('8')) {
+      window.alert("비밀번호 형식과 일치여부를 확인해주세요");
+      pwRef.current.focus();
+      return;
+    }
     if (userEmail === "" || userId === '' || userNick === "" || userPw === "" || userPwCheck === "") {
       window.alert("모든 항목은 필수입니다😊");
       return;
     }
-    if (!userIdAlert.includes('사용 가능한')) {
+    if (!userIdAlert.includes('사용 가능한') || userIdAlert === '') {
       window.alert("아이디 중복체크 해주세요");
       idRef.current.focus();
       return;
     }
-    if (!userEmailAlert.includes('사용 가능한')) {
+    if (!userEmailAlert.includes('사용 가능한') || userEmailAlert === '') {
       window.alert("이메일 중복체크 해주세요");
       emailRef.current.focus();
       return;
     }
-    if (!userNickAlert.includes('사용 가능한')) {
+    if (!userNickAlert.includes('사용 가능한') || userNickAlert === '') {
       window.alert("닉네임 중복체크 해주세요");
       nickRef.current.focus();
       return;
     }
-    if (userPwAlert != '' && userPwAChecklert != '') {
-      window.alert("비밀번호 형식과 일치여부를 확인해주세요");
-      pwRef.current.focus();
+    if (!oneChecked) {
+      window.alert("이용약관 동의가 필요합니다😊");
+      return;
+    }
+    if (!twoChecked) {
+      window.alert("개인정보 수집 및 활용 동의가 필요합니다😊");
       return;
     }
 
@@ -166,7 +232,6 @@ function SignUp(e) {
     }
 
     dispatch(addUserDB(userInfo, signupUrl, navigate));
-
   }
 
 
@@ -181,47 +246,75 @@ function SignUp(e) {
       </div>
       <SignWrap>
         <Title><span>티끌</span>회원가입을 위해<br />정보를 입력해 주세요.</Title>
-        <Form>
+        <Form idStr={idColor} pwStr={pwColor} pwCheckStr={pwCheckColor} emailStr={emailColor} nickStr={nickColor}>
           <label htmlFor="userId">
             <input
               type="text"
               id="userId"
               placeholder="아이디"
               ref={idRef}
-              onChange={onIdChange}
-            />
-            <p>{userIdAlert}</p>
-            <CheckBtn onClick={idCheck}>중복체크</CheckBtn>
+              onChange={onIdChange} />
+            <p className="idResult">{userIdAlert}</p>
+            <CheckBtn onClick={idCheck} disabled={idStrCheck}>중복체크</CheckBtn>
           </label>
+
           <label htmlFor="userPw">
-            <input type="password" id="userPw" placeholder="비밀번호" ref={pwRef} onChange={onPwChange} />
-            <p>{userPwAlert}</p>
+            <input
+              type="password"
+              id="userPw"
+              placeholder="비밀번호"
+              ref={pwRef}
+              onChange={onPwChange} />
+            <p className="pwResult">{userPwAlert}</p>
           </label>
+
           <label htmlFor="checkPassword">
-            <input type="password" id="checkPassword" placeholder="비밀번호 확인" ref={pwCheckRef} onChange={onPwCheckChange} />
-            <p>{userPwAChecklert}</p>
+            <input
+              type="password"
+              id="checkPassword"
+              placeholder="비밀번호 확인"
+              ref={pwCheckRef}
+              onChange={onPwCheckChange} />
+            <p className="pwCheckResult">{userPwAChecklert}</p>
           </label>
+
           <label htmlFor="userEmail">
-            <input type="text" id="userEmail" placeholder="이메일" ref={emailRef} onChange={onEmailChange} />
-            <p>{userEmailAlert}</p>
-            <CheckBtn onClick={emailCheck}>중복체크</CheckBtn>
+            <input
+              type="text"
+              id="userEmail"
+              placeholder="이메일"
+              ref={emailRef}
+              onChange={onEmailChange} />
+            <p className="emailResult">{userEmailAlert}</p>
+            <CheckBtn onClick={emailCheck} disabled={emailStrCheck}>중복체크</CheckBtn>
           </label>
+
           <label htmlFor="userNick">
             <input type="text" id="userNick" placeholder="닉네임" ref={nickRef} onChange={onNickChange} />
-            <p>{userNickAlert}</p>
-            <CheckBtn onClick={nickCheck}>중복체크</CheckBtn>
+            <p className="nickResult">{userNickAlert}</p>
+            <CheckBtn onClick={nickCheck} disabled={nickStrCheck}>중복체크</CheckBtn>
           </label>
           <InfoCheck>
             <label>
               <div>
-                <input type="checkbox" name="info" value="서비스 약관" />
+                <input
+                  type="checkbox"
+                  name="info"
+                  value="서비스 약관"
+                  onChange={oneCheck}
+                />
                 <span>이용약관 동의</span>
               </div>
               <button>내용보기</button>
             </label>
             <label>
               <div>
-                <input type="checkbox" name="info" value="개인정보" />
+                <input
+                  type="checkbox"
+                  name="info"
+                  value="개인정보"
+                  onChange={twoCheck}
+                />
                 <span>개인정보 수집 및 활용 동의</span>
               </div>
               <button>내용보기</button>
@@ -256,6 +349,7 @@ span{
   padding-right: 5px;
 }
 `
+
 const Form = styled.form`
 width: 100%;
 margin: 20px auto 0;
@@ -266,10 +360,43 @@ label{
   text-align: left;
 }
 p{
-  /* margin-top:5px; */
   font-size: 0.87rem;
-  color: #FF7272;
+  
 }
+// 유효성 검사 결과 텍스트 색상
+p.idResult {
+  color: ${props => props.idStr || 'red'};
+  padding: ${props => props.idStr && "5px 0 0 10px"};
+}
+p.idResult ~ button {
+  color: ${props => props.idStr === 'blue' ? "#ccc" : "#999"};
+}
+
+p.pwResult {
+  color: ${props => props.pwStr || 'red'};
+  padding: ${props => props.pwStr && "5px 0 0 10px"};
+}
+p.pwCheckResult {
+  color: ${props => props.pwCheckStr || 'red'};
+  padding: ${props => props.pwCheckStr && "5px 0 0 10px"};
+}
+
+p.emailResult {
+  color: ${props => props.emailStr || 'red'};
+  padding: ${props => props.emailStr && "5px 0 0 10px"};
+}
+p.emailResult ~ button {
+  color: ${props => props.emailStr === 'blue' ? "#ccc" : "#999"};
+}
+
+p.nickResult {
+  color: ${props => props.nickStr || 'red'};
+  padding: ${props => props.nickStr && "5px 0 0 10px"};
+}
+p.nickResult ~ button {
+  color: ${props => props.nickStr === 'blue' ? "#ccc" : "#999"};
+}
+
 input {
   outline: none;
   width:100%;
@@ -281,29 +408,17 @@ input {
   box-sizing: border-box;
   border-radius: 2px;
 }
-
-
 input#user_id {
   width: 70%;
 }
 input::placeholder {
   color: #ccc;
 }
-/* button.checkBtn {
-  position: absolute;
-  top: 50%; right: 3%;
-  transform: translateY(-50%);
-  border: 1px solid #D8D8D8;
-  padding: 5px 10px;
-  background: #fff;
-  color: #999999;
-  font-size: 0.87rem;
-  border-radius: 60px;
-} */
 `;
 
 const InfoCheck = styled.div`
 margin: 20px 10px;
+
 div {
   display: flex;
   align-items: center;
@@ -327,8 +442,8 @@ div {
  button {
   color:#26DFB3;
  }
-  
 `;
+
 const InputBtn = styled.button`
   display: block;
   width: 100%;
@@ -340,8 +455,8 @@ const InputBtn = styled.button`
   color:#fff;
   font-size: 18px;
   cursor: pointer;
-  
 `;
+
 const CheckBtn = styled.button`
   position: absolute;
   top: 50%; right: 3%;

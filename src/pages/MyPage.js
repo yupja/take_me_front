@@ -42,7 +42,7 @@ function MyPage() {
   const closePopup = (e) => {
     setOpenModal(false)
   };
-  console.log(pwStr)
+
   // 탈퇴하기
   const secession = async (e) => {
     e.preventDefault();
@@ -113,10 +113,12 @@ function MyPage() {
                 <div><Consu /></div>
                 <span>티끌 정보</span>
               </li>
-              <li>
-                <div><InfoIcon /></div>
-                <span>고객의 소리</span>
-              </li>
+              <a href="https://forms.gle/qYoVUmbNwkNz2m957" target="_blank" rel="noreferrer">
+                <li>
+                  <div><InfoIcon /></div>
+                  <span>고객의 소리</span>
+                </li>
+              </a>
               <li onClick={() => setOpenModal(true)}>
                 <div><Withdrawal /></div>
                 <span>회원 탈퇴</span>
@@ -140,7 +142,6 @@ function MyPage() {
                 <span>비밀번호</span>
                 <div>
                   <input type="password" placeholder={pwStr} ref={pwRef} />
-                  {/* <p>{pwAlertStr}df</p> */}
                 </div>
               </div>
             </Info>
@@ -238,6 +239,7 @@ button {
   font-weight: 700;
   background: #ccc;
   padding:1rem 0;
+  cursor: pointer;
 }
 .closeBtn{
   background: #26dfa6;
@@ -288,6 +290,7 @@ const MenuList = styled.ul`
     position: relative;
     width: 6.24rem;
     height: 6.24rem;
+    cursor: pointer;
   }
   a{
     position: absolute;
@@ -359,6 +362,7 @@ li{
   float: left;
   margin-bottom: 15px;
   align-items: center;
+  cursor: pointer;
 }
 div {
   width: 1.25rem;
@@ -395,6 +399,7 @@ height: 1rem;
 margin-top: 10px;
 position:absolute;
 top: 0; right: 3%;
+cursor: pointer;
 
 span {
   display:block;

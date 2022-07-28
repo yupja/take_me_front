@@ -28,7 +28,7 @@ function Header({ title, props }) {
   const logout = (e) => {
     localStorage.clear();
     removeCookie('refreshToken', { path: '/' });
-    window.location.href('/login');
+    window.location.href = '/login';
   }
 
   const onNav = (e) => {
@@ -244,6 +244,7 @@ p{
   line-height: 1.23rem;
   display: inline-block;
   padding-bottom:2px;
+  cursor: pointer;
 }
 p:nth-child(2) {
   color: #26DFA6;
