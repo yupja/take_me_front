@@ -65,7 +65,7 @@ export const deleteChattingRoom = (roomId, navigate) => {
   return async function (dispatch) {
     try {
       await instance.get(`/api/chat/room/${roomId}/save`)
-      window.location.href="/";
+      window.location.href="/chattingList";
     } catch (error) {
       console.log(error)
     }
@@ -77,7 +77,7 @@ export const deleteLobyChat = (roomId, navigate) => {
   return async function (dispatch) {
     try {
       await instance.get(`/api/chat/room/${roomId}/save`)
-      dispatch(loadChattingListRS());
+      // dispatch(loadChattingListRS());
     } catch (error) {
       console.log(error)
     }

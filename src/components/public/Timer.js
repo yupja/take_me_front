@@ -8,7 +8,6 @@ export default function Timer(props) {
   const [seconds, setSeconds] = useState(Number(props.sec));
   const dispatch = useDispatch();
 
-  console.log(props.roomId)
 
   useEffect(() => {
     const countdown = setInterval(() => {
@@ -24,10 +23,15 @@ export default function Timer(props) {
         }
       }
     }, 1000);
+    
+    if(props.station === "chattingInfo"){
+      if((parseInt(minutes)==0)&&(parseInt(seconds)==0)|| parseInt(minutes)>10){
+        //dispatch(deleteChattingRoom(props.roomId))
+        props.setTimeOutLimit(false)
+      }
 
-    if((parseInt(minutes)==0)&&(parseInt(seconds)==0)|| parseInt(minutes)>10){
-      dispatch(deleteChattingRoom(props.roomId))
     }
+
 
     return () => clearInterval(countdown);
   }, [minutes, seconds]);
