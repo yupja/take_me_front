@@ -35,7 +35,7 @@ const ListModal = (props) => {
   return (
     <>
       {props.showModall ?
-
+  <div style={{overflow:"hidden"}}>
         <Background>
           {/* <ModalBox onClick={e => e.stopPropagation()}> */}
           <PaperBox>
@@ -48,7 +48,7 @@ const ListModal = (props) => {
             <Middle>
               <p><Spann>{saveDataa.userId}</Spann>님의
               {saveDataa.goalItemName} <Spann>KEEP</Spann></p>
-              <p style={{ fontWeight: "700", marginTop: "2vw" }}>
+              <p style={{ fontWeight: "700", marginTop: "8px" }}>
                 {saveDataa.savedItemTotalPrice} 원</p>
             </Middle>
             <ListBox>
@@ -81,7 +81,7 @@ const ListModal = (props) => {
           </BigBox>
           {/* </ModalBox> */}
           <CloseBtn onClick={props.closeModall}>닫기</CloseBtn>
-        </Background> : null}
+        </Background></div> : null}
     </>
 
   );
@@ -106,7 +106,7 @@ align-items: center;
 position: absolute;
 /* margin-right: 1vw; */
 border: none;
-top: 50%; 
+top: 430px; 
 left: 50%;
 transform: translate(-50%, -50%);
   `;
@@ -128,6 +128,8 @@ transform: translate(-50%, -50%);
 `;
 
 const Background = styled.div`
+width: 100%;
+height: 100%;
   position: absolute;
   top: 0;
   left: 0;
@@ -137,9 +139,7 @@ const Background = styled.div`
   display: flex;
   justify-content: center;
   /* background-color: rgba(41,41,41,0.85); */
-  .paper{
-    position: relative;
-  }
+  z-index: 889;
   `;
 
 const ModalBox = styled.div`
@@ -174,7 +174,7 @@ justify-content: end;
 const Top = styled.div`
 width: 150px;
 /* width: 100%; */
-border: 1px solid blue;
+/* border: 1px solid blue; */
 display: flex;
 margin:10px 0 15px 0;
 position: absolute;
@@ -197,8 +197,7 @@ flex-direction: column;
 top: 230px;
 left: 50%;
 transform: translate(-50%, -50%);
-z-index: 80;
-position: fixed;
+position: absolute;
 `;
 
 const Spann = styled.span`
@@ -211,7 +210,7 @@ width: 80%;
 height: 40px;
 align-items: center;
 justify-content: center;
-line-height: 10vw; //폰트의 높이!
+line-height: 40px;
 `;
 
 const Left = styled.div`
@@ -258,7 +257,8 @@ position: absolute;
 display: flex;
 justify-content: center;
 align-items: center;
-bottom: 5%;
+top: 750px;
+position: fixed;
 `;
 
 export default ListModal;

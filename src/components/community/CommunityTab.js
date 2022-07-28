@@ -182,9 +182,11 @@ const CommunityTab = () => {
       </BtnBox>
       {/* 세이브리스트모달 */}
       {showModall ?
+      <div style={{width:"500px", border:"1px solid red"}}>
         <ListModal showModall={showModall} closeModall={closeModall}
           forsaveId={Postdata[savedListIndex].boardId}
         />
+        </div>
         : null}
     </Box>
   )
@@ -324,13 +326,13 @@ position: relative;
 `;
 
 const BtnBox = styled.div`
-width: 355px;
+width: 375px;
 height: 60px;
 margin: 0 auto;
 display: flex;
 justify-content: center;
 align-items: center;
-bottom: 5%;
+top: 750px;
 position: fixed;
 `;
 
