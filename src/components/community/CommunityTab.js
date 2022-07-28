@@ -1,4 +1,4 @@
-import React,{ useState,useEffect}from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import ListModal from "./ListModal";
@@ -7,7 +7,7 @@ import PostModal from "./PostModal";
 
 
 import { useNavigate } from "react-router-dom";
-import {getUserInfoDB} from "../../store/modules/user";
+import { getUserInfoDB } from "../../store/modules/user";
 import Like from "./Like";
 import GoalForCum from "./GoalForCum"
 import { loadMoreContentDB, loadpostsAc, deletePostAc } from "../../store/modules/community";
@@ -24,18 +24,18 @@ const CommunityTab = () => {
 
   const dispatch = useDispatch();
   const Navigate = useNavigate();
-  
-  const  [savedListIndex, setSavedListIndex] = useState();
+
+  const [savedListIndex, setSavedListIndex] = useState();
 
   const userinfo = useSelector((state) => state.user.infoList)
   const Postdata = useSelector((state) => state.community.postList.data);
   const Savedata = useSelector((state) => state.saved.savedItem);
 
- 
+
 
   const [showModall, setShowModall] = useState(false);
   const openModall = (index) => {
-    setSavedListIndex(index);   
+    setSavedListIndex(index);
     setShowModall(true)
   }
   const closeModall = () => {
@@ -64,40 +64,40 @@ const CommunityTab = () => {
   const clickLike = () => {
     setILike(true)
   }
-  
+
   const [target, setTarget] = useState(null);
   const onIntersect = async ([entry], observer) => {
-      if (entry.isIntersecting) {
-          observer.unobserve(entry.target);
-          await dispatch(loadMoreContentDB());
-      }
+    if (entry.isIntersecting) {
+      observer.unobserve(entry.target);
+      await dispatch(loadMoreContentDB());
+    }
   };
 
   useEffect(() => {
-      let observer;
-      if (target) {
-          observer = new IntersectionObserver(onIntersect, {
-              threshold: 1,
-          });
-          observer.observe(target);
-      }
-      return () => {
-          observer && observer.disconnect();
-      };
+    let observer;
+    if (target) {
+      observer = new IntersectionObserver(onIntersect, {
+        threshold: 1,
+      });
+      observer.observe(target);
+    }
+    return () => {
+      observer && observer.disconnect();
+    };
   }, [target]);
 
   return (
     <Box>
       {Postdata.map((postList, index) => {
         return (
-          <div key={postList.boardId} ref={index === Postdata.length - 1 ? setTarget : null}> 
+          <div key={postList.boardId} ref={index === Postdata.length - 1 ? setTarget : null}>
             <>
               <ContentBox>
                 <Left>
                   {/* <Day>{postList.createAt}</Day> */}
                   <ItemImgBox>
                     <ItemImage src={postList.image}></ItemImage>
-                    <GoalForCum  className="dounut" color="#26DFA6" size="140" position="relative" percent={postList.goalPercent}/>
+                    <GoalForCum className="dounut" color="#26DFA6" size="140" position="relative" percent={postList.goalPercent} />
                   </ItemImgBox>
                   <ProfileBox>
                     <Profile src={postList.profileImg}></Profile>
@@ -105,41 +105,46 @@ const CommunityTab = () => {
                 </Left>
                 <Right>
                   <div>
-                  <NewTop>
-                    <div onClick={() => { Navigate
-                      (`/detail/${postList.boardId}`,
-                      {state: {name:postList}}
-                      ) }}>
-                    {postList.goalItemName}
-                    {userinfo.username === postList.userId ?
-                    <DotBox><Dot className="dot"/></DotBox>
+                    <NewTop>
+                      <div onClick={() => {
+                        Navigate
+                          (`/detail/${postList.boardId}`,
+                            { state: { name: postList } }
+                          )
+                      }}>
+                        {postList.goalItemName}
+                        {userinfo.username === postList.userId ?
+                          <DotBox><Dot className="dot" /></DotBox>
 
-                    : null }
-                    </div>
-                  </NewTop>
+                          : null}
+                      </div>
+                    </NewTop>
                     <NewNick>
                       {postList.nickname}&nbsp;&nbsp;{postList.contents}
                     </NewNick>
                   </div>
                   <NewFoot>
                     <LikeBox>
-                    <Like
-                      isLike = {postList.checkLike}
-                      forLikeId = {postList.boardId}
-                      likeCount = {postList.likeCount}
-                    />&nbsp;&nbsp;
-                    {postList.likeCount}
+                      <Like
+                        isLike={postList.checkLike}
+                        forLikeId={postList.boardId}
+                        likeCount={postList.likeCount}
+                      />&nbsp;&nbsp;
+                      {postList.likeCount}
                     </LikeBox>
-                    <div onClick={() => { Navigate
-                      (`/detail/${postList.boardId}`,
-                      {state: {name:postList}}
-                      ) }}>
-                    <Count onClick={() => { Navigate(`/detail/${postList.boardId}`)
+                    <div onClick={() => {
+                      Navigate
+                        (`/detail/${postList.boardId}`,
+                          { state: { name: postList } }
+                        )
+                    }}>
+                      <Count onClick={() => {
+                        Navigate(`/detail/${postList.boardId}`)
                       }}>
-                      <Comment />&nbsp;&nbsp;{postList.commentCount} 개
+                        <Comment />&nbsp;&nbsp;{postList.commentCount} 개
                       </Count>
-                      </div>
-                    <Rec onClick={()=>{openModall(index)}}><Receipt /></Rec>
+                    </div>
+                    <Rec onClick={() => { openModall(index) }}><Receipt /></Rec>
                   </NewFoot>
                 </Right>
               </ContentBox>
@@ -149,27 +154,23 @@ const CommunityTab = () => {
       }
       )}
       <BlankBox></BlankBox>
-         <BtnBox>
+      <BtnBox>
         <FootBtn onClick={() => {
           openModal();
           setModalName("내 태산 % 공유");
-          setModalState(<PostModal close={closeModal} />)}}>
-              내 태산 % 공유</FootBtn>
+          setModalState(<PostModal close={closeModal} />)
+        }}>
+          내 태산 % 공유</FootBtn>
 
-        {/* 세이브리스트모달 */}
-        {showModall ?
-            <ListModal showModall={showModall} closeModall={closeModall} 
-                        forsaveId = {Postdata[savedListIndex].boardId}
-                        />
-            : null}
+
         {/* 게시글등록모달     */}
 
         <Modal
-        open={modalOpen}
-        close={closeModal}
-        header={modalName}>
-        {modalState}
-      </Modal>
+          open={modalOpen}
+          close={closeModal}
+          header={modalName}>
+          {modalState}
+        </Modal>
 
         {/* <Modal 
           open={modalOpen}
@@ -178,9 +179,15 @@ const CommunityTab = () => {
           {<PostModal close={closeModal}/>}
         </Modal> */}
 
-        </BtnBox>
+      </BtnBox>
+      {/* 세이브리스트모달 */}
+      {showModall ?
+        <ListModal showModall={showModall} closeModall={closeModall}
+          forsaveId={Postdata[savedListIndex].boardId}
+        />
+        : null}
     </Box>
-)
+  )
 };
 
 const Count = styled.span`
@@ -292,20 +299,6 @@ border: none;
 position: absolute;
 `;
 
-const Nick = styled.div`
-/* border: 1px solid red; */
-width: 100%;
-height: 20vw;
-/* margin-top: 2vw; */
-font-size: 0.9rem;
-display: flex;
-/* text-overflow: ellipsis;  
-	overflow : hidden;
-	display: -webkit-box;
-        -webkit-line-clamp: 5;
-        -webkit-box-orient: vertical; */
-`;
-
 const Day = styled.div`
 font-size: 1.5rem;
 margin-left: auto;
@@ -330,19 +323,8 @@ margin: auto;
 position: relative;
 `;
 
-const Foot = styled.div`
-width: 100%;
-height: 100vw;
-/* border: 2px solid violet; */
-display: flex;
-margin: auto;
-/* align-items: flex-end; */
-font-size: 0.5rem;
-padding: 1rem;
-`;
-
 const BtnBox = styled.div`
-width: 100%;
+width: 355px;
 height: 60px;
 margin: 0 auto;
 display: flex;
@@ -350,7 +332,6 @@ justify-content: center;
 align-items: center;
 bottom: 5%;
 position: fixed;
-left: 0
 `;
 
 const FootBtn = styled.button`
