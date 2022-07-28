@@ -21,7 +21,6 @@ function ChattingList() {
   const RoomId = "";
   const name = React.useRef();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const [modalOpen, setModalOpen] = React.useState(false);
   const [modalState, setModalState] = React.useState();
@@ -33,6 +32,8 @@ function ChattingList() {
   const closedRoomList = useSelector(((state => state.community.closedChttingList)));
   const userInfo = useSelector((state) => state.community.myInfo)
 
+  console.log(roomList);
+  
   return (
     <>
       <Wrap>
@@ -53,8 +54,7 @@ function ChattingList() {
                     authorNickname={item.authorNickname}
                     comment={item.comment}
                     userCount={item.userCount}
-                    createdAt={item.createdAt}
-                    timeLimit={item.timeLimit}
+                    leftTiime={item.leftTiime}
                     prosCons={item.prosCons}
                     currentState={"Live"} />
                 </ChattingListDiv>

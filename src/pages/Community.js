@@ -27,9 +27,6 @@ const Community = () => {
       dispatch(topListRS());
     },[isLoad])
   const topRoomList = useSelector(((state => state.community.topChttingList)));
-  console.log(topRoomList)
-
-  console.log(chooseMenu)
 
   return (
   <> 

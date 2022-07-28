@@ -35,7 +35,6 @@ const SwipeForm = (props) =>{
     const [minutes, setMinutes] = useState();
     const [seconds, setSeconds] = useState();
     const [vote, setVote] = useState(props.prosCons);
-
     const userInfo = useSelector((state)=>state.community.myInfo)
 
     const dispatch = useDispatch();
@@ -96,7 +95,7 @@ const SwipeForm = (props) =>{
     };
 
 
-    useInterval(() => {
+  useInterval(() => {
       setCurrentIndex(currentIndex => currentIndex + 1);
   }, 2000)
   

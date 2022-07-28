@@ -11,8 +11,6 @@ function History() {
   const title = "히스토리";
   const dispatch = useDispatch();
   const state = useSelector((state) => state.info.historyList)
-  console.log(state);
-  console.log(state[3]?.savedItems);
   useEffect(() => {
     dispatch(getHistory());
   }, []);

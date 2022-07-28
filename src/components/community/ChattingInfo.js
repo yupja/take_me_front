@@ -30,7 +30,7 @@ const ChattingInfo = (props) => {
       setReady(false)
     }, 100)
 
-    if(minutes > 10 || !timeOutLimit){
+    if(minutes > 10 || minutes < 0 ||!timeOutLimit){
       setTimeout(() => {
         dispatch(deleteChattingRoom(props.roomId));
       }, 100)
@@ -84,22 +84,11 @@ const ChattingInfo = (props) => {
 
 
   const getTime = () => {
-    const createTime = new Date(props.createdAt);
-    const Time = new Date();
-    setCurrentTime(Time)
-    console.log(Time)
-    createTime.setMinutes(createTime.getMinutes() + props.timeLimit)
-  
-    let diff = (createTime - Time)
-    const diffHours = Math.floor(diff / (1000 * 60 * 60));
-    diff -= diffHours * (1000 * 60 * 60);
-    let diffMin = Math.floor(diff / (1000 * 60));
-    diff -= diffMin * (1000 * 60);
-    const diffSec = Math.floor(diff / 100000);
+    const min = (Math.floor(props.leftTiime/60))
+    const sec = (Math.floor(props.leftTiime%60))
+   setMinutes(min);
+   setSeconds(sec);
 
-    setMinutes(diffMin);
-    setSeconds(diffSec);
-    console.log(diffMin, diffSec)
   }
 
 
@@ -124,7 +113,7 @@ const ChattingInfo = (props) => {
               <div className="timerArea">
                 <Timer />
                 <TimerFunction
-                  min={minutes+1}
+                  min={minutes}
                   sec={seconds}
                   setTimeOutLimit={"setTimeOutLimit"}
                   station = "chattingInfo"/>

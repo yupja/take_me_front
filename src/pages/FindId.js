@@ -8,6 +8,7 @@ import Header from "../components/public/Header";
 
 
 const FindId = () => {
+  const title = "아이디 찾기";
 
   const dispatch = useDispatch();
   const state = useSelector((state) => state.user.findIdResult);
@@ -46,7 +47,7 @@ const FindId = () => {
 
   return (
     <>
-      <Header />
+      <Header title={title} />
       {!findId ?
         (
           <FindWrap>
