@@ -423,15 +423,16 @@ transform: translate(-50%, -50%);
 `;
 
 const Enter = styled.div`
-width: 100%;
+width: 388px;
 height: 84px;
 padding: 5px 25px;
 border: none;
 background-color: #333333;
 display: flex;
 align-items: center; 
-position: absolute;
+position: fixed;
 bottom: 0;
+margin-top: 84px;
 `;
 
 const Input = styled.input`
