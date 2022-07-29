@@ -173,7 +173,7 @@ const SwipeForm = (props) =>{
 } 
 
 const Wrap = styled.div`
-max-width: 390px;
+max-width: 440px;
 width: 100%;
 max-height: 140px;
 height: 100%;
