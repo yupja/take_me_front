@@ -7,6 +7,7 @@ import Header from "../components/public/Header";
 import { userSecDB } from "../store/modules/user";
 import { getInfo } from "../store/modules/info";
 import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
 
 import { ReactComponent as Star } from "../assets/icons/Star.svg";
 import { ReactComponent as EditIProfile } from "../assets/icons/EditIProfile.svg";
@@ -19,6 +20,7 @@ import { ReactComponent as Close } from "../assets/icons/Close.svg";
 
 function MyPage() {
   const title = "MY"
+  const navigate = useNavigate();
 
   const [, , removeCookie] = useCookies(['refreshToken']);
 
@@ -30,6 +32,9 @@ function MyPage() {
 
 
   useEffect(() => {
+    if(!localStorage.getItem("accessToken")){
+      navigate("/main")
+    }
     dispatch(getInfo())
   }, [dispatch])
 

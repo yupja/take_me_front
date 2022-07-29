@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 import Header from "../components/public/Header";
 import SaveItemList from "../components/saved/SaveItemList";
@@ -8,10 +9,15 @@ import SaveItemList from "../components/saved/SaveItemList";
 import { getHistory } from "../store/modules/info";
 
 function History() {
+  const navigate = useNavigate();
+  
   const title = "히스토리";
   const dispatch = useDispatch();
   const state = useSelector((state) => state.info.historyList)
   useEffect(() => {
+    if(!localStorage.getItem("accessToken")){
+      navigate("/main")
+    }
     dispatch(getHistory());
   }, []);
 

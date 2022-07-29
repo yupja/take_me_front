@@ -29,7 +29,13 @@ function Router() {
       <Routes>
         {/* <Route path="*" element={<NotFound />} /> */}
         <Route path="/main" element={<Main />} />
+        
+        {localStorage.getItem("accessToken")?
         <Route path="/" element={<Save />} />
+        :
+        <Route path="/" element={<Main/>} />
+        }
+        
         {/* <Route path="/statistics" element={<Statistics />} /> */}
         {/* <Route path="/detail/:boardId" element={<Detail />} /> */}
         <Route path="/mypage" element={<MyPage />} />
