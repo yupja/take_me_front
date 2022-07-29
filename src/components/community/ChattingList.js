@@ -31,8 +31,7 @@ function ChattingList() {
   const roomList = useSelector(((state => state.community.chattingList)));
   const closedRoomList = useSelector(((state => state.community.closedChttingList)));
   const userInfo = useSelector((state) => state.community.myInfo)
-
-  console.log(roomList);
+  console.log(roomList)
   
   return (
     <>
@@ -54,7 +53,7 @@ function ChattingList() {
                     authorNickname={item.authorNickname}
                     comment={item.comment}
                     userCount={item.userCount}
-                    leftTiime={item.leftTiime}
+                    leftTiime={item.leftTime}
                     prosCons={item.prosCons}
                     currentState={"Live"} />
                 </ChattingListDiv>
