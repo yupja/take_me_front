@@ -35,7 +35,7 @@ const ListModal = (props) => {
   return (
     <>
       {props.showModall ?
-  <div style={{overflow:"hidden"}}>
+      <>
         <Background>
           {/* <ModalBox onClick={e => e.stopPropagation()}> */}
           <PaperBox>
@@ -81,7 +81,7 @@ const ListModal = (props) => {
           </BigBox>
           {/* </ModalBox> */}
           <CloseBtn onClick={props.closeModall}>닫기</CloseBtn>
-        </Background></div> : null}
+        </Background></> : null}
     </>
 
   );
@@ -106,9 +106,9 @@ align-items: center;
 position: absolute;
 /* margin-right: 1vw; */
 border: none;
-top: 430px; 
+/* top: 430px;  */
 left: 50%;
-transform: translate(-50%, -50%);
+transform: translate(-50%, -5%);
   `;
 
 const ListBox = styled.div`
@@ -122,7 +122,7 @@ margin: auto;
 align-items: center;
 position: absolute;
 z-index: 90;
-top: 470px; 
+top: 370px; 
 left: 50%;
 transform: translate(-50%, -50%);
 `;
@@ -130,7 +130,7 @@ transform: translate(-50%, -50%);
 const Background = styled.div`
 width: 100%;
 height: 100%;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   bottom: 0;
@@ -166,7 +166,7 @@ width: 300px;
 height: 20px;
 align-items: center;
 position: absolute;
-top: 135px;
+top: 20px;
 display: flex;
 justify-content: end;
 `;
@@ -194,7 +194,7 @@ text-align: center;
 display: flex;
 justify-content: center;
 flex-direction: column;
-top: 230px;
+top: 120px;
 left: 50%;
 transform: translate(-50%, -50%);
 position: absolute;
@@ -253,12 +253,11 @@ background-color: #26DFA6;
 color: white;
 font-size: 1rem;
 font-weight: 700;
-position: absolute;
 display: flex;
 justify-content: center;
 align-items: center;
-top: 750px;
-position: fixed;
+bottom: 10%;
+position: absolute;
 `;
 
 export default ListModal;

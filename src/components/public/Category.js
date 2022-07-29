@@ -32,6 +32,7 @@ const Category = (props ) => {
       <option value={16}>자녀/육아</option>
       <option value={17}>반려동물</option>
       <option value={18}>경조/선물</option>
+      <option value={19}>가전/디지털</option>
     </SelectBox>
   );
 }
