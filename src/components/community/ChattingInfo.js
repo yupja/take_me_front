@@ -13,6 +13,7 @@ import Loading from "../public/Loading";
 
 const ChattingInfo = (props) => {
 
+
   const [minutes, setMinutes] = useState();
   const [seconds, setSeconds] = useState();
   const [ready, setReady] = useState(true);

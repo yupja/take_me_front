@@ -17,14 +17,14 @@ function RoomDetail() {
   const { state } = useLocation();
   const { roomId } = useParams();
   const dispatch = useDispatch();
-  const navigate = useNavigate
+  const navigate = useNavigate();
+
+
   const [timeOutLimit , setTimeOutLimit] = useState(true);
   const getMessages = useSelector((state) => state.community.messages);
 
   useEffect(() => {
-    scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
-    console.log(timeOutLimit)
-
+    scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' })
     if(state.minutes > 10 ||  state.minutes<0){
       setTimeout(() => {
         client.disconnect();
@@ -35,12 +35,13 @@ function RoomDetail() {
       setTimeout(() => {
         client.disconnect();
         dispatch(deleteChattingRoom(roomId));
-      }, 1000) 
-
+      }, 1000)
     }
 
+    
 
-  }, [getMessages, timeOutLimit]);
+
+  }, [getMessages, timeOutLimit, navigate]);
   
 
   const title = '쓸까?말까?'
