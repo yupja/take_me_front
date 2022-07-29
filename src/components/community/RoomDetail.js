@@ -18,13 +18,13 @@ function RoomDetail() {
   const { roomId } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate
-  const [timeOutLimit , setTimeOutLimit] = useState(true);
+  const [timeOutLimit, setTimeOutLimit] = useState(true);
   const getMessages = useSelector((state) => state.community.messages);
 
   useEffect(() => {
     scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
 
-    if(state.minutes > 10 ||  state.minutes<0 || !timeOutLimit){
+    if (state.minutes > 10 || state.minutes < 0 || !timeOutLimit) {
       setTimeout(() => {
         client.disconnect();
         dispatch(deleteChattingRoom(roomId));
@@ -33,13 +33,13 @@ function RoomDetail() {
 
 
   }, [getMessages, timeOutLimit]);
-  
+
 
   const title = '쓸까?말까?'
   const chatRef = useRef();
   const scrollRef = useRef();
 
-  
+
 
 
   const sock = new SockJS('https://api.webprogramming-mj6119.shop/chatting', null, { transports: ["websocket", "xhr-streaming", "xhr-polling"] });
@@ -73,6 +73,13 @@ function RoomDetail() {
 
   }, [])
 
+  // 이전 페이지 이동시 소켓 연결 해제
+  useEffect(() => {
+    return (() => {
+      // dispatch(delMessage())
+      disconnects();
+    })
+  }, [])
 
 
   //연결 해제
@@ -83,12 +90,6 @@ function RoomDetail() {
       client.disconnect();
     }
   }
-
-  useEffect(() => {
-    window.addEventListener("beforeunload", disconnects);
-    console.log('새로고침 확인')
-  }, [])
-
 
 
 
@@ -136,8 +137,8 @@ function RoomDetail() {
           <strong>
             <TimerFunction
               min={state.minutes}
-              sec={state.seconds} 
-              setTimeOutLimit={setTimeOutLimit}/>
+              sec={state.seconds}
+              setTimeOutLimit={setTimeOutLimit} />
           </strong>
         </ListInfo>
         <Vote>

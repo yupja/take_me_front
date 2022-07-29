@@ -57,6 +57,15 @@ function SignUp(e) {
     setTwoChecked(current => !current);
   }
 
+  //팝업창
+  const [navToggles, setNavToggles] = useState(false);
+  const [ModalStr, setModalStr] = useState('');
+  const [resultAlert, setResultAlert] = useState("");
+
+  const closeNav = (e) => {
+    setNavToggles(false);
+    setResultAlert("");
+  }
 
 
 
@@ -190,36 +199,43 @@ function SignUp(e) {
     console.log(userPw, userPwCheck)
 
     // 유효성 검사
-    if (userPw !== userPwCheck || userPwAlert.includes('8')) {
-      window.alert("비밀번호 형식과 일치여부를 확인해주세요");
-      pwRef.current.focus();
-      return;
-    }
     if (userEmail === "" || userId === '' || userNick === "" || userPw === "" || userPwCheck === "") {
-      window.alert("모든 항목은 필수입니다😊");
+      setResultAlert("모든 항목은 필수입니다😊");
+      setNavToggles(true);
       return;
     }
     if (!userIdAlert.includes('사용 가능한') || userIdAlert === '') {
-      window.alert("아이디 중복체크 해주세요");
+      setResultAlert("아이디 중복체크 해주세요");
+      setNavToggles(true);
       idRef.current.focus();
       return;
     }
+    if (userPw !== userPwCheck || userPwAlert.includes('8')) {
+      setResultAlert("비밀번호 형식과 일치여부를 확인해주세요");
+      setNavToggles(true);
+      pwRef.current.focus();
+      return;
+    }
     if (!userEmailAlert.includes('사용 가능한') || userEmailAlert === '') {
-      window.alert("이메일 중복체크 해주세요");
+      setResultAlert("이메일 중복체크 해주세요");
+      setNavToggles(true);
       emailRef.current.focus();
       return;
     }
     if (!userNickAlert.includes('사용 가능한') || userNickAlert === '') {
-      window.alert("닉네임 중복체크 해주세요");
+      setResultAlert("닉네임 중복체크 해주세요");
+      setNavToggles(true);
       nickRef.current.focus();
       return;
     }
     if (!oneChecked) {
-      window.alert("이용약관 동의가 필요합니다😊");
+      setResultAlert("이용약관 동의가 필요합니다😊");
+      setNavToggles(true);
       return;
     }
     if (!twoChecked) {
-      window.alert("개인정보 수집 및 활용 동의가 필요합니다😊");
+      setResultAlert("개인정보 수집 및 활용 동의가 필요합니다😊");
+      setNavToggles(true);
       return;
     }
 
@@ -323,6 +339,22 @@ function SignUp(e) {
           <InputBtn type="button" onClick={signup}>가입 하기</InputBtn>
         </Form>
       </SignWrap>
+      {navToggles ?
+        <ModalWrap>
+          <ModalBox>
+            <h1>가입하기</h1>
+            <CloseBtn onClick={closeNav}>
+              <span></span>
+              <span></span>
+            </CloseBtn>
+            <div className="cont">
+              {resultAlert}
+            </div>
+            <button className="change" onClick={closeNav}>닫기</button>
+          </ModalBox>
+        </ModalWrap>
+        : null
+      }
     </>
   )
 };
@@ -369,7 +401,7 @@ p.idResult {
   padding: ${props => props.idStr && "5px 0 0 10px"};
 }
 p.idResult ~ button {
-  color: ${props => props.idStr === 'blue' ? "#ccc" : "#999"};
+  color: ${props => props.idStr === '#26DFA6' ? "#ccc" : "#999"};
 }
 
 p.pwResult {
@@ -386,7 +418,7 @@ p.emailResult {
   padding: ${props => props.emailStr && "5px 0 0 10px"};
 }
 p.emailResult ~ button {
-  color: ${props => props.emailStr === 'blue' ? "#ccc" : "#999"};
+  color: ${props => props.emailStr === '#26DFA6' ? "#ccc" : "#999"};
 }
 
 p.nickResult {
@@ -394,7 +426,7 @@ p.nickResult {
   padding: ${props => props.nickStr && "5px 0 0 10px"};
 }
 p.nickResult ~ button {
-  color: ${props => props.nickStr === 'blue' ? "#ccc" : "#999"};
+  color: ${props => props.nickStr === '#26DFA6' ? "#ccc" : "#999"};
 }
 
 input {
@@ -468,4 +500,100 @@ const CheckBtn = styled.button`
   font-size: 0.87rem;
   border-radius: 60px;
   
+`;
+
+// 모달
+const ModalWrap = styled.div`
+width: 100%;
+height: 100%;
+padding: 0 25px;
+position: absolute;
+top: 0; left: 0;
+background: rgba(0,0,0,0.7);
+z-index: 999;
+`
+const ModalBox = styled.div`
+position: absolute;
+top: 50%; left: 50%;
+transform: translate(-50%,-50%);
+width: 90%;
+height: 11.5rem;
+background: #fff;
+border-radius: 5px;
+overflow: hidden;
+text-align : center;
+
+h1 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  text-align: center;
+  line-height:62px;
+}
+ h3 {
+  font-size: 1.5rem;
+  padding: 20px 0;
+  white-space: pre-wrap;
+ }
+ div.cont{
+  position: relative;
+  margin: 0 10px;
+  padding: 15px 0;
+  border-bottom : 1px solid #ddd;
+  button{
+    position: absolute;
+    right: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4.43rem;
+    text-align: center;
+    color: #999;
+    padding: 3px 5px;
+    font-weight: 500;
+    font-size: 0.875rem;
+    border: 1px solid #dbdbdb;
+    border-radius: 3.12rem;
+  }
+ }
+ input {
+  width: 75%;
+  background : none;
+  border: none;
+  text-align: center;
+ }
+ input:focus{
+  outline:none;
+ }
+ button.change {
+  font-size:0.93rem;
+  font-weight: 700;
+  color: #fff;
+  width: 100%;
+  background: #26DFA6;
+  padding: 16px 0;
+  position: absolute;
+  bottom: 0; left: 0;
+ }
+`
+
+const CloseBtn = styled.div`
+width:15px;
+height: 15px;
+position:absolute;
+top: 13px; right: 5%;
+
+span {
+  display:block;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width:100%;
+  height:1px;
+  background-color: #999999;
+}
+span:first-child{
+  transform: rotate(45deg) translateX(0%);
+  }
+span:last-child{
+  transform: rotate(135deg) translateX(0%);
+  }
 `;
