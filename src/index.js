@@ -10,12 +10,18 @@ import { height } from '@mui/system';
 
 // import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 // serviceWorkerRegistration.register();
+const Image = styled.div`
+  background-image: url("https://s3.ap-northeast-2.amazonaws.com/amorossoprc.shop/W_06.Edit_2D_3-2.png");
+  background-size: 100% 100%;
+  width: 100%;
+  height: 320px;
+`;
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
     <CookiesProvider>
-      <div style={{
+      <Image style={{
         display: "flex",
         justifyContent: 'center',
         maxWidth: "1500px",
@@ -31,10 +37,11 @@ root.render(
           maxHeight: "896",
           height: "100%",
           overflowY: "scroll",
+          background: "white"
         }}>
           <App />
         </div>
-      </div>
+      </Image>
     </CookiesProvider>
   </Provider>
 );
