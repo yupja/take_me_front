@@ -27,7 +27,8 @@ export const LoginDB = (loginInfo, setModalStr, setNavToggles, navigate, urlData
       })
       .catch((error) => {
         console.log(error.response.data);
-        if (error.response.data.status === 500) {
+        const errCode = error.response.data.status;
+        if (errCode === 500 || errCode === 400) {
           setModalStr("아이디 또는 비밀번호를\n 확인해주세요.");
           setNavToggles(true);
         }
