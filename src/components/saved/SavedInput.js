@@ -112,6 +112,7 @@ li{
   border: 1px solid #CCCCCC;
   border-radius  : 20px ;
   padding: 0.15rem;
+  text-align: center;
 }
 input{
   display: flex;
