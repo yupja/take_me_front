@@ -308,8 +308,8 @@ export const createCommentAc = (data, boardId) => {
   return async function (dispatch) {
     await instance.post(`/api/board/${boardId}/comment`, data)
       .then(response => {
-        window.location.reload();
-        console.log("댓글등록")
+        dispatch(loadCommentAc(boardId));
+
       })
       .catch(error => {
         console.log("get error", error)
@@ -351,7 +351,7 @@ export const deleteComment = (boardId, commentId) => {
     await instance
       .delete(`/api/board/${boardId}/comment/${commentId}`)
       .then((response) => {
-        window.location.reload()
+        dispatch(loadCommentAc(boardId));
       })
       .catch((err) => {
         console.log(err);
@@ -377,7 +377,7 @@ const communitySlice = createSlice({
     postList: { data: [] },
     post: [],
     likeList: [],
-    commentList: [],
+    commentList: {data : []},
   },
   reducers: {
     // 포스트 리듀서 

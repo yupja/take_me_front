@@ -64,7 +64,6 @@ function Detail() {
       comment: comment_ref.current.value,
     }
     dispatch(createCommentAc(data, postlistdata.boardId))
-    window.location.reload();
   };
 
   const [user_nav, setUserNav] = useState(false)
