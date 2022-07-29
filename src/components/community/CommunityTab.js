@@ -274,7 +274,7 @@ const ContentBox = styled.div`
 width: 100%;
 height: 170px;
 padding: 1rem;
-/* border: 3px solid blue; */
+border-top: 1px solid #EDEDED;
 display: flex;
 flex-direction: row;
 margin-bottom: 10px;

@@ -57,8 +57,8 @@ function RoomDetail() {
   let token = localStorage.getItem('accessToken');
 
 
-    useEffect(() => {
-      return (() => {
+useEffect(() => {
+    return (() => {
         dispatch(delMessage())
         disconnects();
       })

@@ -53,11 +53,13 @@ const SwipeForm = (props) =>{
       setReady(false)
     }, 100)
 
-    if(minutes > 10 || minutes < 0 ||!timeOutLimit){
+    if(!timeOutLimit){
+      dispatch(deleteChattingRoom(props.roomId));
       setTimeout(() => {
-        dispatch(deleteChattingRoom(props.roomId));
-      }, 100)
+         window.location.reload();
+      }, 2000)
     }
+
 
   }, [timeOutLimit])
 
@@ -114,6 +116,9 @@ const SwipeForm = (props) =>{
                <Timer />
 
                <TimerFunction
+                setTimeOutLimit={setTimeOutLimit}
+                station = "chattingInfo"
+                roomId={item?.roomId}
                  min={Math.floor(item?.leftTime/60)}
                  sec={Math.floor(item?.leftTime%60)}
                   />
