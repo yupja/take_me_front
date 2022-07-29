@@ -3,12 +3,13 @@ import styled from "styled-components";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Header from "../public/Header";
-
+import { useBeforeunload } from "react-beforeunload";
 import {closedChttingLogRS, myInfoData} from "../../store/modules/community"
 import ChattingInfo from "./ChattingInfo";
 import ClosedChattingInfo from "./ClosedChattingInfo";
 
 function ClosedChttinglog(props) {
+  useBeforeunload((event) => event.preventDefault());
   const  roomId  = useParams();
   const dispatch = useDispatch();
 

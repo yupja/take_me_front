@@ -31,6 +31,9 @@ function MyPage() {
 
 
   useEffect(() => {
+    if (!localStorage.getItem("accessToken")) {
+      navigate("/main")
+    }
     dispatch(getInfo())
   }, [dispatch])
 
@@ -254,6 +257,8 @@ button {
 // 마이페이지
 const MyPageWrap = styled.div`
 width: 100%;
+height: 95.1%;
+background: #F8F8F8;
 /* padding: 0 25px; */
 `
 const MyInfo = styled.div`
@@ -261,6 +266,7 @@ width: 100%;
 height: 13rem;
 padding: 10px 25px;
 text-align: center;
+background: #fff;
 div {
   position: relative;
   width: 7.5rem;
@@ -326,7 +332,6 @@ const MenuList = styled.ul`
   }
 `
 const MyMenu = styled.div`
-height: 72.5vh;
 background:#F8F8F8;
 text-align: center;
 padding:20px 25px;

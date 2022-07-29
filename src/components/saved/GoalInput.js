@@ -124,11 +124,13 @@ const GoalInput = (props)=>{
           <div className="leftBox">
             <p>이름</p>
           </div>
+          <div style={{width:"68%"}}>
           <SearchItem
             state={"태산을 찾아보세요!"}
             setNewAdd={setNewAdd}
             actionState={"goalInput"}
             setSelectInputValue={setSelectInputValue} />
+            </div>
         </li></ul>
       }
 
@@ -158,8 +160,8 @@ const GoalInput = (props)=>{
             <img src={image} />
           </div>
           <div>
-            <label style={{ background: "#6A8EFF" }}>
-              <LeftArrow />기본 이미지 </label>
+            {/* <label style={{ background: "#6A8EFF" }}>
+              <LeftArrow />기본 이미지 </label> */}
             <label htmlFor="ex_file" style={{ marginTop: "5%" }}>
               <LeftArrow /> 이미지 등록 </label>
             <input
@@ -220,6 +222,7 @@ li{
 }
 .inputStyle{
   display: flex;
+  text-align: center;
   width: 68%;
   align-items: center;
   border: 1px solid #CCCCCC;

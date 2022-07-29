@@ -21,13 +21,14 @@ root.render(
         maxWidth: "1500px",
         width: "100%",
         height: "100%",
-      }}>
+        
+         }}>
         <div style={{
           position: "relative",
-          border: "1px solid #cccccc",
-          maxWidth: "390px",
+          // border: "1px solid #cccccc",
+          maxWidth: "414px",
           width: "100%",
-          maxHeight: "844px",
+          maxHeight: "896",
           height: "100%",
           overflowY: "scroll",
         }}>

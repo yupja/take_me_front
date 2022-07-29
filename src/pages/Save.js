@@ -14,6 +14,7 @@ import CurrentSavedItem from "../components/saved/CurrentSavedItem";
 import GoalModifyComponunt from "../components/saved/GoalModify";
 import PostModal from "../components/community/PostModal";
 import Guide from "../components/community/Guide"
+import { useNavigate } from "react-router-dom";
 
 
 import styled from "styled-components";
@@ -32,8 +33,13 @@ import { AiOutlineStar } from 'react-icons/ai'
 
 
 function Save() {
+  const navigate  = useNavigate();
 
   useEffect(() => {
+
+      if(!localStorage.getItem("accessToken")){
+        navigate("/main")
+      }
     dispatch(myReadGoalRQ());
     dispatch(myFavoriteListRQ());
     if (state.state?.signupUrl.state && state.state?.loginUrl) {
@@ -479,7 +485,7 @@ align-items: center;
 `;
 
 const FavoriteTag = styled.div`
-height: 5%;
+padding : 0.5rem 0 0.5rem 1.7rem ;
 display: flex;
 align-items: center;
 width:95%;

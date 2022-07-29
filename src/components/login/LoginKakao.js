@@ -9,8 +9,6 @@ function LoginKakao(props) {
 
   const KAKAO_AUTH_URL = `https://api.webprogramming-mj6119.shop/oauth2/authorization/kakao?client_id=${KAKAO_CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 
-  //const KAKAO_AUTH_URL = `https://www.tikkeeul.com/oauth2/authorization/kakao?client_id=${KAKAO_CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
-
   return (
     <SocialWrap>
       <a href={KAKAO_AUTH_URL}>

@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useBeforeunload } from "react-beforeunload";
 import styled from "styled-components";
 import { Link, useParams, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,6 +15,7 @@ import TimerFunction from "../public/Timer"
 
 
 function RoomDetail() {
+  useBeforeunload((event) => event.preventDefault());
   const { state } = useLocation();
   const { roomId } = useParams();
   const dispatch = useDispatch();

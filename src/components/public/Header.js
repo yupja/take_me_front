@@ -18,10 +18,9 @@ const slider = keyframes`
 
 
 
-function Header({ title, tColor }) {
+function Header({ title, tColor, backGround }) {
   const navigate = useNavigate();
   const [navToggles, setNavToggles] = useState(false);
-  console.log(tColor)
 
   const [, , removeCookie] = useCookies(['refreshToken']);
 
@@ -43,7 +42,7 @@ function Header({ title, tColor }) {
     <HeaderWrap>
       <LeftArea>
         <h1 onClick={() => {
-          navigate(-1);
+          navigate("/");
         }}>티끌</h1>
       </LeftArea>
       <Title style={{ color: `${tColor}` }}>{title}</Title>
@@ -119,7 +118,7 @@ export default Header;
 const HeaderWrap = styled.div`
 position: sticky;
 top: 0;
-max-width:390px;
+max-width:440px;
 width: 100%;
 height: 44px;
 background: rgba(0, 0, 0, 0);
@@ -267,7 +266,7 @@ position: absolute;
 background-color: rgba(0,0,0,0.7);
 width: 100%;
 height: 100vh;
-max-height: 844px;
+max-height: 896px;
 `;
 
 const Copyright = styled.div`
