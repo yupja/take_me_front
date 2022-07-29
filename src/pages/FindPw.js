@@ -5,6 +5,7 @@ import { findPwDB } from "../store/modules/user";
 import { useSelector } from "react-redux/es/exports";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/public/Header";
+import { ReactComponent as Check } from "../assets/icons/Check.svg";
 
 
 const FindPw = () => {
@@ -15,6 +16,8 @@ const FindPw = () => {
   const navigate = useNavigate();
   const state = useSelector((state) => state.user);
   const [findPwPop, setfindPwPop] = useState(false);
+  const [resultPop, setResultPop] = useState(false);
+
 
   const emailRef = useRef();
   const idRef = useRef();
@@ -28,11 +31,10 @@ const FindPw = () => {
   const emailCheck = (e) => {
     const email = emailRef.current.value;
 
-    console.log(email)
     if (emailCheckStr.test(email)) {
       setUserEmailAlert("통과:)")
     } else {
-      setUserEmailAlert("이메일 형식을 맞춰주세요")
+      setUserEmailAlert("이메일 형식을 확인해주세요")
     }
   }
 
@@ -49,20 +51,21 @@ const FindPw = () => {
   }
 
 
-  // 버튼 클릭시 결과 컴포넌트 보이게
-  const onResult = (e) => {
+  // 버튼 클릭시 결과
+  const onResult = async () => {
     const id = idRef.current.value;
     const email = emailRef.current.value;
+
     const findInfo = {
       username: id,
-      email: email
+      email: email,
     }
-    if (userEmailAlert === '통과:)' || userIdAlert === '통과') {
-      console.log("다음!")
-      dispatch(findPwDB(findInfo, setfindPwPop, setStr))
+    if (userEmailAlert === '통과:)' && userIdAlert === '통과') {
+      await dispatch(findPwDB(findInfo, setfindPwPop, setStr))
       // setfindPwPop(true) // 디스패치 먼저 실행 후 결과 팝업 생성
     } else {
-      alert("이메일을 입력해주세요!")
+      setStr("아이디와 이메일을\n확인해주세요")
+      setResultPop(true)
     }
   }
 
@@ -82,13 +85,29 @@ const FindPw = () => {
         <>
           <ModalWrap>
             <ModalBox>
-              <div className="icon"></div>
+              <div className="icon"><Check /></div>
               <CloseBtn onClick={() => navigate('/login')}>
                 <span></span>
                 <span></span>
               </CloseBtn>
               <h3>{str}</h3>
               <button onClick={() => navigate('/login')}>확인</button>
+            </ModalBox>
+          </ModalWrap>
+        </>
+      ) : null
+      }
+      {resultPop ? (
+        <>
+          <ModalWrap>
+            <ModalBox>
+              <div className="icon"><Check /></div>
+              <CloseBtn onClick={() => setResultPop(false)}>
+                <span></span>
+                <span></span>
+              </CloseBtn>
+              <h3 className="result">{str}</h3>
+              <button onClick={() => setResultPop(false)}>확인</button>
             </ModalBox>
           </ModalWrap>
         </>
@@ -143,7 +162,7 @@ button{
 // 모달
 const ModalWrap = styled.div`
 width: 100%;
-height: 100vh;
+height: 100%;
 padding: 0 25px;
 position: absolute;
 top: 0; left: 0;
@@ -155,7 +174,6 @@ position: absolute;
 top: 50%; left: 50%;
 transform: translate(-50%,-50%);
 width: 90%;
-height: 12.12rem;
 background: #fff;
 border-radius: 5px;
 text-align: center;
@@ -163,14 +181,22 @@ text-align: center;
 .icon {
   width: 2.5rem;
   height: 2.5rem;
-  border-radius: 50%;
-  background: #d9d9d9;
   margin:  10px auto 0;
+  svg {
+    width: 40px;
+    height: 40px;
+  }
+  path {
+    fill:#26DFA6;
+  }
 }
  h3 {
   font-size: 1.5rem;
   padding: 30px 0;
   white-space: pre-wrap;
+ }
+ .result{
+  line-height: 1.8rem;
  }
  button {
   font-size:0.93rem;
@@ -178,7 +204,6 @@ text-align: center;
   width: 100%;
   background: #26DFA6;
   padding: 15px 0;
-  position: absolute;
   bottom: 0; left: 0;
  }
 `

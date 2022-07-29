@@ -160,19 +160,20 @@ export const findIdDB = (email) => {
         }
       })
       .catch((error) => {
-        window.alert(error);
+        console.log(error);
       });
   };
 };
 
 // 비밀번호 찾기
-export const findPwDB = (info, setfindPwPop) => {
+export const findPwDB = (info, setfindPwPop, setStr) => {
   return async function (dispatch) {
     console.log(info);
     await instance.post("/api/user/findPassword", info)
       .then((res) => {
         console.log(res)
-        dispatch(findPwResult(res.data.respMsg));
+        setStr(res.data.respMsg)
+        // dispatch(findPwResult(res.data.respMsg));
         setfindPwPop(true)
       })
       .catch((error) => {

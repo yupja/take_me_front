@@ -52,7 +52,7 @@ span{
 }
 .btn{
   display: block;
-  position: fixed;
+  position: absolute;
   bottom: 6.25rem;
   left: 50%;
   transform: translateX(-50%);
