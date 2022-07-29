@@ -29,7 +29,7 @@ export const LoginDB = (loginInfo, setModalStr, setNavToggles, navigate, urlData
       })
       .catch((error) => {
         console.log(error.response.data);
-        if (error.response.data.code === 1008) {
+        if (error.response.data.status === 500) {
           setModalStr('로그인 실패! 아이디 또는 비밀번호를 확인해 주세요');
           setNavToggles(true);
         }
@@ -56,7 +56,7 @@ export const getUserInfoDB = () => {
           nickname: nickname,
           email: email
         }
-        console.log(userInfo)
+        // console.log(userInfo)
         dispatch(infoList(userInfo))
 
       })
@@ -82,14 +82,16 @@ export const addUserDB = (userInfo, signupUrl, navigate) => {
 };
 
 // 아이디 중복 체크
-export const idCheckDB = (id, setUserIdAlert) => {
+export const idCheckDB = (id, setUserIdAlert, setIdColor) => {
   return async function (dispatch) {
     await instance.post("/api/user/register/checkUsername", { username: id })
       .then((res) => {
         if (res.data.result === true) {
           setUserIdAlert("사용 가능한 아이디입니다")
+          setIdColor('blue')
         } else {
           setUserIdAlert("중복된 아이디입니다")
+          setIdColor('red')
         }
       })
       .catch((err) => {
@@ -99,15 +101,17 @@ export const idCheckDB = (id, setUserIdAlert) => {
 };
 
 // 이메일 중복 체크
-export const emailCheckDB = (email, setUserEmailAlert) => {
+export const emailCheckDB = (email, setUserEmailAlert, setEmailColor) => {
   return async function (dispatch) {
     console.log(email);
     await instance.post("/api/user/register/checkEmail", { email: email })
       .then((res) => {
         if (res.data.result === true) {
           setUserEmailAlert("사용 가능한 이메일입니다")
+          setEmailColor('blue')
         } else {
           setUserEmailAlert("중복된 이메일입니다")
+          setEmailColor('')
         }
       })
       .catch((error) => {
@@ -117,7 +121,7 @@ export const emailCheckDB = (email, setUserEmailAlert) => {
 };
 
 // 닉네임 중복 체크
-export const nickCheckDB = (nick, setUserNickAlert) => {
+export const nickCheckDB = (nick, setUserNickAlert, setNickColor) => {
   return async function (dispatch) {
     console.log(nick);
     await instance.post("/api/user/register/checkNickname", { nickname: nick })
@@ -125,8 +129,10 @@ export const nickCheckDB = (nick, setUserNickAlert) => {
         console.log(res)
         if (res.data.result === true) {
           setUserNickAlert("사용 가능한 닉네임입니다")
+          setNickColor('blue')
         } else {
           setUserNickAlert("중복된 닉네임입니다")
+          setNickColor('')
         }
       })
       .catch((error) => {
@@ -203,7 +209,16 @@ export const userSecDB = (data, setPwStr, pwAlert) => {
     await instance.post("/api/user/resign", data)
       .then((response) => {
         console.log(response)
+
+        // 토큰 삭제
+        const deleteCookie = function (name) {
+          document.cookie = name + '=; expires=Thu, 01 Jan 1999 00:00:10 GMT;';
+        }
+        deleteCookie('refreshToken');
+        localStorage.clear();
+
         dispatch(result(true));
+        window.location.href = '/login';
       })
       .catch((error) => {
         console.log(error);

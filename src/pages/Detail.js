@@ -34,10 +34,9 @@ function Detail() {
     const  state  = useLocation();
     const postlistdata = state.state.name
     const boardId = postlistdata.boardId
-    // console.log(boardId,"id")
 
     React.useEffect(() => {
-        dispatch(loadCommentAc(boardIdex))
+        dispatch(loadCommentAc(boardId))
         dispatch(loadpostsAc())
         dispatch(loadDetailAc(boardId))
         dispatch(getUserInfoDB())
@@ -121,7 +120,7 @@ function Detail() {
               <DountChart color="#26DFA6" size="260" position="absolute" percent={goal.goalPercent} />
               <Text>
                 <Commu>
-                  <GoalName><p className="goalTitle">{goal.goalitemName} {Math.floor(goal.goalPercent * 100)}%</p></GoalName>
+                  <GoalName><p className="goalTitle">{Math.floor(goal.goalPercent * 100)}&nbsp;%</p></GoalName>
                   <GoalName>{postlistdata.goalItemName}</GoalName>
                 </Commu>
                 <Bottom className="bottom">
@@ -255,7 +254,7 @@ object-fit: cover;
 
 const Commu = styled.div`
 width: 100%;
-height: 30%;
+height: 80px;
 /* border: 3px solid blue; */
 display: flex;
 flex-direction: column;
@@ -297,17 +296,17 @@ margin-bottom: 2vw;
 `;
 
 const Day = styled.span`
-font-size: 1rem;
+font-size: 0.8rem;
 font-weight: 200;
 color: #999;
 /* border: 1px solid red; */
 `
 
 const GoalName = styled.span`
-font-size: 1.5rem;
+font-size: 1.9rem;
 font-weight: 700;
 text-align: center;
-margin-top: 10px;
+margin-top: 7px;
 /* margin: auto 0; */
 /* border: 1px solid green; */
 `;
@@ -338,8 +337,8 @@ flex-direction: row;
 justify-content: center;
 align-items: center;
 color: white;
-margin-top: 90px;
-margin-bottom: 3px;
+margin-top: 40px;
+margin-bottom: 7px;
 
 `;
 
@@ -416,9 +415,9 @@ transform: translate(-50%, -50%);
 
 const Text = styled.div`
 width: 140px;
-height: 200px;
+height: 190px;
 position: absolute;
-top: 50%; left: 50%;
+top: 60%; left: 50%;
 transform: translate(-50%, -50%);
 /* border: 1px solid red; */
 `;
