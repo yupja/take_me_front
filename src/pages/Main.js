@@ -15,8 +15,18 @@ function Main() {
   const dispatch = useDispatch();
 
   const state = useLocation();
-  console.log(state, "state")
+  // console.log(state, "state")
   const title = "티끌 모아 태산"
+
+  const links = () => {
+    if (localStorage.getItem('accessToken')) {
+      console.log("로그인 상태!")
+      navigate('/save')
+    } else {
+      console.log("로그인 필요 상태!")
+      navigate('/login')
+    }
+  }
 
   return (
     <>
@@ -56,10 +66,9 @@ function Main() {
             내가 이돈 참았으면<br />
             살 수 있습니다!
           </strong>
-          <Link to="/save" className="btn">티끌 모으러 가보자!</Link>
+          <p onClick={links} className="btn">티끌 모으러 가보자!</p>
         </section>
         <footer>
-          {/* <Link to="https://forms.gle/qYoVUmbNwkNz2m957"></Link> */}
           <a href="https://forms.gle/qYoVUmbNwkNz2m957" target="_blank" rel="noopener noreferrer">개발자&디자이너에게 한마디✉</a>
           <p>
             SERVICE OPEM DATE. 2022.07.27<br />
@@ -147,7 +156,7 @@ strong{
   }
 }
 // 버튼
-a.btn {
+.btn {
   width: 100%;
   background: #26DFB3;
   color: #fff;
