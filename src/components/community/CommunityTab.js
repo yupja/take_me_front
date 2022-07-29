@@ -132,7 +132,7 @@ const CommunityTab = () => {
                         forLikeId={postList.boardId}
                         likeCount={postList.likeCount}
                       />&nbsp;&nbsp;
-                      {postList.likeCount}
+                      <CtnNum>{postList.likeCount}</CtnNum>
                     </LikeBox>
                     <div onClick={() => {
                       Navigate
@@ -144,7 +144,7 @@ const CommunityTab = () => {
                         Navigate(`/detail/${postList.boardId}`,
                         { state: { name: postList } })
                       }}>
-                        <Comment />&nbsp;&nbsp;{postList.commentCount} 개
+                        <Comment />&nbsp;&nbsp;<CtnNum>{postList.commentCount} 개</CtnNum>
                       </Count>
                     </div>
                     <Rec onClick={() => { openModall(index) }}><Receipt /></Rec>
@@ -164,7 +164,7 @@ const CommunityTab = () => {
           setModalState(<PostModal close={closeModal} />)
         }}>
           내 태산 % 공유</FootBtn>
-
+      </BtnBox>
 
         {/* 게시글등록모달     */}
 
@@ -182,18 +182,23 @@ const CommunityTab = () => {
           {<PostModal close={closeModal}/>}
         </Modal> */}
 
-      </BtnBox>
+      
       {/* 세이브리스트모달 */}
       {showModall ?
-      <div style={{width:"500px", border:"1px solid red"}}>
+      <>
         <ListModal showModall={showModall} closeModall={closeModall}
           forsaveId={Postdata[savedListIndex].boardId}
         />
-        </div>
+        </>
         : null}
     </Box>
   )
 };
+
+const CtnNum = styled.span`
+font-size: 10px;
+color: #999999;
+`;
 
 const Count = styled.span`
 display: flex;
@@ -246,6 +251,7 @@ const LikeBox = styled.div`
 display: flex;
 width: 25%;
 margin-right: 2px;
+align-items: center;
 `;
 
 const CreatAt = styled.div`
@@ -329,28 +335,25 @@ position: relative;
 `;
 
 const BtnBox = styled.div`
-width: 375px;
+width: 355px;
 height: 60px;
-margin: 0 auto;
-display: flex;
-justify-content: center;
-align-items: center;
-top: 750px;
+border-radius: 59px;
+padding: 1rem;
 position: fixed;
+/* top: 85%; */
+bottom: 10%;
+background: #26DFA6;
+text-align: center;
+z-index: 1;
+margin-left: 15px;
+box-shadow: 5px 5px 5px rgb(110, 110, 110, 0.4);
+opacity: 95%;
+font-size: 20px;
 `;
 
 const FootBtn = styled.button`
-width: 90%;
-height: 60px;
-border-radius: 2rem;
-border: none;
-font-size: 1.3rem;
 color: white;
-font-weight: 500;
-background-color: #26DFA6;
-box-shadow: 5px 5px 5px rgb(110, 110, 110, 0.4);
-opacity: 95%;
-margin-left: 10px;
+    font-weight: 500;
 `;
 
 const Right = styled.div`
@@ -378,7 +381,7 @@ font-weight: 700;
 const NewNick = styled.div`
 /* border: 0.5px solid purple; */
 width: 100%;
-height: 70px;
+height: 69px;
 font-size: 1rem;
       /* width:100%; */
       overflow: hidden;
