@@ -338,6 +338,7 @@ export const updateCommentAc = (data) => {
     console.log(data)
     instance.put(`/api/board/${data.boardId}/comment/${data.commentId}`, { "comment": data.comment })
       .then((response) => {
+        dispatch(loadCommentAc(data.boardId));
       }).catch((error) => {
         console.log(error)
       })
