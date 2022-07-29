@@ -17,13 +17,14 @@ function RoomDetail() {
   const { state } = useLocation();
   const { roomId } = useParams();
   const dispatch = useDispatch();
-  const navigate = useNavigate
-  const [timeOutLimit, setTimeOutLimit] = useState(true);
+  const navigate = useNavigate();
+
+
+  const [timeOutLimit , setTimeOutLimit] = useState(true);
   const getMessages = useSelector((state) => state.community.messages);
 
   useEffect(() => {
-    scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
-    console.log(timeOutLimit)
+    scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' })
 
     if (state.minutes > 10 || state.minutes < 0) {
       setTimeout(() => {
@@ -36,13 +37,12 @@ function RoomDetail() {
         client.disconnect();
         dispatch(deleteChattingRoom(roomId));
       }, 1000)
-
     }
-
 
   }, [getMessages, timeOutLimit]);
 
 
+  
   const title = '쓸까?말까?'
   const chatRef = useRef();
   const scrollRef = useRef();
@@ -55,6 +55,15 @@ function RoomDetail() {
 
   // 토큰
   let token = localStorage.getItem('accessToken');
+
+
+    useEffect(() => {
+      return (() => {
+        dispatch(delMessage())
+        disconnects();
+      })
+
+  }, [])
 
 
 
@@ -81,13 +90,7 @@ function RoomDetail() {
 
   }, [])
 
-  // 이전 페이지 이동시 소켓 연결 해제
-  useEffect(() => {
-    return (() => {
-      // dispatch(delMessage())
-      disconnects();
-    })
-  }, [])
+
 
 
   //연결 해제
@@ -411,6 +414,6 @@ button:nth-child(2) {
   border: none;
 }
 
-`
+`;
 
 
