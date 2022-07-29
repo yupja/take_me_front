@@ -15,6 +15,7 @@ const Community = () => {
   const title = "커뮤니티"
   const {state} = useLocation();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [page, setPage] = useState(<ChattingList />);
   const [chooseMenu,  setChooseMenu] = useState(true);
   useEffect(()=>{
@@ -34,32 +35,22 @@ const Community = () => {
         <MenuBar>
           {chooseMenu?
           <>
-            <div className="Choice"
+            <div className="nonChice"
             onClick={()=>{
-            setPage(<CommunityList />)
+              navigate("/community")
             setChooseMenu(true)
           }}>티끌자랑</div>
-          <div className="nonChice"
+          <div className="choice"
             onClick={()=>{
-            setPage(<ChattingList/>)
+             setChooseMenu(<ChattingList/>)
             setChooseMenu(false)
           }}>쓸까말까</div>
           </>
           :
-          <>
-          <div className="nonChice"
-            onClick={()=>{
-            setPage(<CommunityList />)
-            setChooseMenu(true)
-          }}>티끌자랑</div>
-          <div className="Choice"
-              onClick={()=>{
-            setPage(<ChattingList/>)
-            setChooseMenu(false)
-          }}>쓸까말까</div>
+          ""
+
           
-          
-          </>}
+          }
 
         </MenuBar>
 

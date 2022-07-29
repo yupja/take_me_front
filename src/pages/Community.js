@@ -37,12 +37,12 @@ const Community = () => {
             <>
               <div className="Choice"
                 onClick={() => {
-                  setPage(<CommunityList />)
+                  navigate("/community")
                   setChooseMenu(true)
                 }}>티끌자랑</div>
               <div className="nonChice"
                 onClick={() => {
-                  setPage(<ChattingList />)
+                  navigate("/chattingList")
                   setChooseMenu(false)
                 }}>쓸까말까</div>
             </>
@@ -63,11 +63,6 @@ const Community = () => {
             </>}
 
         </MenuBar>
-
-
-        <TimeList>
-          <SwipeRooms topRoomList={topRoomList} />
-        </TimeList>
 
         <div style={{ width: "100%", height: "100%" }}>
           <CommunityContents>
