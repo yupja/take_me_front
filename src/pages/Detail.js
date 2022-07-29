@@ -110,14 +110,14 @@ function Detail() {
 
   return (
     <>
-      <Header title={"커뮤니티"} tColor={"#ffffff"}/>
+      <Head><Header title={"커뮤니티"} tColor={"#ffffff"}/></Head>
       <Box className="box">
         <BImg src={postlistdata.image}></BImg>
         <StyledSlider {...settings}>
           <div style={{ backgroundColor: "transparent" }}></div>
           <ContentsBox>
             <DountBox>
-              <DountChart color="#26DFA6" size="260" position="absolute" percent={goal.goalPercent} />
+              <DountChart color="#26DFA6" size="235" position="absolute" percent={goal.goalPercent} />
               <Text>
                 <Commu>
                   <GoalName><p className="goalTitle">{Math.floor(goal.goalPercent * 100)}&nbsp;%</p></GoalName>
@@ -208,6 +208,11 @@ function Detail() {
   )
 };
 
+const Head = styled.div`
+position: absolute;
+width: 100%;
+`;
+
 const StyledSlider = styled(Slider)`
     .slick-list {
         width: 100%;
@@ -233,7 +238,7 @@ height: 284px;
 align-items: center;
 flex-direction: column;
 /* padding: 0 5vw; */
-position: relative;
+/* position: absolute; */
 `;
 
 
@@ -406,10 +411,10 @@ position: relative;
 const DountBox = styled.div`
 /* background-color: gray; */
 position: relative;
-width: 260px;
-height: 260px;
+width: 235px;
+height: 235px;
 top: 50%; left: 50%;
-transform: translate(-50%, -50%);
+transform: translate(-50%, -45%);
 
 `;
 
