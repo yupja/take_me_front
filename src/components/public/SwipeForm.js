@@ -24,6 +24,8 @@ const SwipeForm = (props) =>{
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    console.log()
+
 
     const chageVote = () =>{
       let sendData={}
@@ -46,11 +48,18 @@ const SwipeForm = (props) =>{
 
 
   useEffect(() => {
-    if(minutes > 10 || minutes < 0 ||!timeOutLimit){
+
+    setTimeout(() => {
+      setReady(false)
+    }, 100)
+
+    if(!timeOutLimit){
+      dispatch(deleteChattingRoom(props.roomId));
       setTimeout(() => {
-        dispatch(deleteChattingRoom(props.roomId));
-      }, 100)
+         window.location.reload();
+      }, 2000)
     }
+
 
   }, [timeOutLimit])
 
@@ -63,8 +72,8 @@ const SwipeForm = (props) =>{
           authorProfileImg : props.topRoomList[index].authorProfileImg,
           userCount : props.topRoomList.userCount,
           comment : props.topRoomList[index].comment,
-          leftTime : props.topRoomList[index].leftTime,
-          timeLimit:props.topRoomList[index].timeLimit,
+          minutes : Math.floor(props.topRoomList[index].leftTime/60),
+          seconds : Math.floor(props.topRoomList[index].leftTime%60),
       }
     
       navigate(`/chat/roomdetail/${sendData.roomId}`, {state:sendData});
@@ -86,10 +95,8 @@ const SwipeForm = (props) =>{
     :
     <>
     <Wrap>
-    {props.topRoomList.map&&props.topRoomList?.map((item, idx)=>( 
-    
-
-      <ChattingList>
+    {props.topRoomList?.map((item, idx)=>( 
+    <ChattingList>
         {/* style={{transform: `translateX(${(-100 / props.topRoomList.length+2) * (currentIndex)}%)`}}>  */}
        <SwipeItem>
          <div className="chatInfoArea"
@@ -107,9 +114,13 @@ const SwipeForm = (props) =>{
                  {item.authorNickname}</span> {item.comment}</span>
              <div className="timerArea">
                <Timer />
+
                <TimerFunction
+                setTimeOutLimit={setTimeOutLimit}
+                station = "chattingInfo"
+                roomId={item?.roomId}
                  min={Math.floor(item?.leftTime/60)}
-                 sec={Math.floor(item?.leftTiime%60)}
+                 sec={Math.floor(item?.leftTime%60)}
                   />
              </div>
            </div>

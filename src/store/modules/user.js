@@ -20,8 +20,6 @@ export const LoginDB = (loginInfo, setModalStr, setNavToggles, navigate, urlData
           secure: true,
           sameSite: 'none',
         })
-        console.log(urlData, "??")
-
         // window.location.href = "/save"
         navigate('/save', { state: urlData })
         dispatch(isLogin(true))
@@ -29,8 +27,9 @@ export const LoginDB = (loginInfo, setModalStr, setNavToggles, navigate, urlData
       })
       .catch((error) => {
         console.log(error.response.data);
-        if (error.response.data.status === 500) {
-          setModalStr('로그인 실패! 아이디 또는 비밀번호를 확인해 주세요');
+        const errCode = error.response.data.status;
+        if (errCode === 500 || errCode === 400) {
+          setModalStr("아이디 또는 비밀번호를\n 확인해주세요.");
           setNavToggles(true);
         }
       });
@@ -56,7 +55,7 @@ export const getUserInfoDB = () => {
           nickname: nickname,
           email: email
         }
-        // console.log(userInfo)
+        console.log(userInfo)
         dispatch(infoList(userInfo))
 
       })
@@ -88,7 +87,7 @@ export const idCheckDB = (id, setUserIdAlert, setIdColor) => {
       .then((res) => {
         if (res.data.result === true) {
           setUserIdAlert("사용 가능한 아이디입니다")
-          setIdColor('blue')
+          setIdColor('#26DFA6')
         } else {
           setUserIdAlert("중복된 아이디입니다")
           setIdColor('red')
@@ -108,10 +107,10 @@ export const emailCheckDB = (email, setUserEmailAlert, setEmailColor) => {
       .then((res) => {
         if (res.data.result === true) {
           setUserEmailAlert("사용 가능한 이메일입니다")
-          setEmailColor('blue')
+          setEmailColor('#26DFA6')
         } else {
           setUserEmailAlert("중복된 이메일입니다")
-          setEmailColor('')
+          setEmailColor('red')
         }
       })
       .catch((error) => {
@@ -129,10 +128,10 @@ export const nickCheckDB = (nick, setUserNickAlert, setNickColor) => {
         console.log(res)
         if (res.data.result === true) {
           setUserNickAlert("사용 가능한 닉네임입니다")
-          setNickColor('blue')
+          setNickColor('#26DFA6')
         } else {
           setUserNickAlert("중복된 닉네임입니다")
-          setNickColor('')
+          setNickColor('red')
         }
       })
       .catch((error) => {
@@ -161,19 +160,21 @@ export const findIdDB = (email) => {
         }
       })
       .catch((error) => {
-        window.alert(error);
+        console.log(error);
       });
   };
 };
 
 // 비밀번호 찾기
-export const findPwDB = (info, setfindPwPop) => {
+export const findPwDB = (info, setfindPwPop, setStr) => {
   return async function (dispatch) {
     console.log(info);
     await instance.post("/api/user/findPassword", info)
       .then((res) => {
         console.log(res)
-        dispatch(findPwResult(res.data.respMsg));
+        setStr(res.data.respMsg)
+        // dispatch(findPwResult(res.data.respMsg));
+        setfindPwPop(true)
       })
       .catch((error) => {
         console.log(error)

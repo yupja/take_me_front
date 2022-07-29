@@ -18,9 +18,10 @@ const slider = keyframes`
 
 
 
-function Header({ title, props }) {
+function Header({ title, tColor }) {
   const navigate = useNavigate();
   const [navToggles, setNavToggles] = useState(false);
+  console.log(tColor)
 
   const [, , removeCookie] = useCookies(['refreshToken']);
 
@@ -45,7 +46,7 @@ function Header({ title, props }) {
           navigate(-1);
         }}>티끌</h1>
       </LeftArea>
-      <Title style={{ color: { props } }}>{title}</Title>
+      <Title style={{ color: `${tColor}` }}>{title}</Title>
       <HamArea onClick={onNav}>
         <NavBtn>
           <div>
@@ -65,24 +66,24 @@ function Header({ title, props }) {
               </CloseBtn>
               <Menu>
                 <li onClick={() => {
-                  if (!localStorage.getItem("accessToken")){
+                  if (!localStorage.getItem("accessToken")) {
                     alert("로그인 후 이용이 가능해요.")
-                  }else {navigate("/save");}
-                  }}>데일리 티끌</li>
+                  } else { navigate("/save"); }
+                }}>데일리 티끌</li>
                 <li onClick={() => {
-                  if (!localStorage.getItem("accessToken")){
-                  alert("로그인 후 이용이 가능해요.")
-                }else {navigate("/community");}
+                  if (!localStorage.getItem("accessToken")) {
+                    alert("로그인 후 이용이 가능해요.")
+                  } else { navigate("/community"); }
                 }}>커뮤니티</li>
                 <li onClick={() => {
-                  if (!localStorage.getItem("accessToken")){
-                  alert("로그인 후 이용이 가능해요.")
-                }else { navigate("/ranking");}
+                  if (!localStorage.getItem("accessToken")) {
+                    alert("로그인 후 이용이 가능해요.")
+                  } else { navigate("/ranking"); }
                 }}>랭킹</li>
                 <li onClick={() => {
-                  if (!localStorage.getItem("accessToken")){
-                  alert("로그인 후 이용이 가능해요.")
-                }else {navigate("/mypage");}
+                  if (!localStorage.getItem("accessToken")) {
+                    alert("로그인 후 이용이 가능해요.")
+                  } else { navigate("/mypage"); }
                 }}>MY</li>
                 <li onClick={() => {
                   navigate("/main");
@@ -121,7 +122,7 @@ top: 0;
 max-width:390px;
 width: 100%;
 height: 44px;
-background: #fff;
+background: rgba(0, 0, 0, 0);
 z-index:888;
 `;
 
@@ -193,7 +194,7 @@ li:first-child{
 
 const NavWrap = styled.div`
 width:70%; //180px
-height: 100vh;
+height: 100%;
 background-color: #fff;
 position: absolute;
 top: 0; right: 0;
@@ -266,6 +267,7 @@ position: absolute;
 background-color: rgba(0,0,0,0.7);
 width: 100%;
 height: 100vh;
+max-height: 844px;
 `;
 
 const Copyright = styled.div`

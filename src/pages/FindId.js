@@ -70,7 +70,6 @@ export default FindId;
 const FindWrap = styled.div`
 padding: 0 25px;
 margin-top: 10rem;
-position: relative;
 
 h2 {
   font-size:1.75rem;
@@ -93,7 +92,7 @@ p{
   color: #FF7272;
 }
 button{
-  position: fixed;
+  position: absolute;
   bottom: 6.25rem;
   left: 50%;
   transform: translateX(-50%);

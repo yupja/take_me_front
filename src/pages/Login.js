@@ -9,11 +9,11 @@ import Header from "../components/public/Header";
 import LoginGoogle from "../components/login/LoginGoogle";
 import LoginKakao from "../components/login/LoginKakao";
 
+import { ReactComponent as Check } from "../assets/icons/Check.svg";
+
 function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const userState = useSelector((state) => state.user)
-  console.log(userState)
 
   const title = "로그인"
 
@@ -111,7 +111,7 @@ function Login() {
       {navToggles ?
         <ModalWrap>
           <ModalBox>
-            <div className="icon"></div>
+            <div className="icon"><Check /></div>
             <CloseBtn onClick={closeNav}>
               <span></span>
               <span></span>
@@ -241,7 +241,7 @@ li{
 // 모달
 const ModalWrap = styled.div`
 width: 100%;
-height: 100vh;
+height: 100%;
 padding: 0 25px;
 position: absolute;
 top: 0; left: 0;
@@ -253,7 +253,6 @@ position: absolute;
 top: 50%; left: 50%;
 transform: translate(-50%,-50%);
 width: 90%;
-height: 12.12rem;
 background: #fff;
 border-radius: 5px;
 text-align: center;
@@ -261,23 +260,28 @@ text-align: center;
 .icon {
   width: 2.5rem;
   height: 2.5rem;
-  border-radius: 50%;
-  background: #d9d9d9;
   margin:  10px auto 0;
+  svg {
+    width: 40px;
+    height: 40px;
+  }
+  path {
+    fill:#26DFA6;
+  }
 }
  h3 {
   font-size: 1.5rem;
-  padding: 20px 0;
+  padding: 20px 0 24px;
   white-space: pre-wrap;
+  line-height: 2rem;
  }
  button {
-  font-size:0.93rem;
+  font-size:1.12rem;
   color: #fff;
   width: 100%;
   background: #26DFA6;
   padding: 15px 0;
-  position: absolute;
-  bottom: 0; left: 0;
+  font-weight: 700;
  }
 `
 

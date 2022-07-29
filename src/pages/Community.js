@@ -14,62 +14,57 @@ import CommunityTab from "../components/community/CommunityTab";
 
 const Community = () => {
   const title = "커뮤니티"
-  const {state} = useLocation();
+  const { state } = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isLoad, setLoad] = useState(false);
   const [page, setPage] = useState(<CommunityTab />);
-  const [chooseMenu,  setChooseMenu] = useState(true);
+  const [chooseMenu, setChooseMenu] = useState(true);
 
-  useEffect(()=>{
+  useEffect(() => {
 
-      dispatch(topListRS());
-    },[isLoad])
+    dispatch(topListRS());
+  }, [isLoad])
   const topRoomList = useSelector(((state => state.community.topChttingList)));
 
   return (
-  <> 
-  <Wap >
-    <Header title={title} color={state}/>
+    <>
+      <Wap >
+        <Header title={title} color={state} />
 
         <MenuBar>
-          {chooseMenu?
-          <>
-            <div className="Choice"
-            onClick={()=>{
-            setPage(<CommunityList />)
-            setChooseMenu(true)
-          }}>티끌자랑</div>
-          <div className="nonChice"
-            onClick={()=>{
-            setPage(<ChattingList/>)
-            setChooseMenu(false)
-          }}>쓸까말까</div>
-          </>
-          :
-          <>
-          <div className="nonChice"
-            onClick={()=>{
-            setPage(<CommunityList />)
-            setChooseMenu(true)
-          }}>티끌자랑</div>
-          <div className="Choice"
-              onClick={()=>{
-            setPage(<ChattingList/>)
-            setChooseMenu(false)
-          }}>쓸까말까</div>
-          
-          
-          </>}
+          {chooseMenu ?
+            <>
+              <div className="Choice"
+                onClick={() => {
+                  navigate("/community")
+                  setChooseMenu(true)
+                }}>티끌자랑</div>
+              <div className="nonChice"
+                onClick={() => {
+                  navigate("/chattingList")
+                  setChooseMenu(false)
+                }}>쓸까말까</div>
+            </>
+            :
+            <>
+              <div className="nonChice"
+                onClick={() => {
+                  setPage(<CommunityList />)
+                  setChooseMenu(true)
+                }}>티끌자랑</div>
+              <div className="Choice"
+                onClick={() => {
+                  setPage(<ChattingList />)
+                  setChooseMenu(false)
+                }}>쓸까말까</div>
+
+
+            </>}
 
         </MenuBar>
 
-
-        <TimeList>
-          <SwipeRooms topRoomList={topRoomList}/>
-        </TimeList>
-
-        <div style={{ width: "100%", height:"100%" }}>
+        <div style={{ width: "100%", height: "100%" }}>
           <CommunityContents>
             {page}
           </CommunityContents>
@@ -77,7 +72,7 @@ const Community = () => {
 
 
       </Wap>
-  </>
+    </>
   )
 };
 

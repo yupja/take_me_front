@@ -308,8 +308,9 @@ margin-top: 10%;
 const ButtonArea = styled.div`
 display: flex;
 justify-content: space-around;
-position: fixed;
+position: absolute;
 bottom:10%;
+left:0;
 width: 390px;
 
 

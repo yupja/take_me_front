@@ -13,6 +13,7 @@ import Loading from "../public/Loading";
 
 const ChattingInfo = (props) => {
 
+
   const [minutes, setMinutes] = useState();
   const [seconds, setSeconds] = useState();
   const [ready, setReady] = useState(true);
@@ -30,10 +31,11 @@ const ChattingInfo = (props) => {
       setReady(false)
     }, 100)
 
-    if(minutes > 10 || minutes < 0 ||!timeOutLimit){
+    if(!timeOutLimit){
+      dispatch(deleteChattingRoom(props.roomId));
       setTimeout(() => {
-        dispatch(deleteChattingRoom(props.roomId));
-      }, 100)
+         window.location.href="/chattingList";
+      }, 2000)
     }
 
   }, [timeOutLimit])
@@ -115,8 +117,9 @@ const ChattingInfo = (props) => {
                 <TimerFunction
                   min={minutes}
                   sec={seconds}
-                  setTimeOutLimit={"setTimeOutLimit"}
-                  station = "chattingInfo"/>
+                  setTimeOutLimit={setTimeOutLimit}
+                  station = "chattingInfo"
+                  roomId={props.roomId}/>
               </div>
             </div>
           </div>
