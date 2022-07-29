@@ -20,13 +20,13 @@ import styled from "styled-components";
 import Slider from "react-slick";
 import "../styles/saveMain.css"
 import {
-  CheckedStart, GoalModify, WhiteTrash,
-  AddMintPoint, WhiteShare
+  CheckedStart, GoalModify, GoalDelete,
+  AddMintPoint,  ShareCommunity
 } from "../assets/icons"
 
 
 import { AiOutlineStar } from 'react-icons/ai'
-import { useNavigate } from "react-router-dom";
+
 
 
 
@@ -215,7 +215,7 @@ function Save() {
                               percent={goal.goalPercent}
                               closeModal={closeModal} />)
                           }}>
-                          <WhiteShare />
+                          <ShareCommunity />
                           <p className="clickMenuFont">공유</p>
                         </div>
 
@@ -228,7 +228,7 @@ function Save() {
                           onClick={() => {
                             dispatch(deleteGoalRQ(goal.goalItemId))
                           }}>
-                          <WhiteTrash />
+                          <GoalDelete />
                           <p className="clickMenuFont">목표삭제</p>
                         </div>
 
@@ -240,7 +240,7 @@ function Save() {
 
                       <GoalInfo>
                         <p>{Math.floor(goal.goalPercent * 100)}%</p>
-                        <p style={{ fontSize: "1rem" }}>{goal.goalitemName}</p>
+                        <p style={{ fontSize: "1.5rem" , fontFamily: "Roboto" }}>{goal.goalitemName}</p>
                       </GoalInfo>
                     </>
                   }
@@ -260,6 +260,11 @@ function Save() {
           state={"오늘은 어떤 것을 아끼셨나요?"}
           goalItemId={goal.goalItemId} />
       </SearchArea>
+
+      <div className="favoriteDiv" 
+        style={{
+          display:"flex",
+          justifyContent:"center"}}>
 
       <FavoriteTag>
         {mylist && mylist.length === 0 ?
@@ -283,6 +288,8 @@ function Save() {
           </>
         }
       </FavoriteTag>
+      </div>
+
 
       {selectInputValue.length !== 0 ?
         <>
@@ -344,8 +351,9 @@ flex-direction: column;
 text-align: center;
 p{
   color: #26DFA6;
-  font-size: 2rem;
-  font-weight: 500;
+  font-family: "Roboto";
+  font-size: 3rem;
+  font-weight: 700;
   margin-top: 5%;
 }
 .clickMenuFont{
@@ -462,13 +470,6 @@ p{
 `;
 
 
-const CircleInner = styled.div`
-position: absolute;
-top: 50%; left: 50%;
-transform: translate(-50%, -50%);
-`;
-
-
 const SearchArea = styled.div`
 padding: 0.5rem 1rem 0rem 1rem;
 width: 100%;
@@ -481,10 +482,11 @@ const FavoriteTag = styled.div`
 height: 5%;
 display: flex;
 align-items: center;
-width:100%;
+width:95%;
 overflow-x:scroll;
-justify-content: center;
+
 white-space: nowrap;
+
 border-bottom: 1px solid #CCCCCC;
   &::-webkit-scrollbar {
     display: none;

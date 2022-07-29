@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import {deleteSavedList, modifySaved} from "../../store/modules/saved"
 import styled from "styled-components";
 
-import {EditBlack, Trash, AddMintPoint} from "../../assets/icons"
+import {EditBlack, TikkleDelete, AddMintPoint} from "../../assets/icons"
 
 
 const ModifySave = (props) =>{
@@ -45,7 +45,7 @@ const ModifySave = (props) =>{
                   
               }}><EditBlack/></button>
               <button onClick={()=>{dispatch(deleteSavedList(props.savedItemId, props.goalItemId))
-              }}><Trash/></button>
+              }}><TikkleDelete/></button>
             </ButtonArea>       
         </>
 

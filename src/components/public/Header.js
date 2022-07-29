@@ -65,16 +65,24 @@ function Header({ title, props }) {
               </CloseBtn>
               <Menu>
                 <li onClick={() => {
-                  navigate("/save");
-                }}>데일리 티끌</li>
+                  if (!localStorage.getItem("accessToken")){
+                    alert("로그인 후 이용이 가능해요.")
+                  }else {navigate("/save");}
+                  }}>데일리 티끌</li>
                 <li onClick={() => {
-                  navigate("/community");
+                  if (!localStorage.getItem("accessToken")){
+                  alert("로그인 후 이용이 가능해요.")
+                }else {navigate("/community");}
                 }}>커뮤니티</li>
                 <li onClick={() => {
-                  navigate("/ranking");
+                  if (!localStorage.getItem("accessToken")){
+                  alert("로그인 후 이용이 가능해요.")
+                }else { navigate("/ranking");}
                 }}>랭킹</li>
                 <li onClick={() => {
-                  navigate("/mypage");
+                  if (!localStorage.getItem("accessToken")){
+                  alert("로그인 후 이용이 가능해요.")
+                }else {navigate("/mypage");}
                 }}>MY</li>
                 <li onClick={() => {
                   navigate("/main");

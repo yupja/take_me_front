@@ -23,12 +23,20 @@ function RoomDetail() {
 
   useEffect(() => {
     scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
+    console.log(timeOutLimit)
 
-    if (state.minutes > 10 || state.minutes < 0 || !timeOutLimit) {
+    if (state.minutes > 10 || state.minutes < 0) {
       setTimeout(() => {
         client.disconnect();
         dispatch(deleteChattingRoom(roomId));
       }, 100)
+
+    } else if (!timeOutLimit) {
+      setTimeout(() => {
+        client.disconnect();
+        dispatch(deleteChattingRoom(roomId));
+      }, 1000)
+
     }
 
 
@@ -138,7 +146,9 @@ function RoomDetail() {
             <TimerFunction
               min={state.minutes}
               sec={state.seconds}
-              setTimeOutLimit={setTimeOutLimit} />
+              setTimeOutLimit={setTimeOutLimit}
+              station={"room"}
+            />
           </strong>
         </ListInfo>
         <Vote>
@@ -168,17 +178,22 @@ function RoomDetail() {
           }
         </Chatting>
       </ChatBox>
-      <Enter>
-        <Input
-          type="text"
-          maxLength="25"
-          placeholder={userInput}
-          ref={chatRef}
-          onfocus="this.placeholder=''"
-          onKeyPress={handleOnKeyPress}
-        ></Input>
-        <PostBtn onClick={myChat}>게시</PostBtn>
-      </Enter>
+      {timeOutLimit ?
+        <>
+          <Enter>
+            <Input
+              type="text"
+              maxLength="25"
+              placeholder={userInput}
+              ref={chatRef}
+              onfocus="this.placeholder=''"
+              onKeyPress={handleOnKeyPress}
+            ></Input>
+            <PostBtn onClick={myChat}>게시</PostBtn>
+          </Enter>
+        </>
+        : ""}
+
     </ChatWrap>
   )
 };

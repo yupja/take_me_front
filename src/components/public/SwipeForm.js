@@ -6,39 +6,26 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import {ReactComponent as Timer} from "../../assets/icons/Timer.svg";
-import { chattingVote } from "../../store/modules/community"
-
+import { chattingVote, deleteChattingRoom } from "../../store/modules/community"
+import Loading from "../public/Loading";
 
 import TimerFunction from "../public/Timer"
-
-function useInterval(callback, delay) {
-  const savedCallback = useRef();
-
-  useLayoutEffect(() => {
-    savedCallback.current = callback;
-  }, [callback]);
-
-  useEffect(() => {
-    if (!delay && delay !== 0) {
-      return undefined;
-    }
-    const id = setInterval(() => savedCallback.current(), delay);
-    return () => clearInterval(id);
-  }, [delay]);
-}
-
 
 const SwipeForm = (props) =>{
     const swifeRef = useRef<HTMLDivElement>(null);
     const [currentIndex, setCurrentIndex] = useState(0);
-    const [loop, setLoop] = useState(null);
     const [minutes, setMinutes] = useState();
     const [seconds, setSeconds] = useState();
+    const [timeOutLimit , setTimeOutLimit] = useState(true);
     const [vote, setVote] = useState(props.prosCons);
     const userInfo = useSelector((state)=>state.community.myInfo)
+    const [ready, setReady] = useState(true);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    console.log()
+
 
     const chageVote = () =>{
       let sendData={}
@@ -59,6 +46,21 @@ const SwipeForm = (props) =>{
         dispatch(chattingVote(sendData))
     }}
 
+
+  useEffect(() => {
+
+    setTimeout(() => {
+      setReady(false)
+    }, 100)
+
+    if(minutes > 10 || minutes < 0 ||!timeOutLimit){
+      setTimeout(() => {
+        dispatch(deleteChattingRoom(props.roomId));
+      }, 100)
+    }
+
+  }, [timeOutLimit])
+
     const getChttingData =(index)=>{
       const sendData ={
           roomId:props.topRoomList[index].roomId,
@@ -68,41 +70,15 @@ const SwipeForm = (props) =>{
           authorProfileImg : props.topRoomList[index].authorProfileImg,
           userCount : props.topRoomList.userCount,
           comment : props.topRoomList[index].comment,
-          createdAt:props.topRoomList[index].createdAt,
-          timeLimit:props.topRoomList[index].timeLimit
+          minutes : Math.floor(props.topRoomList[index].leftTime/60),
+          seconds : Math.floor(props.topRoomList[index].leftTime%60),
       }
     
       navigate(`/chat/roomdetail/${sendData.roomId}`, {state:sendData});
     
       }
 
-    const setInfiniteSlide = (datas, slideToAdd) => {
-      const newSlides = [...datas];
-      const size = datas.length;
-      for (let i = 0; i < slideToAdd; i += 1) {
-        const first = {
-          ...datas[i % size],
-          id: datas.length + i,
-        };
-        const last = {
-          ...datas[datas.length - 1 - (i % size)],
-          id: -(i + 1),
-        };
-        newSlides.unshift(last);
-        newSlides.push(first);
-      }
-      return newSlides;
-    };
-
-
-  useInterval(() => {
-      setCurrentIndex(currentIndex => currentIndex + 1);
-  }, 2000)
-  
-  
-  
-  
-  return (
+  return  ready ? <Loading /> : (
     
     <>
     {props.topRoomList.length===0? 
@@ -117,10 +93,8 @@ const SwipeForm = (props) =>{
     :
     <>
     <Wrap>
-    {props.topRoomList.map&&props.topRoomList?.map((item, idx)=>( 
-    
-
-      <ChattingList>
+    {props.topRoomList?.map((item, idx)=>( 
+    <ChattingList>
         {/* style={{transform: `translateX(${(-100 / props.topRoomList.length+2) * (currentIndex)}%)`}}>  */}
        <SwipeItem>
          <div className="chatInfoArea"
@@ -138,9 +112,11 @@ const SwipeForm = (props) =>{
                  {item.authorNickname}</span> {item.comment}</span>
              <div className="timerArea">
                <Timer />
+
                <TimerFunction
-                 min={minutes}
-                 sec={seconds} />
+                 min={Math.floor(item?.leftTime/60)}
+                 sec={Math.floor(item?.leftTime%60)}
+                  />
              </div>
            </div>
          </div>

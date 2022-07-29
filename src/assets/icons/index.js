@@ -30,14 +30,20 @@ import { ReactComponent as Timer } from './Timer.svg';
 import { ReactComponent as Trash } from './AddMintPoint.svg';
 import { ReactComponent as UpArrow } from './AddMintPoint.svg';
 import { ReactComponent as WhiteShare } from './AddMintPoint.svg';
-import { ReactComponent as WhiteTrash } from './AddMintPoint.svg';
 import { ReactComponent as Withdrawal } from './AddMintPoint.svg';
 import { ReactComponent as Young } from './AddMintPoint.svg';
 import { ReactComponent as SaveList } from './SaveList.svg';
 import { ReactComponent as ChattingEnd } from './ChattingEnd.svg'
+import { ReactComponent as ShareCommunity } from './ShareCommunity.svg'
+import { ReactComponent as GoalDelete } from './GoalDelete.svg'
+import { ReactComponent as TikkleDelete } from './TikkleDelete.svg'
+
+
+
 
 
 export { AddMintPoint, ArrowUp, BigReceipt, Binheart, ChangeRank, Check, CheckedStart, Close, 
          Comment, Consu, Dot, EditBlack, EditIProfile, EditMint, EmptyStar, Ghost, GoalModify, Google,
          Info, Invi, Kakao, Key, LeftArrow, Receipt, ReceiptB, SearchIcon, Star, StarColor, Timer
-         ,Trash, UpArrow, WhiteShare, WhiteTrash , Withdrawal, Young, SaveList, ChattingEnd};
+         ,Trash, UpArrow, WhiteShare, GoalDelete , Withdrawal, Young, SaveList, ChattingEnd, ShareCommunity
+         ,TikkleDelete};
