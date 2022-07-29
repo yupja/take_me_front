@@ -93,6 +93,7 @@ function Login() {
         <Licks>
           <Link to="/signup">회원가입</Link>
           <span>
+            {/* <Link to="/user/findid">아이디 찾기</Link> */}
             <Link to="/user/findid">아이디·</Link>
             <Link to="/user/findpw">비밀번호 찾기</Link>
           </span>

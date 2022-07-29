@@ -13,14 +13,14 @@ import { nickCheckDB } from "../store/modules/user";
 
 function Proflie() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const title = '프로필 편집'
   const infoState = useSelector((state) => state.info.infoList);
-  const navigate = useNavigate();
 
 
   useEffect(() => {
     dispatch(getInfo());
-    if(!localStorage.getItem("accessToken")){
+    if (!localStorage.getItem("accessToken")) {
       navigate("/main")
     }
   }, [dispatch])
@@ -131,6 +131,7 @@ function Proflie() {
   const logout = (e) => {
     localStorage.clear();
     removeCookie('refreshToken', { path: '/' });
+    navigate('/login')
   }
   // 닉네임 중복검사
   // const onNickChange = () => {

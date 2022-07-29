@@ -1,13 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import Header from "../components/public/Header";
 import { userSecDB } from "../store/modules/user";
 import { getInfo } from "../store/modules/info";
 import { useCookies } from "react-cookie";
-import { useNavigate } from "react-router-dom";
 
 import { ReactComponent as Star } from "../assets/icons/Star.svg";
 import { ReactComponent as EditIProfile } from "../assets/icons/EditIProfile.svg";
@@ -32,7 +31,7 @@ function MyPage() {
 
 
   useEffect(() => {
-    if(!localStorage.getItem("accessToken")){
+    if (!localStorage.getItem("accessToken")) {
       navigate("/main")
     }
     dispatch(getInfo())
@@ -72,6 +71,7 @@ function MyPage() {
   const logout = (e) => {
     localStorage.clear();
     removeCookie('refreshToken', { path: '/' });
+    navigate('/login')
   }
 
   return (
@@ -110,14 +110,14 @@ function MyPage() {
           <Box>
             <h3>고객 지원</h3>
             <ul>
-              <li>
+              {/* <li>
                 <div><Invi /></div>
                 <span>친구 초대하기</span>
               </li>
               <li>
                 <div><Consu /></div>
                 <span>티끌 정보</span>
-              </li>
+              </li> */}
               <a href="https://forms.gle/qYoVUmbNwkNz2m957" target="_blank" rel="noreferrer">
                 <li>
                   <div><InfoIcon /></div>
@@ -395,6 +395,7 @@ font-size: 1.12rem;
 font-weight: 700;
 line-height: 1.3rem;
 border-bottom: 1px solid #999;
+cursor: pointer;
 `
 
 const CloseBtn = styled.div`
