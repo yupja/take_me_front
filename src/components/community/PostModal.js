@@ -74,7 +74,8 @@ const PostModal = (props) => {
           </ModalBody>
           <Footer onClick={()=>{
             postAc();
-            props.closeModal();
+            props.close();
+            // window.location.reload();
           }}>공유하기</Footer>
 
     </>
