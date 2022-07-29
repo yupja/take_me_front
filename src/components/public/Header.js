@@ -193,7 +193,7 @@ li:first-child{
 
 const NavWrap = styled.div`
 width:70%; //180px
-height: 100vh;
+height: 100%;
 background-color: #fff;
 position: absolute;
 top: 0; right: 0;

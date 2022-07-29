@@ -59,7 +59,8 @@ function Main() {
           <Link to="/save" className="btn">티끌 모으러 가보자!</Link>
         </section>
         <footer>
-          <Link to="">개발자&디자이너에게 한마디✉</Link>
+          {/* <Link to="https://forms.gle/qYoVUmbNwkNz2m957"></Link> */}
+          <a href="https://forms.gle/qYoVUmbNwkNz2m957" target="_blank" rel="noopener noreferrer">개발자&디자이너에게 한마디✉</a>
           <p>
             SERVICE OPEM DATE. 2022.07.27<br />
             ⓒ 항해 7기 나를가조  All Rights Reserved.
