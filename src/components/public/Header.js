@@ -18,9 +18,10 @@ const slider = keyframes`
 
 
 
-function Header({ title, props }) {
+function Header({ title, tColor }) {
   const navigate = useNavigate();
   const [navToggles, setNavToggles] = useState(false);
+  console.log(tColor)
 
   const [, , removeCookie] = useCookies(['refreshToken']);
 
@@ -45,7 +46,7 @@ function Header({ title, props }) {
           navigate(-1);
         }}>티끌</h1>
       </LeftArea>
-      <Title style={{ color: { props } }}>{title}</Title>
+      <Title style={{ color: `${tColor}` }}>{title}</Title>
       <HamArea onClick={onNav}>
         <NavBtn>
           <div>
@@ -121,7 +122,7 @@ top: 0;
 max-width:390px;
 width: 100%;
 height: 44px;
-background: #fff;
+background: rgba(0, 0, 0, 0);
 z-index:888;
 `;
 
