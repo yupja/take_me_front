@@ -10,9 +10,11 @@ import { useCookies } from "react-cookie";
 
 import { emailCheckDB } from "../store/modules/user";
 import { nickCheckDB } from "../store/modules/user";
+import { useNavigate } from "react-router-dom";
 
 function Proflie() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const title = '프로필 편집'
   const infoState = useSelector((state) => state.info.infoList);
 
@@ -127,6 +129,7 @@ function Proflie() {
   const logout = (e) => {
     localStorage.clear();
     removeCookie('refreshToken', { path: '/' });
+    navigate('/login')
   }
   // 닉네임 중복검사
   // const onNickChange = () => {
