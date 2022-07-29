@@ -479,7 +479,7 @@ align-items: center;
 `;
 
 const FavoriteTag = styled.div`
-height: 5%;
+padding : 0.5rem 0 0.5rem 1.7rem ;
 display: flex;
 align-items: center;
 width:95%;

@@ -25,9 +25,9 @@ root.render(
         <div style={{
           position: "relative",
           border: "1px solid #cccccc",
-          maxWidth: "390px",
+          maxWidth: "414px",
           width: "100%",
-          maxHeight: "844px",
+          maxHeight: "896",
           height: "100%",
           overflowY: "scroll",
         }}>
