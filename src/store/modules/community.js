@@ -65,7 +65,7 @@ export const deleteChattingRoom = (roomId, navigate) => {
   return async function (dispatch) {
     try {
       await instance.get(`/api/chat/room/${roomId}/save`)
-      window.location.href="/chattingList";
+
     } catch (error) {
       console.log(error)
     }
@@ -73,11 +73,10 @@ export const deleteChattingRoom = (roomId, navigate) => {
 }
 
 export const deleteLobyChat = (roomId, navigate) => {
-  console.log(roomId)
   return async function (dispatch) {
     try {
       await instance.get(`/api/chat/room/${roomId}/save`)
-      // dispatch(loadChattingListRS());
+
     } catch (error) {
       console.log(error)
     }
@@ -435,7 +434,7 @@ const communitySlice = createSlice({
       state.messages = [];
       // state.messages = action.payload;
     },
-    
+
   },
 
   extraReducers: {
@@ -462,5 +461,5 @@ const communitySlice = createSlice({
 
 });
 
-export const { loadComment, createComment, roadPosts, loadDetail, subMessage, getDayCountList, myInfo, delMessage } = communitySlice.actions;
+export const {  loadComment, createComment, roadPosts, loadDetail, subMessage, getDayCountList, myInfo, delMessage } = communitySlice.actions;
 export default communitySlice.reducer;
