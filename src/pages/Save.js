@@ -145,7 +145,7 @@ function Save() {
   return (
     <Wrap>
       <TopWrap>
-        <HeaderArea><Header title={title} color="#FFFFFF" /></HeaderArea>
+        <HeaderArea><Header title={title} tColor={"#ffffff"} /></HeaderArea>
 
         {goal.goalitemName === "이름 없음" ?
           <>

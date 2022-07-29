@@ -110,7 +110,7 @@ function Detail() {
 
   return (
     <>
-      <Header title={"커뮤니티"} />
+      <Header title={"커뮤니티"} tColor={"#ffffff"}/>
       <Box className="box">
         <BImg src={postlistdata.image}></BImg>
         <StyledSlider {...settings}>
