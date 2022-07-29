@@ -145,8 +145,16 @@ function MyStatistics() {
             ))}
           </BottomCircleArea>
 
-        </div>
+        
         <ButtonArea>
+          <div style={{
+            display: "flex",
+            position: "fixed",
+            bottom: "10%",
+            justifyContent: "space-around",
+            width: "440px"
+            
+          }}>
           {dayMonth ?
             <button
               onClick={() => {
@@ -170,8 +178,12 @@ function MyStatistics() {
               onClick={() => { changePriceCount() }}>
               횟수 별보기 <ChangeRank /></button>
           }
+          </div>
+
 
         </ButtonArea>
+
+        </div>
       </Wrap>
     </>
   )
@@ -307,13 +319,9 @@ margin-top: 10%;
 
 const ButtonArea = styled.div`
 display: flex;
-justify-content: space-around;
 position: absolute;
+margin-right: 200px;
 bottom:10%;
-left:0;
-width: 390px;
-
-
 
 button{
   display: flex;

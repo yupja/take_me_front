@@ -55,7 +55,7 @@ function Router() {
         <Route path="/history" element={<History />} />
         <Route path="/proflie" element={<Proflie />} />
         <Route path="/ranking" element={<Ranking />} />
-        <Route path="/oauth2/redirect" element={<SociallLogin />} />
+        <Route path="/oauth2/redirect/:token" element={<SociallLogin />} />
         <Route path="/chat/roomdetail/:roomId" element={<RoomDetail />} />
         <Route path="/guide" element={<Guide />} />
         <Route path="/chat/closedChttinglog/:closedRoomId" element={< ClosedChattingLog />} />
