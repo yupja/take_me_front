@@ -308,10 +308,10 @@ const MenuList = styled.ul`
     display: flex;
     justify-content: center;
     align-items: center;
-  }
-  li:nth-child(2) div{
     box-shadow: 0px 4px 11px 0px rgba(0, 0, 0, 0.15);
   }
+  /* li:nth-child(2) div{
+  } */
   .starIcon{
     width: 2.5rem;
     height : 2.5rem;
@@ -367,7 +367,6 @@ li{
 div {
   width: 1.25rem;
   height: 1.25rem;
-  background: #D9D9D9;
   border-radius: 50%;
   margin-right: 10px;
 }
