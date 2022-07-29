@@ -9,10 +9,13 @@ import ChattingInfo from "./ChattingInfo";
 import ClosedChattingInfo from "./ClosedChattingInfo"
 import { loadChattingListRS, closedChttingListRS, myInfoData } from "../../store/modules/community"
 
-
 function ChattingList() {
+  const navigate = useNavigate();
 
   useEffect(() => {
+    if(!localStorage.getItem("accessToken")){
+      navigate("/main")
+    }
     dispatch(loadChattingListRS());
     dispatch(closedChttingListRS());
     dispatch(myInfoData())
@@ -117,7 +120,7 @@ export default ChattingList;
 const Wrap = styled.div`
 display: flex;
 justify-content: flex-start;;
-max-width: 390px;
+max-width: 440px;
 width: 100%;
 max-height:570px;
 height: 100%;
@@ -153,7 +156,12 @@ overflow-y: scroll;
 `;
 
 const AllchattingList = styled.div`
-max-width: 390px;
+max-width: 440px;
+display: flex;
+flex-direction: column;
+/* justify-content: center; */
+align-items: center;
+
 width:100%;
 max-height: 844px;
 `;

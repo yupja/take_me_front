@@ -2,9 +2,18 @@ import React from "react";
 import styled from "styled-components";
 import Header from "../components/public/Header";
 import Statistics from "../components/Statistics"
+import { useNavigate } from "react-router-dom";
 
 function Ranking() {
   const title = "랭킹"
+  const navigate = useNavigate();
+
+  React.useEffect(() => {
+    if(!localStorage.getItem("accessToken")){
+      navigate("/main")
+    }
+  }, [])
+
   return (
     <>
       <Header title={title} />

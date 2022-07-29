@@ -31,6 +31,9 @@ function MyPage() {
 
 
   useEffect(() => {
+    if (!localStorage.getItem("accessToken")) {
+      navigate("/main")
+    }
     dispatch(getInfo())
   }, [dispatch])
 

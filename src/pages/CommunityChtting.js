@@ -19,6 +19,9 @@ const Community = () => {
   const [page, setPage] = useState(<ChattingList />);
   const [chooseMenu,  setChooseMenu] = useState(true);
   useEffect(()=>{
+    if(!localStorage.getItem("accessToken")){
+      navigate("/main")
+    }
 
       dispatch(topListRS());
     },[])
@@ -74,8 +77,7 @@ const Community = () => {
 
 
 const Wap = styled.div`
-max-width: 390px;
-max-height: 844px;
+
 `;
 
 const MenuBar = styled.div`

@@ -7,10 +7,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { getInfo, infoUpdate } from "../store/modules/info";
 import { ReactComponent as Edit } from "../assets/icons/EditMint.svg";
 import { useCookies } from "react-cookie";
-
+import { useNavigate } from "react-router-dom";
 import { emailCheckDB } from "../store/modules/user";
 import { nickCheckDB } from "../store/modules/user";
-import { useNavigate } from "react-router-dom";
 
 function Proflie() {
   const dispatch = useDispatch();
@@ -21,6 +20,9 @@ function Proflie() {
 
   useEffect(() => {
     dispatch(getInfo());
+    if (!localStorage.getItem("accessToken")) {
+      navigate("/main")
+    }
   }, [dispatch])
 
 

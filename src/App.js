@@ -5,11 +5,14 @@ import styled, { createGlobalStyle } from "styled-components";
 
 function App() {
   return (
-
-      <div>
+    // <Container>
+    //   <Inner>
+      <>
         <GlobalStyle />
         <Router />
-      </div>
+        </>
+
+
   );
 }
 
@@ -19,3 +22,5 @@ ${reset};
 `;
 
 export default App;
+
+

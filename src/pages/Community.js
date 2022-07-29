@@ -22,6 +22,9 @@ const Community = () => {
   const [chooseMenu, setChooseMenu] = useState(true);
 
   useEffect(() => {
+    if(!localStorage.getItem("accessToken")){
+      navigate("/main")
+    }
 
     dispatch(topListRS());
   }, [isLoad])
@@ -80,8 +83,7 @@ const Community = () => {
 
 
 const Wap = styled.div`
-max-width: 390px;
-max-height: 844px;
+
 `;
 
 const MenuBar = styled.div`
@@ -139,7 +141,7 @@ overflow-x:scroll;
 
 const CommunityContents = styled.div`
 width: 100%;
-display: flex;
+
 `;
 
 export default Community;

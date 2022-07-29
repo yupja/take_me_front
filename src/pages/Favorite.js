@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import SearchSavedItem from "../components/public/SearchSavedItem";
@@ -18,6 +19,8 @@ function Favorite() {
   const priceInput = useRef();
   const priceRef = useRef();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
 
   const [modalOpen, setModalOpen] = useState(false);
   // const [modalState, setModalState] = useState();
@@ -41,7 +44,11 @@ function Favorite() {
   }
 
   useEffect(() => {
+    if(!localStorage.getItem("accessToken")){
+      navigate("/main")
+    }
     dispatch(myFavoriteListRQ());
+    
   }, []);
 
   const mylist = useSelector((state) => state.favorite.myFavoriteList);

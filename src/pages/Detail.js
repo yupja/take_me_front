@@ -1,9 +1,10 @@
 import React, { useRef, useEffect, useState } from "react";
+import { useBeforeunload } from "react-beforeunload";
 import styled from "styled-components";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
+import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux/es/exports";
 import { useParams } from "react-router-dom";
@@ -25,9 +26,11 @@ import { ReactComponent as ArrowUp } from "../assets/icons/ArrowUp.svg";
 
 
 function Detail() {
+  useBeforeunload((event) => event.preventDefault());
   const dispatch = useDispatch();
   const params = useParams();
   const comment_ref = React.useRef();
+  const navigate = useNavigate();
 
   const boardIdex = params.boardId;
 
@@ -36,6 +39,9 @@ function Detail() {
     const boardId = postlistdata.boardId
 
     React.useEffect(() => {
+      if(!localStorage.getItem("accessToken")){
+        navigate("/main")
+      }
         dispatch(loadCommentAc(boardId))
         dispatch(loadpostsAc())
         dispatch(loadDetailAc(boardId))
