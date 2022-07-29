@@ -15,10 +15,6 @@ const CurrentSavedItem =(props)=>{
       }, [props.goalItemId]);
 
     const mySavedList = useSelector((state) => state.saved.currentMySavedList);
-    const [checkedTogle, setCheckedTogle] = useState(false);
-
-
-
    
     const addFavoriteStar = (savedItemIndex) => {
       const sendData = {
@@ -43,6 +39,7 @@ const CurrentSavedItem =(props)=>{
         <SavedList>
         {mySavedList&&mySavedList.data?.map((savedItem, savedItemIndex) => (
             <ul key={savedItem.savedItemId}>
+              
               <li>
               <div className="leftBox">
               <FavoriteCheckedStar 
@@ -61,9 +58,10 @@ const CurrentSavedItem =(props)=>{
                 {savedItem.itemName}
               </SavedDay>
               </div>
-              <ModifySave     itemId={savedItem.itemId}
-                              savedItemId={savedItem.savedItemId}
-                              goalItemId={props.goalItemId}/>
+              <ModifySave     
+                itemId={savedItem.itemId}
+                savedItemId={savedItem.savedItemId}
+                goalItemId={props.goalItemId}/>
               </li>
            </ul>
         ))}
@@ -97,22 +95,25 @@ flex-direction: column;
 const SavedList = styled.div`
 display: flex;
 flex-direction: column;
-width: 100%;
 height: 43vh;
 
 ul{
-  padding: 0 10px;
+  display: flex;
+  justify-content: center;
 }
+
 li{
   display: flex;
+  max-width: 390px;
+  width: 95%;
   justify-content: space-around;;
   align-items: center;
   border-bottom: 1px solid #CCCCCC;
-  padding: 3%;
+  padding: 3% 0 3% 4%;
 }
 .leftBox{
   display: flex;
-  justify-content: space-around;;
+  justify-content: space-around;
   align-items: center;
 }
 

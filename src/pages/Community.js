@@ -18,7 +18,6 @@ const Community = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isLoad, setLoad] = useState(false);
-  // const [page, setPage] = useState(<CommunityList />);
   const [page, setPage] = useState(<CommunityTab />);
   const [chooseMenu,  setChooseMenu] = useState(true);
 
