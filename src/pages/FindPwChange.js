@@ -8,7 +8,8 @@ import Header from "../components/public/Header";
 
 const FindPwChange = () => {
   const { token } = useParams();
-  const [tokens, username] = token.split('&')
+  // const [tokens, username] = token?.split('&');
+  console.log("22");
   // console.log('토큰 :', tokens, '아이디 :', username)
 
 
@@ -58,7 +59,7 @@ const FindPwChange = () => {
     const pw = pwRef.current.value;
     const checkPw = pwCheckRef.current.value;
     const findInfo = {
-      username: username, // url에서 가져오기
+      // username: username, // url에서 가져오기
       password: pw,
       checkPassword: checkPw,
     }
@@ -68,7 +69,7 @@ const FindPwChange = () => {
     }
     if (userPwAlert === '' && userPwAChecklert === '') {
       console.log("다음!")
-      await dispatch(changePw(findInfo, tokens))
+      // await dispatch(changePw(findInfo, tokens))
       setfindPwPop(true) // 디스패치 먼저 실행 후 결과 팝업 생성
     } else {
       alert("비밀번호를 확인해주세요")
@@ -114,7 +115,6 @@ export default FindPwChange;
 const FindWrap = styled.div`
 padding: 0 25px;
 margin-top: 10rem;
-position: relative;
 
 h2 {
   font-size:1.75rem;
@@ -137,7 +137,7 @@ p{
   color: #FF7272;
 }
 button{
-  position: fixed;
+  position: absolute;
   bottom: 6.25rem;
   left: 50%;
   transform: translateX(-50%);
