@@ -21,10 +21,12 @@ function SignUp(e) {
   const pwRef = useRef();
   const pwCheckRef = useRef();
 
+
+  // 정규식
   const emailCheckStr = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
-  const idCheckStr = /^(?=.*[a-z])(?=.*\d)[a-z\d]{3,10}$/;
+  const idCheckStr = /^[a-z0-9_-]{3,10}$/;
   const nickCheckStr = /^[a-zA-Zㄱ-힣0-9-_.]{2,12}$/;
-  const pwCheckStr = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,16}$/;
+  const pwCheckStr = /(?=.*\d)(?=.*?[#?!@$%^&*-])(?=.*[a-zA-ZS]).{8,}/;
 
 
   // 유효성 알림
@@ -96,7 +98,7 @@ function SignUp(e) {
       setidStrCheck(false);
       setIdColor(null);
     } else {
-      setUserIdAlert("🚨 3~10글자,영문,숫자로 작성해주세요.")
+      setUserIdAlert("🚨 3~10글자, 소문자로 작성해주세요.");
       setidStrCheck(true);
       setIdColor('red');
       if (id === '') {
@@ -135,11 +137,11 @@ function SignUp(e) {
         setUserPwAlert("공백 없이 입력해주세요.");
         setPwColor('red');
       } else {
-        setUserPwAlert("");
-        setPwColor(null);
+        setUserPwAlert("👍사용 가능한 비밀번호입니다.");
+        setPwColor("#26DFA6");
       }
     } else {
-      setUserPwAlert("🚨 비밀번호는 영대문자, 소문자, 숫자, 특수문자를 포함해 총 8글자 이상이어야 합니다.");
+      setUserPwAlert("🚨 문자, 숫자 1개이상 포함, 8자리 이상 입력해주세요.");
       setPwColor('red');
       if (pw === '') {
         setUserPwAlert('')
@@ -154,8 +156,8 @@ function SignUp(e) {
     const pw = pwRef.current.value;
     const pwCheck = pwCheckRef.current.value;
     if (pwCheck === pw) {
-      setUserPwCheckAlert("");
-      setPwCheckColor(null);
+      setUserPwCheckAlert("👍두 비밀번호가 일치합니다.");
+      setPwCheckColor("#26DFA6");
     } else {
       setUserPwCheckAlert("🚨두 비밀번호가 일치하지 않습니다.")
       setPwCheckColor('red');
@@ -476,6 +478,7 @@ div {
   width: 16px;
   height: 16px;
   margin-right: 5px;
+  cursor: pointer;
  }
  label {
   display:flex;

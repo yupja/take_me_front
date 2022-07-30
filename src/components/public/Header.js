@@ -133,6 +133,7 @@ h1 {
   line-height: 44px;
   color: #26DFA6;
   font-size: 1.25rem;
+  cursor: pointer;
 }
 `;
 
