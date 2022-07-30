@@ -169,7 +169,7 @@ const ChattingInfo = (props) => {
 
 
 const ChattingList = styled.div`
-max-width: 355px;
+min-width: 355px;
 min-height: 108px;
 width: 100%;
 height: 100%;
