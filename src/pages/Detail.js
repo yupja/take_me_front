@@ -164,7 +164,9 @@ function Detail() {
                   <div onClick={() => {
                      openModal();
                      setModalName("수정하기");
-                     setModalState(<EditPostModal close={closeModal} />)
+                     setModalState(<EditPostModal 
+                      close={closeModal}
+                      boardId={postlistdata.boardId} />)
                    }}>수정하기</div>
                   <div style={{ color: "#FF5E5E" }} onClick={() => {
                     dispatch(
