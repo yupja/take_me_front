@@ -148,6 +148,8 @@ function Save() {
     slidesToShow: 1,
     slidesToScroll: 1
   };
+
+  console.log(selectInputValue);
   return (
     <Wrap>
       <TopWrap>
@@ -318,7 +320,8 @@ function Save() {
                 <div className="inputBox">
                   <input
                     type="Number"
-                    ref={priceInput} />
+                    ref={priceInput}
+                    price={selectInputValue.price} />
                   <button onClick={addSaveData}><AddMintPoint /></button>
                 </div>
 
