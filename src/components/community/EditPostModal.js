@@ -39,7 +39,8 @@ const EditPostModal = (props) => {
         const data = {
             title : title,
             contents:contents_ref.current.value,
-            file: imageFile
+            file: imageFile,
+            boardId : props.boardId 
         }
         console.log(data,"수정하기")
         dispatch(UpdatePost(data))
@@ -74,7 +75,7 @@ const EditPostModal = (props) => {
           </ModalBody>
           <Footer onClick={()=>{
             modiPost();
-            props.closeModal();
+            props.close();
           }}>수정하기</Footer>
 
     </>

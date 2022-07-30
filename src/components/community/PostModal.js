@@ -123,8 +123,8 @@ const PostModal = (props) => {
 
   const ContentsBox = styled.input`
   width: 95%;
-  height: 5rem;
-  margin-bottom: 0.5;
+  height: 92px;
+  margin: 10px auto;
   ;
   `;
   

@@ -4,6 +4,7 @@ import styled from "styled-components";
 import ListModal from "./ListModal";
 import Modal from "../public/BasicModalForm";
 import PostModal from "./PostModal";
+import EditPostModal from "../../components/community/EditPostModal";
 
 
 import { useNavigate } from "react-router-dom";
@@ -114,12 +115,33 @@ const CommunityTab = () => {
                             { state: { name: postList } }
                           )
                       }}>
-                        {postList.goalItemName}
+                        {postList.goalItemName}</div>
                         {userinfo.username === postList.userId ?
-                          <DotBox><Dot className="dot" /></DotBox>
-
-                          : null}
-                      </div>
+                          <>
+                          <Toggle onClick={onClickNav}><Dot className="dot"/></Toggle>
+                          {user_nav && (
+                            <UserInfoNav>
+                              <div>
+                                <div onClick={() => {
+                                   openModal();
+                                   setModalName("수정하기");
+                                   setModalState(<EditPostModal 
+                                    close={closeModal} 
+                                    boardId={postList.boardId}
+                                    />)
+                                    
+                                 }}>수정하기</div>
+                                <div style={{ color: "#FF5E5E" }} onClick={() => {
+                                  dispatch(
+                                    deletePostAc(postList.boardId))
+                                }}>삭제하기</div>
+                              </div>
+                            </UserInfoNav>
+                          )}
+                        </>
+                        : null
+                      }
+                      
                     </NewTop>
                     <NewNick>
                       {postList.nickname}&nbsp;&nbsp;{postList.contents}
@@ -195,6 +217,8 @@ const CommunityTab = () => {
   )
 };
 
+
+
 const CtnNum = styled.span`
 font-size: 10px;
 color: #999999;
@@ -216,33 +240,27 @@ float: right;
 `;
 
 const Toggle = styled.div`
-margin-left: 0;
-width: 5%;
-height: 5%;
-float: right;
-/* border: 3px solid orange; */
 position: absolute;
-z-index: 3;
+color: black;
 right: 0;
 top: 0;
-.dot{
-  path { fill: #333333}
-}
+margin-right: 15px;
+
 `;
 
 const UserInfoNav = styled.div`
 position: absolute;
-top: 6%;
-right: 6%;
+top: 10px;
+right: 5%;
 > div {
     position: relative;
     z-index: 5;
-    width: 20vw;
-    height: 18vw;
+    width: 70px;
+    height: 70px;
     text-align: center;
     line-height: 2rem;
     font-size: 0.7rem;
-    border-radius: 1vw;
+    border-radius: 6px;
     background: #fff;
     box-shadow: rgb(0 0 0 / 10%) 0px 0px 8px;
 }`
@@ -345,15 +363,17 @@ bottom: 10%;
 background: #26DFA6;
 text-align: center;
 z-index: 1;
-margin-left: 15px;
+margin-left: 25px;
 box-shadow: 5px 5px 5px rgb(110, 110, 110, 0.4);
 opacity: 95%;
 font-size: 20px;
+/* border: 1px solid red; */
 `;
 
 const FootBtn = styled.button`
 color: white;
     font-weight: 500;
+
 `;
 
 const Right = styled.div`

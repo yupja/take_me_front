@@ -232,7 +232,7 @@ export const loadDetailAc = (boardId) => {
 
 export const loadMoreContentDB = () => {
   return async function (dispatch, getState) {
-    const board = getState().post.postList.data;
+    const board = getState().community.postList.data;
     // console.log(board,"resS")
     const lastIndex = board[board.length - 1].boardId
     // console.log(lastIndex,"last")
@@ -289,6 +289,7 @@ export const deletePostAc = (boardId) => {
     await instance
       .delete(`/api/board/${boardId}`)
       .then((response) => {
+        window.location.reload();
         // dispatch(deletePostAc(boardId));
       })
       .catch((err) => {
