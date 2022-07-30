@@ -5,7 +5,7 @@ import { Link, useParams, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import SockJS from "sockjs-client";
 import Stomp from "stompjs";
-import { subMessage, delMessage, deleteChattingRoom } from "../../store/modules/community";
+import { subMessage, delMessage, deleteChattingRoom, chattingVote } from "../../store/modules/community";
 import Header from "../public/Header";
 import { BsSortNumericDown } from "react-icons/bs";
 // import ChattingInfo from "./ChattingInfo";
@@ -156,10 +156,19 @@ useEffect(() => {
             />
           </strong>
         </ListInfo>
+        
         <Vote>
-          <button>쓰자!</button>
-          <button>멈춰!</button>
+          <button
+            onClick={()=>{
+              chattingVote(true)
+            }}
+            >쓸까?</button>
+          <button
+            onClick={()=>{
+              chattingVote(true)
+            }}>말까?</button>
         </Vote>
+
         <p className="count">조회수 <span>{state.userCount}</span></p>
       </Box>
       <ChatBox className="chatbox">
