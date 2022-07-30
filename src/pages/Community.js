@@ -22,7 +22,7 @@ const Community = () => {
   const [chooseMenu, setChooseMenu] = useState(true);
 
   useEffect(() => {
-    if(!localStorage.getItem("accessToken")){
+    if (!localStorage.getItem("accessToken")) {
       navigate("/main")
     }
 
@@ -104,6 +104,7 @@ width : 100%;
     padding: 10px;
     border-bottom: none;
     border-radius: 10px 10px 0px 0px;
+    cursor: pointer;
 }
 .nonChice{
     width: 45%;
@@ -114,6 +115,7 @@ width : 100%;
     padding: 10px;
     border-bottom: none;
     border-radius: 10px 10px 0px 0px;
+    cursor: pointer;
 }
 `;
 

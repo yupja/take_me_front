@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled, { keyframes } from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { ReactComponent as Close } from "../../assets/icons/Close.svg";
+import Guide from "../community/Guide";
 
 // import NavToggle from "./NavToggle";
 const slider = keyframes`
@@ -18,7 +19,31 @@ const slider = keyframes`
 
 
 
+
+
 function Header({ title, tColor, backGround }) {
+
+  const url = window.location.href;
+  const [circle, setCircle] = useState();
+  useEffect(() => {
+    if (url.includes('save')) {
+      setCircle("save")
+    }
+    if (url.includes('community') || url.includes('chattingList')) {
+      setCircle("community")
+    }
+    if (url.includes('ranking')) {
+      setCircle("ranking")
+    }
+    if (url.includes('mypage')) {
+      setCircle("mypage")
+    }
+    if (url.includes('main')) {
+      setCircle("main")
+    }
+  }, [url])
+
+
   const navigate = useNavigate();
   const [navToggles, setNavToggles] = useState(false);
 
@@ -37,6 +62,19 @@ function Header({ title, tColor, backGround }) {
   const closeNav = (e) => {
     setNavToggles(false)
   }
+
+  const [showModal, setShowModal] = useState(false);
+
+  const openGuide = () => {
+    setShowModal(true)
+  }
+  const closeGuide = () => {
+    setShowModal(false);
+    setNavToggles(false)
+  }
+
+
+
 
   return (
     <HeaderWrap>
@@ -59,34 +97,51 @@ function Header({ title, tColor, backGround }) {
       {navToggles ?
         <>
           <Popup>
+            {showModal ?
+              <Guide
+                open={showModal}
+                close={closeGuide}
+              />
+              : null}
             <NavWrap>
               <CloseBtn onClick={closeNav}>
                 <Close />
               </CloseBtn>
-              <Menu>
+              <Menu link={circle}>
                 <li onClick={() => {
                   if (!localStorage.getItem("accessToken")) {
                     alert("로그인 후 이용이 가능해요.")
                   } else { navigate("/save"); }
-                }}>데일리 티끌</li>
+                }}>
+                  <span className="save">데일리 티끌</span>
+                </li>
                 <li onClick={() => {
                   if (!localStorage.getItem("accessToken")) {
                     alert("로그인 후 이용이 가능해요.")
                   } else { navigate("/community"); }
-                }}>커뮤니티</li>
+                }}>
+                  <span className="community">커뮤니티</span>
+                </li>
                 <li onClick={() => {
                   if (!localStorage.getItem("accessToken")) {
                     alert("로그인 후 이용이 가능해요.")
                   } else { navigate("/ranking"); }
-                }}>랭킹</li>
+                }}>
+                  <span className="ranking">랭킹</span>
+                </li>
                 <li onClick={() => {
                   if (!localStorage.getItem("accessToken")) {
                     alert("로그인 후 이용이 가능해요.")
                   } else { navigate("/mypage"); }
-                }}>MY</li>
+                }}>
+                  <span className="my">MY</span>
+                </li>
                 <li onClick={() => {
                   navigate("/main");
-                }}>About</li>
+                }}>
+                  <span className="main">About</span>
+                </li>
+                <li className="guide" onClick={openGuide}>🏷 티끌 가이드 다시보기</li>
               </Menu>
 
               <Footer>
@@ -177,20 +232,67 @@ span:last-child{
   }
 `;
 
+
+
+
 const Menu = styled.ul`
 padding-top : 80px;
 z-index: 100;
 text-align: center;
 li {
   font-size: 1.5rem;
-  padding-bottom: 1.87rem;
-  font-family: 'SEBANG_Gothic_Bold';
+  margin-bottom: 1.87rem;
   cursor: pointer;
 }
 li:first-child{
   color: #26DFB3;
 }
+li:last-child{
+  color: #999;
+  font-size: 1.125rem;
+  margin: 3.12rem 0;
+  font-family: 'SEBANG_Gothic_Bold';
+}
+span{
+  position: relative;
+  font-family: 'SEBANG_Gothic_Bold';
+  :before{
+    display: none;
+    position: absolute;
+    top: -5px; left: -10px;
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: #26DFB3;
+    border-radius: 50%;
+  }
+}
+
+// 현재 페이지
+.save::before{
+  display: ${props => props.link === "save" && 'inline-block'};
+}
+.community::before{
+  display: ${props => props.link === "community" && 'inline-block'};
+}
+.ranking::before{
+  display: ${props => props.link === "ranking" && 'inline-block'};
+}
+.my::before{
+  display: ${props => props.link === "mypage" && 'inline-block'};
+}
+.main::before{
+  display: ${props => props.link === "main" && 'inline-block'};
+}
+
 `
+
+// const Save = styled.span`
+
+//  color: ${props => props.link === "save" && '#FF7272'};
+// /* padding-top : 80px; */
+// `
+
 
 const NavWrap = styled.div`
 width:70%; //180px
@@ -204,9 +306,6 @@ animation-duration: 0.3s;
   animation-name: ${slider};
   animation-fill-mode: forwards;
 
-button{
-
-}
 `;
 
 const NavBtn = styled.div`
