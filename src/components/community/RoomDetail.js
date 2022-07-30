@@ -156,7 +156,7 @@ useEffect(() => {
             />
           </strong>
         </ListInfo>
-        
+
         <Vote>
           <button
             onClick={()=>{
@@ -165,7 +165,7 @@ useEffect(() => {
             >쓸까?</button>
           <button
             onClick={()=>{
-              chattingVote(true)
+              chattingVote(false)
             }}>말까?</button>
         </Vote>
 
