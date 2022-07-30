@@ -84,9 +84,6 @@ export const deleteLobyChat = (roomId, navigate) => {
 }
 
 
-
-
-
 // 찬반투표
 export const chattingVote = (vote, roomId) => {
   return async function (dispatch) {

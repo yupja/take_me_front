@@ -46,19 +46,11 @@ const ChattingInfo = (props) => {
     let sendData = {}
     if (vote) {
       setVote(false)
-      sendData = {
-        roomId: props.roomId,
-        prosCons: false
-      }
-      dispatch(chattingVote(sendData))
+      dispatch(chattingVote(2,props.roomId ))
 
     } else if (!vote) {
       setVote(true)
-      sendData = {
-        roomId: props.roomId,
-        prosCons: true
-      }
-      dispatch(chattingVote(sendData))
+      dispatch(chattingVote(1,props.roomId))
     }
   }
 
@@ -124,7 +116,17 @@ const ChattingInfo = (props) => {
 
 
           <div className="bottomArea">
-            {vote ?
+
+            {vote ===0?
+              <button
+              onClick={() => { chageVote() }}>쓸까?</button>
+            :
+            <button
+            onClick={() => { chageVote() }}>말까?</button>
+            }
+
+
+            {vote===1 ?
               <button style={{
                 background: "#26DFA6",
                 color: "white"
@@ -138,7 +140,7 @@ const ChattingInfo = (props) => {
             }
 
 
-            {vote ?
+            {vote===2 ?
               <button
                 onClick={() => { chageVote() }}>말까?</button>
 
