@@ -23,6 +23,7 @@ function RoomDetail() {
 
 
   const [timeOutLimit , setTimeOutLimit] = useState(true);
+  const [vote, setVote] = useState(state.prosCons)
   const getMessages = useSelector((state) => state.community.messages);
 
   useEffect(() => {
@@ -49,8 +50,7 @@ function RoomDetail() {
   const chatRef = useRef();
   const scrollRef = useRef();
 
-
-
+  console.log(vote)
 
   const sock = new SockJS('https://api.webprogramming-mj6119.shop/chatting', null, { transports: ["websocket", "xhr-streaming", "xhr-polling"] });
   let client = Stomp.over(sock);
@@ -68,6 +68,26 @@ useEffect(() => {
   }, [])
 
 
+
+  const chageVote = () => {
+    let sendData = {}
+    if (vote) {
+      setVote(false)
+      sendData = {
+        roomId: roomId,
+        prosCons: false
+      }
+      dispatch(chattingVote(sendData))
+
+    } else if (!vote) {
+      setVote(true)
+      sendData = {
+        roomId: roomId,
+        prosCons: true
+      }
+      dispatch(chattingVote(sendData))
+    }
+  }
 
 
   useEffect(() => {
@@ -158,15 +178,62 @@ useEffect(() => {
         </ListInfo>
 
         <Vote>
-          <button
+          {vote==0?
+            <>
+            <NonChoice
             onClick={()=>{
-              chattingVote(true)
+              dispatch(chattingVote(Number(1), roomId))
+              setVote(Number(1))
             }}
-            >쓸까?</button>
-          <button
+            >쓰자!</NonChoice>
+          <NonChoice
             onClick={()=>{
-              chattingVote(false)
-            }}>말까?</button>
+              dispatch(chattingVote(Number(2),roomId))
+              setVote(Number(2))
+            }}>그만...</NonChoice>
+            </>
+        :
+        ""
+         }
+
+         {vote==1? 
+           <>
+           <Choice
+           onClick={()=>{
+             dispatch(chattingVote(Number(1),roomId))
+             setVote(Number(1))
+           }}
+           >쓰자!</Choice>
+         <NonChoice
+           onClick={()=>{
+             dispatch(chattingVote(Number(2),roomId))
+             setVote(Number(2))
+           }}>그만...</NonChoice>
+           </>
+          :
+          ""
+          }
+
+
+         {vote==2? 
+         <>
+          <NonChoice
+            onClick={()=>{
+              dispatch(chattingVote(Number(1),roomId))
+              setVote(Number(1))
+            }}
+            >쓰자!</NonChoice>
+          <Choice
+            onClick={()=>{
+              dispatch(chattingVote(Number(2),roomId))
+              setVote(Number(2))
+            }}>그만...</Choice>
+            </>
+            :
+            ""
+            }
+
+
         </Vote>
 
         <p className="count">조회수 <span>{state.userCount}</span></p>
@@ -335,6 +402,7 @@ padding: 1.25rem 1.5rem;
 color: #fff;
 p.count{
   font-size:0.87rem;
+  margin: 1rem 0 0 0;
   span{
     color: #999;
   }
@@ -411,20 +479,25 @@ display: flex;
 justify-content: space-between;
 align-items: center;
 margin: 0.62rem 0;
-button {
-  width: 49%;
-  height: 1.87rem;
-  text-align: center;
-  border-radius: 1.93rem;
+`;
+
+const Choice = styled.button`
+display: flex;
+background: #26DFA6;
+padding: 0.5rem 4rem 0.6rem 4rem;
+border-radius: 50px;
+color: #ffffff;
+border: 1px solid #26DFA6;
+`;
+
+const NonChoice = styled.button`
+  display: flex;
+
+  background: #333333;
+  padding: 0.5rem 4rem 0.6rem 4rem;
+  border-radius: 50px;
   color: #26DFA6;
   border: 1px solid #26DFA6;
-}
-button:nth-child(2) {
-  background: #26DFA6;
-  color: #fff;
-  border: none;
-}
-
 `;
 
 
