@@ -91,13 +91,20 @@ const ChattingInfo = (props) => {
                 <span className="innerSpan">
                   {props.authorNickname}</span> {props.comment}</span>
               <div className="timerArea">
-                <Timer />
+                <div><Timer /></div>
+                <div style={{
+                  display:"flex", 
+                  color:"#26DFB3",
+                  fontSize:"1.2rem",
+                  fontWeight:"700"}}>
                 <TimerFunction
                   min={minutes}
                   sec={seconds}
                   setTimeOutLimit={setTimeOutLimit}
                   station = "chattingInfo"
                   roomId={props.roomId}/>
+                  <span>M</span>
+                  </div>
               </div>
             </div>
           </div>
@@ -222,6 +229,7 @@ margin-bottom: 1rem; */
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    padding: 1rem 0 0 0;
 
   }
 
