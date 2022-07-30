@@ -345,15 +345,17 @@ bottom: 10%;
 background: #26DFA6;
 text-align: center;
 z-index: 1;
-margin-left: 15px;
+margin-left: 25px;
 box-shadow: 5px 5px 5px rgb(110, 110, 110, 0.4);
 opacity: 95%;
 font-size: 20px;
+/* border: 1px solid red; */
 `;
 
 const FootBtn = styled.button`
 color: white;
     font-weight: 500;
+
 `;
 
 const Right = styled.div`

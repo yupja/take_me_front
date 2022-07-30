@@ -103,7 +103,7 @@ background-color: rgb(0,0,0,0.3);
 box-shadow: rgb(0 0 0 / 9%) 0px 2px 12px 0px;
 display: flex;
 
-  @media screen and (600px){
+  @media screen{
     width: 100vw;
     height: 100vh;
     padding: 20px;

@@ -433,7 +433,8 @@ transform: translate(-50%, -50%);
 `;
 
 const Enter = styled.div`
-width: 388px;
+max-width: 414px;
+width: 100%;
 height: 84px;
 padding: 5px 25px;
 border: none;
@@ -471,7 +472,8 @@ font-weight:700;
 
 const UserInfoNav = styled.div`
 position: absolute;
-top: 45%;
+/* top: 36%; */
+margin-top: 15px;
 right: 5%;
 > div {
     position: relative;
