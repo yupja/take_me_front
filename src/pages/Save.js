@@ -165,8 +165,8 @@ function Save() {
                     closeModal={closeModal} />)
               }}>
                 <NonGoalInnerCicle>
-                  <p style={{ fontSize: "1.5rem", fontWeight: "bold" }}>티끌모아 태산!</p>
-                  <p>+ 태산 만들기!</p>
+                  <p style={{ fontSize: "1.7rem", fontWeight: "bold" }}>티끌모아 태산!</p>
+                  <p>+ 태산(목표) 만들기!</p>
                 </NonGoalInnerCicle>
               </Circle>
 
@@ -469,9 +469,10 @@ const NonGoalInnerCicle = styled.div`
 display: flex;
 flex-direction: column;
 align-items: center;
-gap: 1rem;
+gap: 0.5rem;
 p{
-  font-style: "Cafe24Ohsquareair";
+  font-weight: 700;
+  font-style: "SEBANG_Gothic_Bold";
 }
 `;
 
@@ -505,6 +506,7 @@ gap: 5%;
 justify-content: center;
 p{
   color: #26DFA6;
+  
 }
 `;
 

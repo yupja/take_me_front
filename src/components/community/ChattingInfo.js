@@ -42,17 +42,6 @@ const ChattingInfo = (props) => {
 
   const userInfo = useSelector((state) => state.community.myInfo)
 
-  const chageVote = () => {
-    if (vote===1) {
-      setVote(2)
-      dispatch(chattingVote(2,props.roomId ))
-
-    } else if (vote===2) {
-      setVote(1)
-      dispatch(chattingVote(1,props.roomId))
-    }
-  }
-
   const getChttingData = (index) => {
     const sendData = {
       roomId: props.roomId,
@@ -119,9 +108,15 @@ const ChattingInfo = (props) => {
             {vote ===0?
             <>
               <button
-              onClick={() => { chageVote() }}>쓸까?</button>
+              onClick={() => { 
+                setVote(1)
+                dispatch(chattingVote(1,props.roomId))
+                }}>쓸까?</button>
               <button
-              onClick={() => { chageVote() }}>말까?</button>
+              onClick={() => { 
+                setVote(2)
+                dispatch(chattingVote(2,props.roomId ))
+                }}>말까?</button>
             </>
             : ""}
 
@@ -133,14 +128,20 @@ const ChattingInfo = (props) => {
               }}
               disabled
               >쓸까?</button>
-              <button onClick={() => { chageVote() }}>말까?</button>
+              <button onClick={() => { 
+                setVote(2)
+                dispatch(chattingVote(2,props.roomId ))
+               }}>말까?</button>
             </>
               :""}
 
 
             {vote==2 ?
             <>
-              <button onClick={() => { chageVote() }}>쓸까?</button>
+              <button onClick={() => { 
+                setVote(1)
+                dispatch(chattingVote(1,props.roomId))
+              }}>쓸까?</button>
 
               <button style={{
                 background: "#26DFA6",

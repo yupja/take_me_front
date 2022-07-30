@@ -61,7 +61,6 @@ export const closedChttingLogRS = createAsyncThunk(
 
 
 export const deleteChattingRoom = (roomId, navigate) => {
-  console.log(roomId)
   return async function (dispatch) {
     try {
       await instance.get(`/api/chat/room/${roomId}/save`)
@@ -91,6 +90,7 @@ export const chattingVote = (vote, roomId) => {
       await instance.post(`/api/chat/room/${roomId}/vote`, {
         prosCons: vote
       })
+      dispatch(topListRS())
     } catch (error) {
       console.log(error)
     }

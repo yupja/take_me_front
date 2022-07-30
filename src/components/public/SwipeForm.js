@@ -17,35 +17,12 @@ const SwipeForm = (props) =>{
     const [minutes, setMinutes] = useState();
     const [seconds, setSeconds] = useState();
     const [timeOutLimit , setTimeOutLimit] = useState(true);
-    const [vote, setVote] = useState(props.prosCons);
+    const [vote, setVote] = useState();
     const userInfo = useSelector((state)=>state.community.myInfo)
     const [ready, setReady] = useState(true);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
-    console.log()
-
-
-    const chageVote = () =>{
-      let sendData={}
-      if(vote){
-        setVote(false)
-        sendData={
-          roomId: props.roomId,
-          prosCons : false
-        }
-        dispatch(chattingVote(sendData))
-  
-      }else if(!vote){
-        setVote(true)
-        sendData={
-          roomId: props.roomId,
-          prosCons : true
-        }
-        dispatch(chattingVote(sendData))
-    }}
-
 
   useEffect(() => {
 
@@ -70,7 +47,7 @@ const SwipeForm = (props) =>{
           profileImg: userInfo.profileImg,
           authorNickname : props.topRoomList[index].authorNickname,
           authorProfileImg : props.topRoomList[index].authorProfileImg,
-          userCount : props.topRoomList.userCount,
+          userCount : props.topRoomList[index].userCount,
           comment : props.topRoomList[index].comment,
           minutes : Math.floor(props.topRoomList[index].leftTime/60),
           seconds : Math.floor(props.topRoomList[index].leftTime%60),
@@ -128,33 +105,54 @@ const SwipeForm = (props) =>{
 
 
          <div className="bottomArea">
-           {vote ?
-             <button style={{
-               background: "#26DFA6",
-               color: "white"
-             }}
-               disabled
-             >쓸까?</button>
-             :
-             <button
-               onClick={() => { chageVote() }}>쓸까?</button>
+         {vote ===0?
+            <>
+              <button
+              onClick={() => { 
+                setVote(1)
+                dispatch(chattingVote(1,props.roomId))
+                }}>쓸까?</button>
+              <button
+              onClick={() => { 
+                setVote(2)
+                dispatch(chattingVote(2,props.roomId ))
+                }}>말까?</button>
+            </>
+            : ""}
 
-           }
+            {vote === 1 ?
+            <>
+              <button style={{
+                background: "#26DFA6",
+                color: "white"
+              }}
+              disabled
+              >쓸까?</button>
+              <button onClick={() => { 
+                setVote(2)
+                dispatch(chattingVote(2,props.roomId ))
+               }}>말까?</button>
+            </>
+              :""}
 
 
-           {vote ?
-             <button
-               onClick={() => { chageVote() }}>말까?</button>
+            {vote==2 ?
+            <>
+              <button onClick={() => { 
+                setVote(1)
+                dispatch(chattingVote(1,props.roomId))
+              }}>쓸까?</button>
 
-             :
-             <button style={{
-               background: "#26DFA6",
-               color: "white"
-             }}
-               disabled
-             >말까?</button>
-
-           }
+              <button style={{
+                background: "#26DFA6",
+                color: "white"
+              }}
+                disabled
+              >말까?</button>
+            </>
+              :
+              ""
+            }
 
          </div>
 
