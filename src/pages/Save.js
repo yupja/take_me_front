@@ -486,7 +486,7 @@ align-items: center;
 `;
 
 const FavoriteTag = styled.div`
-padding : 0.5rem 0 0.5rem 1.7rem ;
+padding : 0.5rem 0 0.5rem 2rem ;
 display: flex;
 align-items: center;
 width:95%;
