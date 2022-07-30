@@ -22,8 +22,6 @@ function RoomDetail() {
   const navigate = useNavigate();
 
 
-console.log(state)
-
   const [timeOutLimit , setTimeOutLimit] = useState(true);
   const [vote, setVote] = useState(state.prosCons)
   const getMessages = useSelector((state) => state.community.messages);
@@ -184,13 +182,13 @@ useEffect(() => {
             <>
             <NonChoice
             onClick={()=>{
-              dispatch(chattingVote(Number(1)))
+              dispatch(chattingVote(Number(1), roomId))
               setVote(Number(1))
             }}
             >쓰자!</NonChoice>
           <NonChoice
             onClick={()=>{
-              dispatch(chattingVote(Number(2)))
+              dispatch(chattingVote(Number(2),roomId))
               setVote(Number(2))
             }}>그만...</NonChoice>
             </>
@@ -202,13 +200,13 @@ useEffect(() => {
            <>
            <Choice
            onClick={()=>{
-             dispatch(chattingVote(Number(1)))
+             dispatch(chattingVote(Number(1),roomId))
              setVote(Number(1))
            }}
            >쓰자!</Choice>
          <NonChoice
            onClick={()=>{
-             dispatch(chattingVote(Number(2)))
+             dispatch(chattingVote(Number(2),roomId))
              setVote(Number(2))
            }}>그만...</NonChoice>
            </>
@@ -221,13 +219,13 @@ useEffect(() => {
          <>
           <NonChoice
             onClick={()=>{
-              dispatch(chattingVote(Number(1)))
+              dispatch(chattingVote(Number(1),roomId))
               setVote(Number(1))
             }}
             >쓰자!</NonChoice>
           <Choice
             onClick={()=>{
-              dispatch(chattingVote(Number(2)))
+              dispatch(chattingVote(Number(2),roomId))
               setVote(Number(2))
             }}>그만...</Choice>
             </>

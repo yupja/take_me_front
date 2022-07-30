@@ -88,12 +88,11 @@ export const deleteLobyChat = (roomId, navigate) => {
 
 
 // 찬반투표
-export const chattingVote = (voteData) => {
-  console.log(voteData)
+export const chattingVote = (vote, roomId) => {
   return async function (dispatch) {
     try {
-      await instance.post(`/api/chat/room/${voteData.roomId}/vote`, {
-        prosCons: voteData.prosCons
+      await instance.post(`/api/chat/room/${roomId}/vote`, {
+        prosCons: vote
       })
     } catch (error) {
       console.log(error)
