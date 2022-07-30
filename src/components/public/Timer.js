@@ -25,13 +25,13 @@ export default function Timer(props) {
     }, 1000);
     
     if(props.station === "chattingInfo"){
-      if((parseInt(minutes)==0)&&(parseInt(seconds)==1)|| parseInt(minutes)>10){
+      if((parseInt(minutes)==0)&&(parseInt(seconds)==1)|| parseInt(minutes)>10 || 0<parseInt(minutes)){
         props.setTimeOutLimit(false)
 
       }
 
     }else if(props.station === "room"){
-      if((parseInt(minutes)==0)&&(parseInt(seconds)==0)|| parseInt(minutes)>10){
+      if((parseInt(minutes)==0)&&(parseInt(seconds)==0)|| parseInt(minutes)>10|| 0<parseInt(minutes)){
         alert("채팅이 종료되었습니다.")
         props.setTimeOutLimit(false)
       }
