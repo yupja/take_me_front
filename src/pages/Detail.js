@@ -122,10 +122,10 @@ function Detail() {
           <div style={{ backgroundColor: "transparent" }}></div>
           <ContentsBox>
             <DountBox>
-              <DountChart color="#26DFA6" size="235" position="absolute" percent={goal.goalPercent} />
+              <DountChart color="#26DFA6" size="235" position="absolute" percent={postlistdata.goalPercent} />
               <Text>
                 <Commu>
-                  <GoalName><p className="goalTitle">{Math.floor(goal.goalPercent * 100)}&nbsp;%</p></GoalName>
+                  <GoalName><p className="goalTitle">{Math.floor(postlistdata.goalPercent * 100)}&nbsp;%</p></GoalName>
                   <GoalName>{postlistdata.goalItemName}</GoalName>
                 </Commu>
                 <Bottom className="bottom">
