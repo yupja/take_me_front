@@ -86,11 +86,11 @@ export const idCheckDB = (id, setUserIdAlert, setIdColor) => {
     await instance.post("/api/user/register/checkUsername", { username: id })
       .then((res) => {
         if (res.data.result === true) {
-          setUserIdAlert("사용 가능한 아이디입니다")
+          setUserIdAlert("👍사용 가능한 아이디입니다")
           setIdColor('#26DFA6')
         } else {
           setUserIdAlert("중복된 아이디입니다")
-          setIdColor('red')
+          setIdColor('#FF7272')
         }
       })
       .catch((err) => {
@@ -102,15 +102,14 @@ export const idCheckDB = (id, setUserIdAlert, setIdColor) => {
 // 이메일 중복 체크
 export const emailCheckDB = (email, setUserEmailAlert, setEmailColor) => {
   return async function (dispatch) {
-    console.log(email);
     await instance.post("/api/user/register/checkEmail", { email: email })
       .then((res) => {
         if (res.data.result === true) {
-          setUserEmailAlert("사용 가능한 이메일입니다")
+          setUserEmailAlert("👍사용 가능한 이메일입니다")
           setEmailColor('#26DFA6')
         } else {
           setUserEmailAlert("중복된 이메일입니다")
-          setEmailColor('red')
+          setEmailColor('#FF7272')
         }
       })
       .catch((error) => {
@@ -122,16 +121,15 @@ export const emailCheckDB = (email, setUserEmailAlert, setEmailColor) => {
 // 닉네임 중복 체크
 export const nickCheckDB = (nick, setUserNickAlert, setNickColor) => {
   return async function (dispatch) {
-    console.log(nick);
     await instance.post("/api/user/register/checkNickname", { nickname: nick })
       .then((res) => {
         console.log(res)
         if (res.data.result === true) {
-          setUserNickAlert("사용 가능한 닉네임입니다")
+          setUserNickAlert("👍사용 가능한 닉네임입니다")
           setNickColor('#26DFA6')
         } else {
           setUserNickAlert("중복된 닉네임입니다")
-          setNickColor('red')
+          setNickColor('#FF7272')
         }
       })
       .catch((error) => {

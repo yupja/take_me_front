@@ -21,7 +21,6 @@ const slider = keyframes`
 function Header({ title, tColor, backGround }) {
   const navigate = useNavigate();
   const [navToggles, setNavToggles] = useState(false);
-  console.log(tColor)
 
   const [, , removeCookie] = useCookies(['refreshToken']);
 
@@ -267,7 +266,7 @@ position: absolute;
 background-color: rgba(0,0,0,0.7);
 width: 100%;
 height: 100vh;
-max-height: 844px;
+/* max-height: 896px; */
 `;
 
 const Copyright = styled.div`

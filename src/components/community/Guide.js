@@ -5,10 +5,10 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-import M_guide_1 from "../../assets/guide/M_guide_1.png" 
-import M_guide_2 from "../../assets/guide/M_guide_2.png" 
-import M_guide_3 from "../../assets/guide/M_guide_3.png" 
-import M_guide_4 from "../../assets/guide/M_guide_4.png" 
+import M_guide_1 from "../../assets/guide/M_guide_1.png"
+import M_guide_2 from "../../assets/guide/M_guide_2.png"
+import M_guide_3 from "../../assets/guide/M_guide_3.png"
+import M_guide_4 from "../../assets/guide/M_guide_4.png"
 import { useNavigate } from "react-router-dom";
 
 const Guide = (props) => {
@@ -23,27 +23,28 @@ const Guide = (props) => {
     arrows: true
   };
 
-  return(
+  return (
     <>
-    {/* {props.showModal ? */}
-    <Divvv>
-    <StyledSlider {...settings}>
-      <Div>
-      <GoalImage src={M_guide_1}></GoalImage>
-      </Div>
-      <Div>
-      <GoalImage src={M_guide_2}></GoalImage>
-      </Div>
-      <Div>
-      <GoalImage src={M_guide_3}></GoalImage>
-      </Div>
-      <Div>
-      <GoalImage src={M_guide_4} className="lastPage"></GoalImage>
-      <CloseBtn onClick={props.close}>마침</CloseBtn>
-      </Div>
-    </ StyledSlider>
-   </Divvv> {/* }: null } */}
-   </>
+      {/* {props.showModal ? */}
+      <Divvv>
+        <StyledSlider {...settings} className="ddddddd">
+          <Div>
+            <GoalImage src={M_guide_1} className="img"
+            ></GoalImage>
+          </Div>
+          <Div>
+            <GoalImage src={M_guide_2}></GoalImage>
+          </Div>
+          <Div>
+            <GoalImage src={M_guide_3}></GoalImage>
+          </Div>
+          <Div>
+            <GoalImage src={M_guide_4} className="lastPage"></GoalImage>
+            <CloseBtn onClick={props.close}>마침</CloseBtn>
+          </Div>
+        </ StyledSlider>
+      </Divvv> {/* }: null } */}
+    </>
   )
 }
 
@@ -57,18 +58,25 @@ width:"390";
    align-items: center;
    background-color: #111;
    position: absolute;
+   width: 100%;
+   height: 100%;
    z-index: 99;
    top: 0;
+   left: 0;
 `;
 
 const Div = styled.div`
 background-color: black;
-
+.img {
+  height: 100%;
+}
 `;
 
 const StyledSlider = styled(Slider)`
+    top: 50%;
+    transform: translateY(-50%);
     .slick-list {
-        width: 390px;
+        width: 100%;
         height: 844px;
         /* margin-left: 14vw; */
         margin-top: 0;
@@ -97,6 +105,8 @@ const StyledSlider = styled(Slider)`
  
 .slick-prev:before {
     content: '< 이전';
+    position: relative;
+    z-index: 99;
 }
 
 .slick-prev:before, .slick-next:before {
@@ -136,6 +146,7 @@ const StyledSlider = styled(Slider)`
 
 const GoalImage = styled.img`
 width: 100%;
+height: 87%;
 `;
 
 const CloseBtn = styled.div`
