@@ -34,7 +34,6 @@ function ChattingList() {
   const roomList = useSelector(((state => state.community.chattingList)));
   const closedRoomList = useSelector(((state => state.community.closedChttingList)));
   const userInfo = useSelector((state) => state.community.myInfo)
-  console.log(roomList)
 
 
   return (

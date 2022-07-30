@@ -16,6 +16,7 @@ const CreateRoom = (props) => {
   const [minutes, setMinutes] = useState();
   const [seconds, setSeconds] = useState();
 
+  console.log()
   const getChttingData = (index) => {
     if (comment.current.value === '') {
       comment.current.focus();
