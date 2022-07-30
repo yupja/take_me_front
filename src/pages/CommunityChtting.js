@@ -136,7 +136,13 @@ overflow-x:scroll;
 
 const CommunityContents = styled.div`
 width: 100%;
+overflow-y: scroll ;
 display: flex;
+
+&::-webkit-scrollbar {
+    display: none;
+  }
+
 `;
 
 export default Community;
