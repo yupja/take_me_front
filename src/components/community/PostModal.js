@@ -51,7 +51,10 @@ const PostModal = (props) => {
     <>
         <ModalBody>
           <GoalInfo>
-            <DountChart color="#26DFA6" percent={goalPercent} size="150"/>
+            <DountBox>
+            <DountChart color="#26DFA6" percent={goalPercent} size="150" />
+            <ViewImg><img src={image}/></ViewImg>
+            </DountBox>
               <TextArea>
                 <p>{title}</p>
                 <BasicImg>기본 이미지</BasicImg>
@@ -82,6 +85,26 @@ const PostModal = (props) => {
      );
   }
 
+  const DountBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  `;
+
+  const ViewImg = styled.div`
+  width: 130px;
+  height: 130px;
+  /* border: 1px solid red; */
+  position: absolute;
+  img{
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border-radius:50%;
+  position: absolute;
+}
+  `;
 
   const GoalInfo = styled.div`
   display: flex;
@@ -123,8 +146,8 @@ const PostModal = (props) => {
 
   const ContentsBox = styled.input`
   width: 95%;
-  height: 5rem;
-  margin-bottom: 0.5;
+  height: 92px;
+  margin: 10px auto;
   ;
   `;
   

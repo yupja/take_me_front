@@ -61,7 +61,6 @@ export const closedChttingLogRS = createAsyncThunk(
 
 
 export const deleteChattingRoom = (roomId, navigate) => {
-  console.log(roomId)
   return async function (dispatch) {
     try {
       await instance.get(`/api/chat/room/${roomId}/save`)
@@ -84,17 +83,14 @@ export const deleteLobyChat = (roomId, navigate) => {
 }
 
 
-
-
-
 // 찬반투표
-export const chattingVote = (voteData) => {
-  console.log(voteData)
+export const chattingVote = (vote, roomId) => {
   return async function (dispatch) {
     try {
-      await instance.post(`/api/chat/room/${voteData.roomId}/vote`, {
-        prosCons: voteData.prosCons
+      await instance.post(`/api/chat/room/${roomId}/vote`, {
+        prosCons: vote
       })
+      dispatch(topListRS())
     } catch (error) {
       console.log(error)
     }
@@ -232,7 +228,7 @@ export const loadDetailAc = (boardId) => {
 
 export const loadMoreContentDB = () => {
   return async function (dispatch, getState) {
-    const board = getState().post.postList.data;
+    const board = getState().community.postList.data;
     // console.log(board,"resS")
     const lastIndex = board[board.length - 1].boardId
     // console.log(lastIndex,"last")
@@ -289,6 +285,7 @@ export const deletePostAc = (boardId) => {
     await instance
       .delete(`/api/board/${boardId}`)
       .then((response) => {
+        window.location.reload();
         // dispatch(deletePostAc(boardId));
       })
       .catch((err) => {

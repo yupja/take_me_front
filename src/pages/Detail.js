@@ -122,10 +122,10 @@ function Detail() {
           <div style={{ backgroundColor: "transparent" }}></div>
           <ContentsBox>
             <DountBox>
-              <DountChart color="#26DFA6" size="235" position="absolute" percent={goal.goalPercent} />
+              <DountChart color="#26DFA6" size="235" position="absolute" percent={postlistdata.goalPercent} />
               <Text>
                 <Commu>
-                  <GoalName><p className="goalTitle">{Math.floor(goal.goalPercent * 100)}&nbsp;%</p></GoalName>
+                  <GoalName><p className="goalTitle">{Math.floor(postlistdata.goalPercent * 100)}&nbsp;%</p></GoalName>
                   <GoalName>{postlistdata.goalItemName}</GoalName>
                 </Commu>
                 <Bottom className="bottom">
@@ -164,7 +164,9 @@ function Detail() {
                   <div onClick={() => {
                      openModal();
                      setModalName("수정하기");
-                     setModalState(<EditPostModal close={closeModal} />)
+                     setModalState(<EditPostModal 
+                      close={closeModal}
+                      boardId={postlistdata.boardId} />)
                    }}>수정하기</div>
                   <div style={{ color: "#FF5E5E" }} onClick={() => {
                     dispatch(
@@ -433,7 +435,8 @@ transform: translate(-50%, -50%);
 `;
 
 const Enter = styled.div`
-width: 388px;
+max-width: 414px;
+width: 100%;
 height: 84px;
 padding: 5px 25px;
 border: none;
@@ -471,7 +474,8 @@ font-weight:700;
 
 const UserInfoNav = styled.div`
 position: absolute;
-top: 45%;
+/* top: 36%; */
+margin-top: 15px;
 right: 5%;
 > div {
     position: relative;

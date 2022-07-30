@@ -24,7 +24,6 @@ const ChattingInfo = (props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-
   useEffect(() => {
     getTime();
     setTimeout(() => {
@@ -43,29 +42,6 @@ const ChattingInfo = (props) => {
 
   const userInfo = useSelector((state) => state.community.myInfo)
 
-
-
-
-  const chageVote = () => {
-    let sendData = {}
-    if (vote) {
-      setVote(false)
-      sendData = {
-        roomId: props.roomId,
-        prosCons: false
-      }
-      dispatch(chattingVote(sendData))
-
-    } else if (!vote) {
-      setVote(true)
-      sendData = {
-        roomId: props.roomId,
-        prosCons: true
-      }
-      dispatch(chattingVote(sendData))
-    }
-  }
-
   const getChttingData = (index) => {
     const sendData = {
       roomId: props.roomId,
@@ -77,10 +53,12 @@ const ChattingInfo = (props) => {
       comment: props.comment,
       createdAt: props.createdAt,
       timeLimit: props.timeLimit,
+      prosCons: props.prosCons,
       minutes: minutes,
       seconds : seconds
 
     }
+
     navigate(`/chat/roomdetail/${sendData.roomId}`, { state: sendData });
   }
 
@@ -113,46 +91,76 @@ const ChattingInfo = (props) => {
                 <span className="innerSpan">
                   {props.authorNickname}</span> {props.comment}</span>
               <div className="timerArea">
-                <Timer />
+                <div><Timer /></div>
+                <div style={{
+                  display:"flex", 
+                  color:"#26DFB3",
+                  fontSize:"1.2rem",
+                  fontWeight:"700"}}>
                 <TimerFunction
                   min={minutes}
                   sec={seconds}
                   setTimeOutLimit={setTimeOutLimit}
                   station = "chattingInfo"
                   roomId={props.roomId}/>
+                  <span>M</span>
+                  </div>
               </div>
             </div>
           </div>
 
 
           <div className="bottomArea">
-            {vote ?
+
+            {vote ===0?
+            <>
+              <button
+              onClick={() => { 
+                setVote(1)
+                dispatch(chattingVote(1,props.roomId))
+                }}>쓸까?</button>
+              <button
+              onClick={() => { 
+                setVote(2)
+                dispatch(chattingVote(2,props.roomId ))
+                }}>말까?</button>
+            </>
+            : ""}
+
+            {vote === 1 ?
+            <>
               <button style={{
                 background: "#26DFA6",
                 color: "white"
               }}
-                disabled
+              disabled
               >쓸까?</button>
-              :
-              <button
-                onClick={() => { chageVote() }}>쓸까?</button>
+              <button onClick={() => { 
+                setVote(2)
+                dispatch(chattingVote(2,props.roomId ))
+               }}>말까?</button>
+            </>
+              :""}
 
-            }
 
+            {vote==2 ?
+            <>
+              <button onClick={() => { 
+                setVote(1)
+                dispatch(chattingVote(1,props.roomId))
+              }}>쓸까?</button>
 
-            {vote ?
-              <button
-                onClick={() => { chageVote() }}>말까?</button>
-
-              :
               <button style={{
                 background: "#26DFA6",
                 color: "white"
               }}
                 disabled
               >말까?</button>
-
+            </>
+              :
+              ""
             }
+             
 
           </div>
 
@@ -169,7 +177,7 @@ const ChattingInfo = (props) => {
 
 
 const ChattingList = styled.div`
-max-width: 355px;
+min-width: 355px;
 min-height: 108px;
 width: 100%;
 height: 100%;
@@ -221,6 +229,7 @@ margin-bottom: 1rem; */
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    padding: 1rem 0 0 0;
 
   }
 

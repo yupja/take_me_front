@@ -7,7 +7,7 @@ export default function Timer(props) {
   const [minutes, setMinutes] = useState(Number(props.min));
   const [seconds, setSeconds] = useState(Number(props.sec));
   const dispatch = useDispatch();
-
+  console.log(props.station)
 
   useEffect(() => {
     const countdown = setInterval(() => {
@@ -44,16 +44,15 @@ export default function Timer(props) {
   return (
     <div>
       <div>
-        {props.chattingInfo==="chattingInfo?" ? 
-        <h2>
-          {minutes}
-        </h2>
-        
-        :
-        <h2>
-          {minutes}:{seconds < 10 ? `0${seconds}` : seconds}
-        </h2>
-        }
+        {props.station === "chattingInfo" ? 
+          <h2>
+            {minutes}
+          </h2>
+          :
+          <h2>
+            {minutes}:{seconds < 10 ? `0${seconds}` : seconds}
+          </h2>
+          }
 
       </div>
     </div>

@@ -39,7 +39,8 @@ const EditPostModal = (props) => {
         const data = {
             title : title,
             contents:contents_ref.current.value,
-            file: imageFile
+            file: imageFile,
+            boardId : props.boardId 
         }
         console.log(data,"수정하기")
         dispatch(UpdatePost(data))
@@ -51,7 +52,10 @@ const EditPostModal = (props) => {
     <>
         <ModalBody>
           <GoalInfo>
+          <DountBox>
             <DountChart color="#26DFA6" percent={goalPercent} size="150"/>
+            <ViewImg><img src={image}/></ViewImg>
+            </DountBox>
               <TextArea>
                 <p>{title}</p>
                 <BasicImg>기본 이미지</BasicImg>
@@ -74,13 +78,33 @@ const EditPostModal = (props) => {
           </ModalBody>
           <Footer onClick={()=>{
             modiPost();
-            props.closeModal();
+            props.close();
           }}>수정하기</Footer>
 
     </>
      );
   }
 
+  const DountBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  `;
+
+  const ViewImg = styled.div`
+  width: 130px;
+  height: 130px;
+  /* border: 1px solid red; */
+  position: absolute;
+  img{
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border-radius:50%;
+  position: absolute;
+}
+  `;
 
   const GoalInfo = styled.div`
   display: flex;

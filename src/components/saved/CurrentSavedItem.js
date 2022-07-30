@@ -61,6 +61,7 @@ const CurrentSavedItem =(props)=>{
               <ModifySave     
                 itemId={savedItem.itemId}
                 savedItemId={savedItem.savedItemId}
+                price = {savedItem.price}
                 goalItemId={props.goalItemId}/>
               </li>
            </ul>

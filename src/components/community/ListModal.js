@@ -80,7 +80,6 @@ const ListModal = (props) => {
             </ListBox>
           </BigBox>
           {/* </ModalBox> */}
-          <CloseBtn onClick={props.closeModall}>닫기</CloseBtn>
         </Background></> : null}
     </>
 

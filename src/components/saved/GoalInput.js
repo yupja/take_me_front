@@ -198,7 +198,6 @@ const GoalInput = (props)=>{
 const ItemList = styled.div`
 width: 100%;
 margin: 1rem 0 1rem 0;
-
 ul{
   padding: 0 10px;
 }
@@ -239,7 +238,6 @@ input{
 
 const ImageDiv = styled.div`
 width: 100%;
-
 ul{
   padding: 0 10px;
 }
@@ -252,15 +250,12 @@ li{
   display: flex;
   justify-content: space-around;;
   align-items: center;
-
 }
 .leftBox p{
   font-size: 1rem;
   color: #333;
   text-align: left;
-
 }
-
 label{
   width: 100%;
   padding: 0.5rem;
@@ -272,7 +267,6 @@ label{
   font-weight: 500;
   border-radius:30px;
 }
-
 div{
   width: 100%;
   height: 100%;
@@ -291,11 +285,9 @@ const CategoryLi = styled.div`
 display: flex;
 justify-content: space-evenly;;
 align-items: center;
-
 .leftBox{
   display: flex;
   justify-content: space-evenly;
-
   align-items: center;
   padding-left: 5px;
 }
@@ -305,7 +297,6 @@ align-items: center;
   color: #333;
   text-align: left;
 }
-
 .categoryDiv{
   width: 62%;
   margin-right: 4%;

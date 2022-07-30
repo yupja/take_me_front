@@ -34,7 +34,7 @@ function ChattingList() {
   const roomList = useSelector(((state => state.community.chattingList)));
   const closedRoomList = useSelector(((state => state.community.closedChttingList)));
   const userInfo = useSelector((state) => state.community.myInfo)
-  console.log(roomList)
+
 
   return (
     <>
@@ -66,6 +66,8 @@ function ChattingList() {
               })}
             </div>
           }
+
+
 
 
 
@@ -127,30 +129,29 @@ height: 100%;
 padding: 1rem;
 flex-direction: column;
 align-items: center;
-overflow-y: scroll;
 
-&::-webkit-scrollbar {
-    display: none;
-  }
 
 
 .buttonBox{
-  width: 90%;
+  width: 355px;
+  height: 60px;
   border-radius: 59px;
   padding: 1rem;
   position: absolute;
   bottom: 10%;
-  background: #26DFA6;
   text-align: center;
   z-index: 1;
   background: #6485EC;
+  box-shadow: 5px 5px 5px rgb(110 110 110 / 40%);
+  opacity: 95%;
+
   button{
     color: white;
     font-weight: 500;
-    font-size: 1rem;
   }
   p{
-    font-size: 1.5rem;
+    
+    font-size: 20px;
   }
 }
 `;
