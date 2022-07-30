@@ -27,7 +27,8 @@ const ModifySave = (props) =>{
           <InputArea>
           <input 
             type="Number"
-            ref={priceInput}/>
+            ref={priceInput}
+            placeholder={props.price}/>
           <button onClick={()=>{
             modifySavedItem();
             setModifyView(false);

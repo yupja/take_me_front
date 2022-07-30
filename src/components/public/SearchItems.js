@@ -20,7 +20,6 @@ function SearchItems(props) {
 
   const dispatch = useDispatch();
   const list = useSelector((state) => state.item.allItemList);
-
   const [modalOpen, setModalOpen] = useState(false);
   const [modalState, setModalState] = useState();
   const [modalName, setModalName] = useState("");

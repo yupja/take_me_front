@@ -24,7 +24,7 @@ function MyStatistics() {
 
   //다른사람 태산랭크
   const allUserGoal = useSelector((state) => state.statistics.allUserGoalList);//태산목록
-  const myList = useSelector((state) => state.statistics.myDayPrice);
+  const myList = useSelector((state) => state.statistics.myList);
   const allUserList = useSelector((state) => state.statistics.allUserList);
   //나/일별/횟수별
   //남/일별/횟수별 
@@ -78,8 +78,6 @@ function MyStatistics() {
     }
   }
 
-
-
   return (
     <>
       <Wrap>
@@ -91,6 +89,13 @@ function MyStatistics() {
           <Mint style={{ fontSize: "1.5rem" }}>Best 5!</Mint>
           <CircleArea>
             <RankingNum>
+              {myList.length ===0 ?
+              <span>
+                <span style={{color:"#26DFA6", width:"16%"}}>
+                  티끌</span>
+                을 등록해보세요</span>
+              :
+              ""}
               {myList && myList.map((list, idx) => (
                 <li key={idx}>
                   <p>{list.rankPrice}st </p>
@@ -202,8 +207,19 @@ height: 100%;
 gap: 3%;
 width: 100%;
 
+span{
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  font-style: "SEBANG_Gothic_Bold";
+  font-size: 2rem;
+  font-weight: 700;
 
+}
 
+ul{
+  width: 100%;
+}
 li{
   width: 5rem;
   height: 5rem;
@@ -235,9 +251,7 @@ p {
   color:#6A8EFF;
   /* display: none; */
 }
-span{
-  display: none;
-}
+
 li:first-child span{
   color:#6a8eff;
   display: inline;

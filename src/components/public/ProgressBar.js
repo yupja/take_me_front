@@ -71,9 +71,9 @@ position: relative;
 
 const True = styled.div`
 border-radius: ${(props)=>(props.radius)};
-border: 1px solid #666666;
+border: 1px solid #CCCCCC;
 position: absolute;
-background: #666666;
+background: #30E0AA;
 color: white;
 font-size: 1.5rem;
 display: flex;
@@ -95,7 +95,7 @@ display: flex;
 justify-content: center;
 position: absolute;
 background:white;
-border: 1px solid #666666;
+border: 1px solid #CCCCCC;
 border-radius: ${(props)=>(props.radius)};
 font-size: 1.5rem;
 
