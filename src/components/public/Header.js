@@ -266,7 +266,7 @@ position: absolute;
 background-color: rgba(0,0,0,0.7);
 width: 100%;
 height: 100vh;
-max-height: 896px;
+/* max-height: 896px; */
 `;
 
 const Copyright = styled.div`

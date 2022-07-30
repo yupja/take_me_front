@@ -145,43 +145,43 @@ function MyStatistics() {
             ))}
           </BottomCircleArea>
 
-        
-        <ButtonArea>
-          <div style={{
-            display: "flex",
-            position: "fixed",
-            bottom: "10%",
-            justifyContent: "space-around",
-            width: "440px"
-            
-          }}>
-          {dayMonth ?
-            <button
-              onClick={() => {
-                changeDayMonth()
 
-              }}>
-              일 별보기 <ChangeRank /></button>
-            :
-            <button
-              style={{ background: "rgba(100, 133, 236, 0.9)", fontWeight: "bold" }}
-              onClick={() => { changeDayMonth() }}>
-              월별보기 <ChangeRank /></button>
-          }
+          <ButtonArea>
+            <div style={{
+              display: "flex",
+              position: "fixed",
+              bottom: "10%",
+              justifyContent: "space-around",
+              width: "377px"
 
-          {priceCount ?
-            <button onClick={() => { changePriceCount() }}>
-              금액별 보기<ChangeRank /></button>
-            :
-            <button
-              style={{ background: "rgba(100, 133, 236, 0.9)", fontWeight: "bold" }}
-              onClick={() => { changePriceCount() }}>
-              횟수 별보기 <ChangeRank /></button>
-          }
-          </div>
+            }}>
+              {dayMonth ?
+                <button
+                  onClick={() => {
+                    changeDayMonth()
+
+                  }}>
+                  일 별보기 <ChangeRank /></button>
+                :
+                <button
+                  style={{ background: "rgba(100, 133, 236, 0.9)", fontWeight: "bold" }}
+                  onClick={() => { changeDayMonth() }}>
+                  월별보기 <ChangeRank /></button>
+              }
+
+              {priceCount ?
+                <button onClick={() => { changePriceCount() }}>
+                  금액별 보기<ChangeRank /></button>
+                :
+                <button
+                  style={{ background: "rgba(100, 133, 236, 0.9)", fontWeight: "bold" }}
+                  onClick={() => { changePriceCount() }}>
+                  횟수 별보기 <ChangeRank /></button>
+              }
+            </div>
 
 
-        </ButtonArea>
+          </ButtonArea>
 
         </div>
       </Wrap>
@@ -289,18 +289,21 @@ overflow: scroll;
 
 
 const BottomCircleArea = styled.div`
-display:block;
-float: left;
+display: flex;
 overflow: auto;
 margin-top: 10%;
+gap:2%;
+flex-wrap: wrap;
 
 
 .outSideDiv{
   float: left;  
   display: flex;
+  padding-bottom: 19px;
   align-items: center;
   flex-direction: column;
-  margin: 2%;
+  width: 32%;
+  /* margin: 2%; */
 
     
   img{

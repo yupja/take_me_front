@@ -13,7 +13,7 @@ function ChattingList() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if(!localStorage.getItem("accessToken")){
+    if (!localStorage.getItem("accessToken")) {
       navigate("/main")
     }
     dispatch(loadChattingListRS());
@@ -35,52 +35,52 @@ function ChattingList() {
   const closedRoomList = useSelector(((state => state.community.closedChttingList)));
   const userInfo = useSelector((state) => state.community.myInfo)
   console.log(roomList)
-  
+
   return (
     <>
       <Wrap>
-      <AllchattingList>
+        <AllchattingList>
 
-        {roomList.lenght===0?
-        "진행중인 채팅방이 없습니다. ":
+          {roomList.lenght === 0 ?
+            "진행중인 채팅방이 없습니다. " :
 
-        <div>
-        {roomList && roomList.map((item, itemIndex) => {
-          return (
-            <>
-              <div key={item.roomId}>
-                <ChattingListDiv>
-                  <ChattingInfo
-                    roomId={item.roomId}
-                    authorProfileImg={item.authorProfileImg}
-                    authorNickname={item.authorNickname}
-                    comment={item.comment}
-                    userCount={item.userCount}
-                    leftTiime={item.leftTime}
-                    prosCons={item.prosCons}
-                    currentState={"Live"} />
-                </ChattingListDiv>
-              </div>
-            </>
-          )
-        })}
-      </div>
-      }
- 
+            <div>
+              {roomList && roomList.map((item, itemIndex) => {
+                return (
+                  <>
+                    <div key={item.roomId}>
+                      <ChattingListDiv>
+                        <ChattingInfo
+                          roomId={item.roomId}
+                          authorProfileImg={item.authorProfileImg}
+                          authorNickname={item.authorNickname}
+                          comment={item.comment}
+                          userCount={item.userCount}
+                          leftTiime={item.leftTime}
+                          prosCons={item.prosCons}
+                          currentState={"Live"} />
+                      </ChattingListDiv>
+                    </div>
+                  </>
+                )
+              })}
+            </div>
+          }
+
 
 
           <div>
-            {closedRoomList&&closedRoomList.map((list, itemIndex)=>{
+            {closedRoomList && closedRoomList.map((list, itemIndex) => {
               return (
                 <ChattingListDiv>
                   <ClosedChattingInfo
-                  profileImg = {list.authorProfileImg}
-                  userName = {list.authorNickname}
-                  comment = {list.comment}
-                  roomId = {list.roomId}
-                  true = {list.voteTruePercent}
-                  false={list.voteFalsePercent}
-                                  
+                    profileImg={list.authorProfileImg}
+                    userName={list.authorNickname}
+                    comment={list.comment}
+                    roomId={list.roomId}
+                    true={list.voteTruePercent}
+                    false={list.voteFalsePercent}
+
                   />
                 </ChattingListDiv>
               )
@@ -122,7 +122,7 @@ display: flex;
 justify-content: flex-start;;
 max-width: 440px;
 width: 100%;
-max-height:570px;
+/* max-height:570px; */
 height: 100%;
 padding: 1rem;
 flex-direction: column;

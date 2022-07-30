@@ -264,14 +264,16 @@ function SignUp(e) {
         <Title><span>티끌</span>회원가입을 위해<br />정보를 입력해 주세요.</Title>
         <Form idStr={idColor} pwStr={pwColor} pwCheckStr={pwCheckColor} emailStr={emailColor} nickStr={nickColor}>
           <label htmlFor="userId">
-            <input
-              type="text"
-              id="userId"
-              placeholder="아이디"
-              ref={idRef}
-              onChange={onIdChange} />
+            <div>
+              <input
+                type="text"
+                id="userId"
+                placeholder="아이디"
+                ref={idRef}
+                onChange={onIdChange} />
+              <CheckBtn onClick={idCheck} disabled={idStrCheck}>중복체크</CheckBtn>
+            </div>
             <p className="idResult">{userIdAlert}</p>
-            <CheckBtn onClick={idCheck} disabled={idStrCheck}>중복체크</CheckBtn>
           </label>
 
           <label htmlFor="userPw">
@@ -295,20 +297,29 @@ function SignUp(e) {
           </label>
 
           <label htmlFor="userEmail">
-            <input
-              type="text"
-              id="userEmail"
-              placeholder="이메일"
-              ref={emailRef}
-              onChange={onEmailChange} />
+            <div>
+              <input
+                type="text"
+                id="userEmail"
+                placeholder="이메일"
+                ref={emailRef}
+                onChange={onEmailChange} />
+              <CheckBtn onClick={emailCheck} disabled={emailStrCheck}>중복체크</CheckBtn>
+            </div>
             <p className="emailResult">{userEmailAlert}</p>
-            <CheckBtn onClick={emailCheck} disabled={emailStrCheck}>중복체크</CheckBtn>
           </label>
 
           <label htmlFor="userNick">
-            <input type="text" id="userNick" placeholder="닉네임" ref={nickRef} onChange={onNickChange} />
+            <div>
+              <input
+                type="text"
+                id="userNick"
+                placeholder="닉네임"
+                ref={nickRef}
+                onChange={onNickChange} />
+              <CheckBtn onClick={nickCheck} disabled={nickStrCheck}>중복체크</CheckBtn>
+            </div>
             <p className="nickResult">{userNickAlert}</p>
-            <CheckBtn onClick={nickCheck} disabled={nickStrCheck}>중복체크</CheckBtn>
           </label>
           <InfoCheck>
             <label>
@@ -391,44 +402,14 @@ label{
   display: block;
   text-align: left;
 }
+label>div {
+  position: relative;
+}
 p{
   font-size: 0.87rem;
-  
+  line-height: 17px;
+  letter-spacing: -0.02em;
 }
-// 유효성 검사 결과 텍스트 색상
-p.idResult {
-  color: ${props => props.idStr || 'red'};
-  padding: ${props => props.idStr && "5px 0 0 10px"};
-}
-p.idResult ~ button {
-  color: ${props => props.idStr === '#26DFA6' ? "#ccc" : "#999"};
-}
-
-p.pwResult {
-  color: ${props => props.pwStr || 'red'};
-  padding: ${props => props.pwStr && "5px 0 0 10px"};
-}
-p.pwCheckResult {
-  color: ${props => props.pwCheckStr || 'red'};
-  padding: ${props => props.pwCheckStr && "5px 0 0 10px"};
-}
-
-p.emailResult {
-  color: ${props => props.emailStr || 'red'};
-  padding: ${props => props.emailStr && "5px 0 0 10px"};
-}
-p.emailResult ~ button {
-  color: ${props => props.emailStr === '#26DFA6' ? "#ccc" : "#999"};
-}
-
-p.nickResult {
-  color: ${props => props.nickStr || 'red'};
-  padding: ${props => props.nickStr && "5px 0 0 10px"};
-}
-p.nickResult ~ button {
-  color: ${props => props.nickStr === '#26DFA6' ? "#ccc" : "#999"};
-}
-
 input {
   outline: none;
   width:100%;
@@ -446,6 +427,42 @@ input#user_id {
 input::placeholder {
   color: #ccc;
 }
+
+// 유효성 검사 결과 텍스트 색상
+p.idResult {
+  color: ${props => props.idStr || '#FF7272'};
+  padding: ${props => props.idStr && "5px 0 0 10px"};
+}
+#userId ~ button {
+  color: ${props => props.idStr === '#26DFA6' ? "#ccc" : "#999"};
+}
+
+p.pwResult {
+  color: ${props => props.pwStr || '#FF7272'};
+  padding: ${props => props.pwStr && "5px 0 0 10px"};
+}
+p.pwCheckResult {
+  color: ${props => props.pwCheckStr || '#FF7272'};
+  padding: ${props => props.pwCheckStr && "5px 0 0 10px"};
+}
+
+p.emailResult {
+  color: ${props => props.emailStr || '#FF7272'};
+  padding: ${props => props.emailStr && "5px 0 0 10px"};
+}
+#userEmail ~ button {
+  color: ${props => props.emailStr === '#26DFA6' ? "#ccc" : "#999"};
+}
+
+p.nickResult {
+  color: ${props => props.nickStr || '#FF7272'};
+  padding: ${props => props.nickStr && "5px 0 0 10px"};
+}
+#userNick ~ button {
+  color: ${props => props.nickStr === '#26DFA6' ? "#ccc" : "#999"};
+}
+
+
 `;
 
 const InfoCheck = styled.div`

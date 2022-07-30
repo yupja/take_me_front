@@ -30,7 +30,7 @@ function Main() {
 
   return (
     <>
-      <Header title={title} tColor={"#000000"}/>
+      <Header title={title} tColor={"#000000"} />
       <MainWrap>
         <section>
           <h1>
@@ -168,6 +168,7 @@ strong{
   text-align: center;
   box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.25);
   margin-bottom: 60px;
+  cursor: pointer;
 }
 
 footer {
