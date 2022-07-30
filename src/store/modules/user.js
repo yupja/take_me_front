@@ -104,6 +104,7 @@ export const emailCheckDB = (email, setUserEmailAlert, setEmailColor) => {
   return async function (dispatch) {
     await instance.post("/api/user/register/checkEmail", { email: email })
       .then((res) => {
+        console.log(res)
         if (res.data.result === true) {
           setUserEmailAlert("👍사용 가능한 이메일입니다")
           setEmailColor('#26DFA6')
@@ -113,7 +114,7 @@ export const emailCheckDB = (email, setUserEmailAlert, setEmailColor) => {
         }
       })
       .catch((error) => {
-        window.alert(error);
+        console.log(error)
       });
   };
 };
