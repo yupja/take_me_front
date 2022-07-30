@@ -16,6 +16,7 @@ function Proflie() {
   const navigate = useNavigate();
   const title = '프로필 편집'
   const infoState = useSelector((state) => state.info.infoList);
+  console.log(infoState);
 
 
   useEffect(() => {
@@ -60,7 +61,7 @@ function Proflie() {
   }
 
 
-  const infoChange = (e) => {
+  const infoChange = () => {
     const introDesc = introDescRef.current.value;
     const nick = nickRef.current.value;
 
@@ -78,9 +79,10 @@ function Proflie() {
     formData.append('changeInfo', blob);
 
     console.log(changeInfo);
-
     dispatch(infoUpdate(formData));
-
+    console.log("싱행")
+    window.alert("프로필이 변경되었습니다.")
+    window.location.reload();
   }
 
   const [, , removeCookie] = useCookies(['refreshToken']);
@@ -105,15 +107,24 @@ function Proflie() {
   const [onToggle, setOnToggle] = useState(false);
   const [focus, setFocus] = useState(true);
   const [checkEmail, setCheckEmail] = useState("disabled");
-  const [resultAlert, setResultAlert] = useState("");
   const [userIdAlert, setUserIdAlert] = useState("disabled");
 
-  const active = (e) => {
 
+
+  const [idColor, setIdColor] = useState(null);
+  const [navToggles, setNavToggles] = useState(false);
+  const [resultAlert, setResultAlert] = useState("");
+
+  const closeNav = (e) => {
+    setNavToggles(false);
+    setResultAlert("");
+  }
+
+
+  const active = (e) => {
     setOnToggle(true);
     setFocus(false);
     console.log("실행!")
-
   }
 
   const emailCheck = (e) => {
@@ -133,40 +144,39 @@ function Proflie() {
     removeCookie('refreshToken', { path: '/' });
     navigate('/login')
   }
-  // 닉네임 중복검사
-  // const onNickChange = () => {
-  //   const nick = nickRef.current.value;
-  //   if (nickCheckStr.test(nick)) {
-  //     setUserNickAlert("")
-  //   } else {
-  //     setUserNickAlert("🚨 2~12글자, 특수문자를 제외하고 작성해주세요.")
-  //     // 한글, 영문, 특수문자 (- _ .) 포함한 2 ~ 12글자 닉네임
-  //   }
-  // }
+
+  // 닉네임 중복 검사
   const nickCheckStr = /^[a-zA-Zㄱ-힣0-9-_.]{2,12}$/;
 
-  const nickCheck = (e) => {
-    e.preventDefault();
+  // const nickCheck = (e) => {
+
+  const [nickToggles, setNickToggles] = useState(false);
+  const [nickResult, setNickResult] = useState("");
+
+  const nickClose = (e) => {
+    setNickToggles(false);
+    setNickResult("결과");
+  }
+
+
+  const nickActive = (e) => {
+    setNickToggles(true);
+    // setFocus(false);
+    console.log("실행!")
     const nick = nickRef.current.value;
+    if (infoState.nickname === nick) {
+      return setNickResult("기존 닉네임입니다.")
+    }
     if (nickCheckStr.test(nick)) {
-      dispatch(nickCheckDB(nick, setUserNickAlert))
+      dispatch(nickCheckDB(nick, setNickResult))
     } else {
-      alert("2~12글자, 특수문자를 제외하고 작성해주세요.")
-      // 한글, 영문, 특수문자 (- _ .) 포함한 2 ~ 12글자 닉네임
+      setNickResult("2~11글자, 특수문자를 제외하고 작성해주세요.")
     }
   }
 
+
+
   // 이메일 중복검사 팝업
-
-  const [navToggles, setNavToggles] = useState(false);
-  const [ModalStr, setModalStr] = useState('');
-
-
-  const closeNav = (e) => {
-    setNavToggles(false);
-    setResultAlert("");
-  }
-
   const changeEmail = (e) => {
     e.preventDefault();
     const emailText = emailRef.current.value;
@@ -202,8 +212,25 @@ function Proflie() {
               <input type="text" defaultValue={email} ref={emailRef} onChange={() => { setResultAlert('') }} />
               <button onClick={emailCheck}>중복체크</button>
             </div>
-            {resultAlert}
+            <p>{resultAlert}</p>
             <button className="change" onClick={changeEmail}>변경하기</button>
+          </ModalBox>
+        </ModalWrap>
+        : null
+      }
+      {/* 닉네임 팝업 */}
+      {nickToggles ?
+        <ModalWrap>
+          <ModalBox>
+            <h1>닉네임 변경</h1>
+            <CloseBtn onClick={nickClose}>
+              <span></span>
+              <span></span>
+            </CloseBtn>
+            <div className="cont">
+              {nickResult}
+            </div>
+            <button className="change" onClick={nickClose}>확인</button>
           </ModalBox>
         </ModalWrap>
         : null
@@ -221,13 +248,13 @@ function Proflie() {
               multiple="multiple"
               accept=".jpg, .png, image/jpeg, .svg" />
           </ProflieImg>
-          <Nick>
+          <Nick idStr={idColor}>
             <div>
-              <input type="textarea" defaultValue={infoState.nickname} ref={nickRef} />
-              <button onClick={nickCheck}>중복체크</button>
-              {userNickAlert}
+              <input type="textarea" defaultValue={infoState.nickname} ref={nickRef} maxLength="11" />
+              <button onClick={nickActive}>중복체크</button>
             </div>
             <span className="box"> 님</span>
+            <p className="idResult">{userNickAlert}</p>
           </Nick>
           <input type="text" className="word" maxLength="32" ref={introDescRef} defaultValue={
             infoState.introDesc === null ?
@@ -267,6 +294,9 @@ height: 95.6%;;
 /* padding: 0 25px; */
 text-align: left;
 background : #F8F8F8;
+button {
+  cursor: pointer;
+}
 `
 
 const MyInfo = styled.div`
@@ -330,6 +360,7 @@ button{
   font-size: 0.875rem;
   border: 1px solid #dbdbdb;
   border-radius: 3.12rem;
+
 }
 `
 
@@ -358,6 +389,7 @@ const ProflieImg = styled.div`
     background: #666;
     width: 2.5rem;
     height: 2.5rem;
+    cursor: pointer;
   }
   img {
     position: absolute;
@@ -400,6 +432,7 @@ p{
 div.editBtn{
   position: absolute;
   right: 0; top: 5%;
+  cursor: pointer;
 
   path {
     fill: #333;
@@ -458,7 +491,7 @@ const ModalWrap = styled.div`
 width: 100%;
 height: 100vh;
 padding: 0 25px;
-position: fixed;
+position: absolute;
 top: 0; left: 0;
 background: rgba(0,0,0,0.7);
 z-index: 999;
@@ -484,11 +517,16 @@ h1 {
   padding: 20px 0;
   white-space: pre-wrap;
  }
+ p{
+  text-align: center;
+  padding-top: 5px;
+ }
  div.cont{
   position: relative;
   margin: 0 10px;
   padding: 15px 0;
   border-bottom : 1px solid #ddd;
+  text-align: center;
   button{
     position: absolute;
     right: 0.5rem;

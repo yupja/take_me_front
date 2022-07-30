@@ -27,7 +27,7 @@ export const infoUpdate = (data) => {
     })
       .then((res) => {
         console.log(res)
-        // dispatch(infoList(res.data.data));
+        // dispatch(infoList(res.data.respMsg));
       })
       .catch((error) => {
         console.log(error);
