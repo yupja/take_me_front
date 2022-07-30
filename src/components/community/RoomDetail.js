@@ -184,13 +184,13 @@ useEffect(() => {
             <>
             <NonChoice
             onClick={()=>{
-              chattingVote(Number(1))
+              dispatch(chattingVote(Number(1)))
               setVote(Number(1))
             }}
             >쓰자!</NonChoice>
           <NonChoice
             onClick={()=>{
-              chattingVote(Number(2))
+              dispatch(chattingVote(Number(2)))
               setVote(Number(2))
             }}>그만...</NonChoice>
             </>
@@ -202,13 +202,13 @@ useEffect(() => {
            <>
            <Choice
            onClick={()=>{
-             chattingVote(Number(1))
+             dispatch(chattingVote(Number(1)))
              setVote(Number(1))
            }}
            >쓰자!</Choice>
          <NonChoice
            onClick={()=>{
-             chattingVote(Number(2))
+             dispatch(chattingVote(Number(2)))
              setVote(Number(2))
            }}>그만...</NonChoice>
            </>
@@ -221,13 +221,13 @@ useEffect(() => {
          <>
           <NonChoice
             onClick={()=>{
-              chattingVote(Number(1))
+              dispatch(chattingVote(Number(1)))
               setVote(Number(1))
             }}
             >쓰자!</NonChoice>
           <Choice
             onClick={()=>{
-              chattingVote(Number(2))
+              dispatch(chattingVote(Number(2)))
               setVote(Number(2))
             }}>그만...</Choice>
             </>
