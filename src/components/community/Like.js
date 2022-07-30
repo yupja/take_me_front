@@ -6,34 +6,38 @@ import {ReactComponent as Binheart} from "../../assets/icons/Binheart.svg";
 
 const Like = (props,{ likeCount,boardId }) => {
   const [isloaded, setIsloaded] = useState(false);
-  const [like_count, setLike_count] = useState(likeCount);
+  const [like_count, setLike_count] = useState(props.likeCount);
   const [ like, setLike] = useState(props.isLike);
   const [ likeImage, setLikeImage] = useState();
 
 
   const Postdata = useSelector((state) => state.community.postList.data);
-  // console.log(Postdata[0].boardId,"likecount")
+
   boardId = (props.forLikeId)
   const dispatch = useDispatch();
 
+  // React.useEffect(() => {
+  //   setLike_count(props.likeCount)
+  // },[])
+
   const changeHeart = () =>{
     if(like){
-      setLike_count(likeCount-1)
+      console.log(like_count)
+      setLike_count(like_count-1)
       setLikeImage("🤍")
       setLike(false)
     }else if(!like){
-      setLike_count(likeCount+1)
+      setLike_count(like_count+1)
       setLikeImage("💚")
       setLike(true)
     }
   }
 
+
   return (
     <>
         <LikeCount>
-             <div>
-                <span>{likeCount}</span>
-              </div>
+             
           <div onClick={()=>{
               changeHeart();
               dispatch(likeChange(boardId));
@@ -44,6 +48,9 @@ const Like = (props,{ likeCount,boardId }) => {
               <span><Binheart /></span>
             }
           </div>
+          <div>
+          &nbsp;&nbsp;<Count>{like_count}</Count>
+              </div>
         </LikeCount>
     </>
   );
@@ -54,11 +61,16 @@ const LikeCount = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  
+  text-align: center;
 .heart{
   path { fill: #ff0044}
 }
 
+`;
+
+const Count = styled.span`
+font-size: 10px;
+color: #999999;
 `;
 
 export default Like;
