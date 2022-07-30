@@ -32,7 +32,6 @@ const CommunityTab = () => {
   const Postdata = useSelector((state) => state.community.postList.data);
   const Savedata = useSelector((state) => state.saved.savedItem);
 
-  // console.log(Postdata[0].boardId,"post")
 
 
 
