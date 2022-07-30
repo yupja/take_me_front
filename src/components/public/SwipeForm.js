@@ -90,15 +90,21 @@ const SwipeForm = (props) =>{
                <span className="innerSpan">
                  {item.authorNickname}</span> {item.comment}</span>
              <div className="timerArea">
-               <Timer />
-
-               <TimerFunction
+             <div><Timer /></div>
+                <div style={{
+                  display:"flex", 
+                  color:"#26DFB3",
+                  fontSize:"1.2rem",
+                  fontWeight:"700"}}>
+                <TimerFunction
                 setTimeOutLimit={setTimeOutLimit}
                 station = "chattingInfo"
                 roomId={item?.roomId}
                  min={Math.floor(item?.leftTime/60)}
                  sec={Math.floor(item?.leftTime%60)}
                   />
+                <span>M</span>
+                </div>
              </div>
            </div>
          </div>
@@ -215,7 +221,7 @@ flex-direction: row;
   width: 100%;
   max-height: 60px;
   display: flex;
-  justify-content: space-between;;
+  justify-content: space-around;
 
   span{
 
