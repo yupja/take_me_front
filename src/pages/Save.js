@@ -320,8 +320,8 @@ function Save() {
                 <div className="inputBox">
                   <input
                     type="Number"
-                    ref={priceInput}
-                    price={selectInputValue.price} />
+                    ref={priceInput} 
+                    />
                   <button onClick={addSaveData}><AddMintPoint /></button>
                 </div>
 
@@ -552,5 +552,8 @@ input{
   display: flex;
   align-content: center;
   gap: calc();
+  input{
+    text-align: center;
+  }
 }
 `;
