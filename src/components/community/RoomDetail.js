@@ -22,7 +22,7 @@ function RoomDetail() {
   const navigate = useNavigate();
 
 
-
+console.log(state)
 
   const [timeOutLimit , setTimeOutLimit] = useState(true);
   const [vote, setVote] = useState(state.prosCons)
@@ -52,8 +52,7 @@ function RoomDetail() {
   const chatRef = useRef();
   const scrollRef = useRef();
 
-
-
+  console.log(vote)
 
   const sock = new SockJS('https://api.webprogramming-mj6119.shop/chatting', null, { transports: ["websocket", "xhr-streaming", "xhr-polling"] });
   let client = Stomp.over(sock);
@@ -71,6 +70,26 @@ useEffect(() => {
   }, [])
 
 
+
+  const chageVote = () => {
+    let sendData = {}
+    if (vote) {
+      setVote(false)
+      sendData = {
+        roomId: roomId,
+        prosCons: false
+      }
+      dispatch(chattingVote(sendData))
+
+    } else if (!vote) {
+      setVote(true)
+      sendData = {
+        roomId: roomId,
+        prosCons: true
+      }
+      dispatch(chattingVote(sendData))
+    }
+  }
 
 
   useEffect(() => {
@@ -161,32 +180,36 @@ useEffect(() => {
         </ListInfo>
 
         <Vote>
-          {vote===0?
+          {vote==0?
             <>
             <NonChoice
             onClick={()=>{
               chattingVote(Number(1))
+              setVote(Number(1))
             }}
             >쓰자!</NonChoice>
           <NonChoice
             onClick={()=>{
               chattingVote(Number(2))
+              setVote(Number(2))
             }}>그만...</NonChoice>
             </>
         :
         ""
          }
 
-         {vote===1? 
+         {vote==1? 
            <>
            <Choice
            onClick={()=>{
              chattingVote(Number(1))
+             setVote(Number(1))
            }}
            >쓰자!</Choice>
          <NonChoice
            onClick={()=>{
              chattingVote(Number(2))
+             setVote(Number(2))
            }}>그만...</NonChoice>
            </>
           :
@@ -194,15 +217,18 @@ useEffect(() => {
           }
 
 
-         {vote===2? <>
+         {vote==2? 
+         <>
           <NonChoice
             onClick={()=>{
               chattingVote(Number(1))
+              setVote(Number(1))
             }}
             >쓰자!</NonChoice>
           <Choice
             onClick={()=>{
               chattingVote(Number(2))
+              setVote(Number(2))
             }}>그만...</Choice>
             </>
             :
@@ -458,12 +484,12 @@ margin: 0.62rem 0;
 `;
 
 const Choice = styled.button`
-  width: 49%;
-  height: 1.87rem;
-  text-align: center;
-  border-radius: 1.93rem;
-  color: #26DFA6;
-  border: 1px solid #26DFA6;
+display: flex;
+background: #26DFA6;
+padding: 0.5rem 4rem 0.6rem 4rem;
+border-radius: 50px;
+color: #ffffff;
+border: 1px solid #26DFA6;
 `;
 
 const NonChoice = styled.button`
