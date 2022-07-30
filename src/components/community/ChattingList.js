@@ -36,6 +36,7 @@ function ChattingList() {
   const userInfo = useSelector((state) => state.community.myInfo)
   console.log(roomList)
 
+
   return (
     <>
       <Wrap>
@@ -66,6 +67,8 @@ function ChattingList() {
               })}
             </div>
           }
+
+
 
 
 

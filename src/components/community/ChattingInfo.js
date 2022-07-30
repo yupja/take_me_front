@@ -24,7 +24,6 @@ const ChattingInfo = (props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-
   useEffect(() => {
     getTime();
     setTimeout(() => {
@@ -42,9 +41,6 @@ const ChattingInfo = (props) => {
   
 
   const userInfo = useSelector((state) => state.community.myInfo)
-
-
-
 
   const chageVote = () => {
     let sendData = {}
@@ -77,6 +73,7 @@ const ChattingInfo = (props) => {
       comment: props.comment,
       createdAt: props.createdAt,
       timeLimit: props.timeLimit,
+      prosCons: props.prosCons,
       minutes: minutes,
       seconds : seconds
 
