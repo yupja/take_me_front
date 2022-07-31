@@ -108,7 +108,15 @@ export const createChatRoom = (sendData, navigate) => {
     })
       .then((res) => {
         const roodId = res.data.data.roomId
-        navigate(`/chat/roomdetail/${roodId}`, { state: sendData });
+        const sendingData ={
+          roodId : roodId,
+          sender : sendData.sender,
+          profileImg : sendData.profileImg,
+          minutes : sendData.minutes,
+          prosCons : sendData.prosCons,
+          seconds : sendData.seconds
+        }
+        navigate(`/chat/roomdetail/${roodId}`, { state: sendingData });
       })
       .catch((error) => {
         console.log(error);

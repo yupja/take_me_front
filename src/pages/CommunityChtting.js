@@ -18,15 +18,12 @@ const Community = () => {
   const navigate = useNavigate();
   const [page, setPage] = useState(<ChattingList />);
   const [chooseMenu,  setChooseMenu] = useState(true);
-  const [ready, setReady] = useState(true);
+ 
   useEffect(()=>{
     if(!localStorage.getItem("accessToken")){
       navigate("/main")
     } 
     dispatch(topListRS());
-    setTimeout(() => {
-      setReady(false)
-    }, 2000)
 
     },[])
   const topRoomList = useSelector(((state => state.community.topChttingList)));
@@ -34,7 +31,7 @@ const Community = () => {
 
 
 
-  return ready ? <Loading /> : (
+  return  (
   <> 
   <Wap >
     <Header title={title} color={state}/>
@@ -63,21 +60,36 @@ const Community = () => {
 
 
         <TimeList>
-          <Top5Wrap>
-            <InnerWrap>
-          {topRoomList&&topRoomList?.map((item, idx)=>(
-            <>
-              <ChattingInfo
-                roomId={item.roomId}
-                prosCons={item.prosCons}
-                leftTime={item.leftTime}
-                />
-            </>
-          ))}
-          </InnerWrap>
-          </Top5Wrap>
+  
 
-          
+              {topRoomList.length===0? 
+              <div style={{
+                color:"white",
+                width: "100%",
+                display: "flex",
+                justifyContent:"center",
+                textAlign:"center"
+                
+            }}> 진행중인 채팅이 없어요 </div>
+              :       
+              <>
+              <Top5Wrap>                   
+                <InnerWrap>
+                {topRoomList&&topRoomList?.map((item, idx)=>(
+                  <>
+                    <ChattingInfo
+                      roomId={item.roomId}
+                      prosCons={item.prosCons}
+                      leftTime={item.leftTime}
+                      />
+                  </>
+                ))}
+                </InnerWrap>
+              </Top5Wrap>
+              </>
+              
+              }
+
         </TimeList>
 
         <div style={{ width: "100%", height:"100%" }}>
@@ -98,7 +110,6 @@ max-width: 440px;
 width: 100%;
 max-height: 140px;
 height: 100%;
-background: #333333;
 display: flex;
 align-items: center;
 padding: 0 0 0 1rem;
@@ -158,6 +169,7 @@ max-height: 140px;
 height: 100%;
 display: flex;
 align-items: center;
+background: #333333;
 
 /* background: #000000; */
 box-shadow:initial;
