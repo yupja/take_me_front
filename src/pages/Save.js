@@ -321,6 +321,7 @@ function Save() {
                   <input
                     type="Number"
                     ref={priceInput} 
+                    placeholder={selectInputValue.itemDefaultPrice}
                     />
                   <button onClick={addSaveData}><AddMintPoint /></button>
                 </div>
