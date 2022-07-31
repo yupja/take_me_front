@@ -12,6 +12,7 @@ import Loading from "../public/Loading";
 
 
 const ChattingInfo = (props) => {
+  
 
 
   const [minutes, setMinutes] = useState();
@@ -48,18 +49,18 @@ const ChattingInfo = (props) => {
       roomId: props.roomId,
       sender: userInfo.nickname,
       profileImg: userInfo.profileImg,
+      prosCons: roomList[index].prosCons,
       minutes: minutes,
       seconds: seconds
 
     }
-
     navigate(`/chat/roomdetail/${sendData.roomId}`, { state: sendData });
   }
 
 
   const getTime = () => {
-    const min = (Math.floor(props.leftTiime / 60))
-    const sec = (Math.floor(props.leftTiime % 60))
+    const min = (Math.floor(props.leftTime/60))
+    const sec = (Math.floor(props.leftTime%60))
     setMinutes(min);
     setSeconds(sec);
 
@@ -77,7 +78,7 @@ const ChattingInfo = (props) => {
 
                 <div className="chatInfoArea"
                   onClick={() => {
-                    getChttingData();
+                    getChttingData(idx);
                   }}>
                   <div className="imgBox">
                     Live
