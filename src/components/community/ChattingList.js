@@ -25,6 +25,7 @@ function ChattingList() {
   const name = React.useRef();
   const dispatch = useDispatch();
 
+
   const [modalOpen, setModalOpen] = React.useState(false);
   const [modalState, setModalState] = React.useState();
   const [modalName, setModalName] = React.useState("");
@@ -32,6 +33,8 @@ function ChattingList() {
   const closeModal = () => { setModalOpen(false); };
 
   const roomList = useSelector(((state => state.community.chattingList)));
+
+  console.log(roomList);
   const closedRoomList = useSelector(((state => state.community.closedChttingList)));
   const userInfo = useSelector((state) => state.community.myInfo)
 
@@ -51,14 +54,7 @@ function ChattingList() {
                     <div key={item.roomId}>
                       <ChattingListDiv>
                         <ChattingInfo
-                          roomId={item.roomId}
-                          authorProfileImg={item.authorProfileImg}
-                          authorNickname={item.authorNickname}
-                          comment={item.comment}
-                          userCount={item.userCount}
-                          leftTiime={item.leftTime}
-                          prosCons={item.prosCons}
-                          currentState={"Live"} />
+                          roomId={item.roomId} />
                       </ChattingListDiv>
                     </div>
                   </>

@@ -5,7 +5,8 @@ import { Link, useParams, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import SockJS from "sockjs-client";
 import Stomp from "stompjs";
-import { subMessage, delMessage, deleteChattingRoom, chattingVote } from "../../store/modules/community";
+import { subMessage, delMessage, deleteChattingRoom, chattingVote,
+         loadChattingListRS } from "../../store/modules/community";
 import Header from "../public/Header";
 import { BsSortNumericDown } from "react-icons/bs";
 // import ChattingInfo from "./ChattingInfo";
@@ -19,17 +20,11 @@ function RoomDetail() {
   const { state } = useLocation();
   const { roomId } = useParams();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-
-  const [timeOutLimit , setTimeOutLimit] = useState(true);
-  const [vote, setVote] = useState(state.prosCons)
-  const getMessages = useSelector((state) => state.community.messages);
 
   useEffect(() => {
-    scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' })
+    dispatch(loadChattingListRS());
 
-    if (state.minutes > 10 || state.minutes < 0) {
+    if (state.minutes > 10 || state.minutes <= 0) {
       setTimeout(() => {
         client.disconnect();
         dispatch(deleteChattingRoom(roomId));
@@ -42,77 +37,61 @@ function RoomDetail() {
       }, 1000)
     }
 
+  scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' })
+    
   }, [getMessages, timeOutLimit]);
 
 
+
+  useEffect(() => {
+  return (() => {
+      dispatch(delMessage())
+      disconnects();
+    })
+
+  }, [])
+
+
+useEffect(() => {
+  // 소켓 연결
+  client.connect({ "token": token }, () => {
+    // 채팅방 구독
+    client.subscribe(`/sub/chat/room/${roomId}`, (res) => {
+      let newMessage = JSON.parse(res.body);
+      dispatch(subMessage(newMessage));
+    })
+
+    // 유저 정보 전송 데이터
+    const info = {
+      type: 'ENTER',
+      roomId: roomId,
+      sender: state.sender,
+      profileImg: state.profileImg,
+    }
+    // 유저 정보 전송(입장메시지용)
+    client.send(`/pub/chat/message`, {}, JSON.stringify(info));
+  });
+
+}, [])
+
+  const roomList = useSelector(((state => state.community.chattingList)));
+
+
   
+  const [timeOutLimit , setTimeOutLimit] = useState(true);
+  const [vote, setVote] = useState("")
+  const getMessages = useSelector((state) => state.community.messages);
+
   const title = '쓸까?말까?'
   const chatRef = useRef();
   const scrollRef = useRef();
 
-  console.log(vote)
 
   const sock = new SockJS('https://api.webprogramming-mj6119.shop/chatting', null, { transports: ["websocket", "xhr-streaming", "xhr-polling"] });
   let client = Stomp.over(sock);
 
   // 토큰
   let token = localStorage.getItem('accessToken');
-
-
-useEffect(() => {
-    return (() => {
-        dispatch(delMessage())
-        disconnects();
-      })
-
-  }, [])
-
-
-
-  const chageVote = () => {
-    let sendData = {}
-    if (vote) {
-      setVote(false)
-      sendData = {
-        roomId: roomId,
-        prosCons: false
-      }
-      dispatch(chattingVote(sendData))
-
-    } else if (!vote) {
-      setVote(true)
-      sendData = {
-        roomId: roomId,
-        prosCons: true
-      }
-      dispatch(chattingVote(sendData))
-    }
-  }
-
-
-  useEffect(() => {
-    // 소켓 연결
-    client.connect({ "token": token }, () => {
-      // 채팅방 구독
-      client.subscribe(`/sub/chat/room/${roomId}`, (res) => {
-        let newMessage = JSON.parse(res.body);
-        dispatch(subMessage(newMessage));
-      })
-
-      // 유저 정보 전송 데이터
-      const info = {
-        type: 'ENTER',
-        roomId: roomId,
-        sender: state.sender,
-        profileImg: state.profileImg,
-      }
-      // 유저 정보 전송(입장메시지용)
-      client.send(`/pub/chat/message`, {}, JSON.stringify(info));
-    });
-
-  }, [])
-
-
 
 
   //연결 해제
@@ -123,7 +102,6 @@ useEffect(() => {
       client.disconnect();
     }
   }
-
 
 
   const handleOnKeyPress = (e) => {
@@ -155,89 +133,105 @@ useEffect(() => {
     <ChatWrap>
       <Header title={title} />
 
-      <Box>
-        <ListInfo>
-          <div className="userInfo">
-            <div className="profileBox">
-              <span className="live">LIVE</span>
-              <div className="profile"><img src={state.authorProfileImg} alt="" /></div>
-            </div>
-            <InfoText>
-              <span>{state.authorNickname} </span>
-              {state.comment}
-            </InfoText>
-          </div>
-          <strong>
-            <TimerFunction
-              min={state.minutes}
-              sec={state.seconds}
-              setTimeOutLimit={setTimeOutLimit}
-              station={"room"}
-            />
-          </strong>
-        </ListInfo>
 
-        <Vote>
-          {vote==0?
-            <>
-            <NonChoice
-            onClick={()=>{
-              dispatch(chattingVote(Number(1), roomId))
-              setVote(Number(1))
-            }}
-            >쓰자!</NonChoice>
-          <NonChoice
-            onClick={()=>{
-              dispatch(chattingVote(Number(2),roomId))
-              setVote(Number(2))
-            }}>그만...</NonChoice>
-            </>
-        :
-        ""
-         }
-
-         {vote==1? 
+      {roomList&&roomList.map((item, idx) =>(
+        <>
+        {item.roomId === state.roomId?
            <>
-           <Choice
-           onClick={()=>{
-             dispatch(chattingVote(Number(1),roomId))
-             setVote(Number(1))
-           }}
-           >쓰자!</Choice>
-         <NonChoice
-           onClick={()=>{
-             dispatch(chattingVote(Number(2),roomId))
-             setVote(Number(2))
-           }}>그만...</NonChoice>
-           </>
+           <Box>
+            <ListInfo>
+            <div className="userInfo">
+              <div className="profileBox">
+                <span className="live">LIVE</span>
+                <div className="profile"><img src={item.authorProfileImg} alt="" /></div>
+              </div>
+              <InfoText>
+                <span>{item.authorNickname} </span>
+                {item.comment}
+              </InfoText>
+            </div>
+            <strong>
+              <TimerFunction
+                min={state.minutes}
+                sec={state.seconds}
+                setTimeOutLimit={setTimeOutLimit}
+                station={"room"}
+              />
+            </strong>
+          </ListInfo>
+  
+          <Vote>
+            {item.prosCons==0?
+              <>
+              <NonChoice
+              onClick={()=>{
+                dispatch(chattingVote(Number(1), item.roomId))
+                setVote(Number(1))
+              }}
+              >쓰자!</NonChoice>
+            <NonChoice
+              onClick={()=>{
+                dispatch(chattingVote(Number(2),item.roomId))
+                setVote(Number(2))
+              }}>그만...</NonChoice>
+              </>
           :
           ""
-          }
-
-
-         {vote==2? 
-         <>
-          <NonChoice
-            onClick={()=>{
-              dispatch(chattingVote(Number(1),roomId))
-              setVote(Number(1))
-            }}
-            >쓰자!</NonChoice>
-          <Choice
-            onClick={()=>{
-              dispatch(chattingVote(Number(2),roomId))
-              setVote(Number(2))
-            }}>그만...</Choice>
-            </>
+           }
+  
+           {item.prosCons==1? 
+             <>
+             <Choice
+             onClick={()=>{
+               dispatch(chattingVote(Number(1),item.roomId))
+               setVote(Number(1))
+             }}
+             >쓰자!</Choice>
+           <NonChoice
+             onClick={()=>{
+               dispatch(chattingVote(Number(2),item.roomId))
+               setVote(Number(2))
+             }}>그만...</NonChoice>
+             </>
             :
             ""
             }
+  
+  
+           {item.prosCons==2? 
+           <>
+            <NonChoice
+              onClick={()=>{
+                dispatch(chattingVote(Number(1),item.roomId))
+                setVote(Number(1))
+              }}
+              >쓰자!</NonChoice>
+            <Choice
+              onClick={()=>{
+                dispatch(chattingVote(Number(2),item.roomId))
+                setVote(Number(2))
+              }}>그만...</Choice>
+              </>
+              :
+              ""
+              }
+  
+  
+          </Vote>
+  
+          <p className="count">조회수 <span>{item.userCount}</span></p>
+        </Box> 
+  
+          </>
+          :
+          ""}
+        </>
+     
+      ))}
 
 
-        </Vote>
 
-        <p className="count">조회수 <span>{state.userCount}</span></p>
-      </Box>
+
       <ChatBox className="chatbox">
         <Chatting ref={scrollRef}>
           {state.sender &&
