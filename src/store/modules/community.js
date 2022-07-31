@@ -90,7 +90,7 @@ export const chattingVote = (vote, roomId) => {
       await instance.post(`/api/chat/room/${roomId}/vote`, {
         prosCons: vote
       })
-      dispatch(topListRS())
+      dispatch(loadChattingListRS())
     } catch (error) {
       console.log(error)
     }

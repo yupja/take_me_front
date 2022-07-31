@@ -54,7 +54,10 @@ function ChattingList() {
                     <div key={item.roomId}>
                       <ChattingListDiv>
                         <ChattingInfo
-                          roomId={item.roomId} />
+                          roomId={item.roomId}
+                          prosCons={item.prosCons}
+                          leftTime={item.leftTime}
+                           />
                       </ChattingListDiv>
                     </div>
                   </>

@@ -20,6 +20,16 @@ function RoomDetail() {
   const { state } = useLocation();
   const { roomId } = useParams();
   const dispatch = useDispatch();
+  const title = '쓸까?말까?'
+  const chatRef = useRef();
+  const scrollRef = useRef();
+  const getMessages = useSelector((state) => state.community.messages);
+  const roomList = useSelector(((state => state.community.chattingList)));
+  const [vote, setVote] = useState(state.prosCons)
+  const [timeOutLimit , setTimeOutLimit] = useState(true);
+
+  console.log(state.propsCons)
+
 
   useEffect(() => {
     dispatch(loadChattingListRS());
@@ -74,17 +84,10 @@ useEffect(() => {
 
 }, [])
 
-  const roomList = useSelector(((state => state.community.chattingList)));
 
 
   
-  const [timeOutLimit , setTimeOutLimit] = useState(true);
-  const [vote, setVote] = useState("")
-  const getMessages = useSelector((state) => state.community.messages);
 
-  const title = '쓸까?말까?'
-  const chatRef = useRef();
-  const scrollRef = useRef();
 
 
   const sock = new SockJS('https://api.webprogramming-mj6119.shop/chatting', null, { transports: ["websocket", "xhr-streaming", "xhr-polling"] });
@@ -161,7 +164,7 @@ useEffect(() => {
           </ListInfo>
   
           <Vote>
-            {item.prosCons==0?
+            {vote===0?
               <>
               <NonChoice
               onClick={()=>{
@@ -179,7 +182,7 @@ useEffect(() => {
           ""
            }
   
-           {item.prosCons==1? 
+           {vote===1? 
              <>
              <Choice
              onClick={()=>{
@@ -198,7 +201,7 @@ useEffect(() => {
             }
   
   
-           {item.prosCons==2? 
+           {vote===2? 
            <>
             <NonChoice
               onClick={()=>{
