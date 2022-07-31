@@ -11,6 +11,8 @@ import { useNavigate } from "react-router-dom";
 import { getUserInfoDB } from "../../store/modules/user";
 import Like from "./Like";
 import GoalForCum from "./GoalForCum"
+import DountChart from "../public/Goal";
+
 import { loadMoreContentDB, loadpostsAc, deletePostAc } from "../../store/modules/community";
 import { ReactComponent as Receipt } from "../../assets/icons/Receipt.svg";
 import { ReactComponent as Comment } from "../../assets/icons/Comment.svg";
@@ -27,6 +29,7 @@ const CommunityTab = () => {
   const Navigate = useNavigate();
 
   const [savedListIndex, setSavedListIndex] = useState();
+  const [like_count, setLike_count] = useState();
 
   const userinfo = useSelector((state) => state.user.infoList)
   const Postdata = useSelector((state) => state.community.postList.data);
@@ -87,7 +90,6 @@ const CommunityTab = () => {
       observer && observer.disconnect();
     };
   }, [target]);
-
   return (
     <Box>
       {Postdata.map((postList, index) => {
@@ -99,7 +101,8 @@ const CommunityTab = () => {
                   {/* <Day>{postList.createAt}</Day> */}
                   <ItemImgBox>
                     <ItemImage src={postList.image}></ItemImage>
-                    <GoalForCum className="dounut" color="#26DFA6" size="140" position="relative" percent={postList.goalPercent} />
+                    <GoalForCum color="#26DFA6" size="140" position="relative" 
+                    percent={postList.goalPercent*0.01} />
                   </ItemImgBox>
                   <ProfileBox>
                     <Profile src={postList.profileImg}></Profile>
@@ -153,7 +156,7 @@ const CommunityTab = () => {
                         forLikeId={postList.boardId}
                         likeCount={postList.likeCount}
                       />&nbsp;&nbsp;
-                      <CtnNum>{postList.likeCount}</CtnNum>
+                      {/* <CtnNum>{postList.likeCount}</CtnNum> */}
                     </LikeBox>
                     <div onClick={() => {
                       Navigate
