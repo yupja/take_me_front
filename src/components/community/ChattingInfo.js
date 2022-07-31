@@ -12,6 +12,8 @@ import Loading from "../public/Loading";
 
 
 const ChattingInfo = (props) => {
+
+  console.log(props.prosCons)
   
 
 
@@ -43,6 +45,8 @@ const ChattingInfo = (props) => {
 
   const userInfo = useSelector((state) => state.community.myInfo)
   const roomList = useSelector(((state => state.community.chattingList)));
+
+  console.log(roomList)
 
   const getChttingData = (index) => {
     const sendData = {
@@ -118,11 +122,13 @@ const ChattingInfo = (props) => {
                         onClick={() => {
                           setVote(1)
                           dispatch(chattingVote(1, item.roomId))
+
                         }}>쓸까?</button>
                       <button
                         onClick={() => {
                           setVote(2)
                           dispatch(chattingVote(2, item.roomId))
+
                         }}>말까?</button>
                     </>
                     : ""}
@@ -138,6 +144,8 @@ const ChattingInfo = (props) => {
                       <button onClick={() => {
                         setVote(2)
                         dispatch(chattingVote(2, item.roomId))
+
+                  
                       }}>말까?</button>
                     </>
                     : ""}
@@ -148,6 +156,7 @@ const ChattingInfo = (props) => {
                       <button onClick={() => {
                         setVote(1)
                         dispatch(chattingVote(1, item.roomId))
+
                       }}>쓸까?</button>
 
                       <button style={{
