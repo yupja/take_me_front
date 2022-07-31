@@ -28,13 +28,9 @@ const CreateRoom = (props) => {
       const sendData = {
         sender: props.nickname,
         profileImg: props.profileImg,
-        authorNickname: props.nickname,
-        authorProfileImg: props.profileImg,
-        userCount: Number(0),
         comment: comment.current.value,
         timeLimit: count,
         minutes:count,
-        prosCons:Number(0),
         seconds:Number(0)
       }
 

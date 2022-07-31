@@ -28,7 +28,7 @@ function RoomDetail() {
   const [vote, setVote] = useState(state.prosCons)
   const [timeOutLimit , setTimeOutLimit] = useState(true);
 
-  console.log(state.propsCons)
+  console.log(state)
 
 
   useEffect(() => {
