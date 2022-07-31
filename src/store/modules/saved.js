@@ -24,7 +24,7 @@ export const newItemSavedListRQ = createAsyncThunk(
   'saved/add',
   async (sendData, thunkAPI) => {
     try {
-      await instance.post('/api/newSavedItem', sendData)
+      await instance.post('/api/items/savedItem', sendData)
       thunkAPI.dispatch(mySavedListRQ(sendData.goalItemId))
 
     } catch (error) {
@@ -101,10 +101,10 @@ export const loadMyRankDAc = () => {
 
 //-------------------- UPDATE ---------------------------
 
-export const modifySaved = (data, itemId) => {
+export const modifySaved = (data, savedItemId) => {
   return async function (dispatch) {
     try {
-      await instance.put(`/api/savedItem/${itemId}`, data)
+      await instance.put(`/api/savedItem/${savedItemId}`, data)
       dispatch(myReadGoalRQ())
 
     } catch (error) {

@@ -103,6 +103,7 @@ const PostModal = (props) => {
   height: 100%;
   border-radius:50%;
   position: absolute;
+  object-fit: cover;
 }
   `;
 

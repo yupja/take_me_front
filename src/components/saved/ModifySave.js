@@ -15,7 +15,7 @@ const ModifySave = (props) =>{
       const data = {
         price : Number(priceInput.current.value)
        }
-       dispatch(modifySaved(data, props.itemId))
+       dispatch(modifySaved(data, props.savedItemId))
     }
     
     return (          

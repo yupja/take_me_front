@@ -18,6 +18,7 @@ import { createCommentAc, loadCommentAc } from "../store/modules/community"
 import { loadpostsAc, loadDetailAc, deletePostAc } from "../store/modules/community";
 import { getUserInfoDB } from "../store/modules/user";
 import DountChart from "../components/public/Goal";
+import GoalForCum from "../components/community/GoalForCum";
 import { useLocation } from "react-router";
 import Header from "../components/public/Header"
 
@@ -122,10 +123,11 @@ function Detail() {
           <div style={{ backgroundColor: "transparent" }}></div>
           <ContentsBox>
             <DountBox>
-              <DountChart color="#26DFA6" size="235" position="absolute" percent={postlistdata.goalPercent} />
+              <DountChart color="#26DFA6" size="235" position="absolute"
+              percent={postlistdata.goalPercent * 0.01} />
               <Text>
                 <Commu>
-                  <GoalName><p className="goalTitle">{Math.floor(postlistdata.goalPercent * 100)}&nbsp;%</p></GoalName>
+                  <GoalName><p className="goalTitle">{Math.floor(postlistdata.goalPercent)}&nbsp;%</p></GoalName>
                   <GoalName>{postlistdata.goalItemName}</GoalName>
                 </Commu>
                 <Bottom className="bottom">
