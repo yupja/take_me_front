@@ -25,7 +25,7 @@ export default function Timer(props) {
     
     if(props.station === "chattingInfo"){
       if((parseInt(minutes)==0)&&(parseInt(seconds)==1)|| parseInt(minutes)>10){
-        props.setTimeOutLimit(false)
+      dispatch(deleteChattingRoom(props.roomId))
 
       }
 

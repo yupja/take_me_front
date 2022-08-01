@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useBeforeunload } from "react-beforeunload";
 import styled from "styled-components";
-import { Link, useParams, useLocation, useNavigate } from "react-router-dom";
+import { Link, useParams, useLocation, useNavigate, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import SockJS from "sockjs-client";
 import Stomp from "stompjs";
@@ -23,6 +23,7 @@ function RoomDetail() {
   const roomList = useSelector(((state => state.community.allChattingList.chatRooms)));
   const [vote, setVote] = useState(state.prosCons)
   const [timeOutLimit , setTimeOutLimit] = useState(true);
+  const navigate = useNavigate();
 
 
 
@@ -30,17 +31,18 @@ function RoomDetail() {
     dispatch(allChattingListRS());
 
 
-    if (state.minutes > 10 || state.minutes <= 0) {
-      setTimeout(() => {
-        client.disconnect();
-        dispatch(deleteChattingRoom(roomId));
-      }, 100)
+    // if (state.minutes > 10 || state.minutes <= 0) {
+    //   setTimeout(() => {
+    //     client.disconnect();
+    //     dispatch(deleteChattingRoom(roomId));
+    //   }, 100)
 
-    } else if (!timeOutLimit) {
+    // } else 
+    if (!timeOutLimit) {
       setTimeout(() => {
         client.disconnect();
-        dispatch(deleteChattingRoom(roomId));
-      }, 1000)
+        navigate("/chattingList")
+      }, 100)
     }
 
   scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' })
@@ -134,7 +136,7 @@ useEffect(() => {
 
       {roomList&&roomList.map((item, idx) =>(
         <>
-        {item.roomId === state.roodId?
+        {item.roomId === state.roomId?
            <>
            <Box>
             <ListInfo>
@@ -226,9 +228,6 @@ useEffect(() => {
         </>
      
       ))}
-
-
-
 
       <ChatBox className="chatbox">
         <Chatting ref={scrollRef}>
