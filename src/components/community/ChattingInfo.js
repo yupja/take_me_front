@@ -3,19 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import TimerFunction from "../public/Timer"
-import ProgressBar from "../public/ProgressBar"
-
 import styled from "styled-components";
-import { chattingVote, deleteChattingRoom, loadChattingListRS } from "../../store/modules/community"
-import { Timer, ChattingEnd } from "../../assets/icons"
+import { chattingVote, deleteChattingRoom, allChattingListRS } from "../../store/modules/community"
+import { Timer } from "../../assets/icons"
 import Loading from "../public/Loading";
 
 
 const ChattingInfo = (props) => {
-
-  console.log(props.prosCons)
-  
-
 
   const [minutes, setMinutes] = useState();
   const [seconds, setSeconds] = useState();
@@ -26,8 +20,8 @@ const ChattingInfo = (props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    dispatch(loadChattingListRS());
+  useEffect(() => {    
+    dispatch(allChattingListRS());
     getTime();
     setTimeout(() => {
       setReady(false)
@@ -44,9 +38,7 @@ const ChattingInfo = (props) => {
 
 
   const userInfo = useSelector((state) => state.community.myInfo)
-  const roomList = useSelector(((state => state.community.chattingList)));
-
-  console.log(roomList)
+  const roomList = useSelector(((state => state.community.allChattingList.chatRooms)));
 
   const getChttingData = (index) => {
     const sendData = {
@@ -75,7 +67,7 @@ const ChattingInfo = (props) => {
     <>
 
       {roomList && roomList.map((item, idx) => (
-        <>
+        <div key={idx}>
           {item.roomId === props.roomId ?
             <>
               <ChattingList>
@@ -184,7 +176,7 @@ const ChattingInfo = (props) => {
           <div>
 
           </div>
-        </>
+        </div>
       ))}
     </>
   )

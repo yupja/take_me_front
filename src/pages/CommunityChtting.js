@@ -2,10 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { topListRS } from "../store/modules/community";
+import { allChattingListRS } from "../store/modules/community";
 import ChattingList from "../components/community/ChattingList"
 import Header from "../components/public/Header";
-import ChattingInfo from "../components/community/ChattingInfo";
 import styled from "styled-components";
 
 
@@ -21,10 +20,11 @@ const Community = () => {
     if(!localStorage.getItem("accessToken")){
       navigate("/main")
     } 
-    dispatch(topListRS());
+    dispatch(allChattingListRS());
 
     },[])
-  const topRoomList = useSelector(((state => state.community.topChttingList)));
+    const topRoomList = useSelector(((state => state.community.allChattingList.top5)));
+
   console.log(topRoomList.prosCons)
 
 

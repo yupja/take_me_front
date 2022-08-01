@@ -135,6 +135,7 @@ const GoalModify = (props)=>{
         </div>
         <input
           className="inputStyle"
+          type ="Number"
           ref={price} />
       </li></ul>
 

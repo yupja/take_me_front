@@ -1,46 +1,17 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+
 import { instance } from "../../shared/axios";
 
 
 
 // [커뮤니티 채팅 API/보람]-----------------------------------------------------
 
-// 오픈룸 조회 
-export const loadChattingListRS = createAsyncThunk(
-  'read/chatRoom',
+export const allChattingListRS = createAsyncThunk(
+  `read/chattingList`,
   async (thunkAPI) => {
     try {
-      const { data } = await instance.get('/api/chat/rooms/')
-      return data.data;
-    } catch (error) {
-      console.log(error);
-    }
-  })
-
-//Top5 오픈룸 조회 
-
-export const topListRS = createAsyncThunk(
-  'read/topList',
-  async (thunkAPI) => {
-    try {
-      const { data } = await instance.get('/api/chat/room/top')
-      console.log(data)
-      return data.data;
-    } catch (error) {
-      console.log(error);
-    }
-  })
-
-
-
-// 종료된 채팅 목록 조호 ㅣ
-export const closedChttingListRS = createAsyncThunk(
-  'read/closedChattingList',
-  async (thunkAPI) => {
-    try {
-      const { data } = await instance.get('/api/closedChat/rooms')
-      return data.data;
+      const { data } = await instance.get('/api/chat/rooms/all')
+      return data;
     } catch (error) {
       console.log(error);
     }
@@ -90,7 +61,7 @@ export const chattingVote = (vote, roomId) => {
       await instance.post(`/api/chat/room/${roomId}/vote`, {
         prosCons: vote
       })
-      dispatch(loadChattingListRS())
+      dispatch(allChattingListRS())
     } catch (error) {
       console.log(error)
     }
@@ -166,7 +137,6 @@ export const likeChange = createAsyncThunk(  // 라이크 변경
   async (boardId) => {
     try {
       const { data } = await instance.post(`/api/board/${boardId}`)
-      console.log(data);
     } catch (error) {
       console.log(error)
     }
@@ -372,6 +342,7 @@ const communitySlice = createSlice({
   name: "community",
   initialState: {
     // 채팅
+    allChattingList:[],
     chattingList: [],
     topChttingList: [],
     closedChttingList: [],
@@ -444,23 +415,15 @@ const communitySlice = createSlice({
   },
 
   extraReducers: {
-    [loadChattingListRS.fulfilled]: (state, action) => {
-      state.chattingList = action.payload
+    [allChattingListRS.fulfilled]: (state, action) => {
+      state.allChattingList = action.payload
     },
     [likeChange.fulfilled]: (state, action) => {
       state.likeList = action.payload
     },
-    // 종료된 채팅 리스트 
-    [closedChttingListRS.fulfilled]: (state, action) => {
-      state.closedChttingList = action.payload
-    },
-    // 종료된 채팅 개별로그 closedChttingLogRS
     [closedChttingLogRS.fulfilled]: (state, action) => {
       state.closedChttingLog = action.payload
-    },
-    [topListRS.fulfilled]: (state, action) => {
-      state.topChttingList = action.payload
-    },
+    }
 
 
   }

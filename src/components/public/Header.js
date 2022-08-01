@@ -22,7 +22,7 @@ const slider = keyframes`
 function Header({ title, tColor, backGround }) {
   const url = window.location.href;
   const [circle, setCircle] = useState();
-
+  // 현재 페이지
   useEffect(() => {
     if (url.includes('save')) {
       setCircle("save")
@@ -207,7 +207,7 @@ transform: translateY(-50%);
 
 
 const CloseBtn = styled.div`
-width:1rem; //180px
+width:1rem; 
 height: 1rem;
 margin-top: 10px;
 position:absolute;

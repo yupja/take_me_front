@@ -7,7 +7,6 @@ export default function Timer(props) {
   const [minutes, setMinutes] = useState(Number(props.min));
   const [seconds, setSeconds] = useState(Number(props.sec));
   const dispatch = useDispatch();
-  console.log(props.station)
 
   useEffect(() => {
     const countdown = setInterval(() => {
