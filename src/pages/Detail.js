@@ -183,10 +183,10 @@ function Detail() {
       </Con>
       {commentData.data && commentData.data?.map((comment_list, index) => (
         <CommentList key={index}
-          username={comment_list.username}
+          username={comment_list.nickname}
           createdAt={comment_list.createdAt}
           comment={comment_list.comment}
-          user={userinfo.username}
+          user={userinfo.nickname}
           idUser={postlistdata.userId}
           commId={comment_list}
           postAll={postlistdata}
@@ -286,6 +286,7 @@ color: white;
 margin-right: 15px;
 margin-top: 10px;
 right: 0;
+cursor: pointer
 `;
 
 const Top = styled.div`
@@ -341,6 +342,7 @@ line-height: 1rem;
 const MoreBtn = styled.button`
 color: #26DFA6;
 font-weight: 700;
+cursor: pointer
 `;
 
 const Bottom = styled.div`
@@ -396,6 +398,7 @@ bottom: 0;
 display: flex;
 justify-content: center;
 margin-top: 3vw;
+cursor: pointer
 `;
 
 
@@ -472,6 +475,7 @@ background-color: transparent;
 color: white;
 font-size: 0.75rem;
 font-weight:700;
+cursor: pointer
 `;
 
 const UserInfoNav = styled.div`
@@ -490,6 +494,7 @@ right: 5%;
     border-radius: 6px;
     background: #fff;
     box-shadow: rgb(0 0 0 / 10%) 0px 0px 8px;
+    cursor: pointer
 }`
 
 const Blank = styled.div`

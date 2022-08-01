@@ -145,7 +145,13 @@ const CommunityTab = () => {
                       }
                       
                     </NewTop>
-                    <NewNick>
+                    <NewNick
+                    onClick={() => {
+                      Navigate
+                        (`/detail/${postList.boardId}`,
+                          { state: { name: postList } }
+                        )
+                    }}>
                       {postList.nickname}&nbsp;&nbsp;{postList.contents}
                     </NewNick>
                   </div>
@@ -229,12 +235,14 @@ color: #999999;
 const Count = styled.span`
 display: flex;
 align-items: center;
+cursor: pointer;
 `;
 
 const Rec = styled.div`
 /* border: 1px solid rebeccapurple; */
 right: 0;
 margin-left: auto;
+cursor: pointer;
 `;
 
 const DotBox = styled.div`
@@ -247,6 +255,7 @@ color: black;
 right: 0;
 top: 0;
 margin-right: 15px;
+cursor: pointer
 
 `;
 
@@ -265,6 +274,7 @@ right: 5%;
     border-radius: 6px;
     background: #fff;
     box-shadow: rgb(0 0 0 / 10%) 0px 0px 8px;
+    cursor: pointer
 }`
 
 const LikeBox = styled.div`
@@ -316,9 +326,12 @@ position: relative;
 const ProfileBox = styled.div`
 width: 40px;
 height: 40px;
+border-radius: 40px;
 /* border: 1px solid red; */
 position: absolute;
-top: 0
+top: 0;
+background-color: white;
+
 `;
 
 const Profile = styled.img`
@@ -352,6 +365,7 @@ height: 130px;
 /* align-items: center; */
 margin: auto;
 position: relative;
+cursor: pointer
 `;
 
 const BtnBox = styled.div`
@@ -365,16 +379,19 @@ bottom: 10%;
 background: #26DFA6;
 text-align: center;
 z-index: 1;
-margin-left: 25px;
+/* margin-left: 25px; */
+margin: 0 auto;
 box-shadow: 5px 5px 5px rgb(110, 110, 110, 0.4);
 opacity: 95%;
 font-size: 20px;
 /* border: 1px solid red; */
+cursor: pointer;
 `;
 
 const FootBtn = styled.button`
 color: white;
-    font-weight: 500;
+font-weight: 500;
+cursor: pointer;
 
 `;
 
@@ -395,6 +412,7 @@ width: 100%;
 height: 25px;
 font-size: 1.2rem;
 font-weight: 700;
+cursor: pointer;
 .dot{
   path { fill: #333}
 }
@@ -405,13 +423,15 @@ const NewNick = styled.div`
 width: 100%;
 height: 69px;
 font-size: 1rem;
-      /* width:100%; */
-      overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 4;
-    -webkit-box-orient: vertical;
-      /* white-space:nowrap; */
-      line-height: 1.1rem;
+/* width:100%; */
+overflow: hidden;
+display: -webkit-box;
+-webkit-line-clamp: 4;
+-webkit-box-orient: vertical;
+/* white-space:nowrap; */
+line-height: 1.1rem;
+cursor: pointer;
+
   
 `;
 
