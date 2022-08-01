@@ -19,8 +19,8 @@ function MyStatistics() {
 
   //---------------- 인풋날짜 설정----------------------------- 
   const day = new Date();
-  const inputDay = String(day.getFullYear() + "" + 0 + (day.getMonth() + 1) + "" + 0+ (day.getDate()))
-  const inputMonth = String(day.getFullYear() + "" + 0 + (day.getMonth() + 1))
+  const inputDay = String(day.getFullYear() + "" + 0 + (day.getMonth()) + "" + "31")
+  const inputMonth = String(day.getFullYear() + "" + 0 + (day.getMonth()))
 
   console.log(inputDay)
 
