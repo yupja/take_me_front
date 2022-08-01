@@ -8,8 +8,6 @@ import Stomp from "stompjs";
 import { subMessage, delMessage, deleteChattingRoom, chattingVote,
       allChattingListRS } from "../../store/modules/community";
 import Header from "../public/Header";
-import { BsSortNumericDown } from "react-icons/bs";
-
 import TimerFunction from "../public/Timer"
 
 
@@ -97,7 +95,6 @@ useEffect(() => {
 
   //연결 해제
   function disconnects() {
-    console.log("확인")
     if (client !== null) {
       client.send("/pub/chat/message", {}, JSON.stringify({ type: "QUIT", sender: state.sender }));
       client.disconnect();
@@ -137,7 +134,7 @@ useEffect(() => {
 
       {roomList&&roomList.map((item, idx) =>(
         <>
-        {item.roomId === state.roomId?
+        {item.roomId === state.roodId?
            <>
            <Box>
             <ListInfo>
@@ -169,12 +166,12 @@ useEffect(() => {
                 dispatch(chattingVote(Number(1), item.roomId))
                 setVote(Number(1))
               }}
-              >쓰자!</NonChoice>
+              >쓸까?</NonChoice>
             <NonChoice
               onClick={()=>{
                 dispatch(chattingVote(Number(2),item.roomId))
                 setVote(Number(2))
-              }}>그만...</NonChoice>
+              }}>말까?</NonChoice>
               </>
           :
           ""
@@ -187,12 +184,12 @@ useEffect(() => {
                dispatch(chattingVote(Number(1),item.roomId))
                setVote(Number(1))
              }}
-             >쓰자!</Choice>
+             >쓸까?</Choice>
            <NonChoice
              onClick={()=>{
                dispatch(chattingVote(Number(2),item.roomId))
                setVote(Number(2))
-             }}>그만...</NonChoice>
+             }}>말까?</NonChoice>
              </>
             :
             ""
@@ -206,12 +203,12 @@ useEffect(() => {
                 dispatch(chattingVote(Number(1),item.roomId))
                 setVote(Number(1))
               }}
-              >쓰자!</NonChoice>
+              >쓸까?</NonChoice>
             <Choice
               onClick={()=>{
                 dispatch(chattingVote(Number(2),item.roomId))
                 setVote(Number(2))
-              }}>그만...</Choice>
+              }}>말까?</Choice>
               </>
               :
               ""

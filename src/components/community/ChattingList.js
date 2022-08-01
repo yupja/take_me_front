@@ -7,8 +7,7 @@ import Modal from "../public/BasicModalForm";
 import CreateRoom from "./CreateRoom";
 import ChattingInfo from "./ChattingInfo";
 import ClosedChattingInfo from "./ClosedChattingInfo"
-import { loadChattingListRS, closedChttingListRS, myInfoData ,
-         allChattingListRS} from "../../store/modules/community"
+import { myInfoData , allChattingListRS} from "../../store/modules/community"
 
 function ChattingList() {
   const navigate = useNavigate();
@@ -35,21 +34,18 @@ function ChattingList() {
 
   const roomList = useSelector(((state => state.community.allChattingList.chatRooms)));
   const closedRoomList = useSelector(((state => state.community.allChattingList.closedChatRooms)));
-
   const userInfo = useSelector((state) => state.community.myInfo)
-
-
 
   return (
     <>
       <Wrap>
         <AllchattingList>
 
-          {roomList.lenght === 0 ?
+          {roomList?.lenght === 0 ?
             "진행중인 채팅방이 없습니다. " :
 
             <div>
-              {roomList && roomList.map((item, itemIndex) => {
+              {roomList && roomList?.map((item, itemIndex) => {
                 return (
                   <>
                     <div key={item.roomId}>
@@ -165,8 +161,10 @@ align-items: center;
 
 width:100%;
 max-height: 844px;
+
 `;
 
 const ChattingListDiv = styled.div`
+    margin-bottom: 3%;
 `;
 

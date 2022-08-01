@@ -31,10 +31,12 @@ const CreateRoom = (props) => {
         comment: comment.current.value,
         timeLimit: count,
         minutes:count,
+        prosCons: Number(0),
         seconds:Number(0)
       }
 
- 
+      console.log(sendData);
+
       dispatch(createChatRoom(sendData, navigate));
 
   }
