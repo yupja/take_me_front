@@ -25,10 +25,6 @@ const Community = () => {
     },[])
     const topRoomList = useSelector(((state => state.community.allChattingList.top5)));
 
-  console.log(topRoomList.prosCons)
-
-
-
   return  (
   <> 
   <Wap >
