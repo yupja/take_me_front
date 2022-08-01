@@ -141,7 +141,7 @@ function SignUp(e) {
         setPwColor("#26DFA6");
       }
     } else {
-      setUserPwAlert("🚨 문자, 숫자 1개이상 포함, 8자리 이상 입력해주세요.");
+      setUserPwAlert("🚨 영문, 숫자 1개이상, 특수문자 포함, 8자리 이상 입력해주세요.");
       setPwColor('red');
       if (pw === '') {
         setUserPwAlert('')
