@@ -5,8 +5,7 @@ import { Link, useParams, useLocation, useNavigate, Navigate } from "react-route
 import { useDispatch, useSelector } from "react-redux";
 import SockJS from "sockjs-client";
 import Stomp from "stompjs";
-import { subMessage, delMessage, deleteChattingRoom, chattingVote,
-      allChattingListRS } from "../../store/modules/community";
+import { subMessage, delMessage, chattingVote, allChattingListRS } from "../../store/modules/community";
 import Header from "../public/Header";
 import TimerFunction from "../public/Timer"
 
@@ -42,7 +41,7 @@ function RoomDetail() {
       setTimeout(() => {
         client.disconnect();
         navigate("/chattingList")
-      }, 100)
+      }, 1000)
     }
 
   scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' })
