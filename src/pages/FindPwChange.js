@@ -3,10 +3,10 @@ import styled from 'styled-components'
 import { useDispatch } from 'react-redux'
 import { useSelector } from "react-redux/es/exports";
 import { useParams } from "react-router-dom";
-import { changePw } from "../store/modules/user";
+// import { changePw } from "../store/modules/user";
 import Header from "../components/public/Header";
 
-const FindPwChange = () => {
+function FindPwChange() {
   const { token } = useParams();
   // const [tokens, username] = token?.split('&');
   console.log("22");
