@@ -32,6 +32,8 @@ function MyStatistics() {
   //남/일별/횟수별 
   const allUserDayCount = useSelector((state) => state.statistics.getDayCountList);
 
+console.log(allUserList)
+console.log(myList)
   //---------------- 통계 상태 스테이트 ------------------------- 
   const [dayMonth, setDayMonth] = useState(true); //월별이냐 일별이냐
   const [priceCount, setPriceCount] = useState(true); //가격별이냐 횟수별이냐
@@ -100,7 +102,7 @@ function MyStatistics() {
               ""}
               {myList && myList.map((list, idx) => (
                 <li key={idx}>
-                  <p>{list.rankPrice}st </p>
+                  <p>{list.rankCount}st </p>
                   <img src={Icons[list.categoryId - 1]} />
                   <p>{list.itemName}</p>
                 </li>
@@ -122,7 +124,7 @@ function MyStatistics() {
             <RankingNum>
               {allUserList && allUserList.map((list, idx) => (
                 <li key={idx}>
-                  <p>{list.rankPrice}st </p>
+                  <p>{list.rankCount}st </p>
                   <img src={Icons[list.categoryId - 1]} />
                   <p>{list.itemName}</p>
                 </li>
