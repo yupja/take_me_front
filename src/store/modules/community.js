@@ -75,16 +75,16 @@ export const createChatRoom = (sendData, navigate) => {
       timeLimit: sendData.timeLimit
     })
       .then((res) => {
-        const roodId = res.data.data.roomId
+        const roomId = res.data.data.roomId
         const sendingData ={
-          roodId : roodId,
+          roomId : roomId,
           sender : sendData.sender,
           profileImg : sendData.profileImg,
           minutes : sendData.minutes,
           prosCons : sendData.prosCons,
           seconds : sendData.seconds
         }
-        navigate(`/chat/roomdetail/${roodId}`, { state: sendingData });
+        navigate(`/chat/roomdetail/${roomId}`, { state: sendingData });
       })
       .catch((error) => {
         console.log(error);

@@ -50,6 +50,7 @@ const ChattingInfo = (props) => {
       seconds: seconds
 
     }
+
     navigate(`/chat/roomdetail/${sendData.roomId}`, { state: sendData });
   }
 
