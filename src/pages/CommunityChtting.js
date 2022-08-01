@@ -6,9 +6,7 @@ import { topListRS } from "../store/modules/community";
 import ChattingList from "../components/community/ChattingList"
 import Header from "../components/public/Header";
 import ChattingInfo from "../components/community/ChattingInfo";
-import Loading from "../components/public/Loading";
 import styled from "styled-components";
-import CommunityList from "../components/community/CommunityList";
 
 
 const Community = () => {
@@ -59,7 +57,7 @@ const Community = () => {
         </MenuBar>
 
 
-        <TimeList>
+        {/* <TimeList>
   
 
               {topRoomList.length===0? 
@@ -90,7 +88,7 @@ const Community = () => {
               
               }
 
-        </TimeList>
+        </TimeList> */}
 
         <div style={{ width: "100%", height:"100%" }}>
           <CommunityContents>

@@ -51,9 +51,8 @@ const PercentProgressBar =(props)=>{
         }
 
         {(props.true=== 0)&&(props.false===0)? 
-             
-             <FalseBarDiv style={{justifyContent:"center"}}>
-             아무도 투표하지 않았어요
+        <FalseBarDiv style={{justifyContent:"center"}}>
+             {props.true}아무도 투표하지 않았어요{props.false}
          </FalseBarDiv>
          :
          ""
@@ -95,6 +94,7 @@ display: flex;
 justify-content: center;
 position: absolute;
 background:white;
+color : black;
 border: 1px solid #CCCCCC;
 border-radius: ${(props)=>(props.radius)};
 font-size: 1.5rem;
