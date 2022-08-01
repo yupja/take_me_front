@@ -29,9 +29,10 @@ const ChattingInfo = (props) => {
 
     if (!timeOutLimit) {
       dispatch(deleteChattingRoom(props.roomId));
+      setTimeOutLimit(true)
       setTimeout(() => {
         window.location.href = "/chattingList";
-      }, 2000)
+      },  1000)
     }
 
   }, [timeOutLimit])
@@ -50,6 +51,7 @@ const ChattingInfo = (props) => {
       seconds: seconds
 
     }
+
     navigate(`/chat/roomdetail/${sendData.roomId}`, { state: sendData });
   }
 

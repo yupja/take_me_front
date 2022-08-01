@@ -16,6 +16,7 @@ import FindPwChange from "../pages/FindPwChange"; // 비밀번호 변경
 import Favorite from "../pages/Favorite"; // 즐겨찾기
 import History from "../pages/History"; // 히스토리
 import Proflie from "../pages/Proflie"; // 프로필
+import NotFound from "../pages/NotFound"; // NotFound
 import SociallLogin from "../pages/SociallLogin"; // 소셜 로그인
 import RoomDetail from "../components/community/RoomDetail"//채팅
 import Guide from "../components/community/Guide"//가이드
@@ -29,13 +30,13 @@ function Router() {
       <Routes>
         {/* <Route path="*" element={<NotFound />} /> */}
         <Route path="/main" element={<Main />} />
-        
-        {localStorage.getItem("accessToken")?
-        <Route path="/" element={<Save />} />
-        :
-        <Route path="/" element={<Main/>} />
+
+        {localStorage.getItem("accessToken") ?
+          <Route path="/" element={<Save />} />
+          :
+          <Route path="/" element={<Main />} />
         }
-        
+
         {/* <Route path="/statistics" element={<Statistics />} /> */}
         {/* <Route path="/detail/:boardId" element={<Detail />} /> */}
         <Route path="/mypage" element={<MyPage />} />
@@ -48,7 +49,9 @@ function Router() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/user/findid" element={<FindId />} />
         <Route path="/user/findpw" element={<FindPw />} />
+
         <Route path="/user/changePassword/:token" element={<FindPwChange />} />
+
         <Route path="/detail/:boardId" element={<Detail />} />
         {/* <Route path="/Findpw/:id" element={<FindPwChange />} /> */}
         <Route path="/favorite" element={<Favorite />} />
@@ -59,6 +62,7 @@ function Router() {
         <Route path="/chat/roomdetail/:roomId" element={<RoomDetail />} />
         <Route path="/guide" element={<Guide />} />
         <Route path="/chat/closedChttinglog/:closedRoomId" element={< ClosedChattingLog />} />
+        <Route path="*" element={<NotFound />} />
       </Routes >
     </BrowserRouter >
   );
