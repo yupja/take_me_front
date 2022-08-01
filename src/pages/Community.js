@@ -1,11 +1,10 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { topListRS } from "../store/modules/community";
+import { allChattingListRS } from "../store/modules/community";
 import ChattingList from "../components/community/ChattingList"
 import Header from "../components/public/Header";
-import SwipeRooms from "../components/public/SwipeForm"
 
 import styled from "styled-components";
 import CommunityList from "../components/community/CommunityList";
@@ -17,7 +16,6 @@ const Community = () => {
   const { state } = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [isLoad, setLoad] = useState(false);
   const [page, setPage] = useState(<CommunityTab />);
   const [chooseMenu, setChooseMenu] = useState(true);
 
@@ -26,9 +24,9 @@ const Community = () => {
       navigate("/main")
     }
 
-    dispatch(topListRS());
-  }, [isLoad])
-  const topRoomList = useSelector(((state => state.community.topChttingList)));
+    dispatch(allChattingListRS());
+  }, [])
+  const topRoomList = useSelector(((state => state.community.allChattingList.top5)));
 
   return (
     <>

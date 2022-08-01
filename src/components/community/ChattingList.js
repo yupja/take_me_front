@@ -7,7 +7,8 @@ import Modal from "../public/BasicModalForm";
 import CreateRoom from "./CreateRoom";
 import ChattingInfo from "./ChattingInfo";
 import ClosedChattingInfo from "./ClosedChattingInfo"
-import { loadChattingListRS, closedChttingListRS, myInfoData } from "../../store/modules/community"
+import { loadChattingListRS, closedChttingListRS, myInfoData ,
+         allChattingListRS} from "../../store/modules/community"
 
 function ChattingList() {
   const navigate = useNavigate();
@@ -16,8 +17,8 @@ function ChattingList() {
     if (!localStorage.getItem("accessToken")) {
       navigate("/main")
     }
-    dispatch(loadChattingListRS());
-    dispatch(closedChttingListRS());
+   
+    dispatch(allChattingListRS());
     dispatch(myInfoData())
   }, [])
 
@@ -32,9 +33,9 @@ function ChattingList() {
   const openModal = () => { setModalOpen(true); };
   const closeModal = () => { setModalOpen(false); };
 
-  const roomList = useSelector(((state => state.community.chattingList)));
+  const roomList = useSelector(((state => state.community.allChattingList.chatRooms)));
+  const closedRoomList = useSelector(((state => state.community.allChattingList.closedChatRooms)));
 
-  const closedRoomList = useSelector(((state => state.community.closedChttingList)));
   const userInfo = useSelector((state) => state.community.myInfo)
 
 
