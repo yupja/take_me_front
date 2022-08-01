@@ -33,16 +33,20 @@ const Community = () => {
         <MenuBar>
           {chooseMenu?
           <>
-            <div className="nonChice"
-            onClick={()=>{
+            <button 
+              className="nonChice"
+              onClick={()=>{
               navigate("/community")
             setChooseMenu(true)
-          }}>티끌자랑</div>
-          <div className="choice"
+          }}>티끌자랑</button>
+          
+          <button 
+            className="choice"
             onClick={()=>{
-             setChooseMenu(<ChattingList/>)
-            setChooseMenu(false)
-          }}>쓸까말까</div>
+              navigate("/chattingList")
+              setChooseMenu(false)}}
+            disabled
+            >쓸까말까</button>
           </>
           :
           ""
@@ -88,7 +92,7 @@ const Community = () => {
 
         <div style={{ width: "100%", height:"100%" }}>
           <CommunityContents>
-            {page}
+            <ChattingList/>
           </CommunityContents>
         </div>
 

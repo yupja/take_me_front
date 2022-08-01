@@ -34,40 +34,27 @@ const Community = () => {
         <Header title={title} tColor={state} backGround={"#fff"} />
 
         <MenuBar>
-          {chooseMenu ?
             <>
-              <div className="Choice"
+              <button 
+                className="Choice"
                 onClick={() => {
                   navigate("/community")
                   setChooseMenu(true)
-                }}>티끌자랑</div>
-              <div className="nonChice"
+                }}
+                disabled
+                >티끌자랑</button>
+              <button 
+              className="nonChice"
                 onClick={() => {
                   navigate("/chattingList")
                   setChooseMenu(false)
-                }}>쓸까말까</div>
+                }}>쓸까말까</button>
             </>
-            :
-            <>
-              <div className="nonChice"
-                onClick={() => {
-                  setPage(<CommunityList />)
-                  setChooseMenu(true)
-                }}>티끌자랑</div>
-              <div className="Choice"
-                onClick={() => {
-                  setPage(<ChattingList />)
-                  setChooseMenu(false)
-                }}>쓸까말까</div>
-
-
-            </>}
-
         </MenuBar>
 
         <div style={{ width: "100%", height: "100%" }}>
           <CommunityContents>
-            {page}
+            <CommunityTab/>
           </CommunityContents>
         </div>
 
