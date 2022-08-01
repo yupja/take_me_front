@@ -45,7 +45,7 @@ export default function Timer(props) {
       <div>
         {props.station === "chattingInfo" ? 
           <h2>
-            {minutes}
+            {minutes+1}
           </h2>
           :
           <h2>
