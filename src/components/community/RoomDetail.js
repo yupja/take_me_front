@@ -6,11 +6,9 @@ import { useDispatch, useSelector } from "react-redux";
 import SockJS from "sockjs-client";
 import Stomp from "stompjs";
 import { subMessage, delMessage, deleteChattingRoom, chattingVote,
-         loadChattingListRS } from "../../store/modules/community";
+      allChattingListRS } from "../../store/modules/community";
 import Header from "../public/Header";
 import { BsSortNumericDown } from "react-icons/bs";
-// import ChattingInfo from "./ChattingInfo";
-// import Timer from "../public/Timer";
 
 import TimerFunction from "../public/Timer"
 
@@ -24,15 +22,15 @@ function RoomDetail() {
   const chatRef = useRef();
   const scrollRef = useRef();
   const getMessages = useSelector((state) => state.community.messages);
-  const roomList = useSelector(((state => state.community.chattingList)));
+  const roomList = useSelector(((state => state.community.allChattingList.chatRooms)));
   const [vote, setVote] = useState(state.prosCons)
   const [timeOutLimit , setTimeOutLimit] = useState(true);
 
-  console.log(state)
 
 
   useEffect(() => {
-    dispatch(loadChattingListRS());
+    dispatch(allChattingListRS());
+
 
     if (state.minutes > 10 || state.minutes <= 0) {
       setTimeout(() => {
