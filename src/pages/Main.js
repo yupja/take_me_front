@@ -30,7 +30,7 @@ function Main() {
 
   return (
     <>
-      <Header title={title} tColor={"#000000"} />
+      <Header title={title} tColor={"#000000"} backGround={"#fff"} />
       <MainWrap>
         <section>
           <h1>

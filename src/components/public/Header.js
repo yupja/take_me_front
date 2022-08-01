@@ -19,12 +19,10 @@ const slider = keyframes`
 
 
 
-
-
 function Header({ title, tColor, backGround }) {
-
   const url = window.location.href;
   const [circle, setCircle] = useState();
+
   useEffect(() => {
     if (url.includes('save')) {
       setCircle("save")
@@ -77,7 +75,7 @@ function Header({ title, tColor, backGround }) {
 
 
   return (
-    <HeaderWrap>
+    <HeaderWrap style={{ background: `${backGround}` }}>
       <LeftArea>
         <h1 onClick={() => {
           navigate("/");
@@ -87,10 +85,10 @@ function Header({ title, tColor, backGround }) {
       <HamArea onClick={onNav}>
         <NavBtn>
           <div>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
+            <span style={{ background: `${tColor}` }}></span>
+            <span style={{ background: `${tColor}` }}></span>
+            <span style={{ background: `${tColor}` }}></span>
+            <span style={{ background: `${tColor}` }}></span>
           </div>
         </NavBtn>
       </HamArea>
@@ -321,9 +319,8 @@ div {
     width:100%;
     height:1px;
     margin-bottom: 3px;
-    /* background-color: white; */
-    background-color: #000;
     transition:all .5s;
+    background-color: #000;
   }
   span:last-child{
     margin-bottom: 0;

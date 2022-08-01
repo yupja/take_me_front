@@ -89,13 +89,13 @@ function MyStatistics() {
           <Mint style={{ fontSize: "1.5rem" }}>Best 5!</Mint>
           <CircleArea>
             <RankingNum>
-              {myList.length ===0 ?
-              <span>
-                <span style={{color:"#26DFA6", width:"16%"}}>
-                  티끌</span>
-                을 등록해보세요</span>
-              :
-              ""}
+              {myList.length === 0 ?
+                <span>
+                  <span style={{ color: "#26DFA6", width: "16%" }}>
+                    티끌</span>
+                  을 등록해보세요</span>
+                :
+                ""}
               {myList && myList.map((list, idx) => (
                 <li key={idx}>
                   <p>{list.rankPrice}st </p>

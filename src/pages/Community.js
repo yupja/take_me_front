@@ -33,7 +33,7 @@ const Community = () => {
   return (
     <>
       <Wap >
-        <Header title={title} color={state} />
+        <Header title={title} tColor={state} backGround={"#fff"} />
 
         <MenuBar>
           {chooseMenu ?
