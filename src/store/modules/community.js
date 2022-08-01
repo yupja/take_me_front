@@ -5,7 +5,6 @@ import { instance } from "../../shared/axios";
 
 
 // [커뮤니티 채팅 API/보람]-----------------------------------------------------
-
 export const allChattingListRS = createAsyncThunk(
   `read/chattingList`,
   async (thunkAPI) => {
@@ -16,7 +15,6 @@ export const allChattingListRS = createAsyncThunk(
       console.log(error);
     }
   })
-
 
 //종료된 채팅 조회 상세로그
 export const closedChttingLogRS = createAsyncThunk(
@@ -30,7 +28,7 @@ export const closedChttingLogRS = createAsyncThunk(
     }
   })
 
-
+  
 export const deleteChattingRoom = (roomId, navigate) => {
   return async function (dispatch) {
     try {
@@ -46,7 +44,6 @@ export const deleteLobyChat = (roomId, navigate) => {
   return async function (dispatch) {
     try {
       await instance.get(`/api/chat/room/${roomId}/save`)
-
     } catch (error) {
       console.log(error)
     }
@@ -100,8 +97,6 @@ export const getChatting = (data) => {
   return async function (dispatch) {
     await instance.get(`/api/chat/room/enter/${data}`)
       .then((res) => {
-        console.log(res);
-        // window.location.href = `/chat/roomdetail/${data}`;
       })
       .catch((error) => {
         console.log(error);
@@ -164,12 +159,9 @@ export const createPostAc = (data) => {
       }
     })
       .then((response) => {
-        // console.log(response);
-        // dispatch(uploadPost())
         alert("등록 완료");
       })
       .catch((error) => {
-        // console.log(error);
       });
   };
 };
@@ -179,12 +171,9 @@ export const loadpostsAc = () => {
   return function (dispatch) {
     instance.get('/api/board', { params: { lastBoardId: 999, size: 15 } })
       .then(response => {
-        //   console.log(response.data, "redux_data");
         dispatch(roadPosts(response.data));
-        // console.log(response.data,"나도모르지")
       })
       .catch(error => {
-        // console.log("get error", error)
       })
   };
 };
@@ -207,17 +196,12 @@ export const loadDetailAc = (boardId) => {
 export const loadMoreContentDB = () => {
   return async function (dispatch, getState) {
     const board = getState().community.postList.data;
-    // console.log(board,"resS")
     const lastIndex = board[board.length - 1].boardId
-    // console.log(lastIndex,"last")
     await instance.get('/api/board', { params: { lastBoardId: lastIndex, size: 15 } })
       .then((response) => {
-        // console.log(response,"resssss")
         const new_data = [...board, ...response.data.data];
-        // console.log(new_data,"newdat")
         dispatch(roadPosts({ data: new_data }));
       });
-    // console.log(board, lastIndex, '무스');
   };
 };
 
@@ -245,12 +229,9 @@ export const UpdatePost = (data) => {
         }
       })
       .then((re) => {
-        // console.log(re,"수정아")
       })
       .catch((err) => {
-        // console.log(err);
       });
-    // console.log(data.boardId, "수정아!")
   };
 };
 
@@ -264,12 +245,9 @@ export const deletePostAc = (boardId) => {
       .delete(`/api/board/${boardId}`)
       .then((response) => {
         window.location.reload();
-        // dispatch(deletePostAc(boardId));
       })
       .catch((err) => {
-        // console.log(err);
       });
-    // console.log(boardId, "삭제외않되")
   };
 };
 
@@ -298,7 +276,6 @@ export const loadCommentAc = (boardId) => {
   return function (dispatch) {
     instance.get(`/api/board/${boardId}/comment`)
       .then(response => {
-        // console.log(response.data, "console load")
         dispatch(loadComment(response.data));
       })
       .catch(error => {
@@ -310,7 +287,6 @@ export const loadCommentAc = (boardId) => {
 
 export const updateCommentAc = (data) => {
   return function (dispatch) {
-    console.log(data)
     instance.put(`/api/board/${data.boardId}/comment/${data.commentId}`, { "comment": data.comment })
       .then((response) => {
         dispatch(loadCommentAc(data.boardId));
@@ -332,7 +308,6 @@ export const deleteComment = (boardId, commentId) => {
       .catch((err) => {
         console.log(err);
       });
-    console.log(commentId, "댓삭")
   };
 };
 
@@ -341,11 +316,8 @@ export const deleteComment = (boardId, commentId) => {
 const communitySlice = createSlice({
   name: "community",
   initialState: {
-    // 채팅
+
     allChattingList:[],
-    chattingList: [],
-    topChttingList: [],
-    closedChttingList: [],
     closedChttingLog: [],
     getDayCountList: [],
     messages: [],
