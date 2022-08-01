@@ -161,8 +161,10 @@ align-items: center;
 
 width:100%;
 max-height: 844px;
+
 `;
 
 const ChattingListDiv = styled.div`
+    margin-bottom: 3%;
 `;
 
