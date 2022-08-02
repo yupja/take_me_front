@@ -5,7 +5,7 @@ import { Link, useParams, useLocation, useNavigate, Navigate } from "react-route
 import { useDispatch, useSelector } from "react-redux";
 import SockJS from "sockjs-client";
 import Stomp from "stompjs";
-import { subMessage, delMessage, chattingVote, allChattingListRS } from "../../store/modules/community";
+import { subMessage, delMessage, chattingVote, allChattingListRS, roomInfoRS } from "../../store/modules/community";
 import Header from "../public/Header";
 import TimerFunction from "../public/Timer"
 
@@ -28,6 +28,7 @@ function RoomDetail() {
 
   useEffect(() => {
     dispatch(allChattingListRS());
+    dispatch(roomInfoRS(roomId));
 
 
     // if (state.minutes > 10 || state.minutes <= 0) {
@@ -41,7 +42,7 @@ function RoomDetail() {
       setTimeout(() => {
         client.disconnect();
         navigate("/chattingList")
-      }, 1000)
+      }, 100)
     }
 
   scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' })

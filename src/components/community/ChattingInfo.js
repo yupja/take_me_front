@@ -28,7 +28,7 @@ const ChattingInfo = (props) => {
     }, 100)
 
     if (!timeOutLimit) {
-      dispatch(deleteChattingRoom(props.roomId));
+      dispatch(deleteChattingRoom(props?.roomId));
       setTimeOutLimit(true)
       setTimeout(() => {
         window.location.href = "/chattingList";
@@ -38,8 +38,8 @@ const ChattingInfo = (props) => {
   }, [timeOutLimit])
 
 
-  const userInfo = useSelector((state) => state.community.myInfo)
-  const roomList = useSelector(((state => state.community.allChattingList.chatRooms)));
+  const userInfo = useSelector((state) => state.community?.myInfo)
+  const roomList = useSelector(((state => state.community.allChattingList?.chatRooms)));
 
   const getChttingData = (index) => {
     const sendData = {
