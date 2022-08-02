@@ -11,7 +11,7 @@ import GoalChart from "../goal/Goal";
 
 import { useNavigate } from "react-router-dom";
 import { getUserInfoDB } from "../../store/modules/user";
-import { loadMoreContentDB, loadpostsAc, deletePostAc } from "../../store/modules/community";
+import community, { loadMoreContentDB, loadpostsAc, deletePostAc } from "../../store/modules/community";
 
 import { Comment, Binheart, SaveList } from "../../assets/icons";
 
@@ -22,6 +22,8 @@ const CommunityList = () => {
     dispatch(loadpostsAc())
     dispatch(getUserInfoDB())
   }, [])
+
+
 
   const dispatch = useDispatch();
   const Navigate = useNavigate();
@@ -41,6 +43,8 @@ const CommunityList = () => {
   const userinfo = useSelector((state) => state.user.infoList)
   const Postdata = useSelector((state) => state.community.postList.data);
   const Savedata = useSelector((state) => state.saved.savedItem);
+  const postId = useSelector((state)=>state.community.postId)
+  console.log(postId);
 
 
   return (

@@ -17,6 +17,7 @@ const ListModal = (props) => {
   const saveData = useSelector((state) => state.saved.savedItem.data.savedItemList);
   const saveDataa = useSelector((state) => state.saved.savedItem.data);
   const boardId = (props.forsaveId)
+  console.log(saveDataa,"save")
 
   const [star, setStar] = useState(false);
 
@@ -46,7 +47,7 @@ const ListModal = (props) => {
               <Closeb onClick={props.closeModall}><Close /></Closeb>
             </Top>
             <Middle>
-              <p><Spann>{saveDataa.userId}</Spann>님의
+              <p><Spann>{saveDataa.nickname}</Spann>님의
               {saveDataa.goalItemName} <Spann>KEEP</Spann></p>
               <p style={{ fontWeight: "700", marginTop: "8px" }}>
                 {saveDataa.savedItemTotalPrice} 원</p>
@@ -139,7 +140,7 @@ height: 100%;
   z-index: 889;
   position: fixed;
   top: 0;
-  width: 414px;
+  width: 100%;
   height: 100%;
   `;
 
