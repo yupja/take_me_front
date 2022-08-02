@@ -31,9 +31,9 @@ function Proflie() {
   const nickRef = useRef();
   // const fileRef = useRef();
 
-  const [image, setImage] = useState(0);
-  const [previewImg, setPreviewImg] = useState(0);
-  const [email, setEmail] = useState(0);
+  const [image, setImage] = useState('');
+  const [previewImg, setPreviewImg] = useState('');
+  const [email, setEmail] = useState('');
 
 
   useEffect(() => {
@@ -60,13 +60,10 @@ function Proflie() {
     setPreviewImg(e.target.files[0]);
   }
 
-  // 적용하기
+
   const infoChange = () => {
-    const nick = nickRef.current.value;
-    // if (infoState.nickname !== nick) {
-    //   setNickResult.includes('사용')
-    // }
     const introDesc = introDescRef.current.value;
+    const nick = nickRef.current.value;
 
     const formData = new FormData();
     console.log(introDesc);
@@ -84,7 +81,6 @@ function Proflie() {
     console.log(changeInfo);
     dispatch(infoUpdate(formData));
     window.alert("프로필이 변경되었습니다.")
-    console.log('여기서 새로고침')
     // window.location.reload();
   }
 
@@ -148,9 +144,10 @@ function Proflie() {
     navigate('/login')
   }
 
-
   // 닉네임 중복 검사
   const nickCheckStr = /^[a-zA-Zㄱ-힣0-9-_.]{2,12}$/;
+
+  // const nickCheck = (e) => {
 
   const [nickToggles, setNickToggles] = useState(false);
   const [nickResult, setNickResult] = useState("");
