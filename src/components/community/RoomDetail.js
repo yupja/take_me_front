@@ -21,11 +21,12 @@ function RoomDetail() {
   const getMessages = useSelector((state) => state.community.messages);
   const roomList = useSelector(((state => state.community.roomInfo)));
   const [vote, setVote] = useState(state.prosCons)
+  const [station , setStation] = useState(state.station)
   const [timeOutLimit, setTimeOutLimit] = useState(true);
   const navigate = useNavigate();
 
 
-
+  console.log(state);
   useEffect(() => {
     dispatch(allChattingListRS());
     dispatch(roomInfoRS(roomId));
@@ -143,12 +144,20 @@ function RoomDetail() {
             </InfoText>
           </div>
           <strong>
-            <TimerFunction
-              min={(Math.floor(roomList.leftTime / 60))}
-              sec={(Math.floor(roomList.leftTime % 60))}
+            {state.station == "create" ? 
+              <TimerFunction
+              min={state.minutes}
+              sec={state.seconds}
               setTimeOutLimit={setTimeOutLimit}
-              station={"room"}
-            />
+              station={"room"}/>
+            :
+            <TimerFunction
+            min={(Math.floor(roomList.leftTime / 60))}
+            sec={(Math.floor(roomList.leftTime % 60))}
+            setTimeOutLimit={setTimeOutLimit}
+            station={"room"}
+          />}
+        
           </strong>
         </ListInfo>
 

@@ -23,7 +23,6 @@ export const allChattingListRS = createAsyncThunk(
     async (roomId, thunkAPI) => {
       try {
         const { data } = await instance.get(`/api/chat/room/${roomId}`)
-        console.log(data.data)
         return data.data;
       } catch (error) {
         console.log(error);
@@ -168,8 +167,7 @@ export const createPostAc = (data) => {
       }
     })
       .then((response) => {
-        alert("등록 완료");
-      })
+       })
       .catch((error) => {
       });
   };
@@ -325,7 +323,6 @@ export const deleteComment = (boardId, commentId) => {
 const communitySlice = createSlice({
   name: "community",
   initialState: {
-
     allChattingList:[],
     closedChttingLog: [],
     roomInfo:[],
@@ -335,11 +332,15 @@ const communitySlice = createSlice({
     // 게시판
     postList: { data: [] },
     post: [],
+    postId:[],    
     likeList: [],
     commentList: {data : []},
   },
   reducers: {
     // 포스트 리듀서 
+    getPostId:(state,action) =>{
+      state.postId.push(action.payload);
+    },
     uploadPost: (state, action) => {
       state.postList.push(action.payload);
     },
@@ -415,5 +416,7 @@ const communitySlice = createSlice({
 
 });
 
-export const {  loadComment, createComment, roadPosts, loadDetail, subMessage, getDayCountList, myInfo, delMessage } = communitySlice.actions;
+export const {  
+  loadComment, createComment, roadPosts, loadDetail, subMessage, 
+  getDayCountList, myInfo, delMessage, getPostId } = communitySlice.actions;
 export default communitySlice.reducer;

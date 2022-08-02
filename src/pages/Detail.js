@@ -59,6 +59,7 @@ function Detail() {
     goalitemName: myGoalList?.itemName
   }
 
+
   const createComment = (boardId) => {
     const data = {
       comment: comment_ref.current.value,
