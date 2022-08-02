@@ -28,6 +28,7 @@ function MyPage() {
   const [openModal, setOpenModal] = useState(false);
   const [pwAlertStr, setPwAlertStr] = useState('');
   const [pwStr, setPwStr] = useState('비밀번호를 입력해 주세요.');
+  console.log(state)
 
 
   useEffect(() => {
