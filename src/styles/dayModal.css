@@ -17,9 +17,9 @@
   border: 0;
 }
 .modal > section {
-  width: 90%;
+  width: 80%;
   max-width: 450px;
-  margin: 0 0 0 0.5rem;
+  margin: 0 0 0 1.4rem;
   border-radius: 0.3rem;
   background-color: #fff;
   animation: modal-show 0.3s;
