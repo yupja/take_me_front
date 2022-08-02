@@ -101,7 +101,6 @@ const ChattingInfo = (props) => {
                           setTimeOutLimit={setTimeOutLimit}
                           station="chattingInfo"
                           roomId={item.roomId} />
-                        <span>M</span>
                       </div>
                     </div>
                   </div>

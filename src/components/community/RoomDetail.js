@@ -19,7 +19,7 @@ function RoomDetail() {
   const chatRef = useRef();
   const scrollRef = useRef();
   const getMessages = useSelector((state) => state.community.messages);
-  const roomList = useSelector(((state => state.community.allChattingList.chatRooms)));
+  const roomList = useSelector(((state => state.community.roomInfo)));
   const [vote, setVote] = useState(state.prosCons)
   const [timeOutLimit , setTimeOutLimit] = useState(true);
   const navigate = useNavigate();
@@ -48,8 +48,6 @@ function RoomDetail() {
   scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' })
     
   }, [getMessages, timeOutLimit]);
-
-
 
   useEffect(() => {
   return (() => {
@@ -132,28 +130,22 @@ useEffect(() => {
   return (
     <ChatWrap>
       <Header title={title} />
-
-
-      {roomList&&roomList.map((item, idx) =>(
-        <>
-        {item.roomId === state.roomId?
-           <>
            <Box>
             <ListInfo>
             <div className="userInfo">
               <div className="profileBox">
                 <span className="live">LIVE</span>
-                <div className="profile"><img src={item.authorProfileImg} alt="" /></div>
+                <div className="profile"><img src={roomList.authorProfileImg} alt="" /></div>
               </div>
               <InfoText>
-                <span>{item.authorNickname} </span>
-                {item.comment}
+                <span>{roomList.authorNickname} </span>
+                {roomList.comment}
               </InfoText>
             </div>
             <strong>
               <TimerFunction
-                min={state.minutes}
-                sec={state.seconds}
+                min={(Math.floor(roomList.leftTime/60))}
+                sec={(Math.floor(roomList.leftTime%60))}
                 setTimeOutLimit={setTimeOutLimit}
                 station={"room"}
               />
@@ -165,13 +157,13 @@ useEffect(() => {
               <>
               <NonChoice
               onClick={()=>{
-                dispatch(chattingVote(Number(1), item.roomId))
+                dispatch(chattingVote(Number(1), roomList.roomId))
                 setVote(Number(1))
               }}
               >쓸까?</NonChoice>
             <NonChoice
               onClick={()=>{
-                dispatch(chattingVote(Number(2),item.roomId))
+                dispatch(chattingVote(Number(2),roomList.roomId))
                 setVote(Number(2))
               }}>말까?</NonChoice>
               </>
@@ -183,13 +175,13 @@ useEffect(() => {
              <>
              <Choice
              onClick={()=>{
-               dispatch(chattingVote(Number(1),item.roomId))
+               dispatch(chattingVote(Number(1),roomList.roomId))
                setVote(Number(1))
              }}
              >쓸까?</Choice>
            <NonChoice
              onClick={()=>{
-               dispatch(chattingVote(Number(2),item.roomId))
+               dispatch(chattingVote(Number(2),roomList.roomId))
                setVote(Number(2))
              }}>말까?</NonChoice>
              </>
@@ -202,13 +194,13 @@ useEffect(() => {
            <>
             <NonChoice
               onClick={()=>{
-                dispatch(chattingVote(Number(1),item.roomId))
+                dispatch(chattingVote(Number(1),roomList.roomId))
                 setVote(Number(1))
               }}
               >쓸까?</NonChoice>
             <Choice
               onClick={()=>{
-                dispatch(chattingVote(Number(2),item.roomId))
+                dispatch(chattingVote(Number(2),roomList.roomId))
                 setVote(Number(2))
               }}>말까?</Choice>
               </>
@@ -219,15 +211,9 @@ useEffect(() => {
   
           </Vote>
   
-          <p className="count">조회수 <span>{item.userCount}</span></p>
+          <p className="count">조회수 <span>{roomList.userCount}</span></p>
         </Box> 
   
-          </>
-          :
-          ""}
-        </>
-     
-      ))}
 
       <ChatBox className="chatbox">
         <Chatting ref={scrollRef}>

@@ -23,7 +23,8 @@ export const allChattingListRS = createAsyncThunk(
     async (roomId, thunkAPI) => {
       try {
         const { data } = await instance.get(`/api/chat/room/${roomId}`)
-        return data;
+        console.log(data.data)
+        return data.data;
       } catch (error) {
         console.log(error);
       }
