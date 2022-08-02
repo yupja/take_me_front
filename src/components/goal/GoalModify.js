@@ -48,10 +48,12 @@ const GoalModify = (props)=>{
 
 
   const sendNewData = (state) =>{
-    console.log("여기");    
     const formData = new FormData();
-    formData.append("image",imageFile)
 
+
+    if(imageFile !== null){
+      formData.append("image",imageFile)
+    }    
     
     const  data ={
         itemName: itemName.current.value,
@@ -64,7 +66,7 @@ const GoalModify = (props)=>{
       const blob = new Blob([json], { type: "application/json" });
       formData.append('goalItem',blob);
 
-      // dispatch(newUpdateGoalAPI(formData, props.goalItemId));
+      dispatch(newUpdateGoalAPI(formData, props.goalItemId));
       props.closeModal();
     } 
 
@@ -72,7 +74,9 @@ const GoalModify = (props)=>{
   const sendData = (state) =>{
     const formData = new FormData();
 
-    formData.append("image",imageFile)
+    if(imageFile !== null){
+      formData.append("image",imageFile)
+    }    
 
     const data ={
       categoryId:selectInputValue.categoryId,
@@ -85,12 +89,9 @@ const GoalModify = (props)=>{
     const blob = new Blob([json], { type: "application/json" });
     formData.append('goalItem',blob);
 
-    console.log("있던거 Update")
-    if(imageFile==="null"){
-      alert("이미지를 첨부");
-    }else{
     dispatch(updateGoalAPI(formData, props.goalItemId))
-  }
+    props.closeModal();
+  
 }
 
 
@@ -155,11 +156,18 @@ const GoalModify = (props)=>{
       <ul>
         <li>
           <div className="leftBox">
-            <img src={image} />
+            <img 
+              src={image}
+              style={{objectFit:"cover"}} />
           </div>
           <div>
-            <label style={{ background: "#6A8EFF" }}>
-              <LeftArrow />기본 이미지 </label>
+            <button 
+             style={{ background: "#6A8EFF" }}
+             onClick={()=>{
+              setImage("https://velog.velcdn.com/images/eppo/post/f68f349d-6314-463d-beb0-3a779d24a90b/image.png")
+              setImageFile(null)
+             }}>
+              <LeftArrow />기본 이미지 </button>
             <label htmlFor="ex_file" style={{ marginTop: "5%" }}>
               <LeftArrow /> 이미지 등록 </label>
             <input
@@ -276,6 +284,17 @@ img{
   display: flex;
   width: 60%;
   border-radius:50%;
+}
+button{
+  width: 100%;
+  padding: 0.5rem;
+  background: #26DFA6;
+  color: white;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  font-weight: 500;
+  border-radius:30px;
 }
 `;
 
