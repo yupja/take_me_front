@@ -66,6 +66,7 @@ const GoalInput = (props)=>{
     formData.append('goalItem',blob);
     
     dispatch(newItemGoalAddRQ(formData));
+    window.location.reload("/")
     props.closeModal();
 
   }

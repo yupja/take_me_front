@@ -27,6 +27,7 @@ function ChattingList() {
     if (entry.isIntersecting) {
       observer.unobserve(entry.target);
       dispatch(closedChttingInfinityLoad());
+      window.location.reload("/chattingList");
     }
   };
   

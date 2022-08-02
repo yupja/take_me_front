@@ -122,7 +122,7 @@ function SearchItems(props) {
                   :
                     <AddButton onClick={() => {
                       openModal();
-                      setModalName("새로운 티끌 등록하기")
+                      setModalName("등록하기")
                       setInputValue('')
                     }}>+등록하기</AddButton>}
           
