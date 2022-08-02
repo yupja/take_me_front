@@ -69,7 +69,6 @@ function Save() {
     goalitemName: myGoalList?.itemName
   }
 
-  console.log(myGoalList)
   const openGuide = () => {
     setShowModal(true)
   }
