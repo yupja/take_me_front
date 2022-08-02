@@ -213,7 +213,7 @@ ul{
 }
 li{
   display: flex;
-  justify-content: space-around;;
+  justify-content:  space-between;;
   align-items: center;
   padding: 5px 15px;
 }

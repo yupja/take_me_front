@@ -17,13 +17,15 @@
   border: 0;
 }
 .modal > section {
-  width: 80%;
+  width: 85%;
   max-width: 450px;
-  margin: 0 0 0 1.4rem;
   border-radius: 0.3rem;
   background-color: #fff;
   animation: modal-show 0.3s;
   overflow: hidden;
+  position: absolute;
+  transform: translateX(-50%);
+  left:50%
 }
 .modal > section > header {
   display: flex;
@@ -49,6 +51,7 @@
   display: flex;
   align-items:center;
   animation: modal-bg-show 0.3s;
+  width: 100%;
 }
 @keyframes modal-show {
   from {

@@ -148,13 +148,14 @@ function SearchItems(props) {
         </InputBox>
 
 
+      </WholeBox>
+
       <Modal open={modalOpen}
         close={closeModal}
         header={modalName}>
         <SavedInput
         closeModal={closeModal}/>
       </Modal>
-      </WholeBox>
 
     </>
   )

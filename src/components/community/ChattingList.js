@@ -129,6 +129,7 @@ useEffect(() => {
                 profileImg={userInfo.profileImg} />)
           }}><p>쓸까? 말까? 만들기</p></button>
         </div>
+      
       </Wrap>
 
       <Modal open={modalOpen}
@@ -160,8 +161,8 @@ align-items: center;
   width: 355px;
   height: 60px;
   border-radius: 59px;
-  padding: 1rem;
-  position: absolute;
+  padding: 1.2rem 0 0 0;
+  position: fixed;
   bottom: 10%;
   text-align: center;
   z-index: 1;
@@ -175,7 +176,7 @@ align-items: center;
   }
   p{
     
-    font-size: 20px;
+    font-size: 19px;
   }
 }
 `;

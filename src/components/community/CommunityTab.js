@@ -93,6 +93,7 @@ console.log(Postdata,"post")
 
   console.log(target)
   return (
+    <>
     <Box>
       {Postdata.map((postList, index) => {
         return (
@@ -189,17 +190,6 @@ console.log(Postdata,"post")
       }
       )}
       <BlankBox></BlankBox>
-      <Div>
-      <BtnBox onClick={() => {
-          openModal();
-          setModalName("내 태산 % 공유");
-          setModalState(<PostModal close={closeModal} />)
-        }}>
-        <FootBtn >
-          내 태산 % 공유</FootBtn>
-      </BtnBox>
-      </Div>
-
 
         {/* 게시글등록모달     */}
 
@@ -227,11 +217,29 @@ console.log(Postdata,"post")
         </>
         : null}
     </Box>
+      <Div>
+      <BtnBox onClick={() => {
+          openModal();
+          setModalName("내 태산 % 공유");
+          setModalState(<PostModal close={closeModal} />)
+        }}>
+        <FootBtn >
+          내 태산 % 공유</FootBtn>
+      </BtnBox>
+      </Div>
+    </>
   )
+    
 };
 
 const Div = styled.div`
-margin-left: 30px;
+max-width: 414px;
+width: 100%;
+display: flex;
+justify-content: center;
+position: fixed;
+/* top: 85%; */
+bottom: 10%;
 `;
 
 const CtnNum = styled.span`
@@ -380,9 +388,7 @@ width: 355px;
 height: 60px;
 border-radius: 59px;
 padding: 1rem;
-position: fixed;
-/* top: 85%; */
-bottom: 10%;
+
 background: #26DFA6;
 text-align: center;
 z-index: 1;
@@ -398,6 +404,7 @@ cursor: pointer;
 const FootBtn = styled.button`
 color: white;
 font-weight: 500;
+padding: 0.2rem 0 0 0;
 cursor: pointer;
 `;
 

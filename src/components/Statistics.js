@@ -185,13 +185,18 @@ function MyStatistics() {
           </BottomCircleArea>
 
 
-          <ButtonArea>
+
+        </div>
+
+      </Wrap>
+      <ButtonArea>
             <div style={{
               display: "flex",
               position: "fixed",
               bottom: "10%",
               justifyContent: "space-around",
-              width: "377px"
+              maxWidth: "414px",
+              width: "100%"
 
             }}>
               {dayMonth ?
@@ -222,8 +227,6 @@ function MyStatistics() {
 
           </ButtonArea>
 
-        </div>
-      </Wrap>
     </>
   )
 
