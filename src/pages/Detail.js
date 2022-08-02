@@ -241,6 +241,7 @@ function Detail() {
 };
 
 const Fixed = styled.div`
+
 `;
 
 const Head = styled.div`
