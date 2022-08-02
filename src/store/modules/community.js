@@ -96,7 +96,8 @@ export const createChatRoom = (sendData, navigate) => {
           profileImg : sendData.profileImg,
           minutes : sendData.minutes,
           prosCons : sendData.prosCons,
-          seconds : sendData.seconds
+          seconds : sendData.seconds,
+          station : sendData.station
         }
         navigate(`/chat/roomdetail/${roomId}`, { state: sendingData });
       })

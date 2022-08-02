@@ -26,7 +26,10 @@ function RoomDetail() {
   const navigate = useNavigate();
 
 
+  console.log(state.minutes);
   console.log(state);
+  
+
   useEffect(() => {
     dispatch(allChattingListRS());
     dispatch(roomInfoRS(roomId));
