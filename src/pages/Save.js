@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { myReadGoalRQ } from "../store/modules/goal"
+import {achieveGoal} from "../store/modules/goal"
 import { addSavedListRQ } from "../store/modules/saved"
 import { myFavoriteListRQ, favoriteDel, addFavoriteRQ } from "../store/modules/favorite";
 
@@ -65,7 +66,6 @@ function Save() {
   const goal = {
     goalImage: myGoalList?.image,
     goalItemId: myGoalList?.goalItemId,
-    goalPercent: (myGoalList?.goalPercent) * 0.01,
     goalitemName: myGoalList?.itemName
   }
 
@@ -128,7 +128,6 @@ function Save() {
       <TopWrap>
         <>
         <HeaderArea><Header title={title} tColor={"#ffffff"} /></HeaderArea>
-
         {goal.goalitemName === "이름 없음" ?
           <NonGoal 
             openModal={openModal}
@@ -137,8 +136,11 @@ function Save() {
             setModalState={setModalState}/>
           :
           <>
-          {goal.goalPercent === 100? 
-            alert("100프로달성!")
+          {myGoalList?.goalPercent === 100? 
+          <>{alert("100% 달성했습니다. ")}
+            {dispatch(achieveGoal(myGoalList?.goalItemId))}
+            {window.location.reload("/save")}
+          </>  
             :
             <GoalInfo
               myGoalList={myGoalList}
