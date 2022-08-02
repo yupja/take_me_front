@@ -19,10 +19,9 @@ function MyStatistics() {
 
   //---------------- 인풋날짜 설정----------------------------- 
   const day = new Date();
-  const inputDay = String(day.getFullYear() + "" + 0 + (day.getMonth()) + "" + "31")
-  const inputMonth = String(day.getFullYear() + "" + 0 + (day.getMonth()))
-
-  console.log(inputDay)
+  const yesterday = new Date(day.setDate(day.getDate()-1))
+  const inputDay = String(yesterday.getFullYear() + "0"+ (yesterday.getMonth()+1) + "0"+(yesterday.getDate()))
+  const inputMonth = String(yesterday.getFullYear() + "" + 0 + (yesterday.getMonth()))
 
   //다른사람 태산랭크
   const allUserGoal = useSelector((state) => state.statistics.allUserGoalList);//태산목록
@@ -32,8 +31,6 @@ function MyStatistics() {
   //남/일별/횟수별 
   const allUserDayCount = useSelector((state) => state.statistics.getDayCountList);
 
-console.log(allUserList)
-console.log(myList)
   //---------------- 통계 상태 스테이트 ------------------------- 
   const [dayMonth, setDayMonth] = useState(true); //월별이냐 일별이냐
   const [priceCount, setPriceCount] = useState(true); //가격별이냐 횟수별이냐
@@ -82,6 +79,8 @@ console.log(myList)
     }
   }
 
+  console.log(myList);
+
   return (
     <>
       <Wrap>
@@ -102,7 +101,7 @@ console.log(myList)
                 ""}
               {myList && myList.map((list, idx) => (
                 <li key={idx}>
-                  <p>{list.rankCount}st </p>
+                  <p>{list.rank}st </p>
                   <img src={Icons[list.categoryId - 1]} />
                   <p>{list.itemName}</p>
                 </li>
@@ -124,7 +123,7 @@ console.log(myList)
             <RankingNum>
               {allUserList && allUserList.map((list, idx) => (
                 <li key={idx}>
-                  <p>{list.rankCount}st </p>
+                  <p>{list.rank}st </p>
                   <img src={Icons[list.categoryId - 1]} />
                   <p>{list.itemName}</p>
                 </li>

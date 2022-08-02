@@ -6,4 +6,5 @@ import ProgressBar from "./ProgressBar";
 import SearchItems from "./SearchItems";
 import Timer from "./Timer";
 
-export {BasicModalForm, Category, Header, Loading, ProgressBar, SearchItems, Timer }
+
+export {BasicModalForm, Category, Header, Loading, ProgressBar, SearchItems, Timer  }
