@@ -13,9 +13,7 @@ const FindId = () => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state.user.findIdResult);
 
-
   const [findId, setFindId] = useState(false);
-
   const emailRef = useRef();
 
   const [userEmailAlert, setUserEmailAlert] = useState('');
@@ -24,7 +22,6 @@ const FindId = () => {
   const emailCheck = () => {
     const email = emailRef.current.value;
 
-    console.log(email)
     if (emailCheckStr.test(email)) {
       setUserEmailAlert("통과:)")
     } else {

@@ -15,6 +15,7 @@ const FindPw = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const state = useSelector((state) => state.user);
+
   const [findPwPop, setfindPwPop] = useState(false);
   const [resultPop, setResultPop] = useState(false);
 
@@ -25,8 +26,9 @@ const FindPw = () => {
   const [str, setStr] = useState('');
   const [userIdAlert, setUserIdAlert] = useState('');
   const [userEmailAlert, setUserEmailAlert] = useState('');
+
   const emailCheckStr = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
-  const idCheckStr = /^(?=.*[a-z])(?=.*\d)[a-z\d]{3,10}$/;
+  const idCheckStr = /^[a-z0-9_-]{3,10}$/;
 
   const emailCheck = (e) => {
     const email = emailRef.current.value;
