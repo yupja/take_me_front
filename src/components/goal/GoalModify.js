@@ -3,8 +3,8 @@ import { useDispatch } from "react-redux"
 
 import Category from "../public/Category"
 import SearchItem from "../public/SearchItems"
-import { newItemGoalAddRQ, addGoalRQ, updateGoalAPI, newUpdateGoalAPI } from "../../store/modules/goal"
-import {addItem} from "../../store/modules/item"
+import {  updateGoalAPI, newUpdateGoalAPI } from "../../store/modules/goal"
+
 
 
 import styled from "styled-components";
@@ -20,7 +20,7 @@ const GoalModify = (props)=>{
   const [image, setImage] = useState("https://velog.velcdn.com/images/eppo/post/f68f349d-6314-463d-beb0-3a779d24a90b/image.png");
   const [imageFile, setImageFile] = useState("null");
   const [selectInputValue , setSelectInputValue] = useState([]); 
-  const [newAddGoal, setNewAddGoal] = useState(false);
+  const [newAdd, setNewAdd] = useState(false);
 
   const itemName=useRef();
   const price=useRef();
@@ -98,7 +98,7 @@ const GoalModify = (props)=>{
   return (
   <>
     <ItemList>
-      {newAddGoal ?
+      {newAdd ?
         <>
           <ul><CategoryLi>
             <div className="leftBox">
@@ -126,9 +126,10 @@ const GoalModify = (props)=>{
           <div style={{width:"68%"}}>
           <SearchItem
             state={"태산을 찾아보세요!"}
-            setNewAddGoal={setNewAddGoal}
-            setSelectInputValue={setSelectInputValue} />
-            </div>
+            setNewAdd={setNewAdd}
+            setSelectInputValue={setSelectInputValue}
+            actionState={"goalModify"}/>
+           </div>
         </li></ul>
       }
 
@@ -182,7 +183,7 @@ const GoalModify = (props)=>{
       </ul>
     </ImageDiv>
 
-    {newAddGoal? 
+    {newAdd? 
       <Footer onClick={()=>
         {sendNewData(props.state)
         props.closeModal()}}>

@@ -30,10 +30,9 @@ export const newItemGoalAddRQ = (formData) =>{// 없던거 골아이템 등록
           "Content-Type": "multipart/form-data",
       }});
     }catch(error){
-    
-    dispatch(myReadGoalRQ());
+      window.location.reload("/")
+    }
   }
-} 
 }
 
 

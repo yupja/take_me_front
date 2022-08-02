@@ -113,7 +113,8 @@ function SearchItems(props) {
                     앗! 아직 등록이 안되어있네요!<br />
                     새로 등록하시겠어요?
                   </AddFavoriteInput>
-                  {props.actionState==="goalInput"?
+                  {props.actionState==="goalInput" || 
+                    props.actionState==="goalModify" ?
                     <AddButton onClick={() => {
                       props.setNewAdd(true)
                       setInputValue('')
@@ -121,7 +122,7 @@ function SearchItems(props) {
                   :
                     <AddButton onClick={() => {
                       openModal();
-                      setModalName("등록하기")
+                      setModalName("새로운 티끌 등록하기")
                       setInputValue('')
                     }}>+등록하기</AddButton>}
           
