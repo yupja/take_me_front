@@ -169,6 +169,7 @@ export const createPostAc = (data) => {
       }
     })
       .then((response) => {
+        console.log(response.data)
         swal('등록완료',"","success");
       })
       .catch((error) => {

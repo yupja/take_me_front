@@ -47,7 +47,7 @@ const ListModal = (props) => {
               <Closeb onClick={props.closeModall}><Close /></Closeb>
             </Top>
             <Middle>
-              <p><Spann>{saveDataa.userId}</Spann>님의
+              <p><Spann>{saveDataa.nickname}</Spann>님의
               {saveDataa.goalItemName} <Spann>KEEP</Spann></p>
               <p style={{ fontWeight: "700", marginTop: "8px" }}>
                 {saveDataa.savedItemTotalPrice} 원</p>

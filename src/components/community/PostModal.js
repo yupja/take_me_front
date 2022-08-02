@@ -3,11 +3,13 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux/es/exports";
 import { createPostAc } from "../../store/modules/community";
 import DountChart from "../goal/Goal";
+import { useNavigate } from "react-router-dom";
 
 
 const PostModal = (props) => {
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [image, setImage] = useState(props.image);
     const [imageFile, setImageFile] = useState("null");
 
@@ -77,7 +79,6 @@ const PostModal = (props) => {
           <Footer onClick={()=>{
             postAc();
             props.close();
-            // window.location.reload();
           }}>공유하기</Footer>
     </>
      );
