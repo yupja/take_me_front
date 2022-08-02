@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { instance } from "../../shared/axios";
 import { myReadGoalRQ } from "../modules/goal";
+import {allItemListRQ} from "../modules/item"
 
 
 //--------------------- CREATE ---------------------------
@@ -24,8 +25,10 @@ export const newItemSavedListRQ = createAsyncThunk(
   'saved/add',
   async (sendData, thunkAPI) => {
     try {
-      await instance.post('/api/items/savedItem', sendData)
+      const {data} = await instance.post('/api/items/savedItem', sendData)
       thunkAPI.dispatch(mySavedListRQ(sendData.goalItemId))
+
+      return data? thunkAPI.dispatch(allItemListRQ()) : ""
 
     } catch (error) {
 
