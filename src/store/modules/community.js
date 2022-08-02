@@ -16,6 +16,22 @@ export const allChattingListRS = createAsyncThunk(
     }
   })
 
+ 
+//룸디테일 
+  export const roomInfoRS = createAsyncThunk(
+    `read/roomInfo`,
+    async (roomId, thunkAPI) => {
+      try {
+        const { data } = await instance.get(`/api/chat/room/${roomId}`)
+        console.log(data.data)
+        return data.data;
+      } catch (error) {
+        console.log(error);
+      }
+    })
+
+
+
 //종료된 채팅 조회 상세로그
 export const closedChttingLogRS = createAsyncThunk(
   'read/closedChattingLog',
@@ -33,7 +49,6 @@ export const deleteChattingRoom = (roomId, navigate) => {
   return async function (dispatch) {
     try {
       await instance.get(`/api/chat/room/${roomId}/save`)
-
     } catch (error) {
       console.log(error)
     }
@@ -75,22 +90,23 @@ export const createChatRoom = (sendData, navigate) => {
       timeLimit: sendData.timeLimit
     })
       .then((res) => {
-        const roodId = res.data.data.roomId
+        const roomId = res.data.data.roomId
         const sendingData ={
-          roodId : roodId,
+          roomId : roomId,
           sender : sendData.sender,
           profileImg : sendData.profileImg,
           minutes : sendData.minutes,
           prosCons : sendData.prosCons,
           seconds : sendData.seconds
         }
-        navigate(`/chat/roomdetail/${roodId}`, { state: sendingData });
+        navigate(`/chat/roomdetail/${roomId}`, { state: sendingData });
       })
       .catch((error) => {
         console.log(error);
       });
   };
 };
+
 
 // 이전 메세지
 export const getChatting = (data) => {
@@ -116,13 +132,6 @@ export const myInfoData = (data) => {
       });
   };
 };
-
-
-
-
-
-
-
 
 
 // [커뮤니티 POST API] -------------------------------------------------------
@@ -319,6 +328,7 @@ const communitySlice = createSlice({
 
     allChattingList:[],
     closedChttingLog: [],
+    roomInfo:[],
     getDayCountList: [],
     messages: [],
     myInfo: [],
@@ -389,6 +399,9 @@ const communitySlice = createSlice({
   extraReducers: {
     [allChattingListRS.fulfilled]: (state, action) => {
       state.allChattingList = action.payload
+    },
+    [roomInfoRS.fulfilled]: (state, action) => {
+      state.roomInfo = action.payload
     },
     [likeChange.fulfilled]: (state, action) => {
       state.likeList = action.payload

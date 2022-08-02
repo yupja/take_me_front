@@ -24,7 +24,7 @@ export default function Timer(props) {
     }, 1000);
     
     if(props.station === "chattingInfo"){
-      if((parseInt(minutes)==0)&&(parseInt(seconds)==1)|| parseInt(minutes)>10){
+      if((parseInt(minutes)==0)&&(parseInt(seconds)==0)|| parseInt(minutes)>10){
         props.setTimeOutLimit(false)
 
       }
@@ -44,9 +44,16 @@ export default function Timer(props) {
     <div>
       <div>
         {props.station === "chattingInfo" ? 
-          <h2>
-            {minutes+1}
-          </h2>
+          <>
+            {minutes < 1 ? 
+              <h2>{seconds}</h2>
+            :
+              <h2>
+              {minutes}M
+              </h2>
+            }
+
+          </>
           :
           <h2>
             {minutes}:{seconds < 10 ? `0${seconds}` : seconds}

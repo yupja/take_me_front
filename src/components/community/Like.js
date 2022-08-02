@@ -43,9 +43,9 @@ const Like = (props,{ likeCount,boardId }) => {
               dispatch(likeChange(boardId));
               }}>   
             {like ? 
-              <span><Binheart className="heart" /></span>
+              <Heart><Binheart className="heart" /></Heart>
             :  
-              <span><Binheart /></span>
+              <Heart><Binheart /></Heart>
             }
           </div>
           <div>
@@ -65,7 +65,10 @@ const LikeCount = styled.div`
 .heart{
   path { fill: #ff0044}
 }
+`;
 
+const Heart = styled.span`
+cursor: pointer;
 `;
 
 const Count = styled.span`

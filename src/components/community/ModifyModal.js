@@ -29,8 +29,6 @@ const ModifyModal = (props) => {
     })
   }
 
-  console.log(props.formodiId, "propopop")
-
   const modiPost = () => {
     const data = {
       title: title_ref.current.value,

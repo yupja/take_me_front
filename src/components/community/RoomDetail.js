@@ -1,14 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useBeforeunload } from "react-beforeunload";
 import styled from "styled-components";
-import { Link, useParams, useLocation, useNavigate } from "react-router-dom";
+import { Link, useParams, useLocation, useNavigate, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import SockJS from "sockjs-client";
 import Stomp from "stompjs";
-import {
-  subMessage, delMessage, deleteChattingRoom, chattingVote,
-  allChattingListRS
-} from "../../store/modules/community";
+import { subMessage, delMessage, chattingVote, allChattingListRS, roomInfoRS } from "../../store/modules/community";
 import Header from "../public/Header";
 import TimerFunction from "../public/Timer"
 
@@ -22,35 +19,35 @@ function RoomDetail() {
   const chatRef = useRef();
   const scrollRef = useRef();
   const getMessages = useSelector((state) => state.community.messages);
-  const roomList = useSelector(((state => state.community.allChattingList.chatRooms)));
+  const roomList = useSelector(((state => state.community.roomInfo)));
   const [vote, setVote] = useState(state.prosCons)
   const [timeOutLimit, setTimeOutLimit] = useState(true);
-  console.log(roomList)
+  const navigate = useNavigate();
 
 
 
   useEffect(() => {
     dispatch(allChattingListRS());
+    dispatch(roomInfoRS(roomId));
 
 
-    if (state.minutes > 10 || state.minutes <= 0) {
+    // if (state.minutes > 10 || state.minutes <= 0) {
+    //   setTimeout(() => {
+    //     client.disconnect();
+    //     dispatch(deleteChattingRoom(roomId));
+    //   }, 100)
+
+    // } else 
+    if (!timeOutLimit) {
       setTimeout(() => {
         client.disconnect();
-        dispatch(deleteChattingRoom(roomId));
+        navigate("/chattingList")
       }, 100)
-
-    } else if (!timeOutLimit) {
-      setTimeout(() => {
-        client.disconnect();
-        dispatch(deleteChattingRoom(roomId));
-      }, 1000)
     }
 
     scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
 
   }, [getMessages, timeOutLimit]);
-
-
 
   useEffect(() => {
     return (() => {
@@ -133,103 +130,89 @@ function RoomDetail() {
   return (
     <ChatWrap>
       <Header title={title} backGround={'#fff'} />
+      <Box>
+        <ListInfo>
+          <div className="userInfo">
+            <div className="profileBox">
+              <span className="live">LIVE</span>
+              <div className="profile"><img src={roomList.authorProfileImg} alt="" /></div>
+            </div>
+            <InfoText>
+              <span>{roomList.authorNickname} </span>
+              {roomList.comment}
+            </InfoText>
+          </div>
+          <strong>
+            <TimerFunction
+              min={(Math.floor(roomList.leftTime / 60))}
+              sec={(Math.floor(roomList.leftTime % 60))}
+              setTimeOutLimit={setTimeOutLimit}
+              station={"room"}
+            />
+          </strong>
+        </ListInfo>
 
-
-      {roomList && roomList.map((item, idx) => (
-        <>
-          {item.roomId === state.roodId ?
+        <Vote>
+          {vote === 0 ?
             <>
-              <Box>
-                <ListInfo>
-                  <div className="userInfo">
-                    <div className="profileBox">
-                      <span className="live">LIVE</span>
-                      <div className="profile"><img src={item.authorProfileImg} alt="" /></div>
-                    </div>
-                    <InfoText>
-                      <span>{item.authorNickname} </span>
-                      {item.comment}
-                    </InfoText>
-                  </div>
-                  <strong>
-                    <TimerFunction
-                      min={state.minutes}
-                      sec={state.seconds}
-                      setTimeOutLimit={setTimeOutLimit}
-                      station={"room"}
-                    />
-                  </strong>
-                </ListInfo>
-
-                <Vote>
-                  {vote === 0 ?
-                    <>
-                      <NonChoice
-                        onClick={() => {
-                          dispatch(chattingVote(Number(1), item.roomId))
-                          setVote(Number(1))
-                        }}
-                      >쓸까?</NonChoice>
-                      <NonChoice
-                        onClick={() => {
-                          dispatch(chattingVote(Number(2), item.roomId))
-                          setVote(Number(2))
-                        }}>말까?</NonChoice>
-                    </>
-                    :
-                    ""
-                  }
-
-                  {vote === 1 ?
-                    <>
-                      <Choice
-                        onClick={() => {
-                          dispatch(chattingVote(Number(1), item.roomId))
-                          setVote(Number(1))
-                        }}
-                      >쓸까?</Choice>
-                      <NonChoice
-                        onClick={() => {
-                          dispatch(chattingVote(Number(2), item.roomId))
-                          setVote(Number(2))
-                        }}>말까?</NonChoice>
-                    </>
-                    :
-                    ""
-                  }
-
-
-                  {vote === 2 ?
-                    <>
-                      <NonChoice
-                        onClick={() => {
-                          dispatch(chattingVote(Number(1), item.roomId))
-                          setVote(Number(1))
-                        }}
-                      >쓸까?</NonChoice>
-                      <Choice
-                        onClick={() => {
-                          dispatch(chattingVote(Number(2), item.roomId))
-                          setVote(Number(2))
-                        }}>말까?</Choice>
-                    </>
-                    :
-                    ""
-                  }
-
-
-                </Vote>
-
-                <p className="count">조회수 <span>{item.userCount}</span></p>
-              </Box>
+              <NonChoice
+                onClick={() => {
+                  dispatch(chattingVote(Number(1), roomList.roomId))
+                  setVote(Number(1))
+                }}
+              >쓸까?</NonChoice>
+              <NonChoice
+                onClick={() => {
+                  dispatch(chattingVote(Number(2), roomList.roomId))
+                  setVote(Number(2))
+                }}>말까?</NonChoice>
             </>
             :
-            ""}
-        </>
+            ""
+          }
 
-      ))}
+          {vote === 1 ?
+            <>
+              <Choice
+                onClick={() => {
+                  dispatch(chattingVote(Number(1), roomList.roomId))
+                  setVote(Number(1))
+                }}
+              >쓸까?</Choice>
+              <NonChoice
+                onClick={() => {
+                  dispatch(chattingVote(Number(2), roomList.roomId))
+                  setVote(Number(2))
+                }}>말까?</NonChoice>
+            </>
+            :
+            ""
+          }
 
 
+          {vote === 2 ?
+            <>
+              <NonChoice
+                onClick={() => {
+                  dispatch(chattingVote(Number(1), roomList.roomId))
+                  setVote(Number(1))
+                }}
+              >쓸까?</NonChoice>
+              <Choice
+                onClick={() => {
+                  dispatch(chattingVote(Number(2), roomList.roomId))
+                  setVote(Number(2))
+                }}>말까?</Choice>
+            </>
+            :
+            ""
+          }
+
+
+        </Vote>
+
+        <p className="count">조회수 <span>{roomList.userCount}</span></p>
+      </Box>
 
 
       <ChatBox className="chatbox">
@@ -289,7 +272,7 @@ const ChatWrap = styled.div`
 const ChatBox = styled.div`
   width: 100%;
   overflow-y: hidden;
-  height: calc(100% - 100px);
+  height: calc(100% - 263px);
   padding-bottom: 20px;
 `
 const EnterMsg = styled.p`
@@ -402,7 +385,7 @@ width: 100%;
 background:#333;
 padding: 1.25rem 1.5rem;
 color: #fff;
-height: 20%;
+height: 155px;
 p.count{
   font-size:0.87rem;
   margin: 1rem 0 0 0;

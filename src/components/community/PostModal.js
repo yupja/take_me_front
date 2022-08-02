@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux/es/exports";
 import { createPostAc } from "../../store/modules/community";
-import DountChart from "../public/Goal";
+import DountChart from "../goal/Goal";
 
 
 const PostModal = (props) => {
@@ -43,7 +43,6 @@ const PostModal = (props) => {
         }
         console.log(data,"공유하기")
         dispatch(createPostAc(data))
-        // window.location.reload();
     }
 
   
@@ -80,10 +79,12 @@ const PostModal = (props) => {
             props.close();
             // window.location.reload();
           }}>공유하기</Footer>
-
     </>
      );
   }
+
+const Box = styled.div`
+`;
 
   const DountBox = styled.div`
   display: flex;
@@ -156,7 +157,6 @@ const PostModal = (props) => {
   display: flex;
   align-items: center;
   flex-direction: column;
-
   `;
   
   

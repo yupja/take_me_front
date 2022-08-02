@@ -34,9 +34,6 @@ const CreateRoom = (props) => {
         prosCons: Number(0),
         seconds:Number(0)
       }
-
-      console.log(sendData);
-
       dispatch(createChatRoom(sendData, navigate));
 
   }
