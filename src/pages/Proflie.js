@@ -62,6 +62,20 @@ function Proflie() {
 
 
   const infoChange = () => {
+    if (infoState.nickname !== nickRef.current.value) { // 기존닉네임과 지금닉네임이 다를때
+      console.log(nickResult)
+      // 다를때 중복검사를 했는지 확인
+
+      const confirm = nickResult.includes('사용') // 중복체크를 완료했고, 그 값이 변하지 않았을때
+      if (!confirm) {
+        // return alert("닉네임 중복체크 확인 필요");
+        setnNickTitle("알림")
+        setNickToggles(true);
+        setNickResult("닉네임 중복체크를 확인해주세요.")
+        return
+      }
+    }
+
     const introDesc = introDescRef.current.value;
     const nick = nickRef.current.value;
 
@@ -70,7 +84,7 @@ function Proflie() {
     formData.append('image', previewImg);
 
     const changeInfo = {
-      introDesc: introDesc, // 미작성시 그대로 저장!
+      introDesc: introDesc,
       nickname: nick,
       email: email,
     }
@@ -151,10 +165,11 @@ function Proflie() {
 
   const [nickToggles, setNickToggles] = useState(false);
   const [nickResult, setNickResult] = useState("");
+  const [nickTitle, setnNickTitle] = useState("");
 
   const nickClose = (e) => {
     setNickToggles(false);
-    setNickResult("결과");
+    // setNickResult("");
   }
 
 
@@ -163,6 +178,7 @@ function Proflie() {
     // setFocus(false);
     console.log("실행!")
     const nick = nickRef.current.value;
+    setnNickTitle("닉네임 변경")
     if (infoState.nickname === nick) {
       return setNickResult("기존 닉네임입니다.")
     }
@@ -172,6 +188,8 @@ function Proflie() {
       setNickResult("2~11글자, 특수문자를 제외하고 작성해주세요.")
     }
   }
+
+
 
 
 
@@ -221,7 +239,7 @@ function Proflie() {
       {nickToggles ?
         <ModalWrap>
           <ModalBox>
-            <h1>닉네임 변경</h1>
+            <h1>{nickTitle}</h1>
             <CloseBtn onClick={nickClose}>
               <span></span>
               <span></span>
@@ -249,7 +267,14 @@ function Proflie() {
           </ProflieImg>
           <Nick idStr={idColor}>
             <div>
-              <input type="textarea" defaultValue={infoState.nickname} ref={nickRef} maxLength="11" />
+              <input type="textarea"
+                defaultValue={infoState.nickname}
+                ref={nickRef}
+                maxLength="11"
+                onChange={() => {
+                  setNickResult('')
+                }}
+              />
               <button onClick={nickActive}>중복체크</button>
             </div>
             <span className="box"> 님</span>
@@ -359,7 +384,9 @@ button{
   font-size: 0.875rem;
   border: 1px solid #dbdbdb;
   border-radius: 3.12rem;
-
+  /* position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%); */
 }
 `
 

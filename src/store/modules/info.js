@@ -26,6 +26,7 @@ export const infoUpdate = (data) => {
       withCredentials: true,
     })
       .then((res) => {
+        console.log(data);
         console.log(res)
         // dispatch(infoList(res.data.respMsg));
       })
