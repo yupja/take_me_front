@@ -65,6 +65,7 @@ function Detail() {
       comment: comment_ref.current.value,
     }
     dispatch(createCommentAc(data, postlistdata.boardId))
+    onReset();
   };
 
   const [user_nav, setUserNav] = useState(false)
@@ -86,6 +87,16 @@ function Detail() {
   const [modalName, setModalName] = useState("");
   const openModal = () => { setModalOpen(true); };
   const closeModal = () => { setModalOpen(false); };
+
+  const [text,setText] = useState('');
+
+  const onChange = (e) => {
+    setText(e.target.value);
+  };
+
+  const onReset = () => {
+    setText('')
+  };
 
 
   //슬릭
@@ -114,9 +125,17 @@ function Detail() {
     setLimit(51)
   }
 
+  const handleOnKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      createComment();
+      onReset();
+    }
+  };
+
   return (
     <>
       <Head><Header title={"커뮤니티"} tColor={"#ffffff"}/></Head>
+      <Fixed>
       <Box className="box">
         <BImg src={postlistdata.image}></BImg>
         <StyledSlider {...settings}>
@@ -181,6 +200,7 @@ function Detail() {
           : null
         }
       </Con>
+      </Fixed>
       {commentData.data && commentData.data?.map((comment_list, index) => (
         <CommentList key={index}
           username={comment_list.nickname}
@@ -195,7 +215,11 @@ function Detail() {
       ))}
       <Blank></Blank>
       <Enter>
-        <Input ref={comment_ref}></Input>
+        <Input ref={comment_ref}
+        onKeyPress={handleOnKeyPress}
+        onChange={onChange}
+        value={text}
+        ></Input>
         <PostBtn onClick={createComment}>게시</PostBtn>
       </Enter>
 
@@ -216,6 +240,10 @@ function Detail() {
     </>
   )
 };
+
+const Fixed = styled.div`
+
+`;
 
 const Head = styled.div`
 position: absolute;
@@ -499,7 +527,7 @@ right: 5%;
 
 const Blank = styled.div`
 width: 100%;
-height: 12vw;
+height: 84px;
 /* border: 1px solid black; */
 `;
 
