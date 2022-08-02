@@ -90,6 +90,8 @@ console.log(Postdata,"post")
       observer && observer.disconnect();
     };
   }, [target]);
+
+  console.log(target)
   return (
     <Box>
       {Postdata.map((postList, index) => {

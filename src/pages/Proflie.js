@@ -80,9 +80,8 @@ function Proflie() {
 
     console.log(changeInfo);
     dispatch(infoUpdate(formData));
-    console.log("싱행")
     window.alert("프로필이 변경되었습니다.")
-    window.location.reload();
+    // window.location.reload();
   }
 
   const [, , removeCookie] = useCookies(['refreshToken']);

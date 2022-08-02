@@ -16,8 +16,6 @@ const CreateRoom = (props) => {
   const [minutes, setMinutes] = useState();
   const [seconds, setSeconds] = useState();
 
-  
-
 
   const getChttingData = (index) => {
     if (comment.current.value === '') {
@@ -31,6 +29,7 @@ const CreateRoom = (props) => {
         comment: comment.current.value,
         timeLimit: count,
         minutes:count,
+        station : "create",
         prosCons: Number(0),
         seconds:Number(0)
       }

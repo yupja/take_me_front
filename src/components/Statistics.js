@@ -86,8 +86,26 @@ function MyStatistics() {
       <Wrap>
         <AllUserArea>
           <Title>
+            <div>
             <Mint>내</Mint>
             가 제일 많이 아낀 <Mint>티끌</Mint>
+            </div>
+            <div style={{display:"flex", alignItems:"center"}}>
+            {dayMonth?
+              <span 
+                style={{
+                  fontSize:"0.8rem",
+                  color: "#999999"
+                }}>*어제기준</span>
+            :
+            <span 
+              style={{
+                fontSize:"0.8rem",
+                color: "#999999"
+              }}>*전달기준</span>}
+            </div>
+           
+
           </Title>
           <Mint style={{ fontSize: "1.5rem" }}>Best 5!</Mint>
           <CircleArea>
@@ -101,9 +119,14 @@ function MyStatistics() {
                 ""}
               {myList && myList.map((list, idx) => (
                 <li key={idx}>
-                  <p>{list.rank}st </p>
-                  <img src={Icons[list.categoryId - 1]} />
-                  <p>{list.itemName}</p>
+                  {list.rank===0? ""
+                  :
+                  <>
+                    <p>{list.rank}st </p>
+                    <img src={Icons[list.categoryId - 1]} />
+                    <p>{list.itemName}</p>
+                  </>}
+        
                 </li>
               ))}
             </RankingNum>
@@ -115,6 +138,7 @@ function MyStatistics() {
           <Title>
             <Mint>남</Mint>
             이 제일 많이 아낀 <Mint>티끌</Mint>
+            
           </Title>
           <Mint style={{ fontSize: "1.5rem" }}>Best 10!</Mint>
 
@@ -123,9 +147,16 @@ function MyStatistics() {
             <RankingNum>
               {allUserList && allUserList.map((list, idx) => (
                 <li key={idx}>
-                  <p>{list.rank}st </p>
-                  <img src={Icons[list.categoryId - 1]} />
-                  <p>{list.itemName}</p>
+                  {list.rank===0? 
+                  ""
+                  :
+                  <>
+                    <p>{list.rank}st </p>
+                    <img src={Icons[list.categoryId - 1]} />
+                    <p>{list.itemName}</p>
+                  </>
+                  }
+     
                 </li>
 
 
@@ -268,13 +299,15 @@ li:first-child span{
 `;
 
 
-const Mint = styled.p`
+const Mint = styled.span`
 color:#26DFA6;
 font-weight: bold;
 `;
 
 const Title = styled.div`
+width: 100%;
 display: flex;
+justify-content: space-between;
 `;
 
 const Wrap = styled.div`
