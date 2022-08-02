@@ -27,7 +27,7 @@ function Header({ title, tColor, backGround }) {
     if (url.includes('save')) {
       setCircle("save")
     }
-    if (url.includes('community') || url.includes('chattingList')) {
+    if (url.includes('community') || url.includes('chattingList') || url.includes('chat')) {
       setCircle("community")
     }
     if (url.includes('ranking')) {
