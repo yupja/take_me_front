@@ -129,16 +129,18 @@ transform: translate(-50%, -50%);
 const Background = styled.div`
 width: 100%;
 height: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
+  /* left: 0; */
   bottom: 0;
-  right: 0;
+  /* right: 0; */
   background-color: rgb(0,0,0,0.3);
   display: flex;
   justify-content: center;
   /* background-color: rgba(41,41,41,0.85); */
   z-index: 889;
+  position: fixed;
+  top: 0;
+  width: 414px;
+  height: 100%;
   `;
 
 const ModalBox = styled.div`
