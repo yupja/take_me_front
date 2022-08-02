@@ -90,6 +90,8 @@ const CommunityTab = () => {
       observer && observer.disconnect();
     };
   }, [target]);
+
+  console.log(target)
   return (
     <Box>
       {Postdata.map((postList, index) => {

@@ -119,9 +119,14 @@ function MyStatistics() {
                 ""}
               {myList && myList.map((list, idx) => (
                 <li key={idx}>
-                  <p>{list.rank}st </p>
-                  <img src={Icons[list.categoryId - 1]} />
-                  <p>{list.itemName}</p>
+                  {list.rank===0? ""
+                  :
+                  <>
+                    <p>{list.rank}st </p>
+                    <img src={Icons[list.categoryId - 1]} />
+                    <p>{list.itemName}</p>
+                  </>}
+        
                 </li>
               ))}
             </RankingNum>
@@ -142,9 +147,16 @@ function MyStatistics() {
             <RankingNum>
               {allUserList && allUserList.map((list, idx) => (
                 <li key={idx}>
-                  <p>{list.rank}st </p>
-                  <img src={Icons[list.categoryId - 1]} />
-                  <p>{list.itemName}</p>
+                  {list.rank===0? 
+                  ""
+                  :
+                  <>
+                    <p>{list.rank}st </p>
+                    <img src={Icons[list.categoryId - 1]} />
+                    <p>{list.itemName}</p>
+                  </>
+                  }
+     
                 </li>
 
 

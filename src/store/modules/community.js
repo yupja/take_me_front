@@ -43,6 +43,47 @@ export const closedChttingLogRS = createAsyncThunk(
     }
   })
 
+
+
+  export const closedChttingInfinityLoad = createAsyncThunk(
+    'read/closedChattingListInfinity',
+    async (getState, thunkAPI) => {
+      try {
+
+          const chattingList = getState().community.allChattingList.closedChatRooms;
+          const lastIndex = chattingList[chattingList.length-1].chatRoomId;
+          const { data } = await instance.get(`/api/chat/allRoom/`,{
+            params: 
+            { chatRoomId: lastIndex, size: 5 } 
+          })
+  
+          const newData = [...chattingList, ...data.data];
+          return newData;
+        
+    } catch (error) {
+       alert("마지막 게시물입니다")
+       window.location.reload("/chattingList")
+       
+      }
+    })
+
+
+    // export const loadMoreContentDB = () => {
+    //   return async function (dispatch, getState) {
+    //     const board = getState().community.postList.data;
+    //     const lastIndex = board[board.length - 1].boardId
+    //     await instance.get('/api/board', { params: { lastBoardId: lastIndex, size: 15 } })
+    //       .then((response) => {
+    //         const new_data = [...board, ...response.data.data];
+    //         dispatch(roadPosts({ data: new_data }));
+    //       });
+    //   };
+    // };
+    
+    
+    
+
+
   
 export const deleteChattingRoom = (roomId, navigate) => {
   return async function (dispatch) {
@@ -78,6 +119,11 @@ export const chattingVote = (vote, roomId) => {
     }
   }
 }
+
+
+
+
+
 
 // [커뮤니티 채팅 API / 은진] -------------------------------------------------
 
@@ -399,6 +445,10 @@ const communitySlice = createSlice({
   },
 
   extraReducers: {
+    
+    [closedChttingInfinityLoad.fulfilled]: (state, action) => {
+      state.allChattingList.closedChatRooms = action.payload
+    },
     [allChattingListRS.fulfilled]: (state, action) => {
       state.allChattingList = action.payload
     },
