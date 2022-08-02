@@ -62,13 +62,9 @@ function Proflie() {
 
 
   const infoChange = () => {
-    if (infoState.nickname !== nickRef.current.value) { // 기존닉네임과 지금닉네임이 다를때
-      console.log(nickResult)
-      // 다를때 중복검사를 했는지 확인
-
-      const confirm = nickResult.includes('사용') // 중복체크를 완료했고, 그 값이 변하지 않았을때
+    if (infoState.nickname !== nickRef.current.value) {
+      const confirm = nickResult.includes('사용');
       if (!confirm) {
-        // return alert("닉네임 중복체크 확인 필요");
         setnNickTitle("알림")
         setNickToggles(true);
         setNickResult("닉네임 중복체크를 확인해주세요.")
@@ -80,7 +76,6 @@ function Proflie() {
     const nick = nickRef.current.value;
 
     const formData = new FormData();
-    console.log(introDesc);
     formData.append('image', previewImg);
 
     const changeInfo = {
@@ -92,10 +87,9 @@ function Proflie() {
     const blob = new Blob([json], { type: "application/json" });
     formData.append('changeInfo', blob);
 
-    console.log(changeInfo);
     dispatch(infoUpdate(formData));
     window.alert("프로필이 변경되었습니다.")
-    // window.location.reload();
+    window.location.reload();
   }
 
   const [, , removeCookie] = useCookies(['refreshToken']);
@@ -137,7 +131,6 @@ function Proflie() {
   const active = (e) => {
     setOnToggle(true);
     setFocus(false);
-    console.log("실행!")
   }
 
   const emailCheck = (e) => {
@@ -176,7 +169,6 @@ function Proflie() {
   const nickActive = (e) => {
     setNickToggles(true);
     // setFocus(false);
-    console.log("실행!")
     const nick = nickRef.current.value;
     setnNickTitle("닉네임 변경")
     if (infoState.nickname === nick) {
@@ -199,7 +191,6 @@ function Proflie() {
     const emailText = emailRef.current.value;
     if (resultAlert.includes("사용")) {
       setEmail(emailText);
-      console.log(emailText)
       setNavToggles(false);
     } else {
       setResultAlert("중복체크를 확인해주세요!")

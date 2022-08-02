@@ -1,4 +1,3 @@
-import { borderRadius } from "@mui/system";
 import styled, { keyframes } from "styled-components";
 
 function DountChart({ color, percent, size, image }) {

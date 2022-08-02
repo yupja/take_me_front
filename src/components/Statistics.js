@@ -119,9 +119,14 @@ function MyStatistics() {
                 ""}
               {myList && myList.map((list, idx) => (
                 <li key={idx}>
-                  <p>{list.rank}st </p>
-                  <img src={Icons[list.categoryId - 1]} />
-                  <p>{list.itemName}</p>
+                  {list.rank===0? ""
+                  :
+                  <>
+                    <p>{list.rank}st </p>
+                    <img src={Icons[list.categoryId - 1]} />
+                    <p>{list.itemName}</p>
+                  </>}
+        
                 </li>
               ))}
             </RankingNum>
@@ -142,9 +147,16 @@ function MyStatistics() {
             <RankingNum>
               {allUserList && allUserList.map((list, idx) => (
                 <li key={idx}>
-                  <p>{list.rank}st </p>
-                  <img src={Icons[list.categoryId - 1]} />
-                  <p>{list.itemName}</p>
+                  {list.rank===0? 
+                  ""
+                  :
+                  <>
+                    <p>{list.rank}st </p>
+                    <img src={Icons[list.categoryId - 1]} />
+                    <p>{list.itemName}</p>
+                  </>
+                  }
+     
                 </li>
 
 
@@ -173,13 +185,18 @@ function MyStatistics() {
           </BottomCircleArea>
 
 
-          <ButtonArea>
+
+        </div>
+
+      </Wrap>
+      <ButtonArea>
             <div style={{
               display: "flex",
               position: "fixed",
               bottom: "10%",
               justifyContent: "space-around",
-              width: "377px"
+              maxWidth: "414px",
+              width: "100%"
 
             }}>
               {dayMonth ?
@@ -210,8 +227,6 @@ function MyStatistics() {
 
           </ButtonArea>
 
-        </div>
-      </Wrap>
     </>
   )
 

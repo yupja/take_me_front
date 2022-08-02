@@ -113,7 +113,8 @@ function SearchItems(props) {
                     앗! 아직 등록이 안되어있네요!<br />
                     새로 등록하시겠어요?
                   </AddFavoriteInput>
-                  {props.actionState==="goalInput"?
+                  {props.actionState==="goalInput" || 
+                    props.actionState==="goalModify" ?
                     <AddButton onClick={() => {
                       props.setNewAdd(true)
                       setInputValue('')
@@ -147,13 +148,14 @@ function SearchItems(props) {
         </InputBox>
 
 
+      </WholeBox>
+
       <Modal open={modalOpen}
         close={closeModal}
         header={modalName}>
         <SavedInput
         closeModal={closeModal}/>
       </Modal>
-      </WholeBox>
 
     </>
   )

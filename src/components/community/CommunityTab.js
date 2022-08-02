@@ -35,7 +35,7 @@ const CommunityTab = () => {
   const Postdata = useSelector((state) => state.community.postList.data);
   const Savedata = useSelector((state) => state.saved.savedItem);
 
-
+console.log(Postdata,"post")
 
 
   const [showModall, setShowModall] = useState(false);
@@ -90,7 +90,10 @@ const CommunityTab = () => {
       observer && observer.disconnect();
     };
   }, [target]);
+
+  console.log(target)
   return (
+    <>
     <Box>
       {Postdata.map((postList, index) => {
         return (
@@ -110,7 +113,7 @@ const CommunityTab = () => {
                 </Left>
                 <Right>
                   <div>
-                    <NewTop>
+                    <NewTop className="ellipsis">
                       <div onClick={() => {
                         Navigate
                           (`/detail/${postList.boardId}`,
@@ -187,14 +190,6 @@ const CommunityTab = () => {
       }
       )}
       <BlankBox></BlankBox>
-      <BtnBox>
-        <FootBtn onClick={() => {
-          openModal();
-          setModalName("내 태산 % 공유");
-          setModalState(<PostModal close={closeModal} />)
-        }}>
-          내 태산 % 공유</FootBtn>
-      </BtnBox>
 
         {/* 게시글등록모달     */}
 
@@ -222,10 +217,30 @@ const CommunityTab = () => {
         </>
         : null}
     </Box>
+      <Div>
+      <BtnBox onClick={() => {
+          openModal();
+          setModalName("내 태산 % 공유");
+          setModalState(<PostModal close={closeModal} />)
+        }}>
+        <FootBtn >
+          내 태산 % 공유</FootBtn>
+      </BtnBox>
+      </Div>
+    </>
   )
+    
 };
 
-
+const Div = styled.div`
+max-width: 414px;
+width: 100%;
+display: flex;
+justify-content: center;
+position: fixed;
+/* top: 85%; */
+bottom: 10%;
+`;
 
 const CtnNum = styled.span`
 font-size: 10px;
@@ -373,13 +388,11 @@ width: 355px;
 height: 60px;
 border-radius: 59px;
 padding: 1rem;
-position: fixed;
-/* top: 85%; */
-bottom: 10%;
+
 background: #26DFA6;
 text-align: center;
 z-index: 1;
-/* margin-left: 25px; */
+/* margin-left: 2.5%; */
 margin: 0 auto;
 box-shadow: 5px 5px 5px rgb(110, 110, 110, 0.4);
 opacity: 95%;
@@ -391,8 +404,8 @@ cursor: pointer;
 const FootBtn = styled.button`
 color: white;
 font-weight: 500;
+padding: 0.2rem 0 0 0;
 cursor: pointer;
-
 `;
 
 const Right = styled.div`
@@ -408,11 +421,20 @@ margin-left: 5px;
 
 const NewTop = styled.div`
 /* border: 3px solid red; */
-width: 100%;
+width: 90%;
 height: 25px;
 font-size: 1.2rem;
 font-weight: 700;
+white-space: nowrap;
+overflow: hidden;
+/* text-overflow: ellipsis; */
 cursor: pointer;
+.ellipsis {
+  width: 90%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .dot{
   path { fill: #333}
 }

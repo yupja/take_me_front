@@ -23,7 +23,6 @@ export const allChattingListRS = createAsyncThunk(
     async (roomId, thunkAPI) => {
       try {
         const { data } = await instance.get(`/api/chat/room/${roomId}`)
-        console.log(data.data)
         return data.data;
       } catch (error) {
         console.log(error);
@@ -43,6 +42,46 @@ export const closedChttingLogRS = createAsyncThunk(
       console.log(error);
     }
   })
+
+
+
+  export const closedChttingInfinityLoad = createAsyncThunk(
+    'read/closedChattingListInfinity',
+    async (getState, thunkAPI) => {
+      try {
+
+          const chattingList = getState().community.allChattingList.closedChatRooms;
+          const lastIndex = chattingList[chattingList.length-1].chatRoomId;
+          const { data } = await instance.get(`/api/chat/allRoom/`,{
+            params: 
+            { chatRoomId: lastIndex, size: 5 } 
+          })
+  
+          const newData = [...chattingList, ...data.data];
+          return newData;
+        
+    } catch (error) {
+       alert("마지막 게시물입니다")
+       
+      }
+    })
+
+
+    // export const loadMoreContentDB = () => {
+    //   return async function (dispatch, getState) {
+    //     const board = getState().community.postList.data;
+    //     const lastIndex = board[board.length - 1].boardId
+    //     await instance.get('/api/board', { params: { lastBoardId: lastIndex, size: 15 } })
+    //       .then((response) => {
+    //         const new_data = [...board, ...response.data.data];
+    //         dispatch(roadPosts({ data: new_data }));
+    //       });
+    //   };
+    // };
+    
+    
+    
+
 
   
 export const deleteChattingRoom = (roomId, navigate) => {
@@ -80,6 +119,11 @@ export const chattingVote = (vote, roomId) => {
   }
 }
 
+
+
+
+
+
 // [커뮤니티 채팅 API / 은진] -------------------------------------------------
 
 // 방생성
@@ -97,7 +141,8 @@ export const createChatRoom = (sendData, navigate) => {
           profileImg : sendData.profileImg,
           minutes : sendData.minutes,
           prosCons : sendData.prosCons,
-          seconds : sendData.seconds
+          seconds : sendData.seconds,
+          station : sendData.station
         }
         navigate(`/chat/roomdetail/${roomId}`, { state: sendingData });
       })
@@ -168,8 +213,7 @@ export const createPostAc = (data) => {
       }
     })
       .then((response) => {
-        alert("등록 완료");
-      })
+       })
       .catch((error) => {
       });
   };
@@ -325,7 +369,6 @@ export const deleteComment = (boardId, commentId) => {
 const communitySlice = createSlice({
   name: "community",
   initialState: {
-
     allChattingList:[],
     closedChttingLog: [],
     roomInfo:[],
@@ -335,11 +378,15 @@ const communitySlice = createSlice({
     // 게시판
     postList: { data: [] },
     post: [],
+    postId:[],    
     likeList: [],
     commentList: {data : []},
   },
   reducers: {
     // 포스트 리듀서 
+    getPostId:(state,action) =>{
+      state.postId.push(action.payload);
+    },
     uploadPost: (state, action) => {
       state.postList.push(action.payload);
     },
@@ -397,6 +444,10 @@ const communitySlice = createSlice({
   },
 
   extraReducers: {
+    
+    [closedChttingInfinityLoad.fulfilled]: (state, action) => {
+      state.allChattingList.closedChatRooms = action.payload
+    },
     [allChattingListRS.fulfilled]: (state, action) => {
       state.allChattingList = action.payload
     },
@@ -415,5 +466,7 @@ const communitySlice = createSlice({
 
 });
 
-export const {  loadComment, createComment, roadPosts, loadDetail, subMessage, getDayCountList, myInfo, delMessage } = communitySlice.actions;
+export const {  
+  loadComment, createComment, roadPosts, loadDetail, subMessage, 
+  getDayCountList, myInfo, delMessage, getPostId } = communitySlice.actions;
 export default communitySlice.reducer;

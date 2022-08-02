@@ -110,6 +110,7 @@ height: 70px;
 display: flex;
 margin-top: 10px;
 padding: 0 25px;
+position: sticky;
 `;
 const ProBox = styled.div`
 width: 45px;

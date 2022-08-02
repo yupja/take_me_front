@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -7,7 +7,7 @@ import Modal from "../public/BasicModalForm";
 import CreateRoom from "./CreateRoom";
 import ChattingInfo from "./ChattingInfo";
 import ClosedChattingInfo from "./ClosedChattingInfo"
-import { myInfoData , allChattingListRS} from "../../store/modules/community"
+import { myInfoData , allChattingListRS,closedChttingInfinityLoad} from "../../store/modules/community"
 
 function ChattingList() {
   const navigate = useNavigate();
@@ -21,10 +21,36 @@ function ChattingList() {
     dispatch(myInfoData())
   }, [])
 
+  const [target, setTarget] = useState(null);
+
+  const onIntersect = async ([entry], observer) => {
+    if (entry.isIntersecting) {
+      observer.unobserve(entry.target);
+      dispatch(closedChttingInfinityLoad());
+      window.location.reload("/chattingList");
+    }
+  };
+  
+
+useEffect(() => {
+    let observer;
+    if (target) {
+      try{
+        observer = new IntersectionObserver(onIntersect, {
+          threshold: 1,
+        });
+        observer.observe(target);
+      }
+      catch{
+        alert("게시물의 마지막입니다. ")
+        observer && observer.disconnect();
+      }
+    }
+  }, [target]);
+
   const RoomId = "";
   const name = React.useRef();
   const dispatch = useDispatch();
-
 
   const [modalOpen, setModalOpen] = React.useState(false);
   const [modalState, setModalState] = React.useState();
@@ -70,16 +96,18 @@ function ChattingList() {
           <div>
             {closedRoomList && closedRoomList.map((list, itemIndex) => {
               return (
-                <ChattingListDiv>
+                <ChattingListDiv >
+                  <div ref={itemIndex === closedRoomList.length - 1 ? setTarget : null}>
                   <ClosedChattingInfo
-                    profileImg={list.authorProfileImg}
-                    userName={list.authorNickname}
-                    comment={list.comment}
-                    roomId={list.roomId}
-                    true={list.voteTruePercent}
-                    false={list.voteFalsePercent}
+                    profileImg={list?.authorProfileImg}
+                    userName={list?.authorNickname}
+                    comment={list?.comment}
+                    roomId={list?.roomId}
+                    true={list?.voteTruePercent}
+                    false={list?.voteFalsePercent}
 
                   />
+                  </div>
                 </ChattingListDiv>
               )
             })}
@@ -101,6 +129,7 @@ function ChattingList() {
                 profileImg={userInfo.profileImg} />)
           }}><p>쓸까? 말까? 만들기</p></button>
         </div>
+      
       </Wrap>
 
       <Modal open={modalOpen}
@@ -132,8 +161,8 @@ align-items: center;
   width: 355px;
   height: 60px;
   border-radius: 59px;
-  padding: 1rem;
-  position: absolute;
+  padding: 1.2rem 0 0 0;
+  position: fixed;
   bottom: 10%;
   text-align: center;
   z-index: 1;
@@ -147,7 +176,7 @@ align-items: center;
   }
   p{
     
-    font-size: 20px;
+    font-size: 19px;
   }
 }
 `;
