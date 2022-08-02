@@ -125,7 +125,7 @@ background: white;
 `;
 
 const Wap = styled.div`
-
+width: 100%;
 `;
 
 const MenuBar = styled.div`

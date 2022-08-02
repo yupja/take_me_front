@@ -14,7 +14,7 @@ import Guide from "../components/community/Guide"
 
 import CurrentSavedItem from "../components/saved/CurrentSavedItem";
 
-import "../styles/saveMain.css"
+// import "../styles/saveMain.css"
 import styled from "styled-components";
 import { CheckedStart, AddMintPoint } from "../assets/icons"
 import { AiOutlineStar } from 'react-icons/ai'
@@ -235,6 +235,7 @@ function Save() {
         header={modalName}>
         {modalState}
       </BasicModalForm>
+
       {/* 가이드 모달 */}
       {showModal ?
         <Guide
@@ -249,9 +250,11 @@ export default Save;
 
 
 
+
 const Wrap = styled.div`
 width:100%;
 height: 100%;
+
 /* position: relative; */
 /* z-index: 1; */
 `;

@@ -62,7 +62,6 @@ export const closedChttingLogRS = createAsyncThunk(
         
     } catch (error) {
        alert("마지막 게시물입니다")
-       window.location.reload("/chattingList")
        
       }
     })
