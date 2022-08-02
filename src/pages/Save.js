@@ -1,25 +1,20 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+
 import { myReadGoalRQ } from "../store/modules/goal"
 import { addSavedListRQ } from "../store/modules/saved"
 import { myFavoriteListRQ, favoriteDel, addFavoriteRQ } from "../store/modules/favorite";
 
-import Modal from "../components/public/BasicModalForm";
-import SearchSavedItem from "../components/public/SearchItems";
-import Header from "../components/public/Header";
+
+import {BasicModalForm, SearchItems, Header} from "../components/public"
+import { NonGoal, GoalInfo } from "../components/goal"
+import Guide from "../components/community/Guide"
 
 import CurrentSavedItem from "../components/saved/CurrentSavedItem";
 
-import Guide from "../components/community/Guide"
-import { useNavigate } from "react-router-dom";
-
-import NonGoal from "../components/goal/NonGoal"
-import GoalInfo from "../components/goal/GoalInfo";
-
-import styled from "styled-components";
-
 import "../styles/saveMain.css"
+import styled from "styled-components";
 import { CheckedStart, AddMintPoint } from "../assets/icons"
 import { AiOutlineStar } from 'react-icons/ai'
 
@@ -37,6 +32,7 @@ function Save() {
       }
     dispatch(myReadGoalRQ());
     dispatch(myFavoriteListRQ());
+
     if (state.state?.signupUrl.state && state.state?.loginUrl) {
       setShowModal(true)
     } else {
@@ -51,25 +47,35 @@ function Save() {
 
   const [selectInputValue, setSelectInputValue] = useState([]);
   const [newAdd, setNewAdd] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [star, setStar] = useState(false);
 
 
   const dispatch = useDispatch();
+  const state = useLocation();
+  const priceInput = useRef();
+
+
+  const myGoalList = useSelector((state => state.goal.myGoalList));
+  const mylist = useSelector((state) => state.favorite.myFavoriteList);
 
   const openModal = () => { setModalOpen(true); };
   const closeModal = () => { setModalOpen(false); };
 
-  const [showModal, setShowModal] = useState(false);
+  const goal = {
+    goalImage: myGoalList?.image,
+    goalItemId: myGoalList?.goalItemId,
+    goalPercent: (myGoalList?.goalPercent) * 0.01,
+    goalitemName: myGoalList?.itemName
+  }
 
+  console.log(myGoalList)
   const openGuide = () => {
     setShowModal(true)
   }
   const closeGuide = () => {
     setShowModal(false);
   }
-
-  const state = useLocation();
-
-  const [star, setStar] = useState(false);
 
   const changeStar = () => {
     if (star) {
@@ -79,19 +85,6 @@ function Save() {
     }
   }
 
-
-  const myGoalList = useSelector((state => state.goal.myGoalList));
-  const goal = {
-    goalImage: myGoalList?.image,
-    goalItemId: myGoalList?.goalItemId,
-    goalPercent: (myGoalList?.goalPercent) * 0.01,
-    goalitemName: myGoalList?.itemName
-  }
-
-  const mylist = useSelector((state) => state.favorite.myFavoriteList);
-
-  const title = "데일리 티끌"
-  const priceInput = useRef();
 
   //api/savedItem, 기존에 있던 아이템으로 티끌 등록
   const addSaveData = () => {
@@ -128,6 +121,8 @@ function Save() {
   //
 
 
+  const title = "데일리 티끌"
+
   return (
     <Wrap>
       <TopWrap>
@@ -141,20 +136,25 @@ function Save() {
             setModalName={setModalName}
             setModalState={setModalState}/>
           :
-          <GoalInfo
-            myGoalList={myGoalList}
-            openModal={openModal}
-            closeModal={closeModal}
-            setModalName={setModalName}
-            setModalState={setModalState}/>
-          }
+          <>
+          {goal.goalPercent === 100? 
+            alert("100프로달성!")
+            :
+            <GoalInfo
+              myGoalList={myGoalList}
+              openModal={openModal}
+              closeModal={closeModal}
+              setModalName={setModalName}
+              setModalState={setModalState}/>}
           </>
+        }
+        </>
     
       </TopWrap>
 
 
       <SearchArea>
-        <SearchSavedItem
+        <SearchItems
           setSelectInputValue={setSelectInputValue}
           setNewAdd={setNewAdd}
           actionState={"Save"}
@@ -229,11 +229,11 @@ function Save() {
 
       <CurrentSavedItem goalItemId={goal.goalItemId} />
 
-      <Modal open={modalOpen}
+      <BasicModalForm open={modalOpen}
         close={closeModal}
         header={modalName}>
         {modalState}
-      </Modal>
+      </BasicModalForm>
       {/* 가이드 모달 */}
       {showModal ?
         <Guide

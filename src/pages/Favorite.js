@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-import SearchSavedItem from "../components/public/SearchSavedItem";
+import SearchSavedItem from "../components/public/SearchItems";
 import FavoriteList from "../components/mypage/FavoriteList"
 import { myFavoriteListRQ } from "../store/modules/favorite";
 import FavoriteAdd from "../components/mypage/FavoriteAdd";

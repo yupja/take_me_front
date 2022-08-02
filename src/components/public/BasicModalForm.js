@@ -1,7 +1,7 @@
 import React from "react";
 import "../../styles/dayModal.css"
 
-const Modal = (props) =>{
+const BasicModalForm = (props) =>{
   const { open, close, header } = props;
 
   return (
@@ -21,4 +21,4 @@ const Modal = (props) =>{
   );
 }
 
-export default Modal;
+export default BasicModalForm;
