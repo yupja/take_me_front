@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 import { instance } from "../../shared/axios";
+import swal from "sweetalert";
 
 
 
@@ -159,7 +160,7 @@ export const createPostAc = (data) => {
       }
     })
       .then((response) => {
-        alert("등록 완료");
+        swal('등록완료',"","success");
       })
       .catch((error) => {
       });

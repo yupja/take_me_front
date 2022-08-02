@@ -17,6 +17,7 @@ const ListModal = (props) => {
   const saveData = useSelector((state) => state.saved.savedItem.data.savedItemList);
   const saveDataa = useSelector((state) => state.saved.savedItem.data);
   const boardId = (props.forsaveId)
+  console.log(saveDataa,"save")
 
   const [star, setStar] = useState(false);
 
