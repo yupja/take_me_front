@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const PercentProgressBar =(props)=>{
+const ProgressBar =(props)=>{
     return (
         <>
         <div style={{width:"100%", height:"2rem"}}>
@@ -52,7 +52,7 @@ const PercentProgressBar =(props)=>{
 
         {(props.true=== 0)&&(props.false===0)? 
         <FalseBarDiv style={{justifyContent:"center"}}>
-             {props.true}아무도 투표하지 않았어요{props.false}
+             아무도 투표하지 않았어요
          </FalseBarDiv>
          :
          ""
@@ -102,4 +102,4 @@ font-size: 1.5rem;
 
 width: ${(props)=>(props.percent? props.percent:"")}%;
 `;
-export default PercentProgressBar;
+export default ProgressBar;

@@ -17,6 +17,22 @@ export const allChattingListRS = createAsyncThunk(
     }
   })
 
+ 
+//룸디테일 
+  export const roomInfoRS = createAsyncThunk(
+    `read/roomInfo`,
+    async (roomId, thunkAPI) => {
+      try {
+        const { data } = await instance.get(`/api/chat/room/${roomId}`)
+        console.log(data.data)
+        return data.data;
+      } catch (error) {
+        console.log(error);
+      }
+    })
+
+
+
 //종료된 채팅 조회 상세로그
 export const closedChttingLogRS = createAsyncThunk(
   'read/closedChattingLog',
@@ -34,7 +50,6 @@ export const deleteChattingRoom = (roomId, navigate) => {
   return async function (dispatch) {
     try {
       await instance.get(`/api/chat/room/${roomId}/save`)
-
     } catch (error) {
       console.log(error)
     }
@@ -93,6 +108,7 @@ export const createChatRoom = (sendData, navigate) => {
   };
 };
 
+
 // 이전 메세지
 export const getChatting = (data) => {
   return async function (dispatch) {
@@ -117,13 +133,6 @@ export const myInfoData = (data) => {
       });
   };
 };
-
-
-
-
-
-
-
 
 
 // [커뮤니티 POST API] -------------------------------------------------------
@@ -320,6 +329,7 @@ const communitySlice = createSlice({
 
     allChattingList:[],
     closedChttingLog: [],
+    roomInfo:[],
     getDayCountList: [],
     messages: [],
     myInfo: [],
@@ -390,6 +400,9 @@ const communitySlice = createSlice({
   extraReducers: {
     [allChattingListRS.fulfilled]: (state, action) => {
       state.allChattingList = action.payload
+    },
+    [roomInfoRS.fulfilled]: (state, action) => {
+      state.roomInfo = action.payload
     },
     [likeChange.fulfilled]: (state, action) => {
       state.likeList = action.payload

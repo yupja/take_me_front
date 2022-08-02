@@ -7,7 +7,7 @@ import PostModal from "./PostModal";
 
 import Like from "./Like";
 import ListModal from "./ListModal";
-import GoalChart from "../public/Goal";
+import GoalChart from "../goal/Goal";
 
 import { useNavigate } from "react-router-dom";
 import { getUserInfoDB } from "../../store/modules/user";

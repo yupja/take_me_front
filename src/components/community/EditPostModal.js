@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux/es/exports";
 import { UpdatePost } from "../../store/modules/community";
-import DountChart from "../public/Goal";
+import DountChart from "../goal/Goal";
 
 
 const EditPostModal = (props) => {

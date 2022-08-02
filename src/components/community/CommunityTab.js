@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { getUserInfoDB } from "../../store/modules/user";
 import Like from "./Like";
 import GoalForCum from "./GoalForCum"
-import DountChart from "../public/Goal";
+
 
 import { loadMoreContentDB, loadpostsAc, deletePostAc } from "../../store/modules/community";
 import { ReactComponent as Receipt } from "../../assets/icons/Receipt.svg";

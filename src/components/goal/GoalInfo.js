@@ -7,7 +7,7 @@ import PostModal from "../../components/community/PostModal";
 import styled from "styled-components";
 import { GoalModify, GoalDelete, ShareCommunity } from "../../assets/icons";
 import Slider from "react-slick";
-import GoalChart from "../public/Goal"
+import GoalChart from "./Goal"
 
 
 const GoalInfo = (props) => {
@@ -15,7 +15,6 @@ const GoalInfo = (props) => {
   const goal = props.myGoalList;
   const [touchSetMenu, setTouchSetMenu] = useState(false)
 
-  console.log(touchSetMenu)
 
   const changeMenu = () => {
     if (touchSetMenu) {
@@ -42,7 +41,7 @@ const GoalInfo = (props) => {
             <div>
               <GoalChart
                 color="#26DFA6"
-                percent={goal?.goalPercent}
+                percent={goal?.goalPercent*0.01}
                 size="200"/>
             </div>
      
@@ -107,7 +106,7 @@ const GoalInfo = (props) => {
               <>
 
                 <GoalInfoArea>
-                  <p>{Math.floor(goal?.goalPercent * 100)}%</p>
+                  <p>{Math.floor(goal?.goalPercent)}%</p>
                   <p style={{ fontSize: "1.5rem", fontFamily: "Roboto" }}>{goal?.itemName}</p>
                 </GoalInfoArea>
               </>

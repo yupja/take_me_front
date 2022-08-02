@@ -5,7 +5,7 @@ import { Link, useParams, useLocation, useNavigate, Navigate } from "react-route
 import { useDispatch, useSelector } from "react-redux";
 import SockJS from "sockjs-client";
 import Stomp from "stompjs";
-import { subMessage, delMessage, chattingVote, allChattingListRS } from "../../store/modules/community";
+import { subMessage, delMessage, chattingVote, allChattingListRS, roomInfoRS } from "../../store/modules/community";
 import Header from "../public/Header";
 import TimerFunction from "../public/Timer"
 
@@ -19,15 +19,16 @@ function RoomDetail() {
   const chatRef = useRef();
   const scrollRef = useRef();
   const getMessages = useSelector((state) => state.community.messages);
-  const roomList = useSelector(((state => state.community.allChattingList.chatRooms)));
+  const roomList = useSelector(((state => state.community.roomInfo)));
   const [vote, setVote] = useState(state.prosCons)
-  const [timeOutLimit , setTimeOutLimit] = useState(true);
+  const [timeOutLimit, setTimeOutLimit] = useState(true);
   const navigate = useNavigate();
 
 
 
   useEffect(() => {
     dispatch(allChattingListRS());
+    dispatch(roomInfoRS(roomId));
 
 
     // if (state.minutes > 10 || state.minutes <= 0) {
@@ -41,17 +42,15 @@ function RoomDetail() {
       setTimeout(() => {
         client.disconnect();
         navigate("/chattingList")
-      }, 1000)
+      }, 100)
     }
 
-  scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' })
-    
+    scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
+
   }, [getMessages, timeOutLimit]);
 
-
-
   useEffect(() => {
-  return (() => {
+    return (() => {
       dispatch(delMessage())
       disconnects();
     })
@@ -59,31 +58,31 @@ function RoomDetail() {
   }, [])
 
 
-useEffect(() => {
-  // 소켓 연결
-  client.connect({ "token": token }, () => {
-    // 채팅방 구독
-    client.subscribe(`/sub/chat/room/${roomId}`, (res) => {
-      let newMessage = JSON.parse(res.body);
-      dispatch(subMessage(newMessage));
-    })
+  useEffect(() => {
+    // 소켓 연결
+    client.connect({ "token": token }, () => {
+      // 채팅방 구독
+      client.subscribe(`/sub/chat/room/${roomId}`, (res) => {
+        let newMessage = JSON.parse(res.body);
+        dispatch(subMessage(newMessage));
+      })
 
-    // 유저 정보 전송 데이터
-    const info = {
-      type: 'ENTER',
-      roomId: roomId,
-      sender: state.sender,
-      profileImg: state.profileImg,
-    }
-    // 유저 정보 전송(입장메시지용)
-    client.send(`/pub/chat/message`, {}, JSON.stringify(info));
-  });
+      // 유저 정보 전송 데이터
+      const info = {
+        type: 'ENTER',
+        roomId: roomId,
+        sender: state.sender,
+        profileImg: state.profileImg,
+      }
+      // 유저 정보 전송(입장메시지용)
+      client.send(`/pub/chat/message`, {}, JSON.stringify(info));
+    });
 
-}, [])
+  }, [])
 
 
 
-  
+
 
 
 
@@ -130,123 +129,113 @@ useEffect(() => {
 
   return (
     <ChatWrap>
-      <Header title={title} />
-
-
-      {roomList&&roomList.map((item, idx) =>(
-        <>
-        {item.roomId === state.roomId?
-           <>
-           <Box>
-            <ListInfo>
-            <div className="userInfo">
-              <div className="profileBox">
-                <span className="live">LIVE</span>
-                <div className="profile"><img src={item.authorProfileImg} alt="" /></div>
-              </div>
-              <InfoText>
-                <span>{item.authorNickname} </span>
-                {item.comment}
-              </InfoText>
+      <Header title={title} backGround={'#fff'} />
+      <Box>
+        <ListInfo>
+          <div className="userInfo">
+            <div className="profileBox">
+              <span className="live">LIVE</span>
+              <div className="profile"><img src={roomList.authorProfileImg} alt="" /></div>
             </div>
-            <strong>
-              <TimerFunction
-                min={state.minutes}
-                sec={state.seconds}
-                setTimeOutLimit={setTimeOutLimit}
-                station={"room"}
-              />
-            </strong>
-          </ListInfo>
-  
-          <Vote>
-            {vote===0?
-              <>
+            <InfoText>
+              <span>{roomList.authorNickname} </span>
+              {roomList.comment}
+            </InfoText>
+          </div>
+          <strong>
+            <TimerFunction
+              min={(Math.floor(roomList.leftTime / 60))}
+              sec={(Math.floor(roomList.leftTime % 60))}
+              setTimeOutLimit={setTimeOutLimit}
+              station={"room"}
+            />
+          </strong>
+        </ListInfo>
+
+        <Vote>
+          {vote === 0 ?
+            <>
               <NonChoice
-              onClick={()=>{
-                dispatch(chattingVote(Number(1), item.roomId))
-                setVote(Number(1))
-              }}
+                onClick={() => {
+                  dispatch(chattingVote(Number(1), roomList.roomId))
+                  setVote(Number(1))
+                }}
               >쓸까?</NonChoice>
-            <NonChoice
-              onClick={()=>{
-                dispatch(chattingVote(Number(2),item.roomId))
-                setVote(Number(2))
-              }}>말까?</NonChoice>
-              </>
-          :
-          ""
-           }
-  
-           {vote===1? 
-             <>
-             <Choice
-             onClick={()=>{
-               dispatch(chattingVote(Number(1),item.roomId))
-               setVote(Number(1))
-             }}
-             >쓸까?</Choice>
-           <NonChoice
-             onClick={()=>{
-               dispatch(chattingVote(Number(2),item.roomId))
-               setVote(Number(2))
-             }}>말까?</NonChoice>
-             </>
+              <NonChoice
+                onClick={() => {
+                  dispatch(chattingVote(Number(2), roomList.roomId))
+                  setVote(Number(2))
+                }}>말까?</NonChoice>
+            </>
             :
             ""
-            }
-  
-  
-           {vote===2? 
-           <>
-            <NonChoice
-              onClick={()=>{
-                dispatch(chattingVote(Number(1),item.roomId))
-                setVote(Number(1))
-              }}
+          }
+
+          {vote === 1 ?
+            <>
+              <Choice
+                onClick={() => {
+                  dispatch(chattingVote(Number(1), roomList.roomId))
+                  setVote(Number(1))
+                }}
+              >쓸까?</Choice>
+              <NonChoice
+                onClick={() => {
+                  dispatch(chattingVote(Number(2), roomList.roomId))
+                  setVote(Number(2))
+                }}>말까?</NonChoice>
+            </>
+            :
+            ""
+          }
+
+
+          {vote === 2 ?
+            <>
+              <NonChoice
+                onClick={() => {
+                  dispatch(chattingVote(Number(1), roomList.roomId))
+                  setVote(Number(1))
+                }}
               >쓸까?</NonChoice>
-            <Choice
-              onClick={()=>{
-                dispatch(chattingVote(Number(2),item.roomId))
-                setVote(Number(2))
-              }}>말까?</Choice>
-              </>
-              :
-              ""
-              }
-  
-  
-          </Vote>
-  
-          <p className="count">조회수 <span>{item.userCount}</span></p>
-        </Box> 
-  
-          </>
-          :
-          ""}
-        </>
-     
-      ))}
+              <Choice
+                onClick={() => {
+                  dispatch(chattingVote(Number(2), roomList.roomId))
+                  setVote(Number(2))
+                }}>말까?</Choice>
+            </>
+            :
+            ""
+          }
+
+
+        </Vote>
+
+        <p className="count">조회수 <span>{roomList.userCount}</span></p>
+      </Box>
+
 
       <ChatBox className="chatbox">
-        <Chatting ref={scrollRef}>
-          {state.sender &&
-            getMessages.map((el, i) =>
-              el.type === "TALK" ?
-                (
-                  <div key={i} className={el.sender === state.sender ? "right" : "left"}>
-                    <div className="img"><img src={el.profileImg} alt="프로필" /></div>
-                    <div className="info">
-                      <span>{el.sender}</span>
-                      <p>{el.message}</p>
-                    </div>
-                  </div>) :
-                <EnterMsg key={i}>
-                  <span>{el.message.split('님')[0]}</span>
-                  {el.message.substring(el.message.length - 13)}
-                </EnterMsg>
-            )
-          }
+        <Chatting>
+          <div ref={scrollRef}>
+            {state.sender &&
+              getMessages.map((el, i) =>
+                el.type === "TALK" ?
+                  (
+                    <div key={i} className={el.sender === state.sender ? "right" : "left"}>
+                      <div className="img"><img src={el.profileImg} alt="프로필" /></div>
+                      <div className="info">
+                        <span>{el.sender}</span>
+                        <p>{el.message}</p>
+                      </div>
+                    </div>) :
+                  <EnterMsg key={i}>
+                    <span>{el.message.split('님')[0]}</span>
+                    {el.message.substring(el.message.length - 13)}
+                  </EnterMsg>
+              )
+            }
+          </div>
         </Chatting>
       </ChatBox>
       {timeOutLimit ?
@@ -273,16 +262,18 @@ useEffect(() => {
 export default RoomDetail;
 
 const ChatWrap = styled.div`
-
+  position: relative;
+  overflow: hidden;
+  height: 100%;
 `
 
 
 
 const ChatBox = styled.div`
   width: 100%;
-  overflow: overlay;
-  height: 73vh;
-
+  overflow-y: hidden;
+  height: calc(100% - 263px);
+  padding-bottom: 20px;
 `
 const EnterMsg = styled.p`
   text-align: center;
@@ -298,6 +289,9 @@ const Chatting = styled.div`
 background: #fff;
 width: 100%;
 padding:20px 25px; 
+overflow-y: scroll;
+  height: 100%;
+
 
 .left, .right {
   display: flex;
@@ -354,6 +348,7 @@ display: flex;
 align-items: center; 
 position: absolute;
 bottom: 0;
+height: 66px;
 
 input:placeholder{
   color:#fff;
@@ -390,6 +385,7 @@ width: 100%;
 background:#333;
 padding: 1.25rem 1.5rem;
 color: #fff;
+height: 155px;
 p.count{
   font-size:0.87rem;
   margin: 1rem 0 0 0;

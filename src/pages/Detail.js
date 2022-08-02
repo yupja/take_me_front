@@ -13,12 +13,11 @@ import Like from "../components/community/Like";
 import CommentList from "../components/community/CommentList";
 import Modal from "../components/public/BasicModalForm";
 import EditPostModal from "../components/community/EditPostModal";
-import ModifyModal from "../components/community/ModifyModal";
+
 import { createCommentAc, loadCommentAc } from "../store/modules/community"
 import { loadpostsAc, loadDetailAc, deletePostAc } from "../store/modules/community";
 import { getUserInfoDB } from "../store/modules/user";
-import DountChart from "../components/public/Goal";
-import GoalForCum from "../components/community/GoalForCum";
+import DountChart from "../components/goal/Goal";
 import { useLocation } from "react-router";
 import Header from "../components/public/Header"
 
