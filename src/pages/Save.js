@@ -3,12 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { myReadGoalRQ } from "../store/modules/goal"
-import {achieveGoal} from "../store/modules/goal"
+import { achieveGoal } from "../store/modules/goal"
 import { addSavedListRQ } from "../store/modules/saved"
-import { myFavoriteListRQ, favoriteDel, addFavoriteRQ } from "../store/modules/favorite";
+import { myFavoriteListRQ, favoriteDel, addFavoriteRQ } from "../store/modules/myInfo";
 
 
-import {BasicModalForm, SearchItems, Header} from "../components/public"
+import { BasicModalForm, SearchItems, Header } from "../components/public"
 import { NonGoal, GoalInfo } from "../components/goal"
 import Guide from "../components/community/Guide"
 
@@ -21,16 +21,14 @@ import { AiOutlineStar } from 'react-icons/ai'
 
 
 
-
-
 function Save() {
-  const navigate  = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
 
-      if(!localStorage.getItem("accessToken")){
-        navigate("/main")
-      }
+    if (!localStorage.getItem("accessToken")) {
+      navigate("/main")
+    }
     dispatch(myReadGoalRQ());
     dispatch(myFavoriteListRQ());
 
@@ -58,7 +56,7 @@ function Save() {
 
 
   const myGoalList = useSelector((state => state.goal.myGoalList));
-  const mylist = useSelector((state) => state.favorite.myFavoriteList);
+  const mylist = useSelector((state) => state.myInfo.myFavoriteList);
 
   const openModal = () => { setModalOpen(true); };
   const closeModal = () => { setModalOpen(false); };
@@ -126,31 +124,31 @@ function Save() {
     <Wrap>
       <TopWrap>
         <>
-        <HeaderArea><Header title={title} tColor={"#ffffff"} /></HeaderArea>
-        {goal.goalitemName === "이름 없음" ?
-          <NonGoal 
-            openModal={openModal}
-            closeModal={closeModal}
-            setModalName={setModalName}
-            setModalState={setModalState}/>
-          :
-          <>
-          {myGoalList?.goalPercent === 100? 
-          <>{alert("100% 달성했습니다. ")}
-            {dispatch(achieveGoal(myGoalList?.goalItemId))}
-            {window.location.reload("/save")}
-          </>  
-            :
-            <GoalInfo
-              myGoalList={myGoalList}
+          <HeaderArea><Header title={title} tColor={"#ffffff"} /></HeaderArea>
+          {goal.goalitemName === "이름 없음" ?
+            <NonGoal
               openModal={openModal}
               closeModal={closeModal}
               setModalName={setModalName}
-              setModalState={setModalState}/>}
-          </>
-        }
+              setModalState={setModalState} />
+            :
+            <>
+              {myGoalList?.goalPercent === 100 ?
+                <>{alert("100% 달성했습니다. ")}
+                  {dispatch(achieveGoal(myGoalList?.goalItemId))}
+                  {window.location.reload("/save")}
+                </>
+                :
+                <GoalInfo
+                  myGoalList={myGoalList}
+                  openModal={openModal}
+                  closeModal={closeModal}
+                  setModalName={setModalName}
+                  setModalState={setModalState} />}
+            </>
+          }
         </>
-    
+
       </TopWrap>
 
 
@@ -163,33 +161,34 @@ function Save() {
           goalItemId={goal.goalItemId} />
       </SearchArea>
 
-      <div className="favoriteDiv" 
+      <div className="favoriteDiv"
         style={{
-          display:"flex",
-          justifyContent:"center"}}>
+          display: "flex",
+          justifyContent: "center"
+        }}>
 
-      <FavoriteTag>
-        {mylist && mylist.length === 0 ?
-          <NonFavoriteItem>
-            <div><CheckedStart /></div>
-            <p>즐겨찾기를 등록하고 편하게 사용해보세요!</p>
-          </NonFavoriteItem>
-          :
-          <>
-            {mylist && mylist?.map((item, itemIndex) => {
-              return (<>
-                <FavoriteItem
-                  key={item.favoriteItemId}
-                  onClick={() => { addFavoriteSaved(itemIndex) }}>
-                  {item.itemName}
-                </FavoriteItem>
-                <button onClick={() => { dispatch(favoriteDel(item.favoriteItemId)) }}>x</button>
-              </>
-              )
-            })}
-          </>
-        }
-      </FavoriteTag>
+        <FavoriteTag>
+          {mylist && mylist.length === 0 ?
+            <NonFavoriteItem>
+              <div><CheckedStart /></div>
+              <p>즐겨찾기를 등록하고 편하게 사용해보세요!</p>
+            </NonFavoriteItem>
+            :
+            <>
+              {mylist && mylist?.map((item, itemIndex) => {
+                return (<>
+                  <FavoriteItem
+                    key={item.favoriteItemId}
+                    onClick={() => { addFavoriteSaved(itemIndex) }}>
+                    {item.itemName}
+                  </FavoriteItem>
+                  <button onClick={() => { dispatch(favoriteDel(item.favoriteItemId)) }}>x</button>
+                </>
+                )
+              })}
+            </>
+          }
+        </FavoriteTag>
       </div>
 
 
@@ -214,9 +213,9 @@ function Save() {
                 <div className="inputBox">
                   <input
                     type="Number"
-                    ref={priceInput} 
+                    ref={priceInput}
                     placeholder={selectInputValue.itemDefaultPrice}
-                    />
+                  />
                   <button onClick={addSaveData}><AddMintPoint /></button>
                 </div>
 

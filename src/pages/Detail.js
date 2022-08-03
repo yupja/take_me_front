@@ -4,10 +4,9 @@ import styled from "styled-components";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux/es/exports";
-import { useParams } from "react-router-dom";
 
 import Like from "../components/community/Like";
 import CommentList from "../components/community/CommentList";
@@ -16,7 +15,7 @@ import EditPostModal from "../components/community/EditPostModal";
 
 import { createCommentAc, loadCommentAc } from "../store/modules/community"
 import { loadpostsAc, loadDetailAc, deletePostAc } from "../store/modules/community";
-import { getUserInfoDB } from "../store/modules/user";
+import { getUserInfoDB } from "../store/modules/login";
 import DountChart from "../components/goal/Goal";
 import { useLocation } from "react-router";
 import Header from "../components/public/Header"
@@ -34,23 +33,23 @@ function Detail() {
 
   const boardIdex = params.boardId;
 
-    const  state  = useLocation();
-    const postlistdata = state.state.name
-    const boardId = postlistdata.boardId
+  const state = useLocation();
+  const postlistdata = state.state.name
+  const boardId = postlistdata.boardId
 
-    React.useEffect(() => {
-      if(!localStorage.getItem("accessToken")){
-        navigate("/main")
-      }
-        dispatch(loadCommentAc(boardId))
-        dispatch(loadpostsAc())
-        dispatch(loadDetailAc(boardId))
-        dispatch(getUserInfoDB())
-    }, []);
+  React.useEffect(() => {
+    if (!localStorage.getItem("accessToken")) {
+      navigate("/main")
+    }
+    dispatch(loadCommentAc(boardId))
+    dispatch(loadpostsAc())
+    dispatch(loadDetailAc(boardId))
+    dispatch(getUserInfoDB())
+  }, []);
 
   const commentData = useSelector((state) => state.community.commentList);
   const Postdata = useSelector((state) => state.community.postList);
-  const userinfo = useSelector((state) => state.user.infoList)
+  const userinfo = useSelector((state) => state.login.infoList)
   const myGoalList = useSelector((state => state.goal.myGoalList));
   const goal = {
     goalImage: myGoalList?.image,
@@ -88,7 +87,7 @@ function Detail() {
   const openModal = () => { setModalOpen(true); };
   const closeModal = () => { setModalOpen(false); };
 
-  const [text,setText] = useState('');
+  const [text, setText] = useState('');
 
   const onChange = (e) => {
     setText(e.target.value);
@@ -134,72 +133,72 @@ function Detail() {
 
   return (
     <>
-      <Head><Header title={"커뮤니티"} tColor={"#ffffff"}/></Head>
+      <Head><Header title={"커뮤니티"} tColor={"#ffffff"} /></Head>
       <Fixed>
-      <Box className="box">
-        <BImg src={postlistdata.image}></BImg>
-        <StyledSlider {...settings}>
-          <div style={{ backgroundColor: "transparent" }}></div>
-          <ContentsBox>
-            <DountBox>
-              <DountChart color="#26DFA6" size="235" position="absolute"
-              percent={postlistdata.goalPercent * 0.01} />
-              <Text>
-                <Commu>
-                  <GoalName><p className="goalTitle">{Math.floor(postlistdata.goalPercent)}&nbsp;%</p></GoalName>
-                  <GoalName>{postlistdata.goalItemName}</GoalName>
-                </Commu>
-                <Bottom className="bottom">
-                  <Like
-                    isLike={postlistdata.checkLike}
-                    forLikeId={postlistdata.boardId}
-                    likeCount={postlistdata.likeCount}
-                  />&nbsp;<Count>조회수&nbsp;{postlistdata.viewCount}</Count>
-                </Bottom>
-                <Day>{postlistdata.createdAt.substr(0, 10).split('-', '3').join(".")}</Day>
-              </Text>
-            </DountBox>
-          </ContentsBox>
-        </StyledSlider>
-      </Box>
-      <Con>
-        <Left>
-          <WriterImg src={postlistdata.profileImg}></WriterImg>
-        </Left>
-        <Right>
-          <Content>
-            <Nick>{postlistdata.nickname}</Nick>&nbsp;&nbsp;
-            {/* {postlistdata.contents} */}
-            {toggleEllipsis(postlistdata.contents, limit).string}
-            {toggleEllipsis(postlistdata.contents, limit)
-              .isShowMore ? <MoreBtn onClick={onClickMore(postlistdata.contents)}>
-              ...더보기</MoreBtn> : <Arr onClick={onClickClose}><ArrowUp /></Arr>}
-          </Content>
-        </Right>
-        {userinfo.username === postlistdata.userId ?
-          <>
-            <Toggle onClick={onClickNav}><Dot /></Toggle>
-            {user_nav && (
-              <UserInfoNav>
-                <div>
-                  <div onClick={() => {
-                     openModal();
-                     setModalName("수정하기");
-                     setModalState(<EditPostModal 
-                      close={closeModal}
-                      boardId={postlistdata.boardId} />)
-                   }}>수정하기</div>
-                  <div style={{ color: "#FF5E5E" }} onClick={() => {
-                    dispatch(
-                      deletePostAc(postlistdata.boardId))
-                  }}>삭제하기</div>
-                </div>
-              </UserInfoNav>
-            )}
-          </>
-          : null
-        }
-      </Con>
+        <Box className="box">
+          <BImg src={postlistdata.image}></BImg>
+          <StyledSlider {...settings}>
+            <div style={{ backgroundColor: "transparent" }}></div>
+            <ContentsBox>
+              <DountBox>
+                <DountChart color="#26DFA6" size="235" position="absolute"
+                  percent={postlistdata.goalPercent * 0.01} />
+                <Text>
+                  <Commu>
+                    <GoalName><p className="goalTitle">{Math.floor(postlistdata.goalPercent)}&nbsp;%</p></GoalName>
+                    <GoalName>{postlistdata.goalItemName}</GoalName>
+                  </Commu>
+                  <Bottom className="bottom">
+                    <Like
+                      isLike={postlistdata.checkLike}
+                      forLikeId={postlistdata.boardId}
+                      likeCount={postlistdata.likeCount}
+                    />&nbsp;<Count>조회수&nbsp;{postlistdata.viewCount}</Count>
+                  </Bottom>
+                  <Day>{postlistdata.createdAt.substr(0, 10).split('-', '3').join(".")}</Day>
+                </Text>
+              </DountBox>
+            </ContentsBox>
+          </StyledSlider>
+        </Box>
+        <Con>
+          <Left>
+            <WriterImg src={postlistdata.profileImg}></WriterImg>
+          </Left>
+          <Right>
+            <Content>
+              <Nick>{postlistdata.nickname}</Nick>&nbsp;&nbsp;
+              {/* {postlistdata.contents} */}
+              {toggleEllipsis(postlistdata.contents, limit).string}
+              {toggleEllipsis(postlistdata.contents, limit)
+                .isShowMore ? <MoreBtn onClick={onClickMore(postlistdata.contents)}>
+                ...더보기</MoreBtn> : <Arr onClick={onClickClose}><ArrowUp /></Arr>}
+            </Content>
+          </Right>
+          {userinfo.username === postlistdata.userId ?
+            <>
+              <Toggle onClick={onClickNav}><Dot /></Toggle>
+              {user_nav && (
+                <UserInfoNav>
+                  <div>
+                    <div onClick={() => {
+                      openModal();
+                      setModalName("수정하기");
+                      setModalState(<EditPostModal
+                        close={closeModal}
+                        boardId={postlistdata.boardId} />)
+                    }}>수정하기</div>
+                    <div style={{ color: "#FF5E5E" }} onClick={() => {
+                      dispatch(
+                        deletePostAc(postlistdata.boardId))
+                    }}>삭제하기</div>
+                  </div>
+                </UserInfoNav>
+              )}
+            </>
+            : null
+          }
+        </Con>
       </Fixed>
       {commentData.data && commentData.data?.map((comment_list, index) => (
         <CommentList key={index}
@@ -216,9 +215,9 @@ function Detail() {
       <Blank></Blank>
       <Enter>
         <Input ref={comment_ref}
-        onKeyPress={handleOnKeyPress}
-        onChange={onChange}
-        value={text}
+          onKeyPress={handleOnKeyPress}
+          onChange={onChange}
+          value={text}
         ></Input>
         <PostBtn onClick={createComment}>게시</PostBtn>
       </Enter>

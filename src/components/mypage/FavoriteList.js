@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 import { ReactComponent as Trash } from "../../assets/icons/Trash.svg";
 import { ReactComponent as Edit } from "../../assets/icons/EditBlack.svg";
-import { favoriteUpdate, favoriteDel } from "../../store/modules/favorite";
+import { favoriteUpdate, favoriteDel } from "../../store/modules/myInfo";
 
 
 function FavoriteList(props) {

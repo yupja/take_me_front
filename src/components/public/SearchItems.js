@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux"
 import SavedInput from '../saved/SavedInput'
 
 import Modal from "./BasicModalForm";
-import { myFavoriteListRQ } from "../../store/modules/favorite"
+import { myFavoriteListRQ } from "../../store/modules/myInfo"
 import { allItemListRQ } from "../../store/modules/item"
 import { ReactComponent as SearchIcon } from "../../assets/icons/SearchIcon.svg";
 
@@ -94,14 +94,14 @@ function SearchItems(props) {
     <>
       <WholeBox>
         <InputBox isHaveInputValue={isHaveInputValue}>
-          <div style={{width:"90%"}}>
+          <div style={{ width: "90%" }}>
             <input
               type='text'
               value={inputValue}
               onChange={changeInputValue}
               onKeyUp={handleDropDownKey}
-              placeholder={props.state}/>
-              <div><SearchIcon onClick={() => setInputValue('')}/></div>
+              placeholder={props.state} />
+            <div><SearchIcon onClick={() => setInputValue('')} /></div>
           </div>
 
           {isHaveInputValue && (
@@ -113,19 +113,19 @@ function SearchItems(props) {
                     앗! 아직 등록이 안되어있네요!<br />
                     새로 등록하시겠어요?
                   </AddFavoriteInput>
-                  {props.actionState==="goalInput" || 
-                    props.actionState==="goalModify" ?
+                  {props.actionState === "goalInput" ||
+                    props.actionState === "goalModify" ?
                     <AddButton onClick={() => {
                       props.setNewAdd(true)
                       setInputValue('')
                     }}>+등록하기</AddButton>
-                  :
+                    :
                     <AddButton onClick={() => {
                       openModal();
                       setModalName("등록하기")
                       setInputValue('')
                     }}>+등록하기</AddButton>}
-          
+
                 </DropDownItem>
               )}
 
@@ -154,7 +154,7 @@ function SearchItems(props) {
         close={closeModal}
         header={modalName}>
         <SavedInput
-        closeModal={closeModal}/>
+          closeModal={closeModal} />
       </Modal>
 
     </>

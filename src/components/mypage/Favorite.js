@@ -1,35 +1,30 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-import SearchSavedItem from "../components/public/SearchItems";
-import FavoriteList from "../components/mypage/FavoriteList"
-import { myFavoriteListRQ } from "../store/modules/favorite";
-import FavoriteAdd from "../components/mypage/FavoriteAdd";
+import SearchSavedItem from "../public/SearchItems";
+import FavoriteList from "./FavoriteList"
+import FavoriteAdd from "./FavoriteAdd";
 
-import Header from "../components/public/Header";
-import Modal from "../components/public/BasicModalForm"
-import { ReactComponent as UpArrow } from "../assets/icons/UpArrow.svg";
+import Header from "../public/Header";
+import Modal from "../public/BasicModalForm"
+import { ReactComponent as UpArrow } from "../../assets/icons/UpArrow.svg";
 
-import { addFavoriteRQ } from "../store/modules/favorite"
+import { addFavoriteRQ, myFavoriteListRQ } from "../../store/modules/myInfo"
 
 function Favorite() {
+  const title = "즐겨찾기";
+
   const [selectInputValue, setSelectInputValue] = useState([]);
   const priceInput = useRef();
-  const priceRef = useRef();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
 
   const [modalOpen, setModalOpen] = useState(false);
-  // const [modalState, setModalState] = useState();
-  const [modalName, setModalName] = useState("");
+
   const openModal = () => { setModalOpen(true); };
   const closeModal = () => { setModalOpen(false); };
 
-
-  // console.log(selectInputValue);
 
   const addFavoriteData = () => {
     const sendData = {
@@ -44,14 +39,11 @@ function Favorite() {
   }
 
   useEffect(() => {
-    if(!localStorage.getItem("accessToken")){
-      navigate("/main")
-    }
     dispatch(myFavoriteListRQ());
-    
+
   }, []);
 
-  const mylist = useSelector((state) => state.favorite.myFavoriteList);
+  const mylist = useSelector((state) => state.myInfo.myFavoriteList);
 
   const [Selected, setSelected] = useState('전체');
 
@@ -69,20 +61,11 @@ function Favorite() {
   })
 
 
-  //-------------- 드롭박스 제어 
-  const [inputValue, setInputValue] = useState('');  // Input 값 제어
-  const [isHaveInputValue, setIsHaveInputValue] = useState(false); // Input값이 있니 없니?
-  const [dropDownItemIndex, setDropDownItemIndex] = useState(-1); // 선택한 아이템의 인덱스
-  // const [dropDownList, setDropDownList] = useState(list); // 검색List 
-
-
   const selectList = [
-    '전체', '식비', '카페/간식', '술/유흥', '생활', '온라인쇼핑', '패션/쇼핑', '뷰티/미용', '교통',
-    '주거/통신', '의료/건강', '금융', '문화/여가', '여행/숙박', '교육/학습', '자녀/육아', '반려동물', '경조/선물'
+    '전체', '식비', '카페/간식', '술/유흥', '생활', '온라인쇼핑', '패션/쇼핑', '뷰티/미용', '교통', '주거/통신', '의료/건강', '금융', '문화/여가', '여행/숙박', '교육/학습', '자녀/육아', '반려동물', '경조/선물'
   ]
 
 
-  const title = "즐겨찾기";
   return (
     <Wrap>
       <div style={{ background: "#F8F8F8" }}>

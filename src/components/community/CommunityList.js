@@ -10,7 +10,7 @@ import ListModal from "./ListModal";
 import GoalChart from "../goal/Goal";
 
 import { useNavigate } from "react-router-dom";
-import { getUserInfoDB } from "../../store/modules/user";
+import { getUserInfoDB } from "../../store/modules/login";
 import community, { loadMoreContentDB, loadpostsAc, deletePostAc } from "../../store/modules/community";
 
 import { Comment, Binheart, SaveList } from "../../assets/icons";
@@ -40,10 +40,10 @@ const CommunityList = () => {
 
 
 
-  const userinfo = useSelector((state) => state.user.infoList)
+  const userinfo = useSelector((state) => state.login.infoList)
   const Postdata = useSelector((state) => state.community.postList.data);
   const Savedata = useSelector((state) => state.saved.savedItem);
-  const postId = useSelector((state)=>state.community.postId)
+  const postId = useSelector((state) => state.community.postId)
   console.log(postId);
 
 
@@ -77,15 +77,15 @@ const CommunityList = () => {
                         { state: { name: postList } }
                       )
                   }}>
-                    
+
                     <div className="textArea">
-                      <span style={{ fontSize: "1.2rem" }}>{postList.goalItemName}<br/>
-                      <span style={{ fontSize: "1rem" , fontWeight:"500"}}>{postList.nickname}</span>
-                      <span>{postList.contents}</span>
+                      <span style={{ fontSize: "1.2rem" }}>{postList.goalItemName}<br />
+                        <span style={{ fontSize: "1rem", fontWeight: "500" }}>{postList.nickname}</span>
+                        <span>{postList.contents}</span>
                       </span>
-                      </div>
+                    </div>
                   </div>
-                  
+
                   <div className="boardInfo">
                     <div>
                       <Binheart /> {postList.likeCount}

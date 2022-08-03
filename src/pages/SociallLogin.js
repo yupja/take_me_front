@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { setCookie } from '../store/modules/cookie';
+import { setCookie } from '../shared/cookie';
 
 
 function SociallLogin() {
@@ -22,7 +22,6 @@ function SociallLogin() {
     })
     navigator('/');
   }, [navigator]);
-  return <div>테스트</div>;
 };
 
 

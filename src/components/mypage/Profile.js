@@ -1,21 +1,19 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-
-
-import Header from "../components/public/Header";
-import { useDispatch, useSelector } from "react-redux";
-import { getInfo, infoUpdate } from "../store/modules/info";
-import { ReactComponent as Edit } from "../assets/icons/EditMint.svg";
-import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
-import { emailCheckDB } from "../store/modules/user";
-import { nickCheckDB } from "../store/modules/user";
+import { deleteCookie } from "../../shared/cookie";
 
-function Proflie() {
+import Header from "../public/Header";
+import { useDispatch, useSelector } from "react-redux";
+import { getInfo, infoUpdate } from "../../store/modules/myInfo";
+import { nickCheckDB, emailCheckDB } from "../../store/modules/login";
+import { ReactComponent as Edit } from "../../assets/icons/EditMint.svg";
+
+function Profile() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const title = '프로필 편집'
-  const infoState = useSelector((state) => state.info.infoList);
+  const infoState = useSelector((state) => state.myInfo.infoList);
   console.log(infoState);
 
 
@@ -92,7 +90,6 @@ function Proflie() {
     window.location.reload();
   }
 
-  const [, , removeCookie] = useCookies(['refreshToken']);
 
 
   // 미리보기
@@ -147,14 +144,12 @@ function Proflie() {
   // 로그아웃
   const logout = (e) => {
     localStorage.clear();
-    removeCookie('refreshToken', { path: '/' });
+    deleteCookie('refreshToken');
     navigate('/login')
   }
 
   // 닉네임 중복 검사
   const nickCheckStr = /^[a-zA-Zㄱ-힣0-9-_.]{2,12}$/;
-
-  // const nickCheck = (e) => {
 
   const [nickToggles, setNickToggles] = useState(false);
   const [nickResult, setNickResult] = useState("");
@@ -162,9 +157,7 @@ function Proflie() {
 
   const nickClose = (e) => {
     setNickToggles(false);
-    // setNickResult("");
   }
-
 
   const nickActive = (e) => {
     setNickToggles(true);
@@ -180,8 +173,6 @@ function Proflie() {
       setNickResult("2~11글자, 특수문자를 제외하고 작성해주세요.")
     }
   }
-
-
 
 
 
@@ -217,7 +208,11 @@ function Proflie() {
               <span></span>
             </CloseBtn>
             <div className="cont">
-              <input type="text" defaultValue={email} ref={emailRef} onChange={() => { setResultAlert('') }} />
+              <input
+                type="text"
+                defaultValue={email}
+                ref={emailRef}
+                onChange={() => { setResultAlert('') }} />
               <button onClick={emailCheck}>중복체크</button>
             </div>
             <p>{resultAlert}</p>
@@ -226,7 +221,6 @@ function Proflie() {
         </ModalWrap>
         : null
       }
-      {/* 닉네임 팝업 */}
       {nickToggles ?
         <ModalWrap>
           <ModalBox>
@@ -301,7 +295,7 @@ function Proflie() {
 };
 
 
-export default Proflie;
+export default Profile;
 
 const ProflieWrap = styled.div`
 width: 100%;
@@ -375,9 +369,6 @@ button{
   font-size: 0.875rem;
   border: 1px solid #dbdbdb;
   border-radius: 3.12rem;
-  /* position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%); */
 }
 `
 
@@ -477,9 +468,6 @@ width: 100%;
 text-align: center;
 `
 const EditBtn = styled.button`
-/* position: absolute;
-bottom: 80px; left: 50%;
-transform: translateX(-50%); */
 color: #fff;
 border: none;
 background: #26DFA6;

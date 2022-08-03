@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from "react-redux"
-import { myFavoriteListRQ } from "../../store/modules/favorite"
+import { myFavoriteListRQ } from "../../store/modules/myInfo"
 import { allItemListRQ } from "../../store/modules/item"
 
 
@@ -16,7 +16,7 @@ function SearchFavorite(props) {
 
   const dispatch = useDispatch();
   const list = useSelector((state) => state.item.allItemList);
-  
+
   const allItemList = [];
   const makeList = list?.map((item) => {
     allItemList.push(item.itemName);

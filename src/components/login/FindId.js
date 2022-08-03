@@ -1,17 +1,17 @@
 import React, { useRef, useState } from "react";
 import styled from 'styled-components'
 import { useDispatch } from 'react-redux'
-import FindidResult from "../components/login/FindIdResult";
+import FindidResult from "./FindIdResult";
 import { useSelector } from "react-redux/es/exports";
-import { findIdDB } from "../store/modules/user";
-import Header from "../components/public/Header";
+import { findIdDB } from "../../store/modules/login";
+import Header from "../public/Header";
 
 
 const FindId = () => {
   const title = "아이디 찾기";
 
   const dispatch = useDispatch();
-  const state = useSelector((state) => state.user.findIdResult);
+  const state = useSelector((state) => state.login.findIdResult);
 
   const [findId, setFindId] = useState(false);
   const emailRef = useRef();
