@@ -4,57 +4,57 @@ import { useDispatch } from "react-redux";
 import styled from "styled-components";
 
 import Category from "../public/Category"
-import { addFavoriteRQ } from "../../store/modules/favorite"
+import { addFavoriteRQ } from "../../store/modules/myInfo"
 
 
-const FavoriteAdd = (props)=>{
-    const dispatch = useDispatch();
-    const [category , setCategory] = useState();
-    const itemName = useRef();
-    const price = useRef();
+const FavoriteAdd = (props) => {
+  const dispatch = useDispatch();
+  const [category, setCategory] = useState();
+  const itemName = useRef();
+  const price = useRef();
 
 
-    const addFavoriteNewData=()=>{
-        const sendData ={
-        categoryId: Number(category),
-        itemName:itemName.current.value,
-        itemId:-1,
-        price: Number(price.current.value)
-        }
-        console.log(sendData)
-        dispatch(addFavoriteRQ(sendData));
-        props.setSelectInputValue([])
-        
+  const addFavoriteNewData = () => {
+    const sendData = {
+      categoryId: Number(category),
+      itemName: itemName.current.value,
+      itemId: -1,
+      price: Number(price.current.value)
     }
+    console.log(sendData)
+    dispatch(addFavoriteRQ(sendData));
+    props.setSelectInputValue([])
+
+  }
 
 
-    return (
-        <>
-        <ModalBody>
-        <Category  setCategory={setCategory}/>
-            <div> 
-              <p>ItemName</p>
-              <input 
-                type='text' 
-                ref={itemName}
-                />
-              </div>
-  
-          <div> 
-            <p>Price</p>
-            <input 
-              type='text'
-              ref={price}
-            />
-          </div> 
-        
-        </ModalBody>
-        
-        <Footer onClick={addFavoriteNewData}> 즐겨찾기 등록하기</Footer>
+  return (
+    <>
+      <ModalBody>
+        <Category setCategory={setCategory} />
+        <div>
+          <p>ItemName</p>
+          <input
+            type='text'
+            ref={itemName}
+          />
+        </div>
 
-      </>
+        <div>
+          <p>Price</p>
+          <input
+            type='text'
+            ref={price}
+          />
+        </div>
 
-    )
+      </ModalBody>
+
+      <Footer onClick={addFavoriteNewData}> 즐겨찾기 등록하기</Footer>
+
+    </>
+
+  )
 
 }
 

@@ -1,48 +1,48 @@
 import React, { useEffect, useState } from "react";
-import {addFavoriteRQ, favoriteDel} from "../../store/modules/favorite"
+import { addFavoriteRQ, favoriteDel } from "../../store/modules/myInfo"
 
-import {ReactComponent as EmptyStar} from "../../assets/icons/EmptyStar.svg"
-import {ReactComponent as CheckedStart} from "../../assets/icons/CheckedStart.svg"
+import { ReactComponent as EmptyStar } from "../../assets/icons/EmptyStar.svg"
+import { ReactComponent as CheckedStart } from "../../assets/icons/CheckedStart.svg"
 import { useDispatch, useSelector } from "react-redux";
 
 
-const FavoriteCheckedStar =(props) =>{
+const FavoriteCheckedStar = (props) => {
     const [star, setStar] = useState(props.favorite);
     const [favoriteId, setFavoriteId] = useState();
     const dispatch = useDispatch();
 
-    const currentId = useSelector(((state => state.favorite.currentFavoriteId.data?.favoriteItemId)));
+    const currentId = useSelector(((state => state.myInfo.currentFavoriteId.data?.favoriteItemId)));
 
-    const clickStar =()=>{
-        let sendData={};
+    const clickStar = () => {
+        let sendData = {};
 
 
-        if(star){
+        if (star) {
             setStar(false)
             dispatch(favoriteDel(currentId))
 
-        }else if(!star){
+        } else if (!star) {
             setStar(true)
             sendData = {
                 categoryId: Number(props.categoryId),
-                itemName:props.itemName,
+                itemName: props.itemName,
                 price: Number(props.price),
                 itemId: Number(props.itemId)
             }
             dispatch(addFavoriteRQ(sendData))
         }
     }
-    return(
+    return (
         <div>
-        {star?
-        <CheckedStart onClick={()=>{
-            clickStar();
-        }}/>
-        :
-        <EmptyStar onClick={()=>{
-            clickStar();
-        }}/>
-        }
+            {star ?
+                <CheckedStart onClick={() => {
+                    clickStar();
+                }} />
+                :
+                <EmptyStar onClick={() => {
+                    clickStar();
+                }} />
+            }
         </div>
     )
 

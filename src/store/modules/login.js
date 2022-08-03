@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { setCookie } from "./cookie";
+import { setCookie, deleteCookie } from "../../shared/cookie";
 import instance from "../../shared/axios";
-import { Navigate } from "react-router-dom";
 
 
 //login
@@ -20,9 +19,7 @@ export const LoginDB = (loginInfo, setModalStr, setNavToggles, navigate, urlData
           secure: true,
           sameSite: 'none',
         })
-        // window.location.href = "/save"
         navigate('/save', { state: urlData })
-        dispatch(isLogin(true))
 
       })
       .catch((error) => {
@@ -38,7 +35,7 @@ export const LoginDB = (loginInfo, setModalStr, setNavToggles, navigate, urlData
 
 
 
-// 로그인한 사용자 정보 조회 (모든 페이지? 필요한 페이지만 요청?)
+// 로그인한 사용자 정보 조회
 export const getUserInfoDB = () => {
   return async function (dispatch) {
     await instance.get("/api/myInfo", {
@@ -203,16 +200,13 @@ export const changePw = (data, token) => {
 };
 
 // 탈퇴
-export const userSecDB = (data, setPwStr, pwAlert) => {
+export const userSecDB = (data, setPwStr) => {
   return async function (dispatch) {
     console.log(data);
     await instance.post("/api/user/resign", data)
       .then((response) => {
-        console.log(response)
-
-        // 토큰 삭제
-        const deleteCookie = function (name) {
-          document.cookie = name + '=; expires=Thu, 01 Jan 1999 00:00:10 GMT;';
+        if (!response.data.result) {
+          return setPwStr('잘못된 비밀번호입니다.');
         }
         deleteCookie('refreshToken');
         localStorage.clear();
@@ -222,7 +216,7 @@ export const userSecDB = (data, setPwStr, pwAlert) => {
       })
       .catch((error) => {
         console.log(error);
-        setPwStr('잘못된 비밀번호입니다.')
+        setPwStr('잘못된 비밀번호입니다.');
       });
   };
 };
@@ -230,7 +224,7 @@ export const userSecDB = (data, setPwStr, pwAlert) => {
 
 // 리듀서 
 const userSlice = createSlice({
-  name: "user",
+  name: "login",
   initialState: {
     isLogin: false,
     infoList: [],
@@ -241,27 +235,21 @@ const userSlice = createSlice({
   },
   reducers: {
     isLogin: (state, action) => {
-      console.log(action.payload);
       state.isLogin = action.payload;
     },
     infoList: (state, action) => {
       state.infoList = action.payload;
     },
     findIdResult: (state, action) => {
-      console.log(action.payload);
       state.findIdResult = action.payload;
     },
     findPwResult: (state, action) => {
-      console.log(action.payload);
       state.findPwResult = action.payload;
     },
     idCheckResult: (state, action) => {
-      console.log(action.payload);
       state.idCheckResult = action.payload;
     },
     result: (state, action) => {
-      console.log("리듀서끝!")
-      console.log(action.payload);
       state.result = action.payload;
     },
 

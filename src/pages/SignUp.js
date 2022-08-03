@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
 import Header from "../components/public/Header";
-import { emailCheckDB, idCheckDB, nickCheckDB, addUserDB } from "../store/modules/user";
+import { emailCheckDB, idCheckDB, nickCheckDB, addUserDB } from "../store/modules/login";
 
 function SignUp(e) {
   const dispatch = useDispatch();

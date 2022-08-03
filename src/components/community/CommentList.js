@@ -3,8 +3,8 @@ import styled from "styled-components";
 
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { loadCommentAc, deleteComment, updateCommentAc, loadpostsAc, loadDetailAc }from "../../store/modules/community"
-import {getUserInfoDB} from "../../store/modules/user";
+import { loadCommentAc, deleteComment, updateCommentAc, loadpostsAc, loadDetailAc } from "../../store/modules/community"
+import { getUserInfoDB } from "../../store/modules/login";
 import { ReactComponent as Edit2 } from "../../assets/icons/EditBlack.svg";
 import { ReactComponent as Trash } from "../../assets/icons/Trash.svg";
 import { ReactComponent as Check } from "../../assets/icons/Check.svg";

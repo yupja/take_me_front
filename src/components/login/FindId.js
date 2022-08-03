@@ -1,10 +1,10 @@
 import React, { useRef, useState } from "react";
 import styled from 'styled-components'
 import { useDispatch } from 'react-redux'
-import FindidResult from "../components/login/FindIdResult";
+import FindidResult from "./FindIdResult";
 import { useSelector } from "react-redux/es/exports";
-import { findIdDB } from "../store/modules/user";
-import Header from "../components/public/Header";
+import { findIdDB } from "../../store/modules/login";
+import Header from "../public/Header";
 
 
 const FindId = () => {

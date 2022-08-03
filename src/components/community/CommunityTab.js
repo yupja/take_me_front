@@ -8,7 +8,7 @@ import EditPostModal from "../../components/community/EditPostModal";
 
 
 import { useNavigate } from "react-router-dom";
-import { getUserInfoDB } from "../../store/modules/user";
+import { getUserInfoDB } from "../../store/modules/login";
 import Like from "./Like";
 import GoalForCum from "./GoalForCum"
 
@@ -31,11 +31,11 @@ const CommunityTab = () => {
   const [savedListIndex, setSavedListIndex] = useState();
   const [like_count, setLike_count] = useState();
 
-  const userinfo = useSelector((state) => state.user.infoList)
+  const userinfo = useSelector((state) => state.login.infoList)
   const Postdata = useSelector((state) => state.community.postList.data);
   const Savedata = useSelector((state) => state.saved.savedItem);
 
-console.log(Postdata,"post")
+  console.log(Postdata, "post")
 
 
   const [showModall, setShowModall] = useState(false);
@@ -94,102 +94,102 @@ console.log(Postdata,"post")
   console.log(target)
   return (
     <>
-    <Box>
-      {Postdata.map((postList, index) => {
-        return (
-          <div key={postList.boardId} ref={index === Postdata.length - 1 ? setTarget : null}>
-            <>
-              <ContentBox>
-                <Left>
-                  {/* <Day>{postList.createAt}</Day> */}
-                  <ItemImgBox>
-                    <ItemImage src={postList.image}></ItemImage>
-                    <GoalForCum color="#26DFA6" size="140" position="relative" 
-                    percent={postList.goalPercent*0.01} />
-                  </ItemImgBox>
-                  <ProfileBox>
-                    <Profile src={postList.profileImg}></Profile>
-                  </ProfileBox>
-                </Left>
-                <Right>
-                  <div>
-                    <NewTop className="ellipsis">
+      <Box>
+        {Postdata.map((postList, index) => {
+          return (
+            <div key={postList.boardId} ref={index === Postdata.length - 1 ? setTarget : null}>
+              <>
+                <ContentBox>
+                  <Left>
+                    {/* <Day>{postList.createAt}</Day> */}
+                    <ItemImgBox>
+                      <ItemImage src={postList.image}></ItemImage>
+                      <GoalForCum color="#26DFA6" size="140" position="relative"
+                        percent={postList.goalPercent * 0.01} />
+                    </ItemImgBox>
+                    <ProfileBox>
+                      <Profile src={postList.profileImg}></Profile>
+                    </ProfileBox>
+                  </Left>
+                  <Right>
+                    <div>
+                      <NewTop className="ellipsis">
+                        <div onClick={() => {
+                          Navigate
+                            (`/detail/${postList.boardId}`,
+                              { state: { name: postList } }
+                            )
+                        }}>
+                          {postList.goalItemName}</div>
+                        {userinfo.username === postList.userId ?
+                          <>
+                            <Toggle onClick={onClickNav}><Dot className="dot" /></Toggle>
+                            {user_nav && (
+                              <UserInfoNav>
+                                <div>
+                                  <div onClick={() => {
+                                    openModal();
+                                    setModalName("수정하기");
+                                    setModalState(<EditPostModal
+                                      close={closeModal}
+                                      boardId={postList.boardId}
+                                    />)
+
+                                  }}>수정하기</div>
+                                  <div style={{ color: "#FF5E5E" }} onClick={() => {
+                                    dispatch(
+                                      deletePostAc(postList.boardId))
+                                  }}>삭제하기</div>
+                                </div>
+                              </UserInfoNav>
+                            )}
+                          </>
+                          : null
+                        }
+
+                      </NewTop>
+                      <NewNick
+                        onClick={() => {
+                          Navigate
+                            (`/detail/${postList.boardId}`,
+                              { state: { name: postList } }
+                            )
+                        }}>
+                        {postList.nickname}&nbsp;&nbsp;{postList.contents}
+                      </NewNick>
+                    </div>
+                    <NewFoot>
+                      <LikeBox>
+                        <Like
+                          isLike={postList.checkLike}
+                          forLikeId={postList.boardId}
+                          likeCount={postList.likeCount}
+                        />&nbsp;&nbsp;
+                        {/* <CtnNum>{postList.likeCount}</CtnNum> */}
+                      </LikeBox>
                       <div onClick={() => {
                         Navigate
                           (`/detail/${postList.boardId}`,
                             { state: { name: postList } }
                           )
                       }}>
-                        {postList.goalItemName}</div>
-                        {userinfo.username === postList.userId ?
-                          <>
-                          <Toggle onClick={onClickNav}><Dot className="dot"/></Toggle>
-                          {user_nav && (
-                            <UserInfoNav>
-                              <div>
-                                <div onClick={() => {
-                                   openModal();
-                                   setModalName("수정하기");
-                                   setModalState(<EditPostModal 
-                                    close={closeModal} 
-                                    boardId={postList.boardId}
-                                    />)
-                                    
-                                 }}>수정하기</div>
-                                <div style={{ color: "#FF5E5E" }} onClick={() => {
-                                  dispatch(
-                                    deletePostAc(postList.boardId))
-                                }}>삭제하기</div>
-                              </div>
-                            </UserInfoNav>
-                          )}
-                        </>
-                        : null
-                      }
-                      
-                    </NewTop>
-                    <NewNick
-                    onClick={() => {
-                      Navigate
-                        (`/detail/${postList.boardId}`,
-                          { state: { name: postList } }
-                        )
-                    }}>
-                      {postList.nickname}&nbsp;&nbsp;{postList.contents}
-                    </NewNick>
-                  </div>
-                  <NewFoot>
-                    <LikeBox>
-                      <Like
-                        isLike={postList.checkLike}
-                        forLikeId={postList.boardId}
-                        likeCount={postList.likeCount}
-                      />&nbsp;&nbsp;
-                      {/* <CtnNum>{postList.likeCount}</CtnNum> */}
-                    </LikeBox>
-                    <div onClick={() => {
-                      Navigate
-                        (`/detail/${postList.boardId}`,
-                          { state: { name: postList } }
-                        )
-                    }}>
-                      <Count onClick={() => {
-                        Navigate(`/detail/${postList.boardId}`,
-                        { state: { name: postList } })
-                      }}>
-                        <Comment />&nbsp;&nbsp;<CtnNum>{postList.commentCount} 개</CtnNum>
-                      </Count>
-                    </div>
-                    <Rec onClick={() => { openModall(index) }}><Receipt /></Rec>
-                  </NewFoot>
-                </Right>
-              </ContentBox>
-            </>
-          </div>
-        )
-      }
-      )}
-      <BlankBox></BlankBox>
+                        <Count onClick={() => {
+                          Navigate(`/detail/${postList.boardId}`,
+                            { state: { name: postList } })
+                        }}>
+                          <Comment />&nbsp;&nbsp;<CtnNum>{postList.commentCount} 개</CtnNum>
+                        </Count>
+                      </div>
+                      <Rec onClick={() => { openModall(index) }}><Receipt /></Rec>
+                    </NewFoot>
+                  </Right>
+                </ContentBox>
+              </>
+            </div>
+          )
+        }
+        )}
+        <BlankBox></BlankBox>
 
         {/* 게시글등록모달     */}
 
@@ -207,29 +207,29 @@ console.log(Postdata,"post")
           {<PostModal close={closeModal}/>}
         </Modal> */}
 
-      
-      {/* 세이브리스트모달 */}
-      {showModall ?
-      <>
-        <ListModal showModall={showModall} closeModall={closeModall}
-          forsaveId={Postdata[savedListIndex].boardId}
-        />
-        </>
-        : null}
-    </Box>
+
+        {/* 세이브리스트모달 */}
+        {showModall ?
+          <>
+            <ListModal showModall={showModall} closeModall={closeModall}
+              forsaveId={Postdata[savedListIndex].boardId}
+            />
+          </>
+          : null}
+      </Box>
       <Div>
-      <BtnBox onClick={() => {
+        <BtnBox onClick={() => {
           openModal();
           setModalName("내 태산 % 공유");
           setModalState(<PostModal close={closeModal} />)
         }}>
-        <FootBtn >
-          내 태산 % 공유</FootBtn>
-      </BtnBox>
+          <FootBtn >
+            내 태산 % 공유</FootBtn>
+        </BtnBox>
       </Div>
     </>
   )
-    
+
 };
 
 const Div = styled.div`

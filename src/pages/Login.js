@@ -1,135 +1,124 @@
 import React, { useState, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { Link, useLocation } from "react-router-dom";
-import { LoginDB } from "../store/modules/user";
-import { useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { LoginDB } from "../store/modules/login";
 
 import Header from "../components/public/Header";
 import LoginGoogle from "../components/login/LoginGoogle";
 import LoginKakao from "../components/login/LoginKakao";
+import FindId from "../components/login/FindId";
+import FindPw from "../components/login/FindPw";
 
 import { ReactComponent as Check } from "../assets/icons/Check.svg";
 
 function Login() {
+  const { name } = useParams();
+  const state = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const title = "로그인"
 
-  const [modalOpen, setModalOpen] = useState(false);
-  const [modalState, setModalState] = useState();
-  const [modalName, setModalName] = useState("");
-
-
-  const openModal = () => { setModalOpen(true); };
-  const closeModal = () => { setModalOpen(false); };
-
-
   // 로그인 정보 가져오기
   const userId = useRef();
   const userPw = useRef();
 
-
   const [navToggles, setNavToggles] = useState(false);
   const [ModalStr, setModalStr] = useState('');
 
-
-  const closeNav = (e) => {
+  const closeNav = () => {
     setNavToggles(false)
   }
 
-  // 로그인 버튼 클릭시
+
+  // 로그인
   const login = (e) => {
     e.preventDefault();
-    const loginInfo = {
-      username: userId.current.value,
-      password: userPw.current.value,
-    }
-
-    // 빈 항목 체크
     if (userId.current.value === "" || userPw.current.value === "") {
       setModalStr('아이디 또는 비밀번호를\n 확인해 주세요')
       setNavToggles(true)
       return;
     }
-
+    const loginInfo = {
+      username: userId.current.value,
+      password: userPw.current.value,
+    }
     const urlData = {
       signupUrl: state,
       loginUrl: window.location.href
     }
-
     dispatch(LoginDB(loginInfo, setModalStr, setNavToggles, navigate, urlData));
   }
-  const state = useLocation();
 
   return (
     <>
-      <div className="topWrap">
-        <Header title={title} />
-      </div>
-      <LoginWrap>
-        <Title>안녕하세요.<br /><span className="logo">티끌</span><span>입니다.</span></Title>
-        <p>서비스 이용을 위해 로그인해주세요.</p>
-        <Form>
-          <label htmlFor="userId">
-            <input
-              type="text"
-              id="userId"
-              placeholder="아이디"
-              ref={userId}
-            />
-          </label>
-          <label htmlFor="userPw">
-            <input
-              type="password"
-              id="userPw"
-              placeholder="비밀번호"
-              ref={userPw}
-            />
-          </label>
-          <InputBtn onClick={login}>로그인하기</InputBtn>
-        </Form>
-        <Licks>
-          <Link to="/signup">회원가입</Link>
-          <span>
-            {/* <Link to="/user/findid">아이디 찾기</Link> */}
-            <Link to="/user/findid">아이디·</Link>
-            <Link to="/user/findpw">비밀번호 찾기</Link>
-          </span>
-        </Licks>
-        <Social>
-          <li>
-            <LoginKakao />
-          </li>
-          <li>
-            <LoginGoogle />
-          </li>
-          {/* <li>네이버로 시작하기</li> */}
-        </Social>
-
-      </LoginWrap>
-      {navToggles ?
-        <ModalWrap>
-          <ModalBox>
-            <div className="icon"><Check /></div>
-            <CloseBtn onClick={closeNav}>
-              <span></span>
-              <span></span>
-            </CloseBtn>
-            <h3>{ModalStr}</h3>
-            <button onClick={closeNav}>닫기</button>
-          </ModalBox>
-        </ModalWrap>
-        : null
+      {name === "findid" && <FindId />}
+      {name === "findpw" && <FindPw />}
+      {name === undefined &&
+        <>
+          <div className="topWrap">
+            <Header title={title} />
+          </div>
+          <LoginWrap>
+            <Title>안녕하세요.<br /><span className="logo">티끌</span><span>입니다.</span></Title>
+            <p>서비스 이용을 위해 로그인해주세요.</p>
+            <Form>
+              <label htmlFor="userId">
+                <input
+                  type="text"
+                  id="userId"
+                  placeholder="아이디"
+                  ref={userId}
+                />
+              </label>
+              <label htmlFor="userPw">
+                <input
+                  type="password"
+                  id="userPw"
+                  placeholder="비밀번호"
+                  ref={userPw}
+                />
+              </label>
+              <InputBtn onClick={login}>로그인하기</InputBtn>
+            </Form>
+            <Licks>
+              <Link to="/signup">회원가입</Link>
+              <span>
+                <Link to="/login/findid">아이디·</Link>
+                <Link to="/login/findpw">비밀번호 찾기</Link>
+              </span>
+            </Licks>
+            <Social>
+              <li>
+                <LoginKakao />
+              </li>
+              <li>
+                <LoginGoogle />
+              </li>
+            </Social>
+          </LoginWrap>
+          {navToggles ?
+            <ModalWrap>
+              <ModalBox>
+                <div className="icon"><Check /></div>
+                <CloseBtn onClick={closeNav}>
+                  <span></span>
+                  <span></span>
+                </CloseBtn>
+                <h3>{ModalStr}</h3>
+                <button onClick={closeNav}>닫기</button>
+              </ModalBox>
+            </ModalWrap>
+            : null
+          }
+        </>
       }
     </>
   )
 };
 
 export default Login;
-
-
 
 
 const LoginWrap = styled.div`
@@ -207,6 +196,7 @@ a{
   text-decoration: underline;
   text-underline-position: under;
 }
+
 `
 
 const InputBtn = styled.button`

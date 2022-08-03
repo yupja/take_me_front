@@ -1,11 +1,11 @@
 import React, { useRef, useState } from "react";
 import styled from 'styled-components'
 import { useDispatch } from 'react-redux'
-import { findPwDB } from "../store/modules/user";
+import { findPwDB } from "../../store/modules/login";
 import { useSelector } from "react-redux/es/exports";
 import { useNavigate } from "react-router-dom";
-import Header from "../components/public/Header";
-import { ReactComponent as Check } from "../assets/icons/Check.svg";
+import Header from "../public/Header";
+import { ReactComponent as Check } from "../../assets/icons/Check.svg";
 
 
 const FindPw = () => {

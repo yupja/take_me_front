@@ -3,27 +3,23 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
-import Header from "../components/public/Header";
-import SaveItemList from "../components/saved/SaveItemList";
+import Header from "../public/Header";
+import SaveItemList from "../saved/SaveItemList";
 
-import { getHistory } from "../store/modules/info";
+import { getHistory } from "../../store/modules/myInfo";
 
 function History() {
-  const navigate = useNavigate();
-  
   const title = "히스토리";
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const state = useSelector((state) => state.info.historyList)
+
+  const state = useSelector((state) => state.myInfo.historyList)
   useEffect(() => {
-    if(!localStorage.getItem("accessToken")){
+    if (!localStorage.getItem("accessToken")) {
       navigate("/main")
     }
     dispatch(getHistory());
   }, []);
-
-
-  // 태산 만들기 오류로 등록 불가 -> 히스토리 목록에 보이는게 없음 -> 테스트코드를 지우지 못함:)
-  // 데이터가 있다면 b -> state
 
 
   return (
@@ -41,10 +37,6 @@ function History() {
                 items={list.savedItems}
                 total={list.totalPrice}
               />
-
-
-
-
             ))}
           </ul>
         </HistoryList>

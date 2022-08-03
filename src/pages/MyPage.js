@@ -1,34 +1,33 @@
 import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import Header from "../components/public/Header";
-import { userSecDB } from "../store/modules/user";
-import { getInfo } from "../store/modules/info";
-import { useCookies } from "react-cookie";
+import { userSecDB } from "../store/modules/login";
+import { getInfo } from "../store/modules/myInfo";
+import { deleteCookie } from "../shared/cookie";
+import Favorite from "../components/mypage/Favorite";
+import History from "../components/mypage/History";
+import Profile from "../components/mypage/Profile";
 
 import { ReactComponent as Star } from "../assets/icons/Star.svg";
 import { ReactComponent as EditIProfile } from "../assets/icons/EditIProfile.svg";
 import { ReactComponent as Ghost } from "../assets/icons/Ghost.svg";
 import { ReactComponent as Withdrawal } from "../assets/icons/Withdrawal.svg";
-import { ReactComponent as Invi } from "../assets/icons/Invi.svg";
 import { ReactComponent as InfoIcon } from "../assets/icons/Info.svg";
-import { ReactComponent as Consu } from "../assets/icons/Consu.svg";
 import { ReactComponent as Close } from "../assets/icons/Close.svg";
 
 function MyPage() {
+  const { name } = useParams();
   const title = "MY"
+
   const navigate = useNavigate();
-
-  const [, , removeCookie] = useCookies(['refreshToken']);
-
   const dispatch = useDispatch();
-  const state = useSelector((state) => state.info.infoList);
+
+  const state = useSelector((state) => state.myInfo.infoList);
   const [openModal, setOpenModal] = useState(false);
-  const [pwAlertStr, setPwAlertStr] = useState('');
   const [pwStr, setPwStr] = useState('비밀번호를 입력해 주세요.');
-  console.log(state)
 
 
   useEffect(() => {
@@ -48,14 +47,13 @@ function MyPage() {
     setOpenModal(false)
   };
 
-  // 탈퇴하기
+  // 탈퇴
   const secession = async (e) => {
     e.preventDefault();
     const pw = pwRef.current.value;
     const username = state.username;
 
     if (pw === '') {
-      setPwAlertStr('비밀번호를 입력해주세요.')
       pwRef.current.focus();
       return;
     }
@@ -63,55 +61,59 @@ function MyPage() {
       username: username,
       password: pw
     }
-    await dispatch(userSecDB(data, setPwStr, setPwAlertStr))
+    await dispatch(userSecDB(data, setPwStr))
     pwRef.current.value = null;
-    console.log("디스패치 끝!")
   };
 
   // 로그아웃
   const logout = (e) => {
     localStorage.clear();
-    removeCookie('refreshToken', { path: '/' });
+    deleteCookie('refreshToken');
     navigate('/login')
   }
 
   return (
     <>
-      <Header title={title} />
-      <MyPageWrap>
-        <MyInfo>
-          <div><img src={state.profileImg} alt="" /></div>
-          <p>{state.introDesc === null ?
-            "기본 소개글" : state.introDesc
-          }
-          </p>
-        </MyInfo>
-        <MyMenu>
-          <h2><span>{state.nickname}</span> 님<br />환영합니다!🖐</h2>
-          <MenuList>
-            <li>
-              <Link to="/favorite">
-                <div><Star className="starIcon" /></div>
-                <p>즐겨찾기</p>
-              </Link>
-            </li>
-            <li>
-              <Link to="/history">
-                <div><Ghost /></div>
-                <p>히스토리</p>
-              </Link>
-            </li>
-            <li>
-              <Link to="/proflie">
-                <div><EditIProfile /></div>
-                <p>프로필 편집</p>
-              </Link>
-            </li>
-          </MenuList>
-          <Box>
-            <h3>고객 지원</h3>
-            <ul>
-              {/* <li>
+      {name === "favorite" && <Favorite />}
+      {name === "history" && <History />}
+      {name === "profile" && <Profile />}
+      {name === undefined &&
+        <>
+          <Header title={title} />
+          <MyPageWrap>
+            <MyInfo>
+              <div><img src={state.profileImg} alt="" /></div>
+              <p>{state.introDesc === null ?
+                "기본 소개글" : state.introDesc
+              }
+              </p>
+            </MyInfo>
+            <MyMenu>
+              <h2><span>{state.nickname}</span> 님<br />환영합니다!🖐</h2>
+              <MenuList>
+                <li onClick={() => {
+                  navigate('/mypage/favorite');
+                }}>
+                  <div><Star className="starIcon" /></div>
+                  <p>즐겨찾기</p>
+                </li>
+                <li onClick={() => {
+                  navigate('/mypage/history');
+                }}>
+                  <div><Ghost /></div>
+                  <p>히스토리</p>
+                </li>
+                <li onClick={() => {
+                  navigate('/mypage/profile');
+                }}>
+                  <div><EditIProfile /></div>
+                  <p>프로필 편집</p>
+                </li>
+              </MenuList>
+              <Box>
+                <h3>고객 지원</h3>
+                <ul>
+                  {/* <li>
                 <div><Invi /></div>
                 <span>친구 초대하기</span>
               </li>
@@ -119,47 +121,48 @@ function MyPage() {
                 <div><Consu /></div>
                 <span>티끌 정보</span>
               </li> */}
-              <a href="https://forms.gle/qYoVUmbNwkNz2m957" target="_blank" rel="noreferrer">
-                <li>
-                  <div><InfoIcon /></div>
-                  <span>고객의 소리</span>
-                </li>
-              </a>
-              <li onClick={() => setOpenModal(true)}>
-                <div><Withdrawal /></div>
-                <span>회원 탈퇴</span>
-              </li>
-            </ul>
-          </Box>
-        </MyMenu>
-      </MyPageWrap>
-      <LoginOutBtn onClick={logout}>로그아웃</LoginOutBtn>
-      {openModal ?
-        <PopupBack>
-          <PopupWrap>
-            <Title>회원 탈퇴</Title>
-            <p>정말 탈퇴하시겠어요?😥</p>
-            <Info>
-              <div>
-                <span>아이디</span>
-                <input type="text" defaultValue={state.username} readOnly />
-              </div>
-              <div>
-                <span>비밀번호</span>
-                <div>
-                  <input type="password" placeholder={pwStr} ref={pwRef} />
-                </div>
-              </div>
-            </Info>
-            <Btn>
-              <button onClick={secession}>탈퇴하기</button>
-              <button className="closeBtn" onClick={closePopup}>아니오</button>
-            </Btn>
-            <CloseBtn onClick={closePopup}>
-              <Close />
-            </CloseBtn>
-          </PopupWrap>
-        </PopupBack> : null
+                  <a href="https://forms.gle/qYoVUmbNwkNz2m957" target="_blank" rel="noreferrer">
+                    <li>
+                      <div><InfoIcon /></div>
+                      <span>고객의 소리</span>
+                    </li>
+                  </a>
+                  <li onClick={() => setOpenModal(true)}>
+                    <div><Withdrawal /></div>
+                    <span>회원 탈퇴</span>
+                  </li>
+                </ul>
+              </Box>
+            </MyMenu>
+          </MyPageWrap>
+          <LoginOutBtn onClick={logout}>로그아웃</LoginOutBtn>
+          {openModal ?
+            <PopupBack>
+              <PopupWrap>
+                <Title>회원 탈퇴</Title>
+                <p>정말 탈퇴하시겠어요?😥</p>
+                <Info>
+                  <div>
+                    <span>아이디</span>
+                    <input type="text" defaultValue={state.username} readOnly />
+                  </div>
+                  <div>
+                    <span>비밀번호</span>
+                    <div>
+                      <input type="password" placeholder={pwStr} ref={pwRef} />
+                    </div>
+                  </div>
+                </Info>
+                <Btn>
+                  <button onClick={secession}>탈퇴하기</button>
+                  <button className="closeBtn" onClick={closePopup}>아니오</button>
+                </Btn>
+                <CloseBtn onClick={closePopup}>
+                  <Close />
+                </CloseBtn>
+              </PopupWrap>
+            </PopupBack> : null}
+        </>
       }
     </>
   )
@@ -224,7 +227,6 @@ span {
 }
 input {
   text-align: center;
-  /* padding: */
   line-height: 40px;
   height: 40px;
   border: 1px solid #ccc;
@@ -250,7 +252,6 @@ button {
 .closeBtn{
   background: #26dfa6;
 }
-
 `
 
 
@@ -260,7 +261,6 @@ const MyPageWrap = styled.div`
 width: 100%;
 height: 95.1%;
 background: #F8F8F8;
-/* padding: 0 25px; */
 `
 const MyInfo = styled.div`
 width: 100%;
@@ -319,8 +319,6 @@ const MenuList = styled.ul`
     align-items: center;
     box-shadow: 0px 4px 11px 0px rgba(0, 0, 0, 0.15);
   }
-  /* li:nth-child(2) div{
-  } */
   .starIcon{
     width: 2.5rem;
     height : 2.5rem;
