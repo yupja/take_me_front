@@ -14,7 +14,7 @@ function RoomHistory() {
 
   const chatRef = useRef();
   const getMessages = useSelector((state) => state.community.messages);
-  const userInfo = useSelector((state) => state.user);
+  const userInfo = useSelector((state) => state.login);
 
 
   return (
@@ -28,7 +28,7 @@ function RoomHistory() {
             (
               <div key={i} className={el.sender === userInfo.infoList.nickname ? "right" : "left"}>
                 <div className="img">
-                    <img src="https://mblogthumb-phinf.pstatic.net/MjAyMTAxMjJfNzMg/MDAxNjExMzIzMzU1NDgw.nhAuTdE8OjYs0wZAb8qpMAsUaUIZXeRKJ0zDLs5oaKIg.iONiFE4qhr5wuB2FwDe4yfO3oC9gBbOjDaCyGXxiLMkg.JPEG.sohyeon612/%EB%8B%A4%EC%9A%B4%EB%A1%9C%EB%93%9C%ED%8C%8C%EC%9D%BC%EF%BC%8D2.jpg?type=w800" alt="프로필" /></div>
+                  <img src="https://mblogthumb-phinf.pstatic.net/MjAyMTAxMjJfNzMg/MDAxNjExMzIzMzU1NDgw.nhAuTdE8OjYs0wZAb8qpMAsUaUIZXeRKJ0zDLs5oaKIg.iONiFE4qhr5wuB2FwDe4yfO3oC9gBbOjDaCyGXxiLMkg.JPEG.sohyeon612/%EB%8B%A4%EC%9A%B4%EB%A1%9C%EB%93%9C%ED%8C%8C%EC%9D%BC%EF%BC%8D2.jpg?type=w800" alt="프로필" /></div>
                 <div className="info">
                   <span>닉네임</span>
                   <p>{el.message}</p>

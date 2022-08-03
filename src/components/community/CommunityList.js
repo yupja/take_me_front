@@ -40,7 +40,7 @@ const CommunityList = () => {
 
 
 
-  const userinfo = useSelector((state) => state.user.infoList)
+  const userinfo = useSelector((state) => state.login.infoList)
   const Postdata = useSelector((state) => state.community.postList.data);
   const Savedata = useSelector((state) => state.saved.savedItem);
   const postId = useSelector((state) => state.community.postId)

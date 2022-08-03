@@ -16,7 +16,7 @@ function FindPwChange() {
   const dispatch = useDispatch();
 
   // dispatch(getUserId()); tokens
-  const state = useSelector((state) => state.user);
+  const state = useSelector((state) => state.login);
 
 
 

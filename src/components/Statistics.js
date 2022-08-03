@@ -79,13 +79,11 @@ function MyStatistics() {
     }
   }
 
-  console.log(myList);
-
   return (
     <>
       <Wrap>
         <AllUserArea>
-          <Title>
+          <Title style={{justifyContent:"space-between"}}>
             <div>
             <Mint>내</Mint>
             가 제일 많이 아낀 <Mint>티끌</Mint>
@@ -310,7 +308,7 @@ font-weight: bold;
 const Title = styled.div`
 width: 100%;
 display: flex;
-justify-content: space-between;
+
 `;
 
 const Wrap = styled.div`

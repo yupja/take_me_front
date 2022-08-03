@@ -4,10 +4,9 @@ import styled from "styled-components";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux/es/exports";
-import { useParams } from "react-router-dom";
 
 import Like from "../components/community/Like";
 import CommentList from "../components/community/CommentList";
@@ -50,7 +49,7 @@ function Detail() {
 
   const commentData = useSelector((state) => state.community.commentList);
   const Postdata = useSelector((state) => state.community.postList);
-  const userinfo = useSelector((state) => state.user.infoList)
+  const userinfo = useSelector((state) => state.login.infoList)
   const myGoalList = useSelector((state => state.goal.myGoalList));
   const goal = {
     goalImage: myGoalList?.image,

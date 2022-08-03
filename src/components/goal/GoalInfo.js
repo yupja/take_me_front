@@ -15,7 +15,8 @@ const GoalInfo = (props) => {
   const goal = props.myGoalList;
   const [touchSetMenu, setTouchSetMenu] = useState(false)
 
-
+  console.log(props.myGoalList)
+  
   const changeMenu = () => {
     if (touchSetMenu) {
       setTouchSetMenu(false)
@@ -77,7 +78,7 @@ const GoalInfo = (props) => {
                       props.openModal();
                       props.setModalName("내 태산 % 공유");
                       props.setModalState(<PostModal
-                        image={goal?.goalItemId}
+                        image={goal?.image}
                         percent={goal?.goalPercent}
                         closeModal={props.closeModal} />)
                     }}>

@@ -11,7 +11,7 @@ const FindId = () => {
   const title = "아이디 찾기";
 
   const dispatch = useDispatch();
-  const state = useSelector((state) => state.user.findIdResult);
+  const state = useSelector((state) => state.login.findIdResult);
 
   const [findId, setFindId] = useState(false);
   const emailRef = useRef();
