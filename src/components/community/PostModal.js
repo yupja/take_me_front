@@ -15,8 +15,6 @@ const PostModal = (props) => {
     const [regi, setRegi] = useState(false);
 
     const myGoalList = useSelector((state=> state.goal.myGoalList));
-    console.log(myGoalList,"goallist")
-    
     const title = myGoalList.itemName;
     const goalPercent = (myGoalList.goalPercent)*0.01
 

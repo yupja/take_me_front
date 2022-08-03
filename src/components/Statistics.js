@@ -79,8 +79,6 @@ function MyStatistics() {
     }
   }
 
-  console.log(myList);
-
   return (
     <>
       <Wrap>
