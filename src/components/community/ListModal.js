@@ -140,7 +140,7 @@ height: 100%;
   z-index: 889;
   position: fixed;
   top: 0;
-  width: 100%;
+  width: 414px;
   height: 100%;
   `;
 
