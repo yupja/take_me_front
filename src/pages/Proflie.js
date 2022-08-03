@@ -62,15 +62,24 @@ function Proflie() {
 
 
   const infoChange = () => {
+    if (infoState.nickname !== nickRef.current.value) {
+      const confirm = nickResult.includes('사용');
+      if (!confirm) {
+        setnNickTitle("알림")
+        setNickToggles(true);
+        setNickResult("닉네임 중복체크를 확인해주세요.")
+        return
+      }
+    }
+
     const introDesc = introDescRef.current.value;
     const nick = nickRef.current.value;
 
     const formData = new FormData();
-    console.log(introDesc);
     formData.append('image', previewImg);
 
     const changeInfo = {
-      introDesc: introDesc, // 미작성시 그대로 저장!
+      introDesc: introDesc,
       nickname: nick,
       email: email,
     }
@@ -78,10 +87,9 @@ function Proflie() {
     const blob = new Blob([json], { type: "application/json" });
     formData.append('changeInfo', blob);
 
-    console.log(changeInfo);
     dispatch(infoUpdate(formData));
     window.alert("프로필이 변경되었습니다.")
-    // window.location.reload();
+    window.location.reload();
   }
 
   const [, , removeCookie] = useCookies(['refreshToken']);
@@ -123,7 +131,6 @@ function Proflie() {
   const active = (e) => {
     setOnToggle(true);
     setFocus(false);
-    console.log("실행!")
   }
 
   const emailCheck = (e) => {
@@ -151,18 +158,19 @@ function Proflie() {
 
   const [nickToggles, setNickToggles] = useState(false);
   const [nickResult, setNickResult] = useState("");
+  const [nickTitle, setnNickTitle] = useState("");
 
   const nickClose = (e) => {
     setNickToggles(false);
-    setNickResult("결과");
+    // setNickResult("");
   }
 
 
   const nickActive = (e) => {
     setNickToggles(true);
     // setFocus(false);
-    console.log("실행!")
     const nick = nickRef.current.value;
+    setnNickTitle("닉네임 변경")
     if (infoState.nickname === nick) {
       return setNickResult("기존 닉네임입니다.")
     }
@@ -175,13 +183,14 @@ function Proflie() {
 
 
 
+
+
   // 이메일 중복검사 팝업
   const changeEmail = (e) => {
     e.preventDefault();
     const emailText = emailRef.current.value;
     if (resultAlert.includes("사용")) {
       setEmail(emailText);
-      console.log(emailText)
       setNavToggles(false);
     } else {
       setResultAlert("중복체크를 확인해주세요!")
@@ -221,7 +230,7 @@ function Proflie() {
       {nickToggles ?
         <ModalWrap>
           <ModalBox>
-            <h1>닉네임 변경</h1>
+            <h1>{nickTitle}</h1>
             <CloseBtn onClick={nickClose}>
               <span></span>
               <span></span>
@@ -249,7 +258,14 @@ function Proflie() {
           </ProflieImg>
           <Nick idStr={idColor}>
             <div>
-              <input type="textarea" defaultValue={infoState.nickname} ref={nickRef} maxLength="11" />
+              <input type="textarea"
+                defaultValue={infoState.nickname}
+                ref={nickRef}
+                maxLength="11"
+                onChange={() => {
+                  setNickResult('')
+                }}
+              />
               <button onClick={nickActive}>중복체크</button>
             </div>
             <span className="box"> 님</span>
@@ -359,7 +375,9 @@ button{
   font-size: 0.875rem;
   border: 1px solid #dbdbdb;
   border-radius: 3.12rem;
-
+  /* position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%); */
 }
 `
 
