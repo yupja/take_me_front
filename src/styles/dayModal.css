@@ -23,9 +23,9 @@
   background-color: #fff;
   animation: modal-show 0.3s;
   overflow: hidden;
-  position: absolute;
-  transform: translateX(-50%);
-  left:50%
+  /* position: absolute; */
+  /* transform: translateX(-50%);
+  left:50% */
 }
 .modal > section > header {
   display: flex;
