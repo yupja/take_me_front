@@ -241,7 +241,7 @@
 
 <br/>
 
-## 🔥 Trouble shooting
+## 🔥 트러블 슈팅
 <details>
 <summary><strong> issue1: JWT 액세스,리프레쉬 토큰 관리 </strong></summary>
 
