@@ -2,22 +2,31 @@ import React, { useRef, useState } from "react";
 import styled from 'styled-components'
 import { useDispatch } from 'react-redux'
 import { useSelector } from "react-redux/es/exports";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 // import { changePw } from "../store/modules/user";
+import { changePw } from "../store/modules/login";
+
 import Header from "../components/public/Header";
 
 function FindPwChange() {
-  const { token } = useParams();
-  // const [tokens, username] = token?.split('&');
-  console.log("22");
+  // const { token } = useParams();
+  const location = useLocation();
+  const sch = location.search;
+  console.log(sch);
+  const params = new URLSearchParams(sch);
+  const accessToken = params.get('accessToken');
+  console.log(accessToken);
+  const username = params.get('username');
+  console.log(username);
+  // &username=eunjin0708
   // console.log('토큰 :', tokens, '아이디 :', username)
 
+  localStorage.setItem("accessToken", accessToken);
 
   const dispatch = useDispatch();
 
   // dispatch(getUserId()); tokens
   const state = useSelector((state) => state.login);
-
 
 
   const [findPwPop, setfindPwPop] = useState(false);
@@ -28,7 +37,7 @@ function FindPwChange() {
   const [userPwAlert, setUserPwAlert] = useState('');
   const [userPwAChecklert, setUserPwCheckAlert] = useState('');
 
-  const pwCheckStr = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,16}$/;
+  const pwCheckStr = /(?=.*\d)(?=.*?[#?!@$%^&*-])(?=.*[a-zA-ZS]).{8,}/;
 
 
   const pwCheck = () => {
@@ -38,7 +47,7 @@ function FindPwChange() {
     if (pwCheckStr.test(pw)) {
       setUserPwAlert("")
     } else {
-      setUserPwAlert("영문, 숫자, 특수문자를 최소 1개씩 혼합하여 입력해주세요")
+      setUserPwAlert("영문, 숫자 1개이상, 특수문자 포함, 8자리 이상 입력해주세요.")
     }
   }
 
@@ -49,7 +58,7 @@ function FindPwChange() {
     if (pw === pwCheck) {
       setUserPwCheckAlert("")
     } else {
-      setUserPwCheckAlert("비밀번호가 일치하지 않습니다")
+      setUserPwCheckAlert("두 비밀번호가 일치하지 않습니다")
     }
   }
 
@@ -59,7 +68,7 @@ function FindPwChange() {
     const pw = pwRef.current.value;
     const checkPw = pwCheckRef.current.value;
     const findInfo = {
-      // username: username, // url에서 가져오기
+      username: username,
       password: pw,
       checkPassword: checkPw,
     }
@@ -67,10 +76,19 @@ function FindPwChange() {
       alert("비밀번호를 확인해주세요")
       return;
     }
+    if (pw.search(/\s/) != -1) {
+      setUserPwAlert("공백 없이 입력해주세요.");
+      return;
+    }
+    if (pw !== checkPw) {
+      alert("비밀번호를 확인해주세요");
+      return;
+    }
     if (userPwAlert === '' && userPwAChecklert === '') {
       console.log("다음!")
-      // await dispatch(changePw(findInfo, tokens))
-      setfindPwPop(true) // 디스패치 먼저 실행 후 결과 팝업 생성
+      await dispatch(changePw(findInfo))
+      // setfindPwPop(true) // 디스패치 먼저 실행 후 결과 팝업 생성
+
     } else {
       alert("비밀번호를 확인해주세요")
     }
