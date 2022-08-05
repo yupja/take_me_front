@@ -47,20 +47,14 @@
 #### 🐰 이보람
 <details>
 <summary> 페이지 / 기능 </summary>
-<br>
-✅ 페이지
-<br>
-데일리 티끌, 커뮤니티(쓸까말까 목록/채팅), 랭킹
-<br></br>
 
-✅ 기능
-<br>
-<br>
-<br>
-<br>
-<br>
-</details>
+<ul> 📋  페이지
+<li> 데일리티끌 </li>
+<li>커뮤니티</li>
+<li>랭크 </li>
 
+            
+            
 #### 🦓 김은진
 <details>
 <summary> 페이지 / 기능 </summary>
