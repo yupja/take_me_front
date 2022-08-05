@@ -1,42 +1,40 @@
 import React, { useState, useRef } from "react";
 import { useDispatch } from "react-redux";
-import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 
 import Header from "../components/public/Header";
 import { emailCheckDB, idCheckDB, nickCheckDB, addUserDB } from "../store/modules/login";
+import UserModalForm from "../components/public/UserModalForm"; // 모달
 
 function SignUp(e) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const title = "회원가입";
-  const signupUrl = window.location.href
+  const signupUrl = window.location.href;
 
-
-  // 회원가입 정보 가져오기
+  // 회원가입 정보
   const emailRef = useRef();
   const idRef = useRef();
   const nickRef = useRef();
   const pwRef = useRef();
   const pwCheckRef = useRef();
 
-
-  // 정규식
+  // 유효성 검사 정규식
   const emailCheckStr = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
   const idCheckStr = /^[a-z0-9_-]{3,10}$/;
   const nickCheckStr = /^[a-zA-Zㄱ-힣0-9-_.]{2,12}$/;
   const pwCheckStr = /(?=.*\d)(?=.*?[#?!@$%^&*-])(?=.*[a-zA-ZS]).{8,}/;
 
-
-  // 유효성 알림
+  // 유효성 검사 결과
   const [userIdAlert, setUserIdAlert] = useState('');
   const [userPwAlert, setUserPwAlert] = useState('');
   const [userPwAChecklert, setUserPwCheckAlert] = useState('');
   const [userEmailAlert, setUserEmailAlert] = useState('');
   const [userNickAlert, setUserNickAlert] = useState('');
 
-  // 유효성 알림
+  // 유효성 검사 결과 색상
   const [idColor, setIdColor] = useState(null);
   const [pwColor, setPwColor] = useState('');
   const [pwCheckColor, setPwCheckColor] = useState('');
@@ -52,6 +50,7 @@ function SignUp(e) {
   const [oneChecked, setOneChecked] = useState(false);
   const [twoChecked, setTwoChecked] = useState(false);
 
+  // 이용약관 체크 상태
   const oneCheck = (e) => {
     setOneChecked(current => !current);
   }
@@ -60,14 +59,17 @@ function SignUp(e) {
   }
 
   //팝업창
-  const [navToggles, setNavToggles] = useState(false);
-  const [ModalStr, setModalStr] = useState('');
   const [resultAlert, setResultAlert] = useState("");
 
-  const closeNav = (e) => {
-    setNavToggles(false);
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const openModal = () => {
+    setModalOpen(true);
+  };
+  const closeModal = () => {
+    setModalOpen(false);
     setResultAlert("");
-  }
+  };
 
 
 
@@ -203,41 +205,42 @@ function SignUp(e) {
     // 유효성 검사
     if (userEmail === "" || userId === '' || userNick === "" || userPw === "" || userPwCheck === "") {
       setResultAlert("모든 항목은 필수입니다😊");
-      setNavToggles(true);
+      // setNavToggles(true);
+      openModal();
       return;
     }
     if (!userIdAlert.includes('사용 가능한') || userIdAlert === '') {
       setResultAlert("아이디 중복체크 해주세요");
-      setNavToggles(true);
+      openModal();
       idRef.current.focus();
       return;
     }
     if (userPw !== userPwCheck || userPwAlert.includes('8')) {
       setResultAlert("비밀번호 형식과 일치여부를 확인해주세요");
-      setNavToggles(true);
+      openModal();
       pwRef.current.focus();
       return;
     }
     if (!userEmailAlert.includes('사용 가능한') || userEmailAlert === '') {
       setResultAlert("이메일 중복체크 해주세요");
-      setNavToggles(true);
+      openModal();
       emailRef.current.focus();
       return;
     }
     if (!userNickAlert.includes('사용 가능한') || userNickAlert === '') {
       setResultAlert("닉네임 중복체크 해주세요");
-      setNavToggles(true);
+      openModal();
       nickRef.current.focus();
       return;
     }
     if (!oneChecked) {
       setResultAlert("이용약관 동의가 필요합니다😊");
-      setNavToggles(true);
+      openModal();
       return;
     }
     if (!twoChecked) {
       setResultAlert("개인정보 수집 및 활용 동의가 필요합니다😊");
-      setNavToggles(true);
+      openModal();
       return;
     }
 
@@ -352,22 +355,10 @@ function SignUp(e) {
           <InputBtn type="button" onClick={signup}>가입 하기</InputBtn>
         </Form>
       </SignWrap>
-      {navToggles ?
-        <ModalWrap>
-          <ModalBox>
-            <h1>가입하기</h1>
-            <CloseBtn onClick={closeNav}>
-              <span></span>
-              <span></span>
-            </CloseBtn>
-            <div className="cont">
-              {resultAlert}
-            </div>
-            <button className="change" onClick={closeNav}>닫기</button>
-          </ModalBox>
-        </ModalWrap>
-        : null
-      }
+
+      <UserModalForm open={modalOpen} close={closeModal} header={"가입하기"} footer={"닫기"}>
+        {resultAlert}
+      </UserModalForm>
     </>
   )
 };
@@ -520,100 +511,4 @@ const CheckBtn = styled.button`
   font-size: 0.87rem;
   border-radius: 60px;
   
-`;
-
-// 모달
-const ModalWrap = styled.div`
-width: 100%;
-height: 100%;
-padding: 0 25px;
-position: absolute;
-top: 0; left: 0;
-background: rgba(0,0,0,0.7);
-z-index: 999;
-`
-const ModalBox = styled.div`
-position: absolute;
-top: 50%; left: 50%;
-transform: translate(-50%,-50%);
-width: 90%;
-height: 11.5rem;
-background: #fff;
-border-radius: 5px;
-overflow: hidden;
-text-align : center;
-
-h1 {
-  font-size: 1.25rem;
-  font-weight: 700;
-  text-align: center;
-  line-height:62px;
-}
- h3 {
-  font-size: 1.5rem;
-  padding: 20px 0;
-  white-space: pre-wrap;
- }
- div.cont{
-  position: relative;
-  margin: 0 10px;
-  padding: 15px 0;
-  border-bottom : 1px solid #ddd;
-  button{
-    position: absolute;
-    right: 0.5rem;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 4.43rem;
-    text-align: center;
-    color: #999;
-    padding: 3px 5px;
-    font-weight: 500;
-    font-size: 0.875rem;
-    border: 1px solid #dbdbdb;
-    border-radius: 3.12rem;
-  }
- }
- input {
-  width: 75%;
-  background : none;
-  border: none;
-  text-align: center;
- }
- input:focus{
-  outline:none;
- }
- button.change {
-  font-size:0.93rem;
-  font-weight: 700;
-  color: #fff;
-  width: 100%;
-  background: #26DFA6;
-  padding: 16px 0;
-  position: absolute;
-  bottom: 0; left: 0;
- }
-`
-
-const CloseBtn = styled.div`
-width:15px;
-height: 15px;
-position:absolute;
-top: 13px; right: 5%;
-
-span {
-  display:block;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width:100%;
-  height:1px;
-  background-color: #999999;
-}
-span:first-child{
-  transform: rotate(45deg) translateX(0%);
-  }
-span:last-child{
-  transform: rotate(135deg) translateX(0%);
-  }
 `;

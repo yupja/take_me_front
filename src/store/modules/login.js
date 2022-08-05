@@ -4,7 +4,7 @@ import instance from "../../shared/axios";
 
 
 //login
-export const LoginDB = (loginInfo, setModalStr, setNavToggles, navigate, urlData) => {
+export const LoginDB = (loginInfo, setModalStr, openModal, navigate, urlData) => {
   return async function (dispatch) {
     console.log(loginInfo);
     await instance.post("/api/user/login", loginInfo)
@@ -27,7 +27,7 @@ export const LoginDB = (loginInfo, setModalStr, setNavToggles, navigate, urlData
         const errCode = error.response.data.status;
         if (errCode === 500 || errCode === 400) {
           setModalStr("아이디 또는 비밀번호를\n 확인해주세요.");
-          setNavToggles(true);
+          openModal();
         }
       });
   }
@@ -38,10 +38,7 @@ export const LoginDB = (loginInfo, setModalStr, setNavToggles, navigate, urlData
 // 로그인한 사용자 정보 조회
 export const getUserInfoDB = () => {
   return async function (dispatch) {
-    await instance.get("/api/myInfo", {
-      "Content-Type": "application/json",
-      withCredentials: true,
-    })
+    await instance.get("/api/myInfo")
       .then((response) => {
         const username = response.data.data.username;
         const nickname = response.data.data.nickname;
@@ -164,7 +161,6 @@ export const findIdDB = (email) => {
 // 비밀번호 찾기
 export const findPwDB = (info, setfindPwPop, setStr) => {
   return async function (dispatch) {
-    console.log(info);
     await instance.post("/api/user/findPassword", info)
       .then((res) => {
         console.log(res)
@@ -182,7 +178,6 @@ export const findPwDB = (info, setfindPwPop, setStr) => {
 // 비밀번호 변경 post요청
 export const changePw = (data, token) => {
   return async function (dispatch) {
-    console.log(data, token);
     const headers = {
       'Authorization': `Bearer ${token}`
     }
@@ -191,7 +186,6 @@ export const changePw = (data, token) => {
     })
       .then((res) => {
         console.log(res)
-        // dispatch(findPwResult(res.data.respMsg));
       })
       .catch((error) => {
         console.log(error);
@@ -256,6 +250,5 @@ const userSlice = createSlice({
   }
 });
 
-// export const userActions = userSlice.actions;
 export const { isLogin, infoList, findIdResult, findPwResult, idCheckResult, result } = userSlice.actions;
 export default userSlice.reducer;

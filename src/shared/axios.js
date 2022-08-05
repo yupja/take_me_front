@@ -52,20 +52,16 @@ const refreshToken = () => {
   })
     .then((response) => {
       console.log(response);
-
-      deleteCookie('refreshToken');
-      localStorage.clear();
-
       const accessToken = response.data.accessToken;
       const refreshToken = response.data.refreshToken;
 
       localStorage.setItem("accessToken", accessToken);
-
       setCookie('refreshToken', refreshToken, {
         path: "/",
         secure: true,
         sameSite: 'none',
       });
+
       window.location.reload();
     })
     .catch((error) => {

@@ -6,10 +6,7 @@ import instance from "../../shared/axios";
 // 유저 정보 요청
 export const getInfo = () => {
   return async function (dispatch) {
-    await instance.get("/api/mypage/profile", {
-      "Content-Type": "application/json",
-      withCredentials: true,
-    })
+    await instance.get("/api/mypage/profile")
       .then((res) => {
         dispatch(infoList(res.data.data));
       })
@@ -22,14 +19,9 @@ export const getInfo = () => {
 // 마이페이지 정보 업데이트
 export const infoUpdate = (data) => {
   return async function (dispatch) {
-    await instance.put("/api/mypage/profile", data, {
-      "Content-Type": "multipart/form-data",
-      withCredentials: true,
-    })
+    await instance.put("/api/mypage/profile", data)
       .then((res) => {
-        console.log(data);
         console.log(res)
-        // dispatch(infoList(res.data.respMsg));
       })
       .catch((error) => {
         console.log(error);
@@ -41,10 +33,7 @@ export const infoUpdate = (data) => {
 // 항목 조회
 export const getHistory = () => {
   return async function (dispatch) {
-    await instance.get("/api/mypage/history", {
-      "Content-Type": "application/json",
-      withCredentials: true,
-    })
+    await instance.get("/api/mypage/history")
       .then((res) => {
         console.log(res)
         dispatch(gethistorys(res.data.data))
@@ -92,10 +81,7 @@ export const addFavoriteRQ = createAsyncThunk(
 // UPDATE
 export const favoriteUpdate = (price, itemId) => {
   return async function (dispatch) {
-    await instance.put(`/api/mypage/favorite/${itemId}`, price, {
-      "Content-Type": "application/json",
-      withCredentials: true,
-    })
+    await instance.put(`/api/mypage/favorite/${itemId}`, price)
       .then((response) => {
         console.log(response)
       })

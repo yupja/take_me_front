@@ -9,8 +9,9 @@ import LoginGoogle from "../components/login/LoginGoogle";
 import LoginKakao from "../components/login/LoginKakao";
 import FindId from "../components/login/FindId";
 import FindPw from "../components/login/FindPw";
+import UserModalForm from "../components/public/UserModalForm";
 
-import { ReactComponent as Check } from "../assets/icons/Check.svg";
+// import { ReactComponent as Check } from "../assets/icons/Check.svg";
 
 function Login() {
   const { name } = useParams();
@@ -24,12 +25,20 @@ function Login() {
   const userId = useRef();
   const userPw = useRef();
 
-  const [navToggles, setNavToggles] = useState(false);
+  // const [navToggles, setNavToggles] = useState(false);
   const [ModalStr, setModalStr] = useState('');
 
-  const closeNav = () => {
-    setNavToggles(false)
-  }
+  // const closeNav = () => {
+  //   setNavToggles(false)
+  // }
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const openModal = () => {
+    setModalOpen(true);
+  };
+  const closeModal = () => {
+    setModalOpen(false);
+  };
 
 
   // 로그인
@@ -37,7 +46,7 @@ function Login() {
     e.preventDefault();
     if (userId.current.value === "" || userPw.current.value === "") {
       setModalStr('아이디 또는 비밀번호를\n 확인해 주세요')
-      setNavToggles(true)
+      openModal()
       return;
     }
     const loginInfo = {
@@ -48,7 +57,7 @@ function Login() {
       signupUrl: state,
       loginUrl: window.location.href
     }
-    dispatch(LoginDB(loginInfo, setModalStr, setNavToggles, navigate, urlData));
+    dispatch(LoginDB(loginInfo, setModalStr, openModal, navigate, urlData));
   }
 
   return (
@@ -98,20 +107,9 @@ function Login() {
               </li>
             </Social>
           </LoginWrap>
-          {navToggles ?
-            <ModalWrap>
-              <ModalBox>
-                <div className="icon"><Check /></div>
-                <CloseBtn onClick={closeNav}>
-                  <span></span>
-                  <span></span>
-                </CloseBtn>
-                <h3>{ModalStr}</h3>
-                <button onClick={closeNav}>닫기</button>
-              </ModalBox>
-            </ModalWrap>
-            : null
-          }
+          <UserModalForm open={modalOpen} close={closeModal} header={"icon"} footer={"닫기"} >
+            <h3>{ModalStr}</h3>
+          </UserModalForm>
         </>
       }
     </>
@@ -183,7 +181,6 @@ left: 50%;
 transform: translateX(-50%);
 display: inline-block;
 margin-top: 20px;
-
 span {
   margin-left: 10px;
 }
@@ -196,7 +193,6 @@ a{
   text-decoration: underline;
   text-underline-position: under;
 }
-
 `
 
 const InputBtn = styled.button`
@@ -228,74 +224,3 @@ li{
   text-align: center;
 }
 `
-
-// 모달
-const ModalWrap = styled.div`
-width: 100%;
-height: 100%;
-padding: 0 25px;
-position: absolute;
-top: 0; left: 0;
-background: rgba(0,0,0,0.7);
-z-index: 999;
-`
-const ModalBox = styled.div`
-position: absolute;
-top: 50%; left: 50%;
-transform: translate(-50%,-50%);
-width: 90%;
-background: #fff;
-border-radius: 5px;
-text-align: center;
-
-.icon {
-  width: 2.5rem;
-  height: 2.5rem;
-  margin:  10px auto 0;
-  svg {
-    width: 40px;
-    height: 40px;
-  }
-  path {
-    fill:#26DFA6;
-  }
-}
- h3 {
-  font-size: 1.5rem;
-  padding: 20px 0 24px;
-  white-space: pre-wrap;
-  line-height: 2rem;
- }
- button {
-  font-size:1.12rem;
-  color: #fff;
-  width: 100%;
-  background: #26DFA6;
-  padding: 15px 0;
-  font-weight: 700;
- }
-`
-
-const CloseBtn = styled.div`
-width:1rem; //180px
-height: 1rem;
-margin-top: 10px;
-position:absolute;
-top: 0; right: 3%;
-
-span {
-  display:block;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width:100%;
-  height:2px;
-  background-color: #999999;
-}
-span:first-child{
-  transform: rotate(45deg) translateX(0%);
-  }
-span:last-child{
-  transform: rotate(135deg) translateX(0%);
-  }
-`;
