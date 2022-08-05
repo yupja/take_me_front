@@ -196,7 +196,6 @@ function Profile() {
 
 
 
-
   return (
     <>
       {navToggles ?
@@ -300,7 +299,6 @@ export default Profile;
 const ProflieWrap = styled.div`
 width: 100%;
 height: 95.6%;;
-/* padding: 0 25px; */
 text-align: left;
 background : #F8F8F8;
 button {
