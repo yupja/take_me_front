@@ -124,7 +124,7 @@ function Save() {
     <Wrap>
       <TopWrap>
         <>
-          <HeaderArea><Header title={title} tColor={"#ffffff"} /></HeaderArea>
+          <HeaderArea><Header title={title} tColor={"#EAEAEA"} /></HeaderArea>
           {goal.goalitemName === "이름 없음" ?
             <NonGoal
               openModal={openModal}

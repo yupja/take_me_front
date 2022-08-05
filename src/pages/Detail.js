@@ -133,7 +133,7 @@ function Detail() {
 
   return (
     <>
-      <Head><Header title={"커뮤니티"} tColor={"#ffffff"} /></Head>
+      <Head><Header title={"커뮤니티"} tColor={"#EAEAEA"} /></Head>
       <Fixed>
         <Box className="box">
           <BImg src={postlistdata.image}></BImg>
