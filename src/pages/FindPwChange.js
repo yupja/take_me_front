@@ -12,16 +12,11 @@ function FindPwChange() {
   // const { token } = useParams();
   const location = useLocation();
   const sch = location.search;
-  console.log(sch);
   const params = new URLSearchParams(sch);
-  const accessToken = params.get('accessToken');
-  console.log(accessToken);
   const username = params.get('username');
-  console.log(username);
   // &username=eunjin0708
   // console.log('토큰 :', tokens, '아이디 :', username)
 
-  localStorage.setItem("accessToken", accessToken);
 
   const dispatch = useDispatch();
 

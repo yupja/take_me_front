@@ -178,13 +178,11 @@ export const findPwDB = (info, setfindPwPop, setStr) => {
 // 비밀번호 변경 post요청
 export const changePw = (data) => {
   return async function (dispatch) {
-    // const headers = {
-    //   'Authorization': `Bearer ${token}`
-    // }
     await instance.post("/api/user/changePassword", data)
       .then((res) => {
         console.log(res)
         window.alert('비밀번호가 변경되었습니다!');
+        window.location.href = '/login';
       })
       .catch((error) => {
         console.log(error);
